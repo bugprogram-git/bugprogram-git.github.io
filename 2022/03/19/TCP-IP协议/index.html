@@ -16,21 +16,23 @@
   <meta name="author" content="bugprogram-git">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Archlinux安装教程大体流程 1.镜像下载以及光盘刻录,并启动光盘 2.同步时间 3.磁盘分区以及挂载以及格式化文件系统 4.安装系统 5.生成fstab文件 6.chroot到新的系统 7.设置时间,区域,语言,并同步时间 8.设置hostname,以及hosts文件 9.安装系统引导,并生成引导文件 10.完成安装1.下载镜像以及光盘刻录12345#获取镜像wget https:&#x2F;&#x2F;mi">
+    <meta name="description" content="TCP&#x2F;IP协议1.概念:TCP&#x2F;IP（Transmission Control Protocol&#x2F;Internet Protocol，传输控制协议&#x2F;网际协议）是指能够在多个不同网络间实现信息传输,网络通信的协议簇。TCP&#x2F;IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Archlinux安装教程">
-<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/13/Archlinux%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:title" content="TCP&#x2F;IP协议">
+<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/19/TCP-IP%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="Archlinux安装教程大体流程 1.镜像下载以及光盘刻录,并启动光盘 2.同步时间 3.磁盘分区以及挂载以及格式化文件系统 4.安装系统 5.生成fstab文件 6.chroot到新的系统 7.设置时间,区域,语言,并同步时间 8.设置hostname,以及hosts文件 9.安装系统引导,并生成引导文件 10.完成安装1.下载镜像以及光盘刻录12345#获取镜像wget https:&#x2F;&#x2F;mi">
+<meta property="og:description" content="TCP&#x2F;IP协议1.概念:TCP&#x2F;IP（Transmission Control Protocol&#x2F;Internet Protocol，传输控制协议&#x2F;网际协议）是指能够在多个不同网络间实现信息传输,网络通信的协议簇。TCP&#x2F;IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-13T06:49:14.000Z">
-<meta property="article:modified_time" content="2022-03-16T13:47:03.169Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20180110171531879">
+<meta property="article:published_time" content="2022-03-19T02:09:51.000Z">
+<meta property="article:modified_time" content="2022-03-19T03:56:50.075Z">
 <meta property="article:author" content="bugprogram-git">
-<meta property="article:tag" content="linux发行版安装">
+<meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180110171531879">
   
   
-  <title>Archlinux安装教程 - Blog</title>
+  <title>TCP/IP协议 - Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archlinux安装教程">
+            <span class="h2" id="subtitle" title="TCP/IP协议">
               
             </span>
 
@@ -191,8 +193,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-13 14:49" pubdate>
-        2022年3月13日 下午
+      <time datetime="2022-03-19 10:09" pubdate>
+        2022年3月19日 上午
       </time>
     </span>
   
@@ -202,7 +204,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.7k 字
     </span>
   
 
@@ -211,7 +213,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11 分钟
+      15 分钟
     </span>
   
 
@@ -240,54 +242,55 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Archlinux安装教程</h1>
+            <h1 style="display: none">TCP/IP协议</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：3 天前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="Archlinux安装教程"><a href="#Archlinux安装教程" class="headerlink" title="Archlinux安装教程"></a>Archlinux安装教程</h1><h2 id="大体流程"><a href="#大体流程" class="headerlink" title="大体流程"></a>大体流程</h2><ul>
-<li>1.镜像下载以及光盘刻录,并启动光盘</li>
-<li>2.同步时间</li>
-<li>3.磁盘分区以及挂载以及格式化文件系统</li>
-<li>4.安装系统</li>
-<li>5.生成fstab文件</li>
-<li>6.chroot到新的系统</li>
-<li>7.设置时间,区域,语言,并同步时间</li>
-<li>8.设置hostname,以及hosts文件</li>
-<li>9.安装系统引导,并生成引导文件</li>
-<li>10.完成安装<h3 id="1-下载镜像以及光盘刻录"><a href="#1-下载镜像以及光盘刻录" class="headerlink" title="1.下载镜像以及光盘刻录"></a>1.下载镜像以及光盘刻录</h3><figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#获取镜像</span><br>wget https://mirrors.ustc.edu.cn/archlinux/iso/2022.03.01/archlinux-2022.03.01-x86_64.iso<br><br><span class="hljs-comment">#刻录镜像</span><br><span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=/archlinux.iso of=/dev/sda<br></code></pre></td></tr></table></figure>
-<h3 id="2-同步时间"><a href="#2-同步时间" class="headerlink" title="2.同步时间"></a>2.同步时间</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#启动时间服务</span><br>timedatectl set-ntp <span class="hljs-literal">true</span><br><br><span class="hljs-comment">#同步时间</span><br>hwclock --systohc<br></code></pre></td></tr></table></figure>
-<h3 id="3-磁盘分区以及挂载"><a href="#3-磁盘分区以及挂载" class="headerlink" title="3.磁盘分区以及挂载"></a>3.磁盘分区以及挂载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#磁盘分区</span><br>cfdisk /dev/sda<br><br><span class="hljs-comment">#创建文件系统</span><br>mkfs.vfat /dev/sda1<br>mkswap /dev/sda2<br>mkfs.ext4 /dev/sda3<br><br><span class="hljs-comment">#挂载文件系统</span><br>mount /dev/sda3 /mnt<br><span class="hljs-built_in">mkdir</span> /mnt/boot<br>mount /dev/sda1 /mnt/boot<br>swapon /dev/sda2<br></code></pre></td></tr></table></figure>
-<h3 id="4-安装系统"><a href="#4-安装系统" class="headerlink" title="4.安装系统"></a>4.安装系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacstrap /mnt base linux linux-firmware<br><span class="hljs-comment">#base 为基础系统</span><br><span class="hljs-comment">#linux 为linux内核</span><br><span class="hljs-comment">#linux-firmware为驱动程序包</span><br></code></pre></td></tr></table></figure>
-<h3 id="5-生成fstab文件"><a href="#5-生成fstab文件" class="headerlink" title="5.生成fstab文件"></a>5.生成fstab文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">genfstab /mnt &gt;&gt; /mnt/etc/fstab<br></code></pre></td></tr></table></figure>
-<h3 id="6-chroot到新环境"><a href="#6-chroot到新环境" class="headerlink" title="6.chroot到新环境"></a>6.chroot到新环境</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">arch-chroot /mnt<br></code></pre></td></tr></table></figure>
-<h3 id="7-设置时间区域以及语言"><a href="#7-设置时间区域以及语言" class="headerlink" title="7.设置时间区域以及语言"></a>7.设置时间区域以及语言</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<br><br>vim /etc/locale.gen<br>去掉一下两行<br>en_US.UTF-8 UTF-8<br>zh_CN.UTF-8 UTF-8<br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;LANG=&quot;</span>en_US.UTF-8<span class="hljs-string">&quot; &gt; /etc/locale.conf</span><br><span class="hljs-string">locale-gen</span><br></code></pre></td></tr></table></figure>
-<h3 id="8-设置hostname-hosts文件"><a href="#8-设置hostname-hosts文件" class="headerlink" title="8.设置hostname,hosts文件"></a>8.设置hostname,hosts文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Arch&quot;</span> &gt;&gt; /etc/hostname<br>vim /etc/hosts<br>127.0.0.1 localhost<br>::1     localhost<br>127.0.1.1 localhost.localdomain<br></code></pre></td></tr></table></figure>
-<h3 id="9-安装系统引导"><a href="#9-安装系统引导" class="headerlink" title="9.安装系统引导"></a>9.安装系统引导</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacman -S grub<br>grub-install --target=x86_64-efi --efi-directory=/boot<br>grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
-<h3 id="10-完成安装"><a href="#10-完成安装" class="headerlink" title="10.完成安装"></a>10.完成安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#设置root用户密码</span><br>passwd root<br><br><span class="hljs-comment">#退出系统</span><br><span class="hljs-built_in">exit</span><br><br><span class="hljs-comment">#卸载磁盘</span><br>umount /mnt/boot<br>umount /mnt<br><br><span class="hljs-comment">#重启系统</span><br>reboot<br><span class="hljs-comment">#取出安装介质</span><br></code></pre></td></tr></table></figure></li>
+              <h1 id="TCP-x2F-IP协议"><a href="#TCP-x2F-IP协议" class="headerlink" title="TCP&#x2F;IP协议"></a>TCP&#x2F;IP协议</h1><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念:"></a>1.概念:</h2><p>TCP&#x2F;IP（Transmission Control Protocol&#x2F;Internet Protocol，传输控制协议&#x2F;网际协议）是指能够在多个不同网络间实现信息传输,网络通信的协议簇。TCP&#x2F;IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP&#x2F;IP协议中TCP协议和IP协议最具代表性，所以被称为TCP&#x2F;IP协议。 </p>
+<h2 id="2-计算机网络体系分层结构"><a href="#2-计算机网络体系分层结构" class="headerlink" title="2. 计算机网络体系分层结构"></a>2. 计算机网络体系分层结构</h2><h3 id="在OSI分层体系中-TCP-x2F-IP协议分为7层"><a href="#在OSI分层体系中-TCP-x2F-IP协议分为7层" class="headerlink" title="在OSI分层体系中,TCP&#x2F;IP协议分为7层"></a>在OSI分层体系中,TCP&#x2F;IP协议分为7层</h3><ul>
+<li>1.物理层</li>
+<li>2.数据链路层</li>
+<li>3.网络层</li>
+<li>4.传输层</li>
+<li>5.会话层</li>
+<li>6.表示层</li>
+<li>7.应用层<h3 id="一般为了便于学习-我们一般分为5层-也有4层的说法-4层中将物理层和数据链路层合并为链路层"><a href="#一般为了便于学习-我们一般分为5层-也有4层的说法-4层中将物理层和数据链路层合并为链路层" class="headerlink" title="一般为了便于学习,我们一般分为5层(也有4层的说法,4层中将物理层和数据链路层合并为链路层)"></a>一般为了便于学习,我们一般分为5层(也有4层的说法,4层中将物理层和数据链路层合并为链路层)</h3></li>
+<li>1.物理层</li>
+<li>2.数据链路层</li>
+<li>3.网络层</li>
+<li>4.传输层</li>
+<li>5.应用层</li>
 </ul>
+<p><img src="https://img-blog.csdn.net/20180110171531879" srcset="/img/loading.gif" lazyload alt="TCP-IP"></p>
+<h3 id="2-1-物理层"><a href="#2-1-物理层" class="headerlink" title="2.1.物理层"></a>2.1.物理层</h3><h4 id="2-1-1-主要工作内容"><a href="#2-1-1-主要工作内容" class="headerlink" title="2.1.1.主要工作内容"></a>2.1.1.主要工作内容</h4><p>1.为数据端设备提供传送数据的通路，数据通路可以是一个物理媒体，也可以是多个物理媒体连接而成。一次完整的数据传输，包括激活物理连接，传送数据，终止物理连接。所谓激活，就是不管有多少物理媒体参与，都要在通信的两个数据终端设备间连接起来，形成一条通路。<br>2.传输数据，物理层要形成适合数据传输需要的实体，为数据传送服务。一是要保证数据能在其上正确通过，二是要提供足够的带宽（带宽是指每秒钟内能通过的比特（BIT）数），以减少信道上的拥塞。传输数据的方式能满足点到点，一点到多点，串行或并行，半双工或全双工，同步或异步传输的需要。<br>3.完成物理层的一些管理工作。物理层的媒体包括架空明线、平衡电缆、光纤、无线信道等。通信用的互连设备指DTE和DCE间的互连设备。DTE即数据终端设备，又称物理设备，如计算机、终端等都包括在内。而DCE则是数据通信设备或电路连接设备，如调制解调器等。数据传输通常是经过DTE──DCE，再经过DCE──DTE的路径。互连设备指将DTE、DCE连接起来的装置，如各种插头、插座。LAN中的各种粗、细同轴电缆、T型接、插头，接收器，发送器，中继器等都属物理层的媒体和连接器。</p>
+<h4 id="2-1-2-主要设备"><a href="#2-1-2-主要设备" class="headerlink" title="2.1.2.主要设备"></a>2.1.2.主要设备</h4><p>网线,光纤,集线器,调制解调器</p>
+<h4 id="2-1-3-主要协议"><a href="#2-1-3-主要协议" class="headerlink" title="2.1.3.主要协议"></a>2.1.3.主要协议</h4><p>RS-232、RS-449、X.21、V.35、ISDN、以及FDDI、IEEE802.3、IEEE802.4、和IEEE802.5等。</p>
+<h3 id="2-2-数据链路层"><a href="#2-2-数据链路层" class="headerlink" title="2.2.数据链路层"></a>2.2.数据链路层</h3><h5 id="2-2-1-主要工作内容"><a href="#2-2-1-主要工作内容" class="headerlink" title="2.2.1.主要工作内容"></a>2.2.1.主要工作内容</h5><p>1.数据链路层的最基本的功能是向该层用户提供透明的和，可靠的数据传送基本服务。透明性是指该层上传输的数据的内容、格式及编码没有限制，也没有必要解释信息结构的意义；可靠的传输使用户免去对丢失信息、干扰信息及顺序不正确等的担心。在物理层中这些情况都可能发生，在数据链路层中必须用纠错码来检错与纠错。数据链路层是对物理层传输原始比特流的功能的加强，将物理层提供的可能出错的物理连接改造成为逻辑上无差错的数据链路，使之对网络层表现为一无差错的线路。</p>
+<h4 id="2-2-2-主要设备"><a href="#2-2-2-主要设备" class="headerlink" title="2.2.2.主要设备"></a>2.2.2.主要设备</h4><p>二层交换机,网桥,网卡<br><strong>注意</strong>:<br><strong>对于设备而言,能识别网络层及以上协议的设备都叫网络层设备</strong> </p>
+<h4 id="2-2-3-主要协议"><a href="#2-2-3-主要协议" class="headerlink" title="2.2.3.主要协议"></a>2.2.3.主要协议</h4><p>1.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AE/2991091">点到点协议</a><br>2.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BB%A5%E5%A4%AA%E7%BD%91/99684">以太网协议</a><br>3.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/802.1q">VLAN(IEEE 802.1q)</a>  </p>
+<h3 id="2-3-网络层"><a href="#2-3-网络层" class="headerlink" title="2.3.网络层"></a>2.3.网络层</h3><h4 id="2-3-1-主要工作内容"><a href="#2-3-1-主要工作内容" class="headerlink" title="2.3.1.主要工作内容"></a>2.3.1.主要工作内容</h4><p>1.网络层的目的是实现两个端系统之间的数据透明传送，具体功能包括寻址和路由选择、连接的建立、保持和终止等。它提供的服务使传输层不需要了解网络中的数据传输和交换技术。</p>
+<h4 id="2-3-2-主要设备"><a href="#2-3-2-主要设备" class="headerlink" title="2.3.2.主要设备"></a>2.3.2.主要设备</h4><p>路由器,三层交换机等</p>
+<h4 id="2-3-3-主要协议"><a href="#2-3-3-主要协议" class="headerlink" title="2.3.3.主要协议"></a>2.3.3.主要协议</h4><p>1.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ICMP">ICMP</a><br>2.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF%E5%8D%8F%E8%AE%AE/2707187?fromtitle=RIP&fromid=571852">RIP</a><br>3.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE?fromtitle=bgp&fromid=91408">BGP</a><br>4.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Internet%E7%BB%84%E7%AE%A1%E7%90%86%E5%8D%8F%E8%AE%AE?fromtitle=IGMP&fromid=610474">IGMP</a>  </p>
+<h3 id="2-4-传输层"><a href="#2-4-传输层" class="headerlink" title="2.4.传输层"></a>2.4.传输层</h3><h4 id="2-4-1-主要工作内容"><a href="#2-4-1-主要工作内容" class="headerlink" title="2.4.1.主要工作内容"></a>2.4.1.主要工作内容</h4><p>为应用进程提供端对端的通信服务,它提供面向连接的数据流支持、可靠性、流量控制、多路复用等服务。</p>
+<h4 id="2-4-2-主要协议"><a href="#2-4-2-主要协议" class="headerlink" title="2.4.2.主要协议"></a>2.4.2.主要协议</h4><p>1.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/TCP/33012">TCP</a><br>2.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/UDP">UDP</a></p>
+<h3 id="2-5-应用层"><a href="#2-5-应用层" class="headerlink" title="2.5.应用层"></a>2.5.应用层</h3><h4 id="2-5-1-主要工作内容"><a href="#2-5-1-主要工作内容" class="headerlink" title="2.5.1.主要工作内容"></a>2.5.1.主要工作内容</h4><p>应用层直接和应用程序接口并提供常见的网络应用服务。应用层也向表示层发出请求。应用层是开放系统的最高层,是直接为应用进程提供服务的。其作用是在实现多个系统应用进程相互通信的同时,完成一系列业务处理所需的服务  </p>
+<h4 id="2-5-2-主要协议"><a href="#2-5-2-主要协议" class="headerlink" title="2.5.2.主要协议"></a>2.5.2.主要协议</h4><p>1.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP">HTTP</a><br>2.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ftp/13839">FTP</a><br>3.<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F/2251573?fromtitle=dns&fromid=427444">DNS</a></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/linux%E5%8F%91%E8%A1%8C%E7%89%88%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">linux发行版基本使用</a>
-                    
-                  </div>
-                
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/linux%E5%8F%91%E8%A1%8C%E7%89%88%E5%AE%89%E8%A3%85/">linux发行版安装</a>
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
                     
                   </div>
                 
@@ -298,18 +301,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/16/C%E8%AF%AD%E8%A8%80socket%E7%BC%96%E7%A8%8B/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C语言socket编程(基于linux平台)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/09/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
-                        <span class="hidden-mobile">docker 教程</span>
+                      <a href="/2022/03/16/C%E8%AF%AD%E8%A8%80socket%E7%BC%96%E7%A8%8B/">
+                        <span class="hidden-mobile">C语言socket编程(基于linux平台)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
