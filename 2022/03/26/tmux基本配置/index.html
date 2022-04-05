@@ -16,21 +16,21 @@
   <meta name="author" content="bugprogram-git">
   <meta name="keywords" content="">
   
-    <meta name="description" content="linux内核模块编程1.编程内核模块的代码1234567891011121314151617181920212223242526272829303132#include &lt;linux&#x2F;kernel.h&gt;#include &lt;linux&#x2F;module.h&gt;&#x2F;*__init 和__exit为两个宏*&#x2F;&#x2F;&#x2F; EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以">
+    <meta name="description" content="tmux配置教程1.tmux是什么?tmux是一个终端复用工具,在实际开发运维中,可以用来保存当前工作状态,也可以将当前的单个终端拆分多个窗口。 2.tmux的基本结构tmux为C&#x2F;S架构,tmux进程为守护进程,独立于终端之外,在不使用tmux的情况下,在当前终端执行的所有任务都为当前终端的子进程,而在使用了tmux之后,在tmux下执行的任务为tmux的子进程,而tmux为一个守护进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux内核模块编程入门">
-<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/27/linux%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:title" content="tmux配置教程">
+<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/26/tmux%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="linux内核模块编程1.编程内核模块的代码1234567891011121314151617181920212223242526272829303132#include &lt;linux&#x2F;kernel.h&gt;#include &lt;linux&#x2F;module.h&gt;&#x2F;*__init 和__exit为两个宏*&#x2F;&#x2F;&#x2F; EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以">
+<meta property="og:description" content="tmux配置教程1.tmux是什么?tmux是一个终端复用工具,在实际开发运维中,可以用来保存当前工作状态,也可以将当前的单个终端拆分多个窗口。 2.tmux的基本结构tmux为C&#x2F;S架构,tmux进程为守护进程,独立于终端之外,在不使用tmux的情况下,在当前终端执行的所有任务都为当前终端的子进程,而在使用了tmux之后,在tmux下执行的任务为tmux的子进程,而tmux为一个守护进">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-27T15:05:05.000Z">
-<meta property="article:modified_time" content="2022-03-29T13:36:08.266Z">
+<meta property="article:published_time" content="2022-03-26T11:36:54.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:34:50.995Z">
 <meta property="article:author" content="bugprogram-git">
-<meta property="article:tag" content="编程类">
+<meta property="article:tag" content="基本软件使用">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>linux内核模块编程入门 - Blog</title>
+  <title>tmux配置教程 - Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="linux内核模块编程入门">
+            <span class="h2" id="subtitle" title="tmux配置教程">
               
             </span>
 
@@ -191,8 +191,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-27 23:05" pubdate>
-        2022年3月27日 晚上
+      <time datetime="2022-03-26 19:36" pubdate>
+        2022年3月26日 晚上
       </time>
     </span>
   
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      2.1k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16 分钟
+      18 分钟
     </span>
   
 
@@ -240,22 +240,21 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">linux内核模块编程入门</h1>
+            <h1 style="display: none">tmux配置教程</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：5 天前
+                  本文最后更新于：10 天前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="linux内核模块编程"><a href="#linux内核模块编程" class="headerlink" title="linux内核模块编程"></a>linux内核模块编程</h1><h2 id="1-编程内核模块的代码"><a href="#1-编程内核模块的代码" class="headerlink" title="1.编程内核模块的代码"></a>1.编程内核模块的代码</h2><figure class="highlight c"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/kernel.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/module.h&gt;</span></span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">__init 和__exit为两个宏</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">// EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调用)</span><br><span class="hljs-type">int</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-type">char</span> *b = <span class="hljs-string">&quot;hello&quot;</span>;<br><span class="hljs-type">int</span> c[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>&#125;;<br>module_param(a,<span class="hljs-type">int</span>,<span class="hljs-number">0664</span>);<span class="hljs-comment">//内核模块传参,传参后内核函数可以直接使用这些参数</span><br>module_param(b,charp,<span class="hljs-number">0664</span>);<br>module_param(c,<span class="hljs-type">int</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-number">0664</span>);<br>init __init <span class="hljs-title function_">my_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    printk(<span class="hljs-string">&quot;just a test for linux kernel module test!\n&quot;</span>);<br>    printk(<span class="hljs-string">&quot;my init linux kernel module is running!\n&quot;</span>);<br>&#125;<br><span class="hljs-type">int</span> __exit <span class="hljs-title function_">my_exit</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;just a test for linux kernel module test!\n&quot;</span>);<br><br>&#125;<br>module_init(my_init);<br><span class="hljs-comment">//当该内核模块插入时将会执行my_init函数</span><br>module_exit(my_exit);<br><span class="hljs-comment">//当该内核模块移除时将会执行my_exit函数</span><br>MODULE_LICENCE(<span class="hljs-string">&quot;GPL&quot;</span>);<span class="hljs-comment">//指定模块的开源协议</span><br>MODULE_AUTHOR(<span class="hljs-string">&quot;bugprogram-git&quot;</span>);<span class="hljs-comment">//指定模块的作者</span><br>MODULE_DESCRIPTION(<span class="hljs-string">&quot;just a kernel module test&quot;</span>);<span class="hljs-comment">//指定内核模块的详细信息</span><br>MODULE_ALIAS(<span class="hljs-string">&quot;mymodule&quot;</span>);<span class="hljs-comment">//指定模块的别名</span><br><span class="hljs-comment">//这些MODLE_*的本质其实是定义在static字符数组用于存放指定字符串内容，这些字符串内容链接时存放在.modinfo字段,可以用modinfo命令来查看这些模块信息,用法</span><br>modinfo $(MODULE_NAME)<span class="hljs-comment">//查看某个模块的信息</span><br></code></pre></td></tr></table></figure>
-<h2 id="2-修改模块代码所在目录的Kconfig文件"><a href="#2-修改模块代码所在目录的Kconfig文件" class="headerlink" title="2.修改模块代码所在目录的Kconfig文件"></a>2.修改模块代码所在目录的Kconfig文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">config MY_MODULE<br>    tristate <span class="hljs-string">&quot;this is the linux kernel moule for test&quot;</span><br>    <span class="hljs-built_in">help</span><br>        just a <span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
-<h2 id="3-修改该目录下面的Makefile"><a href="#3-修改该目录下面的Makefile" class="headerlink" title="3.修改该目录下面的Makefile"></a>3.修改该目录下面的Makefile</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">obj-<span class="hljs-variable">$(CONFIG_MY_MODULE)</span>         += module.o<br><span class="hljs-comment">#(这里的module.o要和.c文件的文件名一致,MY_MODULE要和Kconfig文件里面的指定一致)</span><br></code></pre></td></tr></table></figure>
-<h2 id="4-运行内核模块"><a href="#4-运行内核模块" class="headerlink" title="4.运行内核模块"></a>4.运行内核模块</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">dmesg -C    <span class="hljs-comment">#清除内核已打印的信息</span><br>dmesg       <span class="hljs-comment">#查看内核打印信息</span><br>lsmod<span class="hljs-comment">#显示当前系统已经载入的模块</span><br>insmod<span class="hljs-comment">#将某个模块运行</span><br>dmesg<span class="hljs-comment">#查看内核打印信息</span><br></code></pre></td></tr></table></figure>
-<h2 id="关于符号表-Symbols"><a href="#关于符号表-Symbols" class="headerlink" title="关于符号表(Symbols)"></a>关于符号表(Symbols)</h2><p>在编程中，一个符号(symbol)是一个程序的创建块：它是一个变量名或一个函数名,内核是一非常复杂的代码块，并且含有许多、许多的全局符号<br>内核并不使用符号名。它是通过变量或函数的地址(指针)来使用变量或函数的，而 不是使用size_t BytesRead，内核更喜欢使用(例如)c0343f20来引用 这个变量。<br>而另一方面，人们并不喜欢象c0343f20这样的名字。我们跟喜欢使用象 size_t BytesRead这样的表示。通常，这并不会带来什么问题。内核主要 是用C语言写成的，所以在我们编程时编译器&#x2F;连接程序允许我们使用符号名，并且使 内核在运行时使用地址表示。这样大家都满意了。<br>(当前内核调用的符号表)&#x2F;proc&#x2F;kallsyms<br>&#x2F;boot&#x2F;System.map</p>
-<ul>
-<li>注意事项<br>当两个模块存在变量依赖时先将被依赖的模块编译,并将module.symbol文件拷贝到依赖模块的编译目录下面,再重新编译<br>&#x2F;boot&#x2F;System.map*为系统内核的符号表,&#x2F;proc&#x2F;kallsyms为系统当前内核已经加载的符号表</li>
+              <h1 id="tmux配置教程"><a href="#tmux配置教程" class="headerlink" title="tmux配置教程"></a>tmux配置教程</h1><h2 id="1-tmux是什么"><a href="#1-tmux是什么" class="headerlink" title="1.tmux是什么?"></a>1.tmux是什么?</h2><p>tmux是一个终端复用工具,在实际开发运维中,可以用来保存当前工作状态,也可以将当前的单个终端拆分多个窗口。</p>
+<h2 id="2-tmux的基本结构"><a href="#2-tmux的基本结构" class="headerlink" title="2.tmux的基本结构"></a>2.tmux的基本结构</h2><p>tmux为C&#x2F;S架构,tmux进程为守护进程,独立于终端之外,在不使用tmux的情况下,在当前终端执行的所有任务都为当前终端的子进程,而在使用了tmux之后,在tmux下执行的任务为tmux的子进程,而tmux为一个守护进程,因此不用担心在退出当前终端或者远程ssh突然断网时，执行的任务被杀死的情况.</p>
+<h2 id="3-tmux的三个概念"><a href="#3-tmux的三个概念" class="headerlink" title="3.tmux的三个概念"></a>3.tmux的三个概念</h2><ul>
+<li>1.session<br>一个session就是一个会话,session为tmux的一个会话,一个tmux可以同时开多个session  </li>
+<li>2.windows<br>window为session的子集,一个session可以有有多个window  </li>
+<li>3.pannel<br>一个pannel为一个窗格,为window的子集,一个window可以有多个pannel<h2 id="4-tmux的安装使用"><a href="#4-tmux的安装使用" class="headerlink" title="4.tmux的安装使用"></a>4.tmux的安装使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></div></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#archlinux(安装tmux)</span><br>sudo pacman -S tmux<br><span class="hljs-comment">#创建一个tmux会话并在该tmux会话下创建一个窗口并在该窗口下创建一个pannel</span><br>tmux<br><span class="hljs-comment">#查看tmux会话</span><br>tmux list-session<br><span class="hljs-comment">#离开tmux会话</span><br>tmux detach<br><span class="hljs-comment">#进入已经打开的tmux会话</span><br>tmux attach<br><br><br><span class="hljs-comment">#tmux配置文件</span><br><span class="hljs-comment">#tmux系统配置文件为/etc/tmux.conf,用户配置文件为~/.tmux.conf</span><br><br><span class="hljs-comment">#解绑prefix键位</span><br>unbind C-b<br>unbind <span class="hljs-string">&#x27;&quot;&#x27;</span><br>unbind <span class="hljs-string">&#x27;%&#x27;</span><br><span class="hljs-comment">#设置prefix键位为C-a</span><br><span class="hljs-built_in">set</span> -g prefix C-a<br><span class="hljs-built_in">bind</span> C-a send-prefix<br><span class="hljs-comment">#设置切分窗格键位为prefix和h以及prefix和v</span><br><span class="hljs-built_in">bind</span> h split-window -h<br><span class="hljs-built_in">bind</span> v split-window -v<br><span class="hljs-comment">#设置C-r为重载tmux配置文件(指定-n为不用使用prefix键位就可以触发)</span><br>bind-key -n C-r source-file ~/.tmux.conf<br><span class="hljs-comment">#设置调整窗格大小键位(指定-r键位为不用每次触发的时候都要使用prefix键位(只要摁一次prefix键位就可以持续出发操作))</span><br><span class="hljs-built_in">bind</span> -r H resize-pane -L 5<br><span class="hljs-built_in">bind</span> -r J resize-pane -D 5<br><span class="hljs-built_in">bind</span> -r K resize-pane -U 5<br><span class="hljs-built_in">bind</span> -r L resize-pane -R 5<br><span class="hljs-comment">#bind k selectp -U</span><br><span class="hljs-comment">#bind h selectp -L</span><br><span class="hljs-comment">#bind j selectp -D</span><br><span class="hljs-comment">#bind l selectp -R</span><br><span class="hljs-comment">#bind -r ^k resizep -U 5</span><br><span class="hljs-comment">#bind -r ^h resizep -L 5</span><br><span class="hljs-comment">#bind -r ^j resizep -D 5</span><br><span class="hljs-comment">#bind -r ^l resizep -R 5</span><br><br><br><span class="hljs-comment">#窗格管理</span><br><br><span class="hljs-comment">#Ctrl+b %：划分左右两个窗格。</span><br><span class="hljs-comment">#Ctrl+b &quot;：划分上下两个窗格。</span><br><span class="hljs-comment">#Ctrl+b &lt;arrow key&gt;：光标切换到其他窗格。&lt;arrow key&gt;是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。</span><br><span class="hljs-comment">#Ctrl+b ;：光标切换到上一个窗格。</span><br><span class="hljs-comment">#Ctrl+b o：光标切换到下一个窗格。</span><br><span class="hljs-comment">#Ctrl+b &#123;：当前窗格与上一个窗格交换位置。</span><br><span class="hljs-comment">#Ctrl+b &#125;：当前窗格与下一个窗格交换位置。</span><br><span class="hljs-comment">#Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</span><br><span class="hljs-comment">#Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</span><br><span class="hljs-comment">#Ctrl+b x：关闭当前窗格。</span><br><span class="hljs-comment">#Ctrl+b !：将当前窗格拆分为一个独立窗口。</span><br><span class="hljs-comment">#Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。</span><br><span class="hljs-comment">#Ctrl+b Ctrl+&lt;arrow key&gt;：按箭头方向调整窗格大小。</span><br><span class="hljs-comment">#Ctrl+b q：显示窗格编号。</span><br><br><br><span class="hljs-comment">#切换窗格</span><br><br><span class="hljs-comment"># 光标切换到上方窗格</span><br>tmux select-pane -U<br><br><span class="hljs-comment"># 光标切换到下方窗格</span><br>tmux select-pane -D<br><br><span class="hljs-comment"># 光标切换到左边窗格</span><br>tmux select-pane -L<br><br><span class="hljs-comment"># 光标切换到右边窗格</span><br>tmux select-pane -R<br><br><span class="hljs-comment">#交换窗格</span><br><br><span class="hljs-comment"># 当前窗格上移</span><br>tmux swap-pane -U<br><br><span class="hljs-comment"># 当前窗格下移</span><br>tmux swap-pane -D<br><span class="hljs-comment">#窗口管理</span><br><br><span class="hljs-comment">#创建一个新的窗口</span><br>tmux new-window <span class="hljs-string">&quot;window-name&quot;</span><br><span class="hljs-comment">#切换窗口</span><br>tmux select-window -t &lt;window-number&gt; or &lt;window-name&gt;<br><span class="hljs-comment">#重命名window(修改当前窗口的名称)</span><br>tmux rename-window <span class="hljs-string">&quot;new-name&quot;</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 
             </div>
@@ -267,7 +266,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E7%A8%8B%E7%B1%BB/">编程类</a>
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E6%9C%AC%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/">基本软件使用</a>
                     
                   </div>
                 
@@ -280,7 +279,7 @@
                     
                       <a href="/2022/03/29/linux%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">linux字符设备驱动开发入门</span>
+                        <span class="hidden-mobile">linux设备驱动开发入门</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -288,8 +287,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/26/tmux%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">
-                        <span class="hidden-mobile">tmux配置教程</span>
+                      <a href="/2022/03/23/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">
+                        <span class="hidden-mobile">I/O多路复用</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -19,14 +19,14 @@
     <meta name="description" content="C语言socket编程(基于linux平台)1.什么是socket?socket是应用层与TCP&#x2F;IP协议簇通信的中间抽象层,就是对网络中不同主机的应用进程之间进行双向通信的端点的抽象,提供了应用层进程利用网络协议交换数据的机制。套接字上联应用层，下联协议栈，是应用程序利用网络协议进行通信的接口。   2.socket分类2.1.流套接字(SOCK_STREAM)基于TCP协议,面向连接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言socket编程(基于linux平台)">
-<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/16/C%E8%AF%AD%E8%A8%80socket%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:url" content="https://bugprogram-git.github.io/2022/03/16/C%E8%AF%AD%E8%A8%80socket%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="C语言socket编程(基于linux平台)1.什么是socket?socket是应用层与TCP&#x2F;IP协议簇通信的中间抽象层,就是对网络中不同主机的应用进程之间进行双向通信的端点的抽象,提供了应用层进程利用网络协议交换数据的机制。套接字上联应用层，下联协议栈，是应用程序利用网络协议进行通信的接口。   2.socket分类2.1.流套接字(SOCK_STREAM)基于TCP协议,面向连接">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-16T13:44:51.000Z">
-<meta property="article:modified_time" content="2022-03-24T03:05:45.592Z">
+<meta property="article:modified_time" content="2022-04-05T15:42:25.679Z">
 <meta property="article:author" content="bugprogram-git">
-<meta property="article:tag" content="linux应用程序开发">
+<meta property="article:tag" content="网络编程">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -244,7 +244,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：10 天前
+                  本文最后更新于：7 分钟前
                 
               </p>
             
@@ -302,14 +302,17 @@ int main(int argc,char **argv)
         Usage(argv[0]);
         return 0;
     &#125;
+    //创建socket
     int fd = New_Socket(argv[1],argv[2]);
     if(fd == -1)
     &#123;
         printf(&quot;connect server error!\n&quot;);
         return 0;
     &#125;
+    //定义发送数据
     char *str = &quot;Hello,World&quot;;
     unsigned int len = strlen(str)+1;
+    //将数据写入socket发送缓冲区
     if(write(fd,str,len)!=len)
     &#123;
         printf(&quot;send string to server error!\n&quot;);
@@ -338,7 +341,7 @@ int main(int argc,char **argv)
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/linux%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91/">linux应用程序开发</a>
+                      <a class="hover-with-bg" href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">网络编程</a>
                     
                   </div>
                 

@@ -16,21 +16,21 @@
   <meta name="author" content="bugprogram-git">
   <meta name="keywords" content="">
   
-    <meta name="description" content="linux字符设备驱动开发内核用设备号来区分同类里的不同的设备,设备号是一个无符号32位的整数,数据类型为dev_t,设备号分为两部分  1.主设备号占高12位 2.次设备号占低20位MKDEV宏用于将两个设备号组成一个完整的设备号MAJOR宏用于将一个完整的设备号分离出主设备号MINOR宏用于将一个完整的设备号分离出次设备号devno &#x3D; MKDEV(int major,int min">
+    <meta name="description" content="1.linux内核模块开发实例 1234567891011121314151617181920212223242526272829303132#include &lt;linux&#x2F;kernel.h&gt;#include &lt;linux&#x2F;module.h&gt;&#x2F;*__init 和__exit为两个宏*&#x2F;&#x2F;&#x2F; EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux字符设备驱动开发入门">
+<meta property="og:title" content="linux设备驱动开发入门">
 <meta property="og:url" content="https://bugprogram-git.github.io/2022/03/29/linux%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="linux字符设备驱动开发内核用设备号来区分同类里的不同的设备,设备号是一个无符号32位的整数,数据类型为dev_t,设备号分为两部分  1.主设备号占高12位 2.次设备号占低20位MKDEV宏用于将两个设备号组成一个完整的设备号MAJOR宏用于将一个完整的设备号分离出主设备号MINOR宏用于将一个完整的设备号分离出次设备号devno &#x3D; MKDEV(int major,int min">
+<meta property="og:description" content="1.linux内核模块开发实例 1234567891011121314151617181920212223242526272829303132#include &lt;linux&#x2F;kernel.h&gt;#include &lt;linux&#x2F;module.h&gt;&#x2F;*__init 和__exit为两个宏*&#x2F;&#x2F;&#x2F; EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-29T14:16:38.000Z">
-<meta property="article:modified_time" content="2022-04-03T04:51:59.625Z">
+<meta property="article:modified_time" content="2022-04-05T15:48:47.119Z">
 <meta property="article:author" content="bugprogram-git">
 <meta property="article:tag" content="编程类">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>linux字符设备驱动开发入门 - Blog</title>
+  <title>linux设备驱动开发入门 - Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="linux字符设备驱动开发入门">
+            <span class="h2" id="subtitle" title="linux设备驱动开发入门">
               
             </span>
 
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      638 字
+      3.2k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      27 分钟
     </span>
   
 
@@ -240,7 +240,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">linux字符设备驱动开发入门</h1>
+            <h1 style="display: none">linux设备驱动开发入门</h1>
             
               <p class="note note-info">
                 
@@ -249,11 +249,23 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="linux字符设备驱动开发"><a href="#linux字符设备驱动开发" class="headerlink" title="linux字符设备驱动开发"></a>linux字符设备驱动开发</h1><p>内核用设备号来区分同类里的不同的设备,设备号是一个无符号32位的整数,数据类型为dev_t,设备号分为两部分</p>
+              <h2 id="1-linux内核模块开发"><a href="#1-linux内核模块开发" class="headerlink" title="1.linux内核模块开发"></a>1.linux内核模块开发</h2><p>实例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/kernel.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;linux/module.h&gt;</span></span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">__init 和__exit为两个宏</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">// EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调用)</span><br><span class="hljs-type">int</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-type">char</span> *b = <span class="hljs-string">&quot;hello&quot;</span>;<br><span class="hljs-type">int</span> c[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>&#125;;<br>module_param(a,<span class="hljs-type">int</span>,<span class="hljs-number">0664</span>);<span class="hljs-comment">//内核模块传参,传参后内核函数可以直接使用这些参数</span><br>module_param(b,charp,<span class="hljs-number">0664</span>);<br>module_param(c,<span class="hljs-type">int</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-number">0664</span>);<br>init __init <span class="hljs-title function_">my_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    printk(<span class="hljs-string">&quot;just a test for linux kernel module test!\n&quot;</span>);<br>    printk(<span class="hljs-string">&quot;my init linux kernel module is running!\n&quot;</span>);<br>&#125;<br><span class="hljs-type">int</span> __exit <span class="hljs-title function_">my_exit</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;just a test for linux kernel module test!\n&quot;</span>);<br><br>&#125;<br>module_init(my_init);<br><span class="hljs-comment">//当该内核模块插入时将会执行my_init函数</span><br>module_exit(my_exit);<br><span class="hljs-comment">//当该内核模块移除时将会执行my_exit函数</span><br>MODULE_LICENCE(<span class="hljs-string">&quot;GPL&quot;</span>);<span class="hljs-comment">//指定模块的开源协议</span><br>MODULE_AUTHOR(<span class="hljs-string">&quot;bugprogram-git&quot;</span>);<span class="hljs-comment">//指定模块的作者</span><br>MODULE_DESCRIPTION(<span class="hljs-string">&quot;just a kernel module test&quot;</span>);<span class="hljs-comment">//指定内核模块的详细信息</span><br>MODULE_ALIAS(<span class="hljs-string">&quot;mymodule&quot;</span>);<span class="hljs-comment">//指定模块的别名</span><br><span class="hljs-comment">//这些MODLE_*的本质其实是定义在static字符数组用于存放指定字符串内容，这些字符串内容链接时存放在.modinfo字段,可以用modinfo命令来查看这些模块信息,用法</span><br>modinfo $(MODULE_NAME)<span class="hljs-comment">//查看某个模块的信息</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-修改模块代码所在目录的Kconfig文件"><a href="#2-修改模块代码所在目录的Kconfig文件" class="headerlink" title="2.修改模块代码所在目录的Kconfig文件"></a>2.修改模块代码所在目录的Kconfig文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">config MY_MODULE<br>    tristate <span class="hljs-string">&quot;this is the linux kernel moule for test&quot;</span><br>    <span class="hljs-built_in">help</span><br>        just a <span class="hljs-built_in">test</span><br></code></pre></td></tr></table></figure>
+<h2 id="3-修改该目录下面的Makefile"><a href="#3-修改该目录下面的Makefile" class="headerlink" title="3.修改该目录下面的Makefile"></a>3.修改该目录下面的Makefile</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs Makefile">obj-<span class="hljs-variable">$(CONFIG_MY_MODULE)</span>         += module.o<br><span class="hljs-comment">#(这里的module.o要和.c文件的文件名一致,MY_MODULE要和Kconfig文件里面的指定一致)</span><br></code></pre></td></tr></table></figure>
+<h2 id="4-运行内核模块"><a href="#4-运行内核模块" class="headerlink" title="4.运行内核模块"></a>4.运行内核模块</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">dmesg -C    <span class="hljs-comment">#清除内核已打印的信息</span><br>dmesg       <span class="hljs-comment">#查看内核打印信息</span><br>lsmod<span class="hljs-comment">#显示当前系统已经载入的模块</span><br>insmod<span class="hljs-comment">#将某个模块运行</span><br>dmesg<span class="hljs-comment">#查看内核打印信息</span><br></code></pre></td></tr></table></figure>
+<h2 id="关于符号表-Symbols"><a href="#关于符号表-Symbols" class="headerlink" title="关于符号表(Symbols)"></a>关于符号表(Symbols)</h2><p>在编程中，一个符号(symbol)是一个程序的创建块：它是一个变量名或一个函数名,内核是一非常复杂的代码块，并且含有许多、许多的全局符号<br>内核并不使用符号名。它是通过变量或函数的地址(指针)来使用变量或函数的，而 不是使用size_t BytesRead，内核更喜欢使用(例如)c0343f20来引用 这个变量。<br>而另一方面，人们并不喜欢象c0343f20这样的名字。我们跟喜欢使用象 size_t BytesRead这样的表示。通常，这并不会带来什么问题。内核主要 是用C语言写成的，所以在我们编程时编译器&#x2F;连接程序允许我们使用符号名，并且使 内核在运行时使用地址表示。这样大家都满意了。<br>(当前内核调用的符号表)&#x2F;proc&#x2F;kallsyms<br>&#x2F;boot&#x2F;System.map</p>
 <ul>
+<li>注意事项<br>当两个模块存在变量依赖时先将被依赖的模块编译,并将module.symbol文件拷贝到依赖模块的编译目录下面,再重新编译<br>&#x2F;boot&#x2F;System.map*为系统内核的符号表,&#x2F;proc&#x2F;kallsyms为系统当前内核已经加载的符号表<h2 id="linux字符设备驱动开发"><a href="#linux字符设备驱动开发" class="headerlink" title="linux字符设备驱动开发"></a>linux字符设备驱动开发</h2>内核用设备号来区分同类里的不同的设备,设备号是一个无符号32位的整数,数据类型为dev_t,设备号分为两部分</li>
 <li>1.主设备号<br>占高12位</li>
-<li>2.次设备号<br>占低20位<br>MKDEV宏用于将两个设备号组成一个完整的设备号<br>MAJOR宏用于将一个完整的设备号分离出主设备号<br>MINOR宏用于将一个完整的设备号分离出次设备号<br>devno &#x3D; MKDEV(int major,int minor);<figure class="highlight c"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">mknod</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname,<span class="hljs-type">mode_t</span> mode,<span class="hljs-type">dev_t</span> dev)</span>;<br></code></pre></td></tr></table></figure>
+<li>2.次设备号<br>占低20位<br>MKDEV宏用于将两个设备号组成一个完整的设备号<br>MAJOR宏用于将一个完整的设备号分离出主设备号<br>MINOR宏用于将一个完整的设备号分离出次设备号<br>devno &#x3D; MKDEV(int major,int minor);<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">mknod</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname,<span class="hljs-type">mode_t</span> mode,<span class="hljs-type">dev_t</span> dev)</span>;<br></code></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /dev<br><span class="hljs-built_in">mknod</span> 设备文件名 设备种类 主设备号 次设备号  <br><br><span class="hljs-comment">#手动申请设备号</span><br>int register_chrdev-region(dev_t from,unsigned count,const char *name);  <br><span class="hljs-comment">#from 指定的设备号</span><br><span class="hljs-comment"># count分配的设备数量</span><br><span class="hljs-comment"># 设备的名称(/proc/devices)</span><br><span class="hljs-comment">#动态申请设备号</span><br>int alloc_chrdev_region(dev_t *dev,unsigned baseminor,unsigned count,const char *name);<br><span class="hljs-comment">#baseminor为起始次设备号</span><br><span class="hljs-comment">#注销设备号</span><br>int unregister_chrdev_region(dev_t from,unsigned count);<br><br><br>cdev_init()<span class="hljs-comment">#用于初始化一个设备</span><br>cdev_add()<span class="hljs-comment">#用于将对应的设备加入的对应的内核数据结构里面</span><br></code></pre></td></tr></table></figure></li>
+<li>硬件层(硬件初始化,读数据)</li>
+<li>核心层(申请设备号,创建类,注册设备,加入内核链表)</li>
+<li>处理层(创建设备文件)</li>
+<li>应用层<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">在进行内核模块编译的时候内核要匹配,<br></code></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs makefile">MODULE_NAME = simple_input<br>CURDIR = <span class="hljs-variable">$(<span class="hljs-built_in">shell</span> pwd)</span><br><span class="hljs-comment">#如果是跨平台开发需要配置交叉编译器</span><br><span class="hljs-comment">#CROSS_COMPILE = </span><br><span class="hljs-comment">#CC = $&#123;CROSS_COMPILE&#125;gcc</span><br>KERNELDIR = /lib/modules/$&#123;shell uname -r&#125;/build<br><span class="hljs-comment">#KERNELDIR = $&#123;KERNEL_PATH&#125;</span><br><span class="hljs-section">modules:</span><br>    <span class="hljs-variable">$(MAKE)</span> -C <span class="hljs-variable">$(KERNELDIR)</span> M=<span class="hljs-variable">$(CURDIR)</span> modules<br><span class="hljs-section">modules_install:</span><br>    <span class="hljs-variable">$(MAKE)</span> -C <span class="hljs-variable">$(KERNELDIR)</span> M=<span class="hljs-variable">$(CURDIR)</span><br>obj-m += $&#123;MODULE_NAME&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="中断处理函数"><a href="#中断处理函数" class="headerlink" title="中断处理函数"></a>中断处理函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//中断申请</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">request_irq</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq,<span class="hljs-type">irq_handler_t</span> handler,<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> flags,<span class="hljs-type">const</span> <span class="hljs-type">char</span> *name,<span class="hljs-type">void</span> *dev)</span>;<br><span class="hljs-comment">//irq 中断号</span><br><span class="hljs-comment">//handler 终端处理函数</span><br><span class="hljs-comment">//flags 触发方式 </span><br><span class="hljs-comment">//中断名 /proc/interrupts</span><br><span class="hljs-comment">//dev 共享中断的设备</span><br><br><span class="hljs-comment">//中断释放</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">free_irq</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> irq,<span class="hljs-type">void</span> *dev_id)</span>;<br><span class="hljs-comment">//irq中断号 dev_id中断处理共享的设备</span><br><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">irqreturn_t</span> <span class="hljs-params">(*<span class="hljs-type">ira_handler_t</span>)</span><span class="hljs-params">(<span class="hljs-type">int</span>,<span class="hljs-type">void</span>*)</span>;<br><span class="hljs-comment">//中断处理函数定义</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 
             </div>
@@ -286,8 +298,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/27/linux%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%BC%96%E7%A8%8B/">
-                        <span class="hidden-mobile">linux内核模块编程入门</span>
+                      <a href="/2022/03/26/tmux%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/">
+                        <span class="hidden-mobile">tmux配置教程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
