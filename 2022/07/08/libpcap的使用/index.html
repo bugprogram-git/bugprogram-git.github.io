@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="libpcap的使用, Hexo">
-    <meta name="description" content="libpcap的基本使用1.获取网络接口1234567891011121314151617181920212223242526char *pcap_lookupdev(char *error_buffer);//获取本地网络接口(返回网络接">
+    <meta name="keywords" content="libpcap的使用, MyBlog">
+    <meta name="description" content="libpcap的基本使用1.获取网络接口char *pcap_lookupdev(char *error_buffer);//获取本地网络接口(返回网络接口的名称)
+int pcap_findalldevs(pcap_if_t **alld">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>libpcap的使用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>libpcap的使用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,20 +416,61 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="libpcap的基本使用"><a href="#libpcap的基本使用" class="headerlink" title="libpcap的基本使用"></a>libpcap的基本使用</h1><h4 id="1-获取网络接口"><a href="#1-获取网络接口" class="headerlink" title="1.获取网络接口"></a>1.获取网络接口</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">pcap_lookupdev</span><span class="params">(<span class="type">char</span> *error_buffer)</span>;<span class="comment">//获取本地网络接口(返回网络接口的名称)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">pcap_findalldevs</span><span class="params">(<span class="type">pcap_if_t</span> **alldevsp, <span class="type">char</span> *errbuf)</span>;<span class="comment">//查找本地所有的网络接口</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pcap_if</span> <span class="title">pcap_if_t</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pcap_if</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">pcap_if</span> *<span class="title">next</span>;</span></span><br><span class="line">	<span class="type">char</span> *name;		<span class="comment">/* name to hand to &quot;pcap_open_live()&quot; */</span></span><br><span class="line">	<span class="type">char</span> *description;	<span class="comment">/* textual description of interface, or NULL */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">pcap_addr</span> *<span class="title">addresses</span>;</span></span><br><span class="line">	bpf_u_int32 flags;	<span class="comment">/* PCAP_IF_ interface flags */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pcap_addr</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">pcap_addr</span> *<span class="title">next</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *<span class="title">addr</span>;</span>		<span class="comment">/* address */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *<span class="title">netmask</span>;</span>	<span class="comment">/* netmask for that address */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *<span class="title">broadaddr</span>;</span>	<span class="comment">/* broadcast address for that address */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *<span class="title">dstaddr</span>;</span>	<span class="comment">/* P2P destination address for that address */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pcap_pkthdr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">ts</span>;</span>    <span class="comment">/* time stamp */</span></span><br><span class="line">  bpf_u_int32 caplen;   <span class="comment">/* length of portion present */</span></span><br><span class="line">  bpf_u_int32 len;      <span class="comment">/* length this packet (off wire) */</span></span><br><span class="line">&#125;;<span class="comment">//抓到的包的结构</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">pcap_loop</span><span class="params">(handler,<span class="number">10</span>,capture_handler,<span class="literal">NULL</span>)</span>;</span><br><span class="line"><span class="type">char</span> *<span class="title function_">inet_ntoa</span><span class="params">(<span class="keyword">struct</span> in_addr *addr)</span>;<span class="comment">//该函数返回的指针指向的地址空间是静态分配的,因此每次调用此函数后,后面的结果都会对上一次的结果进行覆盖</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+                <h1 id="libpcap的基本使用"><a href="#libpcap的基本使用" class="headerlink" title="libpcap的基本使用"></a>libpcap的基本使用</h1><h4 id="1-获取网络接口"><a href="#1-获取网络接口" class="headerlink" title="1.获取网络接口"></a>1.获取网络接口</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">pcap_lookupdev</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>error_buffer<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取本地网络接口(返回网络接口的名称)</span>
+<span class="token keyword">int</span> <span class="token function">pcap_findalldevs</span><span class="token punctuation">(</span><span class="token class-name">pcap_if_t</span> <span class="token operator">*</span><span class="token operator">*</span>alldevsp<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>errbuf<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//查找本地所有的网络接口</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token class-name">pcap_if_t</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+	<span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>		<span class="token comment">/* name to hand to "pcap_open_live()" */</span>
+	<span class="token keyword">char</span> <span class="token operator">*</span>description<span class="token punctuation">;</span>	<span class="token comment">/* textual description of interface, or NULL */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token operator">*</span>addresses<span class="token punctuation">;</span>
+	bpf_u_int32 flags<span class="token punctuation">;</span>	<span class="token comment">/* PCAP_IF_ interface flags */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>addr<span class="token punctuation">;</span>		<span class="token comment">/* address */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>netmask<span class="token punctuation">;</span>	<span class="token comment">/* netmask for that address */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>broadaddr<span class="token punctuation">;</span>	<span class="token comment">/* broadcast address for that address */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>dstaddr<span class="token punctuation">;</span>	<span class="token comment">/* P2P destination address for that address */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">pcap_pkthdr</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">timeval</span> ts<span class="token punctuation">;</span>    <span class="token comment">/* time stamp */</span>
+  bpf_u_int32 caplen<span class="token punctuation">;</span>   <span class="token comment">/* length of portion present */</span>
+  bpf_u_int32 len<span class="token punctuation">;</span>      <span class="token comment">/* length this packet (off wire) */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token comment">//抓到的包的结构</span>
+<span class="token keyword">int</span> <span class="token function">pcap_loop</span><span class="token punctuation">(</span>handler<span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span>capture_handler<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">inet_ntoa</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">in_addr</span> <span class="token operator">*</span>addr<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//该函数返回的指针指向的地址空间是静态分配的,因此每次调用此函数后,后面的结果都会对上一次的结果进行覆盖</span>
+</code></pre>
 
-<h4 id="2-打开一个网络接口"><a href="#2-打开一个网络接口" class="headerlink" title="2.打开一个网络接口"></a>2.打开一个网络接口</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">pcap_t</span>*  <span class="title function_">pcap_open_live</span><span class="params">(<span class="type">char</span> *device,<span class="type">int</span> snaplen,<span class="type">int</span> packet_count_limit,<span class="type">int</span> timeout_limit,<span class="type">char</span> *error_buffer)</span>;<span class="comment">//打开一个网卡获得一个抓包句柄</span></span><br><span class="line"><span class="comment">//device </span></span><br><span class="line"><span class="comment">//snaplen   </span></span><br><span class="line"><span class="comment">//packet_count_limit 最大抓取的包的数量</span></span><br><span class="line"><span class="comment">//int timeout_limit  设置包从内核缓冲区拷贝到用户区所等待的时间</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-打开一个网络接口"><a href="#2-打开一个网络接口" class="headerlink" title="2.打开一个网络接口"></a>2.打开一个网络接口</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token class-name">pcap_t</span><span class="token operator">*</span>  <span class="token function">pcap_open_live</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>device<span class="token punctuation">,</span><span class="token keyword">int</span> snaplen<span class="token punctuation">,</span><span class="token keyword">int</span> packet_count_limit<span class="token punctuation">,</span><span class="token keyword">int</span> timeout_limit<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>error_buffer<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//打开一个网卡获得一个抓包句柄</span>
+<span class="token comment">//device </span>
+<span class="token comment">//snaplen   </span>
+<span class="token comment">//packet_count_limit 最大抓取的包的数量</span>
+<span class="token comment">//int timeout_limit  设置包从内核缓冲区拷贝到用户区所等待的时间</span></code></pre>
 
-<h4 id="3-编译过滤条件"><a href="#3-编译过滤条件" class="headerlink" title="3.编译过滤条件"></a>3.编译过滤条件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">pcap_compile</span><span class="params">(<span class="type">pcap_t</span> *handler, <span class="keyword">struct</span> bpf_program *fp, <span class="type">char</span> *<span class="built_in">exp</span>, <span class="type">int</span> optimize, bpf_u_int32 netmask)</span>;	<span class="comment">//编一个过滤条件</span></span><br><span class="line"><span class="comment">//handler 打开的网卡句柄</span></span><br><span class="line"><span class="comment">//fp 存储过滤条件指针</span></span><br><span class="line"><span class="comment">//optimize 是否进行优化</span></span><br><span class="line"><span class="comment">//netmask 网络地址</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-编译过滤条件"><a href="#3-编译过滤条件" class="headerlink" title="3.编译过滤条件"></a>3.编译过滤条件</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pcap_compile</span><span class="token punctuation">(</span><span class="token class-name">pcap_t</span> <span class="token operator">*</span>handler<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">bpf_program</span> <span class="token operator">*</span>fp<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>exp<span class="token punctuation">,</span> <span class="token keyword">int</span> optimize<span class="token punctuation">,</span> bpf_u_int32 netmask<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//编一个过滤条件</span>
+<span class="token comment">//handler 打开的网卡句柄</span>
+<span class="token comment">//fp 存储过滤条件指针</span>
+<span class="token comment">//optimize 是否进行优化</span>
+<span class="token comment">//netmask 网络地址</span></code></pre>
 
-<h4 id="4-设置过滤器"><a href="#4-设置过滤器" class="headerlink" title="4.设置过滤器"></a>4.设置过滤器</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">pcap_setfilter</span><span class="params">(<span class="type">pcap_t</span> *p, <span class="keyword">struct</span> bpf_program *fp)</span>;	<span class="comment">//设置过滤器</span></span><br><span class="line"><span class="comment">//p 打开网卡的句柄</span></span><br><span class="line"><span class="comment">//fp设置的过滤表达式</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-设置过滤器"><a href="#4-设置过滤器" class="headerlink" title="4.设置过滤器"></a>4.设置过滤器</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pcap_setfilter</span><span class="token punctuation">(</span><span class="token class-name">pcap_t</span> <span class="token operator">*</span>p<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">bpf_program</span> <span class="token operator">*</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//设置过滤器</span>
+<span class="token comment">//p 打开网卡的句柄</span>
+<span class="token comment">//fp设置的过滤表达式</span></code></pre>
 
-<h4 id="5-获取包信息"><a href="#5-获取包信息" class="headerlink" title="5.获取包信息"></a>5.获取包信息</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">u_char *<span class="title function_">pcap_next</span><span class="params">(device,&amp;packet)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pcap_loop</span><span class="params">(<span class="type">pcap_t</span> *p, <span class="type">int</span> cnt,pcap_handler callback, u_char *user)</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="title function_">void</span> <span class="params">(*pcap_handler)</span><span class="params">(u_char *user, <span class="type">const</span> <span class="keyword">struct</span> pcap_pkthdr *h,<span class="type">const</span> u_char *bytes)</span>;</span><br><span class="line"><span class="comment">//获取一个数据包</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-获取包信息"><a href="#5-获取包信息" class="headerlink" title="5.获取包信息"></a>5.获取包信息</h4><pre class="language-c" data-language="c"><code class="language-c">u_char <span class="token operator">*</span><span class="token function">pcap_next</span><span class="token punctuation">(</span>device<span class="token punctuation">,</span><span class="token operator">&amp;</span>packet<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">pcap_loop</span><span class="token punctuation">(</span><span class="token class-name">pcap_t</span> <span class="token operator">*</span>p<span class="token punctuation">,</span> <span class="token keyword">int</span> cnt<span class="token punctuation">,</span>pcap_handler callback<span class="token punctuation">,</span> u_char <span class="token operator">*</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>pcap_handler<span class="token punctuation">)</span><span class="token punctuation">(</span>u_char <span class="token operator">*</span>user<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">pcap_pkthdr</span> <span class="token operator">*</span>h<span class="token punctuation">,</span><span class="token keyword">const</span> u_char <span class="token operator">*</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//获取一个数据包</span></code></pre>
 
 
 
@@ -447,7 +500,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/07/08/libpcap%E7%9A%84%E4%BD%BF%E7%94%A8/">https://dreamaccount.github.io/2022/07/08/libpcap%E7%9A%84%E4%BD%BF%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/07/08/libpcap%E7%9A%84%E4%BD%BF%E7%94%A8/">https://bugprogram-git.github.io/2022/07/08/libpcap%E7%9A%84%E4%BD%BF%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -668,6 +721,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -840,6 +896,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1058,6 +1116,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1074,6 +1143,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

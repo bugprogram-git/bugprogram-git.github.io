@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="linux常用的服务启动工具的原理, Hexo">
+    <meta name="keywords" content="linux常用的服务启动工具的原理, MyBlog">
     <meta name="description" content="linux常用的服务工具的原理1.openrc&amp;#x2F;systemd通过读取&amp;#x2F;etc&amp;#x2F;init.d&amp;#x2F;*脚本,这个脚本定义了程序的执行规则,停止规则等.
 以nginx服务的服务脚本为例
-12345678910">
+#!/bin/sh
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,8 +20,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>linux常用的服务启动工具的原理 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>linux常用的服务启动工具的原理 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -66,7 +79,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -170,10 +183,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -406,6 +419,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -413,21 +429,247 @@
             <div id="articleContent">
                 <h1 id="linux常用的服务工具的原理"><a href="#linux常用的服务工具的原理" class="headerlink" title="linux常用的服务工具的原理"></a>linux常用的服务工具的原理</h1><h3 id="1-openrc-x2F-systemd"><a href="#1-openrc-x2F-systemd" class="headerlink" title="1.openrc&#x2F;systemd"></a>1.openrc&#x2F;systemd</h3><p>通过读取&#x2F;etc&#x2F;init.d&#x2F;*脚本,这个脚本定义了程序的执行规则,停止规则等.</p>
 <p>以nginx服务的服务脚本为例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## BEGIN INIT INFO</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Provides:	  nginx</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Required-Start:    <span class="variable">$local_fs</span> <span class="variable">$remote_fs</span> <span class="variable">$network</span> <span class="variable">$syslog</span> <span class="variable">$named</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Required-Stop:     <span class="variable">$local_fs</span> <span class="variable">$remote_fs</span> <span class="variable">$network</span> <span class="variable">$syslog</span> <span class="variable">$named</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default-Start:     2 3 4 5</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default-Stop:      0 1 6</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Short-Description: starts the nginx web server</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Description:       starts nginx using start-stop-daemon</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## END INIT INFO</span></span></span><br><span class="line"></span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">DAEMON=/usr/sbin/nginx</span><br><span class="line">NAME=nginx</span><br><span class="line">DESC=nginx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Include nginx defaults <span class="keyword">if</span> available</span></span><br><span class="line">if [ -r /etc/default/nginx ]; then</span><br><span class="line">	. /etc/default/nginx</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">STOP_SCHEDULE=&quot;$&#123;STOP_SCHEDULE:-QUIT/5/TERM/5/KILL/5&#125;&quot;</span><br><span class="line"></span><br><span class="line">test -x $DAEMON || exit 0</span><br><span class="line"></span><br><span class="line">. /lib/init/vars.sh</span><br><span class="line">. /lib/lsb/init-functions</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Try to extract nginx pidfile</span></span><br><span class="line">PID=$(cat /etc/nginx/nginx.conf | grep -Ev &#x27;^\s*#&#x27; | awk &#x27;BEGIN &#123; RS=&quot;[;&#123;&#125;]&quot; &#125; &#123; if ($1 == &quot;pid&quot;) print $2 &#125;&#x27; | head -n1)</span><br><span class="line">if [ -z &quot;$PID&quot; ]; then</span><br><span class="line">	PID=/run/nginx.pid</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ -n &quot;$ULIMIT&quot; ]; then</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Set <span class="built_in">ulimit</span> <span class="keyword">if</span> it is <span class="built_in">set</span> <span class="keyword">in</span> /etc/default/nginx</span></span><br><span class="line">	ulimit $ULIMIT</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">start_nginx() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Start the daemon/service</span></span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># Returns:</span></span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  0 <span class="keyword">if</span> daemon has been started</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  1 <span class="keyword">if</span> daemon was already running</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  2 <span class="keyword">if</span> daemon could not be started</span></span><br><span class="line">	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --test &gt; /dev/null \</span><br><span class="line">		|| return 1</span><br><span class="line">	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON -- \</span><br><span class="line"><span class="meta prompt_">		$</span><span class="language-bash">DAEMON_OPTS 2&gt;/dev/null \</span></span><br><span class="line"><span class="language-bash">		|| <span class="built_in">return</span> 2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test_config() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Test the nginx configuration</span></span><br><span class="line"><span class="meta prompt_">	$</span><span class="language-bash">DAEMON -t <span class="variable">$DAEMON_OPTS</span> &gt;/dev/null 2&gt;&amp;1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop_nginx() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Stops the daemon/service</span></span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># Return</span></span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  0 <span class="keyword">if</span> daemon has been stopped</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  1 <span class="keyword">if</span> daemon was already stopped</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  2 <span class="keyword">if</span> daemon could not be stopped</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  other <span class="keyword">if</span> a failure occurred</span></span><br><span class="line">	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --name $NAME</span><br><span class="line">	RETVAL=&quot;$?&quot;</span><br><span class="line">	sleep 1</span><br><span class="line">	return &quot;$RETVAL&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reload_nginx() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Function that sends a SIGHUP to the daemon/service</span></span><br><span class="line">	start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --name $NAME</span><br><span class="line">	return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rotate_logs() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Rotate <span class="built_in">log</span> files</span></span><br><span class="line">	start-stop-daemon --stop --signal USR1 --quiet --pidfile $PID --name $NAME</span><br><span class="line">	return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upgrade_nginx() &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">Online upgrade nginx executable</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">	<span class="comment"># Return</span></span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  0 <span class="keyword">if</span> nginx has been successfully upgraded</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  1 <span class="keyword">if</span> nginx is not running</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  2 <span class="keyword">if</span> the pid files were not created on time</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">  3 <span class="keyword">if</span> the old master could not be killed</span></span><br><span class="line">	if start-stop-daemon --stop --signal USR2 --quiet --pidfile $PID --name $NAME; then</span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">Wait <span class="keyword">for</span> both old and new master to write their pid file</span></span><br><span class="line">		while [ ! -s &quot;$&#123;PID&#125;.oldbin&quot; ] || [ ! -s &quot;$&#123;PID&#125;&quot; ]; do</span><br><span class="line">			cnt=`expr $cnt + 1`</span><br><span class="line">			if [ $cnt -gt 10 ]; then</span><br><span class="line">				return 2</span><br><span class="line">			fi</span><br><span class="line">			sleep 1</span><br><span class="line">		done</span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">Everything is ready, gracefully stop the old master</span></span><br><span class="line">		if start-stop-daemon --stop --signal QUIT --quiet --pidfile &quot;$&#123;PID&#125;.oldbin&quot; --name $NAME; then</span><br><span class="line">			return 0</span><br><span class="line">		else</span><br><span class="line">			return 3</span><br><span class="line">		fi</span><br><span class="line">	else</span><br><span class="line">		return 1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">	start)</span><br><span class="line">		log_daemon_msg &quot;Starting $DESC&quot; &quot;$NAME&quot;</span><br><span class="line">		start_nginx</span><br><span class="line">		case &quot;$?&quot; in</span><br><span class="line">			0|1) log_end_msg 0 ;;</span><br><span class="line">			2)   log_end_msg 1 ;;</span><br><span class="line">		esac</span><br><span class="line">		;;</span><br><span class="line">	stop)</span><br><span class="line">		log_daemon_msg &quot;Stopping $DESC&quot; &quot;$NAME&quot;</span><br><span class="line">		stop_nginx</span><br><span class="line">		case &quot;$?&quot; in</span><br><span class="line">			0|1) log_end_msg 0 ;;</span><br><span class="line">			2)   log_end_msg 1 ;;</span><br><span class="line">		esac</span><br><span class="line">		;;</span><br><span class="line">	restart)</span><br><span class="line">		log_daemon_msg &quot;Restarting $DESC&quot; &quot;$NAME&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">Check configuration before stopping nginx</span></span><br><span class="line">		if ! test_config; then</span><br><span class="line">			log_end_msg 1 # Configuration error</span><br><span class="line">			exit $?</span><br><span class="line">		fi</span><br><span class="line"></span><br><span class="line">		stop_nginx</span><br><span class="line">		case &quot;$?&quot; in</span><br><span class="line">			0|1)</span><br><span class="line">				start_nginx</span><br><span class="line">				case &quot;$?&quot; in</span><br><span class="line">					0) log_end_msg 0 ;;</span><br><span class="line">					1) log_end_msg 1 ;; # Old process is still running</span><br><span class="line">					*) log_end_msg 1 ;; # Failed to start</span><br><span class="line">				esac</span><br><span class="line">				;;</span><br><span class="line">			*)</span><br><span class="line">				# Failed to stop</span><br><span class="line">				log_end_msg 1</span><br><span class="line">				;;</span><br><span class="line">		esac</span><br><span class="line">		;;</span><br><span class="line">	reload|force-reload)</span><br><span class="line">		log_daemon_msg &quot;Reloading $DESC configuration&quot; &quot;$NAME&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">Check configuration before stopping nginx</span></span><br><span class="line"><span class="meta prompt_">		#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">		<span class="comment"># This is not entirely correct since the on-disk nginx binary</span></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">may differ from the in-memory one, but that<span class="string">&#x27;s not common.</span></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash"><span class="string">We prefer to check the configuration and return an error</span></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash"><span class="string">to the administrator.</span></span></span><br><span class="line">		if ! test_config; then</span><br><span class="line">			log_end_msg 1 # Configuration error</span><br><span class="line">			exit $?</span><br><span class="line">		fi</span><br><span class="line"></span><br><span class="line">		reload_nginx</span><br><span class="line">		log_end_msg $?</span><br><span class="line">		;;</span><br><span class="line">	configtest|testconfig)</span><br><span class="line">		log_daemon_msg &quot;Testing $DESC configuration&quot;</span><br><span class="line">		test_config</span><br><span class="line">		log_end_msg $?</span><br><span class="line">		;;</span><br><span class="line">	status)</span><br><span class="line">		status_of_proc -p $PID &quot;$DAEMON&quot; &quot;$NAME&quot; &amp;&amp; exit 0 || exit $?</span><br><span class="line">		;;</span><br><span class="line">	upgrade)</span><br><span class="line">		log_daemon_msg &quot;Upgrading binary&quot; &quot;$NAME&quot;</span><br><span class="line">		upgrade_nginx</span><br><span class="line">		log_end_msg $?</span><br><span class="line">		;;</span><br><span class="line">	rotate)</span><br><span class="line">		log_daemon_msg &quot;Re-opening $DESC log files&quot; &quot;$NAME&quot;</span><br><span class="line">		rotate_logs</span><br><span class="line">		log_end_msg $?</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		echo &quot;Usage: $NAME &#123;start|stop|restart|reload|force-reload|status|configtest|rotate|upgrade&#125;&quot; &gt;&amp;2</span><br><span class="line">		exit 3</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token comment">### BEGIN INIT INFO</span>
+<span class="token comment"># Provides:	  nginx</span>
+<span class="token comment"># Required-Start:    $local_fs $remote_fs $network $syslog $named</span>
+<span class="token comment"># Required-Stop:     $local_fs $remote_fs $network $syslog $named</span>
+<span class="token comment"># Default-Start:     2 3 4 5</span>
+<span class="token comment"># Default-Stop:      0 1 6</span>
+<span class="token comment"># Short-Description: starts the nginx web server</span>
+<span class="token comment"># Description:       starts nginx using start-stop-daemon</span>
+<span class="token comment">### END INIT INFO</span>
+
+<span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span>/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+<span class="token assign-left variable">DAEMON</span><span class="token operator">=</span>/usr/sbin/nginx
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>nginx
+<span class="token assign-left variable">DESC</span><span class="token operator">=</span>nginx
+
+<span class="token comment"># Include nginx defaults if available</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> -r /etc/default/nginx <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+	<span class="token builtin class-name">.</span> /etc/default/nginx
+<span class="token keyword">fi</span>
+
+<span class="token assign-left variable">STOP_SCHEDULE</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;STOP_SCHEDULE<span class="token operator">:-</span>QUIT<span class="token operator">/</span>5<span class="token operator">/</span>TERM<span class="token operator">/</span>5<span class="token operator">/</span>KILL<span class="token operator">/</span>5&#125;</span>"</span>
+
+<span class="token builtin class-name">test</span> -x <span class="token variable">$DAEMON</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+
+<span class="token builtin class-name">.</span> /lib/init/vars.sh
+<span class="token builtin class-name">.</span> /lib/lsb/init-functions
+
+<span class="token comment"># Try to extract nginx pidfile</span>
+<span class="token assign-left variable">PID</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> /etc/nginx/nginx.conf <span class="token operator">|</span> <span class="token function">grep</span> -Ev <span class="token string">'^\s*#'</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN &#123; RS="[;&#123;&#125;]" &#125; &#123; if ($1 == "pid") print $2 &#125;'</span> <span class="token operator">|</span> <span class="token function">head</span> -n1<span class="token variable">)</span></span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> -z <span class="token string">"<span class="token variable">$PID</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+	<span class="token assign-left variable">PID</span><span class="token operator">=</span>/run/nginx.pid
+<span class="token keyword">fi</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">[</span> -n <span class="token string">"<span class="token variable">$ULIMIT</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+	<span class="token comment"># Set ulimit if it is set in /etc/default/nginx</span>
+	<span class="token builtin class-name">ulimit</span> <span class="token variable">$ULIMIT</span>
+<span class="token keyword">fi</span>
+
+<span class="token function-name function">start_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Start the daemon/service</span>
+	<span class="token comment">#</span>
+	<span class="token comment"># Returns:</span>
+	<span class="token comment">#   0 if daemon has been started</span>
+	<span class="token comment">#   1 if daemon was already running</span>
+	<span class="token comment">#   2 if daemon could not be started</span>
+	start-stop-daemon --start --quiet --pidfile <span class="token variable">$PID</span> --exec <span class="token variable">$DAEMON</span> --test <span class="token operator">></span> /dev/null <span class="token punctuation">\</span>
+		<span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token number">1</span>
+	start-stop-daemon --start --quiet --pidfile <span class="token variable">$PID</span> --exec <span class="token variable">$DAEMON</span> -- <span class="token punctuation">\</span>
+		<span class="token variable">$DAEMON_OPTS</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null <span class="token punctuation">\</span>
+		<span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token number">2</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function-name function">test_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Test the nginx configuration</span>
+	<span class="token variable">$DAEMON</span> -t <span class="token variable">$DAEMON_OPTS</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function-name function">stop_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Stops the daemon/service</span>
+	<span class="token comment">#</span>
+	<span class="token comment"># Return</span>
+	<span class="token comment">#   0 if daemon has been stopped</span>
+	<span class="token comment">#   1 if daemon was already stopped</span>
+	<span class="token comment">#   2 if daemon could not be stopped</span>
+	<span class="token comment">#   other if a failure occurred</span>
+	start-stop-daemon --stop --quiet --retry<span class="token operator">=</span><span class="token variable">$STOP_SCHEDULE</span> --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span>
+	<span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$?</span>"</span>
+	<span class="token function">sleep</span> <span class="token number">1</span>
+	<span class="token builtin class-name">return</span> <span class="token string">"<span class="token variable">$RETVAL</span>"</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function-name function">reload_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Function that sends a SIGHUP to the daemon/service</span>
+	start-stop-daemon --stop --signal HUP --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span>
+	<span class="token builtin class-name">return</span> <span class="token number">0</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function-name function">rotate_logs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Rotate log files</span>
+	start-stop-daemon --stop --signal USR1 --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span>
+	<span class="token builtin class-name">return</span> <span class="token number">0</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function-name function">upgrade_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment"># Online upgrade nginx executable</span>
+	<span class="token comment"># http://nginx.org/en/docs/control.html</span>
+	<span class="token comment">#</span>
+	<span class="token comment"># Return</span>
+	<span class="token comment">#   0 if nginx has been successfully upgraded</span>
+	<span class="token comment">#   1 if nginx is not running</span>
+	<span class="token comment">#   2 if the pid files were not created on time</span>
+	<span class="token comment">#   3 if the old master could not be killed</span>
+	<span class="token keyword">if</span> start-stop-daemon --stop --signal USR2 --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+		<span class="token comment"># Wait for both old and new master to write their pid file</span>
+		<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>.oldbin"</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+			<span class="token assign-left variable">cnt</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">expr</span> $cnt + <span class="token number">1</span><span class="token variable">`</span></span>
+			<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$cnt</span> -gt <span class="token number">10</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+				<span class="token builtin class-name">return</span> <span class="token number">2</span>
+			<span class="token keyword">fi</span>
+			<span class="token function">sleep</span> <span class="token number">1</span>
+		<span class="token keyword">done</span>
+		<span class="token comment"># Everything is ready, gracefully stop the old master</span>
+		<span class="token keyword">if</span> start-stop-daemon --stop --signal QUIT --quiet --pidfile <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>.oldbin"</span> --name <span class="token variable">$NAME</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+			<span class="token builtin class-name">return</span> <span class="token number">0</span>
+		<span class="token keyword">else</span>
+			<span class="token builtin class-name">return</span> <span class="token number">3</span>
+		<span class="token keyword">fi</span>
+	<span class="token keyword">else</span>
+		<span class="token builtin class-name">return</span> <span class="token number">1</span>
+	<span class="token keyword">fi</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
+	start<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Starting <span class="token variable">$DESC</span>"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+		start_nginx
+		<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$?</span>"</span> <span class="token keyword">in</span>
+			<span class="token number">0</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">)</span> log_end_msg <span class="token number">0</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+			<span class="token number">2</span><span class="token punctuation">)</span>   log_end_msg <span class="token number">1</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+		<span class="token keyword">esac</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	stop<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Stopping <span class="token variable">$DESC</span>"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+		stop_nginx
+		<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$?</span>"</span> <span class="token keyword">in</span>
+			<span class="token number">0</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">)</span> log_end_msg <span class="token number">0</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+			<span class="token number">2</span><span class="token punctuation">)</span>   log_end_msg <span class="token number">1</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+		<span class="token keyword">esac</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	restart<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Restarting <span class="token variable">$DESC</span>"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+
+		<span class="token comment"># Check configuration before stopping nginx</span>
+		<span class="token keyword">if</span> <span class="token operator">!</span> test_config<span class="token punctuation">;</span> <span class="token keyword">then</span>
+			log_end_msg <span class="token number">1</span> <span class="token comment"># Configuration error</span>
+			<span class="token builtin class-name">exit</span> <span class="token variable">$?</span>
+		<span class="token keyword">fi</span>
+
+		stop_nginx
+		<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$?</span>"</span> <span class="token keyword">in</span>
+			<span class="token number">0</span><span class="token operator">|</span><span class="token number">1</span><span class="token punctuation">)</span>
+				start_nginx
+				<span class="token keyword">case</span> <span class="token string">"<span class="token variable">$?</span>"</span> <span class="token keyword">in</span>
+					<span class="token number">0</span><span class="token punctuation">)</span> log_end_msg <span class="token number">0</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+					<span class="token number">1</span><span class="token punctuation">)</span> log_end_msg <span class="token number">1</span> <span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token comment"># Old process is still running</span>
+					*<span class="token punctuation">)</span> log_end_msg <span class="token number">1</span> <span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token comment"># Failed to start</span>
+				<span class="token keyword">esac</span>
+				<span class="token punctuation">;</span><span class="token punctuation">;</span>
+			*<span class="token punctuation">)</span>
+				<span class="token comment"># Failed to stop</span>
+				log_end_msg <span class="token number">1</span>
+				<span class="token punctuation">;</span><span class="token punctuation">;</span>
+		<span class="token keyword">esac</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	reload<span class="token operator">|</span>force-reload<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Reloading <span class="token variable">$DESC</span> configuration"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+
+		<span class="token comment"># Check configuration before stopping nginx</span>
+		<span class="token comment">#</span>
+		<span class="token comment"># This is not entirely correct since the on-disk nginx binary</span>
+		<span class="token comment"># may differ from the in-memory one, but that's not common.</span>
+		<span class="token comment"># We prefer to check the configuration and return an error</span>
+		<span class="token comment"># to the administrator.</span>
+		<span class="token keyword">if</span> <span class="token operator">!</span> test_config<span class="token punctuation">;</span> <span class="token keyword">then</span>
+			log_end_msg <span class="token number">1</span> <span class="token comment"># Configuration error</span>
+			<span class="token builtin class-name">exit</span> <span class="token variable">$?</span>
+		<span class="token keyword">fi</span>
+
+		reload_nginx
+		log_end_msg <span class="token variable">$?</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	configtest<span class="token operator">|</span>testconfig<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Testing <span class="token variable">$DESC</span> configuration"</span>
+		test_config
+		log_end_msg <span class="token variable">$?</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	status<span class="token punctuation">)</span>
+		status_of_proc -p <span class="token variable">$PID</span> <span class="token string">"<span class="token variable">$DAEMON</span>"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token variable">$?</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	upgrade<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Upgrading binary"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+		upgrade_nginx
+		log_end_msg <span class="token variable">$?</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	rotate<span class="token punctuation">)</span>
+		log_daemon_msg <span class="token string">"Re-opening <span class="token variable">$DESC</span> log files"</span> <span class="token string">"<span class="token variable">$NAME</span>"</span>
+		rotate_logs
+		log_end_msg <span class="token variable">$?</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+	*<span class="token punctuation">)</span>
+		<span class="token builtin class-name">echo</span> <span class="token string">"Usage: <span class="token variable">$NAME</span> &#123;start|stop|restart|reload|force-reload|status|configtest|rotate|upgrade&#125;"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span>
+		<span class="token builtin class-name">exit</span> <span class="token number">3</span>
+		<span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">esac</span></code></pre>
 
 <p>使用方法</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rc-service sshd start</span><br><span class="line">service ssh start|status|stop|restart</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">rc-service sshd start
+<span class="token function">service</span> <span class="token function">ssh</span> start<span class="token operator">|</span>status<span class="token operator">|</span>stop<span class="token operator">|</span>restart</code></pre>
 
 
 
 <h3 id="2-systemd"><a href="#2-systemd" class="headerlink" title="2.systemd"></a>2.systemd</h3><p>systemd是大部分linux发行版采用的init程序,作为一种init程序,操作系统启动的时候systemd会启动一个后台守护进行systemd,systemd每启动一个服务,是通过从systemd fork一个子进程,启动服务的过程中systemd通过读取&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;**.service文件脚本,从而获得可执行程序的路径,启动程序参数等等…</p>
 <p>以nginx.service服务管理脚本为例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Stop dance <span class="keyword">for</span> nginx</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">=======================</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">After another 5s (TimeoutStopSec=5), and <span class="keyword">if</span> nginx is alive, systemd sends</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SIGKILL to all the remaining processes <span class="keyword">in</span> the process group (KillMode=mixed).</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># nginx signals reference doc:</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">[Unit]</span></span><br><span class="line">Description=A high performance web server and a reverse proxy server</span><br><span class="line">Documentation=man:nginx(8)</span><br><span class="line">After=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进程</span></span><br><span class="line">PIDFile=/run/nginx.pid</span><br><span class="line">ExecStartPre=/usr/sbin/nginx -t -q -g &#x27;daemon on; master_process on;&#x27;</span><br><span class="line">ExecStart=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27;</span><br><span class="line">ExecReload=/usr/sbin/nginx -g &#x27;daemon on; master_process on;&#x27; -s reload</span><br><span class="line">ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid</span><br><span class="line">TimeoutStopSec=5</span><br><span class="line">KillMode=mixed</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Stop dance for nginx</span>
+<span class="token comment"># =======================</span>
+<span class="token comment">#</span>
+<span class="token comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span>
+<span class="token comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span>
+<span class="token comment"># and sends SIGTERM (fast shutdown) to the main process.</span>
+<span class="token comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span>
+<span class="token comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span>
+<span class="token comment">#</span>
+<span class="token comment"># nginx signals reference doc:</span>
+<span class="token comment"># http://nginx.org/en/docs/control.html</span>
+<span class="token comment">#</span>
+<span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<span class="token assign-left variable">Description</span><span class="token operator">=</span>A high performance web server and a reverse proxy server
+<span class="token assign-left variable">Documentation</span><span class="token operator">=</span>man:nginx<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+<span class="token assign-left variable">After</span><span class="token operator">=</span>network.target nss-lookup.target
+
+<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
+<span class="token assign-left variable">Type</span><span class="token operator">=</span>forking
+<span class="token comment">#进程</span>
+<span class="token assign-left variable">PIDFile</span><span class="token operator">=</span>/run/nginx.pid
+<span class="token assign-left variable">ExecStartPre</span><span class="token operator">=</span>/usr/sbin/nginx -t -q -g <span class="token string">'daemon on; master_process on;'</span>
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/sbin/nginx -g <span class="token string">'daemon on; master_process on;'</span>
+<span class="token assign-left variable">ExecReload</span><span class="token operator">=</span>/usr/sbin/nginx -g <span class="token string">'daemon on; master_process on;'</span> -s reload
+<span class="token assign-left variable">ExecStop</span><span class="token operator">=</span>-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
+<span class="token assign-left variable">TimeoutStopSec</span><span class="token operator">=</span><span class="token number">5</span>
+<span class="token assign-left variable">KillMode</span><span class="token operator">=</span>mixed
+
+<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target</code></pre>
 
 
 
 <p>使用命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start|stop|reload nginx.service 		#启动/停止服务</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start<span class="token operator">|</span>stop<span class="token operator">|</span>reload nginx.service 		<span class="token comment">#启动/停止服务</span>
+</code></pre>
 
 
 
@@ -459,7 +701,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/08/05/linux%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8%E5%B7%A5%E5%85%B7%E7%9A%84%E5%8E%9F%E7%90%86/">https://dreamaccount.github.io/2022/08/05/linux%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8%E5%B7%A5%E5%85%B7%E7%9A%84%E5%8E%9F%E7%90%86/</a>
+                    <a href="https://bugprogram-git.github.io/2022/08/05/linux%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8%E5%B7%A5%E5%85%B7%E7%9A%84%E5%8E%9F%E7%90%86/">https://bugprogram-git.github.io/2022/08/05/linux%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%90%AF%E5%8A%A8%E5%B7%A5%E5%85%B7%E7%9A%84%E5%8E%9F%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -684,6 +926,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -856,6 +1101,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1074,6 +1321,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1090,6 +1348,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

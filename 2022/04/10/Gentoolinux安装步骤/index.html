@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Gentoolinux安装步骤, Hexo">
+    <meta name="keywords" content="Gentoolinux安装步骤, MyBlog">
     <meta name="description" content="Gentoolinux安装步骤(systemd)1.基本文件的获取
 1.获取livecdlivecd可以使用Gentoo官方提供的livecd或者其他linux distribution
 2.获取stagestage3分为两种,一种是以sy">
@@ -18,8 +18,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Gentoolinux安装步骤 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Gentoolinux安装步骤 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -66,7 +77,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -170,10 +181,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -406,6 +417,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -415,36 +429,105 @@
 <li>1.获取livecd<br>livecd可以使用Gentoo官方提供的livecd或者其他linux distribution</li>
 <li>2.获取stage<br>stage3分为两种,一种是以systemd作为init程序,一种是以openrc做为init程序(Gentoo官方是推荐openrc)</li>
 </ul>
-<h4 id="2-网络连接"><a href="#2-网络连接" class="headerlink" title="2.网络连接"></a>2.网络连接</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ethernet </span></span><br><span class="line"><span class="comment">#配置ip地址</span></span><br><span class="line">ip addr <span class="variable">$ipaddress</span>/netmask dev interface</span><br><span class="line"><span class="comment">#配置路由</span></span><br><span class="line">ip route add default via ipaddress</span><br><span class="line"><span class="comment">#wifi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#扫描wifi</span></span><br><span class="line">iwlist wlan0 scan</span><br><span class="line"></span><br><span class="line"><span class="comment">#连接wifi</span></span><br><span class="line">wpa_passpharse SSID password &gt; wifi.conf</span><br><span class="line">wpa_supplicant -c wifi.conf -B -i wlan0<span class="comment">#wlan为无线网卡名称,自行根据自己的网卡型号进行改动</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取ip地址</span></span><br><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="2-网络连接"><a href="#2-网络连接" class="headerlink" title="2.网络连接"></a>2.网络连接</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#ethernet </span>
+<span class="token comment">#配置ip地址</span>
+<span class="token function">ip</span> addr <span class="token variable">$ipaddress</span>/netmask dev interface
+<span class="token comment">#配置路由</span>
+<span class="token function">ip</span> route <span class="token function">add</span> default via ipaddress
+<span class="token comment">#wifi</span>
+
+<span class="token comment">#扫描wifi</span>
+iwlist wlan0 scan
+
+<span class="token comment">#连接wifi</span>
+wpa_passpharse SSID password <span class="token operator">></span> wifi.conf
+wpa_supplicant -c wifi.conf -B -i wlan0<span class="token comment">#wlan为无线网卡名称,自行根据自己的网卡型号进行改动</span>
+
+
+<span class="token comment">#获取ip地址</span>
+dhcpcd wlan0</code></pre>
 
 <h4 id="3-磁盘分区"><a href="#3-磁盘分区" class="headerlink" title="3.磁盘分区"></a>3.磁盘分区</h4><p>这里使用fdisk工具对磁盘进行分区,同样的也可以使用cfdisk或者其他磁盘分区工具	</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">fdisk</span> /dev/sda</code></pre>
 <p>查看当前磁盘分区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):p</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 28.89 GiB, 31001149440 bytes, 60549120 sectors</span><br><span class="line">Disk model: DataTraveler 2.0</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel <span class="built_in">type</span>: gpt</span><br><span class="line">Disk identifier: 21AAD8CF-DB67-0F43-9374-416C7A4E31EA</span><br><span class="line"> </span><br><span class="line">Device        Start      End  Sectors  Size Type</span><br><span class="line">/dev/sda1      2048   526335   524288  256M EFI System</span><br><span class="line">/dev/sda2    526336  2623487  2097152    1G Linux swap</span><br><span class="line">/dev/sda3   2623488 19400703 16777216    8G Linux filesystem</span><br><span class="line">/dev/sda4  19400704 60549086 41148383 19.6G Linux filesystem</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">
+Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:p
+
+Disk /dev/sda: <span class="token number">28.89</span> GiB, <span class="token number">31001149440</span> bytes, <span class="token number">60549120</span> sectors
+Disk model: DataTraveler <span class="token number">2.0</span>
+Units: sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disklabel type: gpt
+Disk identifier: 21AAD8CF-DB67-0F43-9374-416C7A4E31EA
+ 
+Device        Start      End  Sectors  Size Type
+/dev/sda1      <span class="token number">2048</span>   <span class="token number">526335</span>   <span class="token number">524288</span>  256M EFI System
+/dev/sda2    <span class="token number">526336</span>  <span class="token number">2623487</span>  <span class="token number">2097152</span>    1G Linux swap
+/dev/sda3   <span class="token number">2623488</span> <span class="token number">19400703</span> <span class="token number">16777216</span>    8G Linux filesystem
+/dev/sda4  <span class="token number">19400704</span> <span class="token number">60549086</span> <span class="token number">41148383</span> <span class="token number">19</span>.6G Linux filesystem</code></pre>
 
 <p>创建一个gpt分区列表</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):g</span><br><span class="line"></span><br><span class="line">Created a new GPT disklabel (GUID: 87EA4497-2722-DF43-A954-368E46AE5C5F).</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:g
+
+Created a new GPT disklabel <span class="token punctuation">(</span>GUID: 87EA4497-2722-DF43-A954-368E46AE5C5F<span class="token punctuation">)</span>.</code></pre>
 
 <p>如果当前存在其他的分区,可以选择将分区删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):d</span><br><span class="line"></span><br><span class="line">Partition number (1-4): 1</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:d
+
+Partition number <span class="token punctuation">(</span><span class="token number">1</span>-4<span class="token punctuation">)</span>: <span class="token number">1</span></code></pre>
 
 <p>创建一个efi分区,大小建议256MB</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):n</span><br><span class="line"></span><br><span class="line">Partition number (1-128, default 1): 1</span><br><span class="line">First sector (2048-60549086, default 2048): </span><br><span class="line">Last sector, +/-sectors or +/-size&#123;K,M,G,T,P&#125; (2048-60549086, default 60549086): +256M</span><br><span class="line"> </span><br><span class="line">Created a new partition 1 of <span class="built_in">type</span> <span class="string">&#x27;Linux filesystem&#x27;</span> and of size 256 MiB.</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:n
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):t</span><br><span class="line"></span><br><span class="line">Selected partition 1</span><br><span class="line">Partition <span class="built_in">type</span> (<span class="built_in">type</span> L to list all types): 1</span><br><span class="line">Changed <span class="built_in">type</span> of partition <span class="string">&#x27;Linux filesystem&#x27;</span> to <span class="string">&#x27;EFI System&#x27;</span>.</span><br></pre></td></tr></table></figure>
+Partition number <span class="token punctuation">(</span><span class="token number">1</span>-128, default <span class="token number">1</span><span class="token punctuation">)</span>: <span class="token number">1</span>
+First sector <span class="token punctuation">(</span><span class="token number">2048</span>-60549086, default <span class="token number">2048</span><span class="token punctuation">)</span>: 
+Last sector, +/-sectors or +/-size<span class="token punctuation">&#123;</span>K,M,G,T,P<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">2048</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +256M
+ 
+Created a new partition <span class="token number">1</span> of <span class="token builtin class-name">type</span> <span class="token string">'Linux filesystem'</span> and of size <span class="token number">256</span> MiB.</code></pre>
+
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:t
+
+Selected partition <span class="token number">1</span>
+Partition <span class="token builtin class-name">type</span> <span class="token punctuation">(</span>type L to list all types<span class="token punctuation">)</span>: <span class="token number">1</span>
+Changed <span class="token builtin class-name">type</span> of partition <span class="token string">'Linux filesystem'</span> to <span class="token string">'EFI System'</span><span class="token builtin class-name">.</span></code></pre>
 
 
 
 <p>创建一个swap分区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):n</span><br><span class="line"></span><br><span class="line">Partition number (2-128, default 2): </span><br><span class="line">First sector (526336-60549086, default 526336): </span><br><span class="line">Last sector, +/-sectors or +/-size&#123;K,M,G,T,P&#125; (526336-60549086, default 60549086): +4G</span><br><span class="line"> </span><br><span class="line">Created a new partition 2 of <span class="built_in">type</span> <span class="string">&#x27;Linux filesystem&#x27;</span> and of size 4 GiB.</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:n
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):t</span><br><span class="line"></span><br><span class="line">Partition number (1,2, default 2): 2</span><br><span class="line">Partition <span class="built_in">type</span> (<span class="built_in">type</span> L to list all types): 19</span><br><span class="line"> </span><br><span class="line">Changed <span class="built_in">type</span> of partition <span class="string">&#x27;Linux filesystem&#x27;</span> to <span class="string">&#x27;Linux swap&#x27;</span>.</span><br></pre></td></tr></table></figure>
+Partition number <span class="token punctuation">(</span><span class="token number">2</span>-128, default <span class="token number">2</span><span class="token punctuation">)</span>: 
+First sector <span class="token punctuation">(</span><span class="token number">526336</span>-60549086, default <span class="token number">526336</span><span class="token punctuation">)</span>: 
+Last sector, +/-sectors or +/-size<span class="token punctuation">&#123;</span>K,M,G,T,P<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">526336</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +4G
+ 
+Created a new partition <span class="token number">2</span> of <span class="token builtin class-name">type</span> <span class="token string">'Linux filesystem'</span> and of size <span class="token number">4</span> GiB.</code></pre>
+
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:t
+
+Partition number <span class="token punctuation">(</span><span class="token number">1,2</span>, default <span class="token number">2</span><span class="token punctuation">)</span>: <span class="token number">2</span>
+Partition <span class="token builtin class-name">type</span> <span class="token punctuation">(</span>type L to list all types<span class="token punctuation">)</span>: <span class="token number">19</span>
+ 
+Changed <span class="token builtin class-name">type</span> of partition <span class="token string">'Linux filesystem'</span> to <span class="token string">'Linux swap'</span><span class="token builtin class-name">.</span></code></pre>
 
 <p>创建主分区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):p</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: 28.89 GiB, 31001149440 bytes, 60549120 sectors</span><br><span class="line">Disk model: DataTraveler 2.0</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel <span class="built_in">type</span>: gpt</span><br><span class="line">Disk identifier: 87EA4497-2722-DF43-A954-368E46AE5C5F</span><br><span class="line"> </span><br><span class="line">Device       Start      End  Sectors  Size Type</span><br><span class="line">/dev/sda1     2048   526335   524288  256M EFI System</span><br><span class="line">/dev/sda2   526336  8914943  8388608    4G Linux swap</span><br><span class="line">/dev/sda3  8914944 60549086 51634143 24.6G Linux filesystem</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:p
+
+Disk /dev/sda: <span class="token number">28.89</span> GiB, <span class="token number">31001149440</span> bytes, <span class="token number">60549120</span> sectors
+Disk model: DataTraveler <span class="token number">2.0</span>
+Units: sectors of <span class="token number">1</span> * <span class="token number">512</span> <span class="token operator">=</span> <span class="token number">512</span> bytes
+Sector size <span class="token punctuation">(</span>logical/physical<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+I/O size <span class="token punctuation">(</span>minimum/optimal<span class="token punctuation">)</span>: <span class="token number">512</span> bytes / <span class="token number">512</span> bytes
+Disklabel type: gpt
+Disk identifier: 87EA4497-2722-DF43-A954-368E46AE5C5F
+ 
+Device       Start      End  Sectors  Size Type
+/dev/sda1     <span class="token number">2048</span>   <span class="token number">526335</span>   <span class="token number">524288</span>  256M EFI System
+/dev/sda2   <span class="token number">526336</span>  <span class="token number">8914943</span>  <span class="token number">8388608</span>    4G Linux swap
+/dev/sda3  <span class="token number">8914944</span> <span class="token number">60549086</span> <span class="token number">51634143</span> <span class="token number">24</span>.6G Linux filesystem</code></pre>
 
 <p>将分区信息写入磁盘</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>):w</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Command <span class="token punctuation">(</span>m <span class="token keyword">for</span> <span class="token builtin class-name">help</span><span class="token punctuation">)</span>:w</code></pre>
 
 <p>当前磁盘分区信息</p>
 <table>
@@ -468,74 +551,266 @@
 </tr>
 </tbody></table>
 <h4 id="4-创建文件系统"><a href="#4-创建文件系统" class="headerlink" title="4.创建文件系统"></a>4.创建文件系统</h4><p>boot分区文件系统一般考虑兼容性使用fat文件系统</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.vfat /dev/sda1</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">mkfs.vfat /dev/sda1</code></pre>
 
 <p>swap分区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkswap /dev/sda2</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkswap</span> /dev/sda2</code></pre>
 
 <p>根分区,可采用(ext3&#x2F;4 xfs btrfs ntfs jfs…..)使用非ext文件系统在后面编译linux内核的时候要启动linux内核对该文件系统的支持</p>
 <p>这里采用btrfs文件系统</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.btrfs /dev/sda3</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">mkfs.btrfs /dev/sda3</code></pre>
 
-<h4 id="5-分区挂载"><a href="#5-分区挂载" class="headerlink" title="5.分区挂载"></a>5.分区挂载</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将/dev/sda3主磁盘分区挂载到/mnt/gentoo下面</span></span><br><span class="line">mount /dev/sda3 /mnt/gentoo</span><br></pre></td></tr></table></figure>
+<h4 id="5-分区挂载"><a href="#5-分区挂载" class="headerlink" title="5.分区挂载"></a>5.分区挂载</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将/dev/sda3主磁盘分区挂载到/mnt/gentoo下面</span>
+<span class="token function">mount</span> /dev/sda3 /mnt/gentoo</code></pre>
 
 <h4 id="6-安装stage3包"><a href="#6-安装stage3包" class="headerlink" title="6.安装stage3包"></a>6.安装stage3包</h4><p>stage3包提供了最基本的portage包管理器编译工具链和一些最基本的链接库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取Gentoo stage3包</span></span><br><span class="line">wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20220109T170538Z/stage3-amd64-systemd-20220109T170538Z.tar.xz</span><br><span class="line">tar -Jxf stage3-amd64-systemd-20220109T170538Z.tar.xz -C /mnt/gentoo</span><br><span class="line"></span><br><span class="line"><span class="comment">#将之前格式化的boot磁盘挂载</span></span><br><span class="line">mount /dev/sda1 /mnt/gentoo/boot</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#获取Gentoo stage3包</span>
+<span class="token function">wget</span> https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20220109T170538Z/stage3-amd64-systemd-20220109T170538Z.tar.xz
+<span class="token function">tar</span> -Jxf stage3-amd64-systemd-20220109T170538Z.tar.xz -C /mnt/gentoo
 
-<h4 id="7-基本编译环境准备"><a href="#7-基本编译环境准备" class="headerlink" title="7.基本编译环境准备"></a>7.基本编译环境准备</h4><h5 id="1-配置编译portage编译软件的参数"><a href="#1-配置编译portage编译软件的参数" class="headerlink" title="1.配置编译portage编译软件的参数"></a>1.配置编译portage编译软件的参数</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">nano /mnt/gentoo/etc/portage/make.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># These settings were set by the catalyst build script that automatically</span></span><br><span class="line"><span class="comment"># built this stage.</span></span><br><span class="line"><span class="comment"># Please consult /usr/share/portage/config/make.conf.example for a more</span></span><br><span class="line"><span class="comment"># detailed example.</span></span><br><span class="line">COMMON_FLAGS=<span class="string">&quot;-march=native -O3 -pipe -fstack-protector-strong&quot;</span> <span class="comment">#设置编译参数(-march=native可以根据cpu指令集进行优化,-O3优化级别)</span></span><br><span class="line">CFLAGS=<span class="string">&quot;<span class="variable">$&#123;COMMON_FLAGS&#125;</span>&quot;</span>    <span class="comment">#C编译参数</span></span><br><span class="line">CXXFLAGS=<span class="string">&quot;<span class="variable">$&#123;COMMON_FLAGS&#125;</span>&quot;</span>  <span class="comment">#C++编译参数</span></span><br><span class="line">FCFLAGS=<span class="string">&quot;<span class="variable">$&#123;COMMON_FLAGS&#125;</span>&quot;</span></span><br><span class="line">FFLAGS=<span class="string">&quot;<span class="variable">$&#123;COMMON_FLAGS&#125;</span>&quot;</span></span><br><span class="line">ACCEPT_KEYWORDS=<span class="string">&quot;amd64&quot;</span>  <span class="comment">#可接受的软件包等级(稳定与不稳定)(这里为全局keyworkds,若想为特定软件包指定特定的Keyworkds(可以在/etc/protage/portage.accpet_keywords</span></span><br><span class="line">ACCEPT_LICENSE=<span class="string">&quot;*&quot;</span>      <span class="comment">#可接受的软件包许可证</span></span><br><span class="line">MAKEOPTS=<span class="string">&quot;-j8 -l7.2&quot;</span>    <span class="comment">#根据cpu核心数来配置(一般配置为cpu核心数+1),如果机器配置不够尽量将线程数调低一些,方式内存爆.</span></span><br><span class="line"></span><br><span class="line">CHOST=<span class="string">&quot;x86_64-pc-linux-gnu&quot;</span></span><br><span class="line"><span class="comment">#--keep-going表示portage在编译软件出错的时候继续进行编译--with-bdeps表示在碰上依赖的时候一起安装上依赖</span></span><br><span class="line">EMERGE_DEFAULT_OPTS=<span class="string">&quot;--jobs=8 --load-average=7.2 --ask --keep-going --with-bdeps=y&quot;</span></span><br><span class="line">GRUB_PLATFORMS=<span class="string">&quot;efi-64&quot;</span> <span class="comment">#配置GRUB架构平台</span></span><br><span class="line">CPU_FLAGS_X86=<span class="string">&quot;&quot;</span><span class="comment">#使用cpuflags查看cpu参数</span></span><br><span class="line"><span class="comment">#设置语言</span></span><br><span class="line">L10N=<span class="string">&quot;en-US en&quot;</span></span><br><span class="line">LINGUAS=<span class="string">&quot;en-US en&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#镜像源</span></span><br><span class="line">NETEASE=<span class="string">&quot;https://mirrors.163.com/gentoo/&quot;</span></span><br><span class="line">NEUSOFT=<span class="string">&quot;https://mirrors.neusoft.edu.cn/gentoo/&quot;</span></span><br><span class="line">TSINGHUA=<span class="string">&quot;https://mirrors.tuna.tsinghua.edu.cn/gentoo/&quot;</span></span><br><span class="line">CDS=<span class="string">&quot;http://mirrors.yun-idc.com/gentoo/&quot;</span></span><br><span class="line">ALI=<span class="string">&quot;https://mirrors.aliyun.com/gentoo/&quot;</span></span><br><span class="line">BIT=<span class="string">&quot;https://mirror.bit.edu.cn/gentoo/&quot;</span></span><br><span class="line">USTC=<span class="string">&quot;https://mirrors.ustc.edu.cn/gentoo/&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AUTO_CLEAN=<span class="string">&quot;yes&quot;</span></span><br><span class="line"><span class="comment">#设置自动清理</span></span><br><span class="line">VIDEO_CARDS=<span class="string">&quot;intel nvidia&quot;</span><span class="comment">#配置显卡驱动</span></span><br><span class="line">INPUT_DEVICES=<span class="string">&quot;libinput&quot;</span>            <span class="comment">#配置输入设备的基本库</span></span><br><span class="line"><span class="comment">#将microcode直接编译进内核</span></span><br><span class="line">MICROCODE_SIGNATURES=<span class="string">&quot;-S&quot;</span></span><br><span class="line">LC_MESSAGES=C</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PORTDIR=<span class="string">&quot;/var/db/repos/gentoo&quot;</span>      <span class="comment">#软件包的ebuild文件存储目录</span></span><br><span class="line">DISTDIR=<span class="string">&quot;/var/cache/distfiles&quot;</span></span><br><span class="line">PKGDIR=<span class="string">&quot;/var/cache/binpkgs&quot;</span>         <span class="comment">#软件包的存储目录</span></span><br><span class="line"><span class="comment">#设置软件包缓存目录</span></span><br><span class="line">PORTAGE_TMPDIR=<span class="string">&quot;/tmp&quot;</span>               <span class="comment">#portage的编译目录</span></span><br><span class="line"><span class="comment">#设置portage构建软件包目录(如果内存较大,建议设置在内存里面)</span></span><br><span class="line"><span class="comment"># This sets the language of build output to English.</span></span><br><span class="line"><span class="comment"># Please keep this setting intact when reporting bugs.</span></span><br><span class="line">LC_MESSAGES=C</span><br><span class="line">GENTOO_MIRRORS=<span class="string">&quot;<span class="variable">$&#123;USTC&#125;</span>&quot;</span>            <span class="comment">#配置Gentoo镜像源(软件镜像源)</span></span><br><span class="line"><span class="comment">#全局USE</span></span><br><span class="line">USE=<span class="string">&quot;-X -qt5 &quot;</span></span><br></pre></td></tr></table></figure>
+<span class="token comment">#将之前格式化的boot磁盘挂载</span>
+<span class="token function">mount</span> /dev/sda1 /mnt/gentoo/boot</code></pre>
 
-<h5 id="2-配置gentoo软件仓库"><a href="#2-配置gentoo软件仓库" class="headerlink" title="2.配置gentoo软件仓库"></a>2.配置gentoo软件仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建存放gentoo仓库配置文件的目录</span></span><br><span class="line"><span class="built_in">mkdir</span> --parents /mnt/gentoo/etc/portage/repos.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#将gentoo软件仓库配置模板拷贝至上述创建的目录下</span></span><br><span class="line"><span class="built_in">cp</span> /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</span><br></pre></td></tr></table></figure>
+<h4 id="7-基本编译环境准备"><a href="#7-基本编译环境准备" class="headerlink" title="7.基本编译环境准备"></a>7.基本编译环境准备</h4><h5 id="1-配置编译portage编译软件的参数"><a href="#1-配置编译portage编译软件的参数" class="headerlink" title="1.配置编译portage编译软件的参数"></a>1.配置编译portage编译软件的参数</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">nano</span> /mnt/gentoo/etc/portage/make.conf
+
+<span class="token comment"># These settings were set by the catalyst build script that automatically</span>
+<span class="token comment"># built this stage.</span>
+<span class="token comment"># Please consult /usr/share/portage/config/make.conf.example for a more</span>
+<span class="token comment"># detailed example.</span>
+<span class="token assign-left variable">COMMON_FLAGS</span><span class="token operator">=</span><span class="token string">"-march=native -O3 -pipe -fstack-protector-strong"</span> <span class="token comment">#设置编译参数(-march=native可以根据cpu指令集进行优化,-O3优化级别)</span>
+<span class="token assign-left variable">CFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>    <span class="token comment">#C编译参数</span>
+<span class="token assign-left variable">CXXFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>  <span class="token comment">#C++编译参数</span>
+<span class="token assign-left variable">FCFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>
+<span class="token assign-left variable">FFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>
+<span class="token assign-left variable">ACCEPT_KEYWORDS</span><span class="token operator">=</span><span class="token string">"amd64"</span>  <span class="token comment">#可接受的软件包等级(稳定与不稳定)(这里为全局keyworkds,若想为特定软件包指定特定的Keyworkds(可以在/etc/protage/portage.accpet_keywords</span>
+<span class="token assign-left variable">ACCEPT_LICENSE</span><span class="token operator">=</span><span class="token string">"*"</span>      <span class="token comment">#可接受的软件包许可证</span>
+<span class="token assign-left variable">MAKEOPTS</span><span class="token operator">=</span><span class="token string">"-j8 -l7.2"</span>    <span class="token comment">#根据cpu核心数来配置(一般配置为cpu核心数+1),如果机器配置不够尽量将线程数调低一些,方式内存爆.</span>
+
+<span class="token assign-left variable">CHOST</span><span class="token operator">=</span><span class="token string">"x86_64-pc-linux-gnu"</span>
+<span class="token comment">#--keep-going表示portage在编译软件出错的时候继续进行编译--with-bdeps表示在碰上依赖的时候一起安装上依赖</span>
+<span class="token assign-left variable">EMERGE_DEFAULT_OPTS</span><span class="token operator">=</span><span class="token string">"--jobs=8 --load-average=7.2 --ask --keep-going --with-bdeps=y"</span>
+<span class="token assign-left variable">GRUB_PLATFORMS</span><span class="token operator">=</span><span class="token string">"efi-64"</span> <span class="token comment">#配置GRUB架构平台</span>
+<span class="token assign-left variable">CPU_FLAGS_X86</span><span class="token operator">=</span><span class="token string">""</span>#使用cpuflags查看cpu参数
+<span class="token comment">#设置语言</span>
+<span class="token assign-left variable">L10N</span><span class="token operator">=</span><span class="token string">"en-US en"</span>
+<span class="token assign-left variable">LINGUAS</span><span class="token operator">=</span><span class="token string">"en-US en"</span>
+
+<span class="token comment">#镜像源</span>
+<span class="token assign-left variable">NETEASE</span><span class="token operator">=</span><span class="token string">"https://mirrors.163.com/gentoo/"</span>
+<span class="token assign-left variable">NEUSOFT</span><span class="token operator">=</span><span class="token string">"https://mirrors.neusoft.edu.cn/gentoo/"</span>
+<span class="token assign-left variable">TSINGHUA</span><span class="token operator">=</span><span class="token string">"https://mirrors.tuna.tsinghua.edu.cn/gentoo/"</span>
+<span class="token assign-left variable">CDS</span><span class="token operator">=</span><span class="token string">"http://mirrors.yun-idc.com/gentoo/"</span>
+<span class="token assign-left variable">ALI</span><span class="token operator">=</span><span class="token string">"https://mirrors.aliyun.com/gentoo/"</span>
+<span class="token assign-left variable">BIT</span><span class="token operator">=</span><span class="token string">"https://mirror.bit.edu.cn/gentoo/"</span>
+<span class="token assign-left variable">USTC</span><span class="token operator">=</span><span class="token string">"https://mirrors.ustc.edu.cn/gentoo/"</span>
+
+
+<span class="token assign-left variable">AUTO_CLEAN</span><span class="token operator">=</span><span class="token string">"yes"</span>
+<span class="token comment">#设置自动清理</span>
+<span class="token assign-left variable">VIDEO_CARDS</span><span class="token operator">=</span><span class="token string">"intel nvidia"</span>#配置显卡驱动
+<span class="token assign-left variable">INPUT_DEVICES</span><span class="token operator">=</span><span class="token string">"libinput"</span>            <span class="token comment">#配置输入设备的基本库</span>
+<span class="token comment">#将microcode直接编译进内核</span>
+<span class="token assign-left variable">MICROCODE_SIGNATURES</span><span class="token operator">=</span><span class="token string">"-S"</span>
+<span class="token assign-left variable">LC_MESSAGES</span><span class="token operator">=</span>C
+
+
+<span class="token assign-left variable">PORTDIR</span><span class="token operator">=</span><span class="token string">"/var/db/repos/gentoo"</span>      <span class="token comment">#软件包的ebuild文件存储目录</span>
+<span class="token assign-left variable">DISTDIR</span><span class="token operator">=</span><span class="token string">"/var/cache/distfiles"</span>
+<span class="token assign-left variable">PKGDIR</span><span class="token operator">=</span><span class="token string">"/var/cache/binpkgs"</span>         <span class="token comment">#软件包的存储目录</span>
+<span class="token comment">#设置软件包缓存目录</span>
+<span class="token assign-left variable">PORTAGE_TMPDIR</span><span class="token operator">=</span><span class="token string">"/tmp"</span>               <span class="token comment">#portage的编译目录</span>
+<span class="token comment">#设置portage构建软件包目录(如果内存较大,建议设置在内存里面)</span>
+<span class="token comment"># This sets the language of build output to English.</span>
+<span class="token comment"># Please keep this setting intact when reporting bugs.</span>
+<span class="token assign-left variable">LC_MESSAGES</span><span class="token operator">=</span>C
+<span class="token assign-left variable">GENTOO_MIRRORS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;USTC&#125;</span>"</span>            <span class="token comment">#配置Gentoo镜像源(软件镜像源)</span>
+<span class="token comment">#全局USE</span>
+<span class="token assign-left variable">USE</span><span class="token operator">=</span><span class="token string">"-X -qt5 "</span></code></pre>
+
+<h5 id="2-配置gentoo软件仓库"><a href="#2-配置gentoo软件仓库" class="headerlink" title="2.配置gentoo软件仓库"></a>2.配置gentoo软件仓库</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建存放gentoo仓库配置文件的目录</span>
+<span class="token function">mkdir</span> --parents /mnt/gentoo/etc/portage/repos.conf
+
+<span class="token comment">#将gentoo软件仓库配置模板拷贝至上述创建的目录下</span>
+<span class="token function">cp</span> /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</code></pre>
 
 <p>配置仓库镜像源(获取ebuild的镜像源)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">nano</span> /mnt/gentoo/etc/portage/repos.conf/gentoo.conf</code></pre>
 
 <p>将镜像源换成国内的中科大gentoo源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[DEFAULT]</span><br><span class="line">main-repo = gentoo</span><br><span class="line"> </span><br><span class="line">[gentoo]</span><br><span class="line">location = /var/db/repos/gentoo</span><br><span class="line">sync-type = rsync</span><br><span class="line">sync-uri = rsync://mirrors.ustc.edu.cn/gentoo-portage</span><br><span class="line">auto-sync = <span class="built_in">yes</span></span><br><span class="line">sync-rsync-verify-jobs = 1</span><br><span class="line">sync-rsync-verify-metamanifest = <span class="built_in">yes</span></span><br><span class="line">sync-rsync-verify-max-age = 24</span><br><span class="line">sync-openpgp-key-path = /usr/share/openpgp-keys/gentoo-release.asc</span><br><span class="line">sync-openpgp-key-refresh-retry-count = 40</span><br><span class="line">sync-openpgp-key-refresh-retry-overall-timeout = 1200</span><br><span class="line">sync-openpgp-key-refresh-retry-delay-exp-base = 2</span><br><span class="line">sync-openpgp-key-refresh-retry-delay-max = 60</span><br><span class="line">sync-openpgp-key-refresh-retry-delay-mult = 4</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>DEFAULT<span class="token punctuation">]</span>
+main-repo <span class="token operator">=</span> gentoo
+ 
+<span class="token punctuation">[</span>gentoo<span class="token punctuation">]</span>
+location <span class="token operator">=</span> /var/db/repos/gentoo
+sync-type <span class="token operator">=</span> <span class="token function">rsync</span>
+sync-uri <span class="token operator">=</span> rsync://mirrors.ustc.edu.cn/gentoo-portage
+auto-sync <span class="token operator">=</span> <span class="token function">yes</span>
+sync-rsync-verify-jobs <span class="token operator">=</span> <span class="token number">1</span>
+sync-rsync-verify-metamanifest <span class="token operator">=</span> <span class="token function">yes</span>
+sync-rsync-verify-max-age <span class="token operator">=</span> <span class="token number">24</span>
+sync-openpgp-key-path <span class="token operator">=</span> /usr/share/openpgp-keys/gentoo-release.asc
+sync-openpgp-key-refresh-retry-count <span class="token operator">=</span> <span class="token number">40</span>
+sync-openpgp-key-refresh-retry-overall-timeout <span class="token operator">=</span> <span class="token number">1200</span>
+sync-openpgp-key-refresh-retry-delay-exp-base <span class="token operator">=</span> <span class="token number">2</span>
+sync-openpgp-key-refresh-retry-delay-max <span class="token operator">=</span> <span class="token number">60</span>
+sync-openpgp-key-refresh-retry-delay-mult <span class="token operator">=</span> <span class="token number">4</span></code></pre>
 
-<h5 id="3-挂载必要的文件系统"><a href="#3-挂载必要的文件系统" class="headerlink" title="3.挂载必要的文件系统"></a>3.挂载必要的文件系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置dns解析文件</span></span><br><span class="line"><span class="built_in">cp</span> --dereference /etc/resolv.conf /mnt/gentoo/etc/resolv.conf</span><br><span class="line"></span><br><span class="line">mount --types proc /proc /mnt/gentoo/proc</span><br><span class="line">mount --rbind /sys /mnt/gentoo/sys</span><br><span class="line">mount --make-rslave /mnt/gentoo/sys</span><br><span class="line">mount --rbind /dev /mnt/gentoo/dev</span><br><span class="line">mount --make-rslave /mnt/gentoo/dev</span><br><span class="line"><span class="comment">#假如用的不是gentoo的livecd,需要加入以下</span></span><br><span class="line"><span class="built_in">test</span> -L /dev/shm &amp;&amp; <span class="built_in">rm</span> /dev/shm &amp;&amp; <span class="built_in">mkdir</span> /dev/shm</span><br><span class="line">mount --types tmpfs --options nosuid,nodev,noexec shm /dev/shm</span><br><span class="line"><span class="built_in">chmod</span> 1777 /dev/shm</span><br></pre></td></tr></table></figure>
-<h5 id="4-进入到新的系统进行基本系统配置"><a href="#4-进入到新的系统进行基本系统配置" class="headerlink" title="4.进入到新的系统进行基本系统配置"></a>4.进入到新的系统进行基本系统配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chroot</span> /mnt/gentoo /bin/bash</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;(chroot)<span class="variable">$&#123;PS1&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-挂载必要的文件系统"><a href="#3-挂载必要的文件系统" class="headerlink" title="3.挂载必要的文件系统"></a>3.挂载必要的文件系统</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置dns解析文件</span>
+<span class="token function">cp</span> --dereference /etc/resolv.conf /mnt/gentoo/etc/resolv.conf
 
-<h4 id="8-开始整个系统的编译"><a href="#8-开始整个系统的编译" class="headerlink" title="8.开始整个系统的编译"></a>8.开始整个系统的编译</h4><h5 id="1-获取ebuild快照"><a href="#1-获取ebuild快照" class="headerlink" title="1.获取ebuild快照"></a>1.获取ebuild快照</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge-webrsync</span><br></pre></td></tr></table></figure>
+<span class="token function">mount</span> --types proc /proc /mnt/gentoo/proc
+<span class="token function">mount</span> --rbind /sys /mnt/gentoo/sys
+<span class="token function">mount</span> --make-rslave /mnt/gentoo/sys
+<span class="token function">mount</span> --rbind /dev /mnt/gentoo/dev
+<span class="token function">mount</span> --make-rslave /mnt/gentoo/dev
+<span class="token comment">#假如用的不是gentoo的livecd,需要加入以下</span>
+<span class="token builtin class-name">test</span> -L /dev/shm <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> /dev/shm <span class="token operator">&amp;&amp;</span> <span class="token function">mkdir</span> /dev/shm
+<span class="token function">mount</span> --types tmpfs --options nosuid,nodev,noexec shm /dev/shm
+<span class="token function">chmod</span> <span class="token number">1777</span> /dev/shm</code></pre>
+<h5 id="4-进入到新的系统进行基本系统配置"><a href="#4-进入到新的系统进行基本系统配置" class="headerlink" title="4.进入到新的系统进行基本系统配置"></a>4.进入到新的系统进行基本系统配置</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">chroot</span> /mnt/gentoo /bin/bash
+<span class="token builtin class-name">source</span> /etc/profile
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PS1</span></span><span class="token operator">=</span><span class="token string">"(chroot)<span class="token variable">$&#123;<span class="token environment constant">PS1</span>&#125;</span>"</span></code></pre>
 
-<h5 id="2-获取系统的配置文件"><a href="#2-获取系统的配置文件" class="headerlink" title="2.获取系统的配置文件"></a>2.获取系统的配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root <span class="comment">#eselect profile list</span></span><br><span class="line"></span><br><span class="line">Available profile symlink targets:</span><br><span class="line">  [1]   default/linux/amd64/17.1 *</span><br><span class="line">  [2]   default/linux/amd64/17.1/desktop</span><br><span class="line">  [3]   default/linux/amd64/17.1/desktop/gnome</span><br><span class="line">  [4]   default/linux/amd64/17.1/desktop/kde</span><br></pre></td></tr></table></figure>
+<h4 id="8-开始整个系统的编译"><a href="#8-开始整个系统的编译" class="headerlink" title="8.开始整个系统的编译"></a>8.开始整个系统的编译</h4><h5 id="1-获取ebuild快照"><a href="#1-获取ebuild快照" class="headerlink" title="1.获取ebuild快照"></a>1.获取ebuild快照</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge-webrsync</code></pre>
 
-<h5 id="3-安装一些常用的软件"><a href="#3-安装一些常用的软件" class="headerlink" title="3.安装一些常用的软件"></a>3.安装一些常用的软件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge --ask app-portage/cpuid2cpuflags<span class="comment">#用于查看cpu参数,可以将参数配置到portage配置文件中使得可以针对cpu参数进行优化</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-获取系统的配置文件"><a href="#2-获取系统的配置文件" class="headerlink" title="2.获取系统的配置文件"></a>2.获取系统的配置文件</h5><pre class="language-bash" data-language="bash"><code class="language-bash">root <span class="token comment">#eselect profile list</span>
+
+Available profile symlink targets:
+  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>   default/linux/amd64/17.1 *
+  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>   default/linux/amd64/17.1/desktop
+  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>   default/linux/amd64/17.1/desktop/gnome
+  <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span>   default/linux/amd64/17.1/desktop/kde</code></pre>
+
+<h5 id="3-安装一些常用的软件"><a href="#3-安装一些常用的软件" class="headerlink" title="3.安装一些常用的软件"></a>3.安装一些常用的软件</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge --ask app-portage/cpuid2cpuflags<span class="token comment">#用于查看cpu参数,可以将参数配置到portage配置文件中使得可以针对cpu参数进行优化</span></code></pre>
 
 <h5 id="4-配置USE标签"><a href="#4-配置USE标签" class="headerlink" title="4.配置USE标签"></a>4.配置USE标签</h5><p>USE标记是Gentoo中用于配置特定软件包如何编译,一般分为全局USE和特定软件包USE<br>(&#x2F;etc&#x2F;portage&#x2F;package.use&#x2F;*特定软件包,&#x2F;etc&#x2F;portage&#x2F;make.conf全局USE)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sys-devel/gcc cet pgo go lto nptl -objc -objc++ -objc-gc -fixed-point -d</span><br><span class="line">sys-devel/gdb cet lzma multitarget python server source-highlight xml xxhash</span><br><span class="line">sys-devel/clang static-analyzer</span><br><span class="line">dev-lang/python -bluetooth -wininst</span><br><span class="line">net-analyze/nmap nse nping ncat libssh2</span><br><span class="line">app-containers/docker btrfs cli apparmor aufs container-init device-mapper overlay</span><br><span class="line">app-editors/vim cscope racket -X -crypt  -terminal</span><br><span class="line">net-misc/wget cookie-check</span><br><span class="line">net-wireless/wpa_supplicant ap -broadcom-sta -crda eap-sim -eapol-test -mesh -p2p</span><br><span class="line">openjdk -headless-awt</span><br><span class="line">git blksha1 -cgi -highlight -webdav -mediawiki -mediawiki-experimental -perforce subversion -tk</span><br><span class="line">openssh X509 hpn ldns livecd scp ssl xmss security-key</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">sys-devel/gcc cet pgo go lto nptl -objc -objc++ -objc-gc -fixed-point -d
+sys-devel/gdb cet lzma multitarget python server source-highlight xml xxhash
+sys-devel/clang static-analyzer
+dev-lang/python -bluetooth -wininst
+net-analyze/nmap nse nping ncat libssh2
+app-containers/docker btrfs cli apparmor aufs container-init device-mapper overlay
+app-editors/vim cscope racket -X -crypt  -terminal
+net-misc/wget cookie-check
+net-wireless/wpa_supplicant ap -broadcom-sta -crda eap-sim -eapol-test -mesh -p2p
+openjdk -headless-awt
+<span class="token function">git</span> blksha1 -cgi -highlight -webdav -mediawiki -mediawiki-experimental -perforce subversion -tk
+openssh X509 hpn ldns livecd <span class="token function">scp</span> ssl xmss security-key</code></pre>
 
 <h5 id="5-设置时间和地区"><a href="#5-设置时间和地区" class="headerlink" title="5.设置时间和地区"></a>5.设置时间和地区</h5><p>配置时间</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime		<span class="comment">#将时间配置到上海时区</span></span><br><span class="line">hwclock --systohc											<span class="comment">#同步时间</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime		<span class="token comment">#将时间配置到上海时区</span>
+hwclock --systohc											<span class="token comment">#同步时间</span></code></pre>
 
 <p>配置语言和地区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#/etc/locale.gen</span></span><br><span class="line">en_US.UTF-8 UTF-8</span><br><span class="line">zh_CN.UTF-8 UTF-8</span><br><span class="line">locale-gen</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出所有可用的locale</span></span><br><span class="line">root <span class="comment">#eselect locale list</span></span><br><span class="line"></span><br><span class="line">Available targets <span class="keyword">for</span> the LANG variable:</span><br><span class="line">  [1]  C</span><br><span class="line">  [2]  C.utf8</span><br><span class="line">  [3]  en_US</span><br><span class="line">  [4]  en_US.iso88591</span><br><span class="line">  [5]  en_US.utf8</span><br><span class="line">  [6]  de_DE</span><br><span class="line">  [7]  de_DE.iso88591</span><br><span class="line">  [8]  de_DE.iso885915</span><br><span class="line">  [9]  de_DE.utf8</span><br><span class="line">  [10] POSIX</span><br><span class="line">  [ ]  (free form)</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置locale</span></span><br><span class="line">root <span class="comment">#eselect locale set 9</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#/etc/locale.gen</span>
+en_US.UTF-8 UTF-8
+zh_CN.UTF-8 UTF-8
+locale-gen
+
+<span class="token comment">#列出所有可用的locale</span>
+root <span class="token comment">#eselect locale list</span>
+
+Available targets <span class="token keyword">for</span> the <span class="token environment constant">LANG</span> variable:
+  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>  C
+  <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>  C.utf8
+  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>  en_US
+  <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span>  en_US.iso88591
+  <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span>  en_US.utf8
+  <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span>  de_DE
+  <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span>  de_DE.iso88591
+  <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span>  de_DE.iso885915
+  <span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span>  de_DE.utf8
+  <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> POSIX
+  <span class="token punctuation">[</span> <span class="token punctuation">]</span>  <span class="token punctuation">(</span>free form<span class="token punctuation">)</span>
+
+<span class="token comment">#设置locale</span>
+root <span class="token comment">#eselect locale set 9</span></code></pre>
 
 <p>配置主机名</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname Gentoo</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">hostnamectl set-hostname Gentoo</code></pre>
 
 <p>配置hosts文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/etc/hosts</span><br><span class="line"><span class="comment"># This defines the current system and must be set</span></span><br><span class="line">127.0.0.1     tux.homenetwork tux localhost</span><br><span class="line">  </span><br><span class="line"><span class="comment"># Optional definition of extra systems on the network</span></span><br><span class="line">192.168.0.5   jenny.homenetwork jenny</span><br><span class="line">192.168.0.6   benny.homenetwork benny</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">/etc/hosts
+<span class="token comment"># This defines the current system and must be set</span>
+<span class="token number">127.0</span>.0.1     tux.homenetwork tux localhost
+  
+<span class="token comment"># Optional definition of extra systems on the network</span>
+<span class="token number">192.168</span>.0.5   jenny.homenetwork jenny
+<span class="token number">192.168</span>.0.6   benny.homenetwork benny</code></pre>
 
 <h5 id="6-安装linux-firmware和microcode"><a href="#6-安装linux-firmware和microcode" class="headerlink" title="6.安装linux-firmware和microcode"></a>6.安装linux-firmware和microcode</h5><p>linux-firmware包含了常用的网卡和显卡驱动,microcode是微码器,一般用于更新微码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">emerge --ask --verbose sys-kernel/linux-firmware sys-firmware/intel-microcode</span><br><span class="line"><span class="comment">#sys-kernel/linux-firmware      包含了一些常用的驱动</span></span><br><span class="line"><span class="comment">#sys-firmware/intel-microcode   用于更新microcode,以保持系统的稳定性</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">emerge --ask --verbose sys-kernel/linux-firmware sys-firmware/intel-microcode
+<span class="token comment">#sys-kernel/linux-firmware      包含了一些常用的驱动</span>
+<span class="token comment">#sys-firmware/intel-microcode   用于更新microcode,以保持系统的稳定性</span></code></pre>
 
-<h5 id="7-编译内核"><a href="#7-编译内核" class="headerlink" title="7.编译内核"></a>7.编译内核</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取内核源码</span></span><br><span class="line">emerge --ask sys-kernel/gentoo-sources sys-kernel/dracut sys-apps/pciutils</span><br><span class="line"></span><br><span class="line"><span class="comment">#sys-kernel/gentoo-sources 为内核源码</span></span><br><span class="line"><span class="comment">#sys-kernel/dracut用与生成initramfs</span></span><br><span class="line"><span class="comment">#sys-apps/pciutils软件包用于收集硬件信息(一些pci设备)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#列出当前可用内核</span></span><br><span class="line">eselect kernel list</span><br><span class="line"></span><br><span class="line"><span class="comment">#设置使用那个内核</span></span><br><span class="line">eselect kernel <span class="built_in">set</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#编译内核</span></span><br><span class="line"><span class="comment">#进入内核目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/src/linux</span><br><span class="line"></span><br><span class="line"><span class="comment">#开始编译</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置编译选项</span></span><br><span class="line">make menuconfig</span><br><span class="line"></span><br><span class="line"><span class="comment">#开始编译</span></span><br><span class="line">make -j8 &amp;&amp; make modules_install -j8</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装内核</span></span><br><span class="line">make install </span><br><span class="line"></span><br><span class="line"><span class="comment">#生成一个initramfs</span></span><br><span class="line">dracut --kver=5.15.80-gentoo</span><br><span class="line"><span class="comment">#记得打开frame_buffer(大坑)。</span></span><br></pre></td></tr></table></figure>
-<h5 id="8-系统基本使用的软件"><a href="#8-系统基本使用的软件" class="headerlink" title="8.系统基本使用的软件"></a>8.系统基本使用的软件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">emerge --ask --verbose net-wireless/iw net-wireless/wpa_supplicant  net-misc/dhcp net-dns/dnsmasq sys-boot/grub:2 app-editors/vim sys-boot/efibootmgr</span><br><span class="line"><span class="comment">#net-wireeless/iw               一个网络管理工具</span></span><br><span class="line"><span class="comment">#net-wireless/wpa-supplicant    wifi连接工具</span></span><br><span class="line"><span class="comment">#net-misc/networkmanager        网络管理工具</span></span><br><span class="line"><span class="comment">#net-misc/dhcp                  dhcp客户端</span></span><br><span class="line"><span class="comment">#net-misc/dnsmasq               dns服务器以及dhcp服务器</span></span><br><span class="line"><span class="comment">#app-admin/sysklogd             日志分析工具</span></span><br><span class="line"><span class="comment">#sys-boot/grub:2                grub(一种bootloader)</span></span><br><span class="line"><span class="comment">#app-editors/vim 				vim编辑器</span></span><br><span class="line"><span class="comment">#sys-boot/efibootmgr			uefi系统引导必要的		</span></span><br></pre></td></tr></table></figure>
+<h5 id="7-编译内核"><a href="#7-编译内核" class="headerlink" title="7.编译内核"></a>7.编译内核</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#获取内核源码</span>
+emerge --ask sys-kernel/gentoo-sources sys-kernel/dracut sys-apps/pciutils
+
+<span class="token comment">#sys-kernel/gentoo-sources 为内核源码</span>
+<span class="token comment">#sys-kernel/dracut用与生成initramfs</span>
+<span class="token comment">#sys-apps/pciutils软件包用于收集硬件信息(一些pci设备)</span>
+
+<span class="token comment">#列出当前可用内核</span>
+eselect kernel list
+
+<span class="token comment">#设置使用那个内核</span>
+eselect kernel <span class="token builtin class-name">set</span>
+
+<span class="token comment">#编译内核</span>
+<span class="token comment">#进入内核目录</span>
+<span class="token builtin class-name">cd</span> /usr/src/linux
+
+<span class="token comment">#开始编译</span>
+
+<span class="token comment">#配置编译选项</span>
+<span class="token function">make</span> menuconfig
+
+<span class="token comment">#开始编译</span>
+<span class="token function">make</span> -j8 <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> modules_install -j8
+
+<span class="token comment">#安装内核</span>
+<span class="token function">make</span> <span class="token function">install</span> 
+
+<span class="token comment">#生成一个initramfs</span>
+dracut --kver<span class="token operator">=</span><span class="token number">5.15</span>.80-gentoo
+<span class="token comment">#记得打开frame_buffer(大坑)。</span></code></pre>
+<h5 id="8-系统基本使用的软件"><a href="#8-系统基本使用的软件" class="headerlink" title="8.系统基本使用的软件"></a>8.系统基本使用的软件</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge --ask --verbose net-wireless/iw net-wireless/wpa_supplicant  net-misc/dhcp net-dns/dnsmasq sys-boot/grub:2 app-editors/vim sys-boot/efibootmgr
+<span class="token comment">#net-wireeless/iw               一个网络管理工具</span>
+<span class="token comment">#net-wireless/wpa-supplicant    wifi连接工具</span>
+<span class="token comment">#net-misc/networkmanager        网络管理工具</span>
+<span class="token comment">#net-misc/dhcp                  dhcp客户端</span>
+<span class="token comment">#net-misc/dnsmasq               dns服务器以及dhcp服务器</span>
+<span class="token comment">#app-admin/sysklogd             日志分析工具</span>
+<span class="token comment">#sys-boot/grub:2                grub(一种bootloader)</span>
+<span class="token comment">#app-editors/vim 				vim编辑器</span>
+<span class="token comment">#sys-boot/efibootmgr			uefi系统引导必要的		</span></code></pre>
 
 
 
-<h5 id="9-更新系统"><a href="#9-更新系统" class="headerlink" title="9.更新系统"></a>9.更新系统</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emerge --ask --verbose --deep --newuse --update @world</span><br></pre></td></tr></table></figure>
+<h5 id="9-更新系统"><a href="#9-更新系统" class="headerlink" title="9.更新系统"></a>9.更新系统</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge --ask --verbose --deep --newuse --update @world</code></pre>
 
 <h4 id="9-配置系统引导"><a href="#9-配置系统引导" class="headerlink" title="9.配置系统引导"></a>9.配置系统引导</h4><p>生成fstab文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成fstab文件</span></span><br><span class="line">blkid</span><br><span class="line"><span class="comment">#如果使用的archlinux的livecd,可以使用archlinux的genfstab自动生成fstab文件</span></span><br><span class="line"><span class="comment">#genfstab /mnt/gentoo &gt; /mnt/gentoo/etc/fstab</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#建议使用uuid</span></span><br><span class="line">blkid &gt;&gt; /etc/fstab</span><br><span class="line">修改/etc/fstab文件</span><br><span class="line">UUID=<span class="string">&quot;203C-2BDD&quot;</span>        /boot   vfat    defaults 0 1</span><br><span class="line">UUID=<span class="string">&quot;5afdfbc9-0c66-4a13-8f29-da00199af5de&quot;</span> /   ext4 defaults defaults,noatime,discard 0 2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成fstab文件</span>
+blkid
+<span class="token comment">#如果使用的archlinux的livecd,可以使用archlinux的genfstab自动生成fstab文件</span>
+<span class="token comment">#genfstab /mnt/gentoo > /mnt/gentoo/etc/fstab</span>
+
+<span class="token comment">#建议使用uuid</span>
+blkid <span class="token operator">>></span> /etc/fstab
+修改/etc/fstab文件
+<span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"203C-2BDD"</span>        /boot   vfat    defaults <span class="token number">0</span> <span class="token number">1</span>
+<span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"5afdfbc9-0c66-4a13-8f29-da00199af5de"</span> /   ext4 defaults defaults,noatime,discard <span class="token number">0</span> <span class="token number">2</span>
+</code></pre>
 <p>这里默认使用的引导是grub2,也可以使用其他的系统引导如lilo uboot等</p>
 <p>生成grub配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /boot/grub</span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> /boot/grub
+<span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg</code></pre>
 
 <p>安装系统引导</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Gentoo</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">grub-install --target<span class="token operator">=</span>x86_64-efi --efi-directory<span class="token operator">=</span>/boot --bootloader-id<span class="token operator">=</span>Gentoo</code></pre>
 
-<h4 id="10-完成安装"><a href="#10-完成安装" class="headerlink" title="10.完成安装"></a>10.完成安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置root用户的密码</span></span><br><span class="line">passwd root</span><br></pre></td></tr></table></figure>
+<h4 id="10-完成安装"><a href="#10-完成安装" class="headerlink" title="10.完成安装"></a>10.完成安装</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#设置root用户的密码</span>
+<span class="token function">passwd</span> root</code></pre>
 
 
 
@@ -567,7 +842,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/10/Gentoolinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">https://dreamaccount.github.io/2022/04/10/Gentoolinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/10/Gentoolinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">https://bugprogram-git.github.io/2022/04/10/Gentoolinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -792,6 +1067,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -964,6 +1242,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1182,6 +1462,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1198,6 +1489,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

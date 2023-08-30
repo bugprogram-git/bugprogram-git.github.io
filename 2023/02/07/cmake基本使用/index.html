@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="cmake基本使用, Hexo">
+    <meta name="keywords" content="cmake基本使用, MyBlog">
     <meta name="description" content="cmake基本使用1.cmake是什么?cmake是一种项目构建工具，在cmake出现之前我们一般使用make进行项目构建，但是makefile编写比较复杂，因此cmake应运而生，使用cmake只需要编写简单的CMakeLists.txt">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>cmake基本使用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>cmake基本使用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -391,27 +402,84 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="cmake基本使用"><a href="#cmake基本使用" class="headerlink" title="cmake基本使用"></a>cmake基本使用</h1><h3 id="1-cmake是什么"><a href="#1-cmake是什么" class="headerlink" title="1.cmake是什么?"></a>1.cmake是什么?</h3><p>cmake是一种项目构建工具，在cmake出现之前我们一般使用make进行项目构建，但是makefile编写比较复杂，因此cmake应运而生，使用cmake只需要编写简单的CMakeLists.txt，cmake会根据CMakeLists.txt生成对应的makefile。</p>
-<h3 id="2-cmake的安装和配置"><a href="#2-cmake的安装和配置" class="headerlink" title="2.cmake的安装和配置"></a>2.cmake的安装和配置</h3><h4 id="1-cmake安装"><a href="#1-cmake安装" class="headerlink" title="1.cmake安装"></a>1.cmake安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install cmake <span class="comment">#基于ubuntu/debian</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-cmake的安装和配置"><a href="#2-cmake的安装和配置" class="headerlink" title="2.cmake的安装和配置"></a>2.cmake的安装和配置</h3><h4 id="1-cmake安装"><a href="#1-cmake安装" class="headerlink" title="1.cmake安装"></a>1.cmake安装</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> cmake <span class="token comment">#基于ubuntu/debian</span></code></pre>
 <h4 id="2-cmake配置"><a href="#2-cmake配置" class="headerlink" title="2.cmake配置"></a>2.cmake配置</h4><p>cmake使用一般要设定两个环境变量，如果工程使用的包含文件或者库文件放在非默认路径下，则需要使用设置该环境变量来弥补</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> CMAKE_INCLUDE_PATH=/usr/include</span><br><span class="line"><span class="built_in">export</span> CMAKE_LIBRARY_PATH=/usr/lib</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">CMAKE_INCLUDE_PATH</span><span class="token operator">=</span>/usr/include
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CMAKE_LIBRARY_PATH</span><span class="token operator">=</span>/usr/lib</code></pre>
 <h3 id="3-CMakeLists-txt的编写规则"><a href="#3-CMakeLists-txt的编写规则" class="headerlink" title="3.CMakeLists.txt的编写规则"></a>3.CMakeLists.txt的编写规则</h3><p>脚本关键字一般使用大写，当然使用小写也是可以的</p>
-<h5 id="1-CMAKE-MINIMUM-REQUIRED"><a href="#1-CMAKE-MINIMUM-REQUIRED" class="headerlink" title="1.CMAKE_MINIMUM_REQUIRED"></a>1.CMAKE_MINIMUM_REQUIRED</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMAKE_MINIMUM_REQUIRED</span>(VERSION <span class="variable">$&#123;VERSION&#125;</span>)</span><br><span class="line"><span class="comment">#用于指定该cmake脚本兼容的最低cmake版本</span></span><br><span class="line"><span class="keyword">CMAKE_MINIMUM_REQUIRED</span>(VERSION <span class="number">3.12</span>)</span><br><span class="line"><span class="comment">#这里表明cmake兼容的最低版本为3.12</span></span><br></pre></td></tr></table></figure>
-<h4 id="2-PROJECT"><a href="#2-PROJECT" class="headerlink" title="2.PROJECT"></a>2.PROJECT</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PROJECT</span>(project_name <span class="variable">$&#123;program_language&#125;</span>)</span><br><span class="line"><span class="comment">#指定该项目的名称和该项目支持的变成语言</span></span><br><span class="line"><span class="keyword">PROJECT</span>(shadowsocks-libev C )</span><br><span class="line"><span class="comment">#这里指定项目名称为shadowsocks-libev,支持的变成语言为C,如果不指定此项默认支持所有变成语言</span></span><br></pre></td></tr></table></figure>
-<h4 id="3-INCLUDE-DIRECTORY"><a href="#3-INCLUDE-DIRECTORY" class="headerlink" title="3.INCLUDE_DIRECTORY"></a>3.INCLUDE_DIRECTORY</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INCLUDE_DIRECTORIES</span>(<span class="variable">$&#123;PATH&#125;</span>)</span><br><span class="line"><span class="comment">#指定包含头文件的包含路径</span></span><br><span class="line"><span class="keyword">INCLUDE_DIRECTORIES</span>(/usr/<span class="keyword">include</span>)</span><br><span class="line"><span class="comment">#指定项目头文件的包含路径为/usr/include</span></span><br></pre></td></tr></table></figure>
-<h4 id="4-LINK-DIRECTORIES"><a href="#4-LINK-DIRECTORIES" class="headerlink" title="4.LINK_DIRECTORIES"></a>4.LINK_DIRECTORIES</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LINK_DIRECTORIES</span>(<span class="variable">$&#123;PATH&#125;</span>)</span><br><span class="line"><span class="comment">#指定链接库的路径</span></span><br><span class="line"><span class="keyword">LINK_DIRECTORIES</span>(/usr/lib)</span><br><span class="line"><span class="comment">#指定链接库的路径为/usr/lib</span></span><br></pre></td></tr></table></figure>
-<h4 id="5-SET"><a href="#5-SET" class="headerlink" title="5.SET"></a>5.SET</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(PARAM VALUE)</span><br><span class="line"><span class="comment">#设置变量</span></span><br><span class="line"><span class="keyword">SET</span>(EXECUTABLE bin)</span><br><span class="line"><span class="comment">#这里设定变量EXECUTABLE为bin</span></span><br><span class="line"><span class="comment">#SET选项一般设置一些关键的环境变量，例如，输出的可执行程序的输出路径，包含文件的查找路径，包含库文件的查找路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#常用的关键变量</span></span><br><span class="line">LIBRARY_OUTPUT_PATH <span class="comment">#生成的库文件的生成目录</span></span><br><span class="line">EXECUTABLE_OUTPUT_PATH <span class="comment">#生成的可执行文件的生成目录</span></span><br><span class="line">CMAKE_C_COMPILER    <span class="comment">#指定cmake使用什么编译器进行编译项目</span></span><br><span class="line">CMAKE_CXX_COMPILER   <span class="comment">#指定cmake使用什么c++编译器进行编译项目</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-CMAKE-MINIMUM-REQUIRED"><a href="#1-CMAKE-MINIMUM-REQUIRED" class="headerlink" title="1.CMAKE_MINIMUM_REQUIRED"></a>1.CMAKE_MINIMUM_REQUIRED</h5><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token variable">CMAKE_MINIMUM_REQUIRED</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token punctuation">$&#123;</span><span class="token property">VERSION</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">#用于指定该cmake脚本兼容的最低cmake版本</span>
+<span class="token variable">CMAKE_MINIMUM_REQUIRED</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.12</span><span class="token punctuation">)</span>
+<span class="token comment">#这里表明cmake兼容的最低版本为3.12</span></code></pre>
+<h4 id="2-PROJECT"><a href="#2-PROJECT" class="headerlink" title="2.PROJECT"></a>2.PROJECT</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">PROJECT</span><span class="token punctuation">(</span>project_name <span class="token punctuation">$&#123;</span>program_language<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">#指定该项目的名称和该项目支持的变成语言</span>
+<span class="token function">PROJECT</span><span class="token punctuation">(</span>shadowsocks-libev C <span class="token punctuation">)</span>
+<span class="token comment">#这里指定项目名称为shadowsocks-libev,支持的变成语言为C,如果不指定此项默认支持所有变成语言</span></code></pre>
+<h4 id="3-INCLUDE-DIRECTORY"><a href="#3-INCLUDE-DIRECTORY" class="headerlink" title="3.INCLUDE_DIRECTORY"></a>3.INCLUDE_DIRECTORY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">INCLUDE_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>PATH<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">#指定包含头文件的包含路径</span>
+<span class="token property">INCLUDE_DIRECTORIES</span><span class="token punctuation">(</span>/usr/include<span class="token punctuation">)</span>
+<span class="token comment">#指定项目头文件的包含路径为/usr/include</span></code></pre>
+<h4 id="4-LINK-DIRECTORIES"><a href="#4-LINK-DIRECTORIES" class="headerlink" title="4.LINK_DIRECTORIES"></a>4.LINK_DIRECTORIES</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">LINK_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>PATH<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">#指定链接库的路径</span>
+<span class="token property">LINK_DIRECTORIES</span><span class="token punctuation">(</span>/usr/lib<span class="token punctuation">)</span>
+<span class="token comment">#指定链接库的路径为/usr/lib</span></code></pre>
+<h4 id="5-SET"><a href="#5-SET" class="headerlink" title="5.SET"></a>5.SET</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">SET</span><span class="token punctuation">(</span>PARAM <span class="token property">VALUE</span><span class="token punctuation">)</span>
+<span class="token comment">#设置变量</span>
+<span class="token function">SET</span><span class="token punctuation">(</span>EXECUTABLE bin<span class="token punctuation">)</span>
+<span class="token comment">#这里设定变量EXECUTABLE为bin</span>
+<span class="token comment">#SET选项一般设置一些关键的环境变量，例如，输出的可执行程序的输出路径，包含文件的查找路径，包含库文件的查找路径</span>
 
-<h4 id="6-ADD-LIBRARY"><a href="#6-ADD-LIBRARY" class="headerlink" title="6.ADD_LIBRARY"></a>6.ADD_LIBRARY</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD_LIBRARY</span>(&lt;name&gt; STATIC/SHARED/MODULE &lt;source&gt;)</span><br><span class="line"><span class="comment">#指定源代码路径以及生成的库的类型和名称</span></span><br><span class="line"><span class="comment">#&lt;name&gt;为指定生成库的名称</span></span><br><span class="line"><span class="comment">#STATIC/SHARED 指定生成静态或者动态库</span></span><br><span class="line"><span class="comment">#&lt;source&gt;指定源代码的路径</span></span><br></pre></td></tr></table></figure>
-<h4 id="7-AUX-SOURCE-DIRECTORY"><a href="#7-AUX-SOURCE-DIRECTORY" class="headerlink" title="7.AUX_SOURCE_DIRECTORY"></a>7.AUX_SOURCE_DIRECTORY</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">AUX_SOURCE_DIRECTORY</span>(src SOURCE_DIR)</span><br><span class="line"><span class="comment">#扫描一个目录的文件并将该目录的文件定义成一个变量</span></span><br></pre></td></tr></table></figure>
-<h4 id="8-其他常用的关键字"><a href="#8-其他常用的关键字" class="headerlink" title="8.其他常用的关键字"></a>8.其他常用的关键字</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TARGET_LINK_DIRECTORIES</span></span><br><span class="line"><span class="keyword">TARGET_LINK_DIRECTORIES</span>(/usr/lib)</span><br><span class="line"><span class="comment">#指定目标文件链接的库路径</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">TARGET_INCLUDE_DIRECTORIES</span></span><br><span class="line">TARGET_INCLUDED_DIRECTORIES(/usr/<span class="keyword">include</span>)</span><br><span class="line"><span class="comment">#指定生成的目标文件链接的头文件目录</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">MESSAGE</span></span><br><span class="line"><span class="keyword">MESSAGE</span>(type<span class="string">&quot;$&#123;message&#125;&quot;</span>)</span><br><span class="line">type</span><br><span class="line"><span class="number">1</span>.STATUS 非重要信息</span><br><span class="line"><span class="number">2</span>.WARNING 警告信息，会继续执行</span><br><span class="line"><span class="number">3</span>.AUTHOR_WARNING 警告信息(dev)，会继续执行</span><br><span class="line"><span class="number">4</span>.SEND_ERROR 错误，继续执行，但是会跳过生辰步骤</span><br><span class="line"><span class="number">5</span>.FATAL_ERROR 错误，终止所有处理过程</span><br><span class="line"><span class="comment">#输出打印信息，如果不指定type则默认STATUS类型</span></span><br><span class="line"><span class="keyword">MESSAGE</span>(FATAL_ERROR <span class="string">&quot;FATAL error&quot;</span>)</span><br><span class="line"><span class="comment">#输出信息错误FATAL error，并且终止cmake执行</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">OPTION</span>(WITH_STATIC <span class="string">&quot;build with static libraries&quot;</span> <span class="keyword">ON</span>)</span><br><span class="line"><span class="comment">#给用户一个选择，如果用户在编译的时候没有进行传参则使用默认值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET_TARGET_PROPERTIES</span>(hello_static PROPERTIES OUTPUT_NAME <span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="comment">#设置hello_static库文件输出文件名为hello</span></span><br></pre></td></tr></table></figure>
+<span class="token comment">#常用的关键变量</span>
+<span class="token variable">LIBRARY_OUTPUT_PATH</span> <span class="token comment">#生成的库文件的生成目录</span>
+<span class="token variable">EXECUTABLE_OUTPUT_PATH</span> <span class="token comment">#生成的可执行文件的生成目录</span>
+<span class="token variable">CMAKE_C_COMPILER</span>    <span class="token comment">#指定cmake使用什么编译器进行编译项目</span>
+<span class="token variable">CMAKE_CXX_COMPILER</span>   <span class="token comment">#指定cmake使用什么c++编译器进行编译项目</span></code></pre>
+
+<h4 id="6-ADD-LIBRARY"><a href="#6-ADD-LIBRARY" class="headerlink" title="6.ADD_LIBRARY"></a>6.ADD_LIBRARY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>&lt;name<span class="token punctuation">></span> <span class="token namespace">STATIC</span>/<span class="token namespace">SHARED</span>/MODULE &lt;source<span class="token punctuation">></span><span class="token punctuation">)</span>
+<span class="token comment">#指定源代码路径以及生成的库的类型和名称</span>
+<span class="token comment">#&lt;name>为指定生成库的名称</span>
+<span class="token comment">#STATIC/SHARED 指定生成静态或者动态库</span>
+<span class="token comment">#&lt;source>指定源代码的路径</span></code></pre>
+<h4 id="7-AUX-SOURCE-DIRECTORY"><a href="#7-AUX-SOURCE-DIRECTORY" class="headerlink" title="7.AUX_SOURCE_DIRECTORY"></a>7.AUX_SOURCE_DIRECTORY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">AUX_SOURCE_DIRECTORY</span><span class="token punctuation">(</span>src <span class="token property">SOURCE_DIR</span><span class="token punctuation">)</span>
+<span class="token comment">#扫描一个目录的文件并将该目录的文件定义成一个变量</span></code></pre>
+<h4 id="8-其他常用的关键字"><a href="#8-其他常用的关键字" class="headerlink" title="8.其他常用的关键字"></a>8.其他常用的关键字</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake">TARGET_LINK_DIRECTORIES
+<span class="token function">TARGET_LINK_DIRECTORIES</span><span class="token punctuation">(</span>/usr/lib<span class="token punctuation">)</span>
+<span class="token comment">#指定目标文件链接的库路径</span>
+
+TARGET_INCLUDE_DIRECTORIES
+<span class="token function">TARGET_INCLUDED_DIRECTORIES</span><span class="token punctuation">(</span>/usr/include<span class="token punctuation">)</span>
+<span class="token comment">#指定生成的目标文件链接的头文件目录</span>
+
+MESSAGE
+<span class="token function">MESSAGE</span><span class="token punctuation">(</span>type<span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">message</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
+type
+<span class="token number">1</span>.STATUS 非重要信息
+<span class="token number">2</span>.WARNING 警告信息，会继续执行
+<span class="token number">3</span>.AUTHOR_WARNING 警告信息<span class="token punctuation">(</span>dev<span class="token punctuation">)</span>，会继续执行
+<span class="token number">4</span>.SEND_ERROR 错误，继续执行，但是会跳过生辰步骤
+<span class="token number">5</span>.FATAL_ERROR 错误，终止所有处理过程
+<span class="token comment">#输出打印信息，如果不指定type则默认STATUS类型</span>
+<span class="token function">MESSAGE</span><span class="token punctuation">(</span>FATAL_ERROR <span class="token string">"FATAL error"</span><span class="token punctuation">)</span>
+<span class="token comment">#输出信息错误FATAL error，并且终止cmake执行</span>
+
+<span class="token function">OPTION</span><span class="token punctuation">(</span>WITH_STATIC <span class="token string">"build with static libraries"</span> <span class="token boolean">ON</span><span class="token punctuation">)</span>
+<span class="token comment">#给用户一个选择，如果用户在编译的时候没有进行传参则使用默认值</span>
+
+<span class="token function">SET_TARGET_PROPERTIES</span><span class="token punctuation">(</span>hello_static <span class="token namespace">PROPERTIES</span> <span class="token property">OUTPUT_NAME</span> <span class="token string">"hello"</span><span class="token punctuation">)</span>
+<span class="token comment">#设置hello_static库文件输出文件名为hello</span></code></pre>
 <h3 id="4-cmake使用方法"><a href="#4-cmake使用方法" class="headerlink" title="4.cmake使用方法"></a>4.cmake使用方法</h3><p>在构建cmake项目的时候我们一般会在项目的根目录建立一个build目录，然后将生成的目标文件以及中间文件生成在build目录下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$PROJECT</span> &amp;&amp; <span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build &amp;&amp; cmake .. &amp;&amp; make</span><br><span class="line"><span class="comment">#如果希望传递一些变量给cmake进行控制一些参数</span></span><br><span class="line">cmake -DCMAKE_C_COMPILER=clang</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> <span class="token variable">$PROJECT</span> <span class="token operator">&amp;&amp;</span> <span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build <span class="token operator">&amp;&amp;</span> cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span>
+<span class="token comment">#如果希望传递一些变量给cmake进行控制一些参数</span>
+cmake -DCMAKE_C_COMPILER<span class="token operator">=</span>clang</code></pre>
 
                 
             </div>
@@ -438,7 +506,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/02/07/cmake%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://dreamaccount.github.io/2023/02/07/cmake%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2023/02/07/cmake%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://bugprogram-git.github.io/2023/02/07/cmake%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -643,6 +711,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -815,6 +886,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1033,6 +1106,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1049,6 +1133,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

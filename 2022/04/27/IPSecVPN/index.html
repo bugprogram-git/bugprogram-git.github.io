@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="IPSEC VPN, Hexo">
+    <meta name="keywords" content="IPSEC VPN, MyBlog">
     <meta name="description" content="IPSecVPN1.什么是IPSEC?互联网安全协议(Internet Protocol Security)是一个协议包,透过对IP协议的分组进行加密和认证的网络传输协议族(一些相互关联的协议的集合)
 IPsec主要由以下协议组成[1][2">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@ IPsec主要由以下协议组成[1][2">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>IPSEC VPN | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>IPSEC VPN | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@ IPsec主要由以下协议组成[1][2">
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@ IPsec主要由以下协议组成[1][2">
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@ IPsec主要由以下协议组成[1][2">
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -444,7 +458,7 @@ IPsec主要由以下协议组成[1][2">
 </ul>
 <p>ESP协议不校验ip包头,并且提供数据包的加密和校验。</p>
 <h3 id="4-IPsecVPN搭建"><a href="#4-IPsecVPN搭建" class="headerlink" title="4.IPsecVPN搭建"></a>4.IPsecVPN搭建</h3><p>ipsecvpn实现有很多软件包的实现，这里基于archlinux使用strongswan实现ipsecvpn的搭建<br>1.安装ipsecvpn</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S strongswan</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S strongswan</code></pre>
 
                 
             </div>
@@ -471,7 +485,7 @@ IPsec主要由以下协议组成[1][2">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/27/IPSecVPN/">https://dreamaccount.github.io/2022/04/27/IPSecVPN/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/27/IPSecVPN/">https://bugprogram-git.github.io/2022/04/27/IPSecVPN/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -696,6 +710,9 @@ IPsec主要由以下协议组成[1][2">
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -868,6 +885,8 @@ IPsec主要由以下协议组成[1][2">
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1086,6 +1105,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1102,6 +1132,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

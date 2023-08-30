@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="归档: 2022/7, Hexo">
-    <meta name="description" content="my blog">
+    <meta name="keywords" content="归档: 2022/7, MyBlog">
+    <meta name="description" content="myblog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>归档: 2022/7 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>归档: 2022/7 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -337,7 +348,7 @@
         <div class="brand">
             <div class="title center-align">
                 
-                    subtitle
+                blog
                 
             </div>
 
@@ -574,7 +585,10 @@
                             <div class="summary block-with-text">
                                 
                                     centos更换内核导入仓库索引密钥并下载仓库索引
-1234#导入仓库索引rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org#安装软件包rpm -Uvh http://www
+#导入仓库索引
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+#安装软件包
+rpm -Uvh http://www.
                                 
                             </div>
                             <div class="publish-info">
@@ -633,7 +647,8 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    libpcap的基本使用1.获取网络接口1234567891011121314151617181920212223242526char *pcap_lookupdev(char *error_buffer);//获取本地网络接口(返回网络接
+                                    libpcap的基本使用1.获取网络接口char *pcap_lookupdev(char *error_buffer);//获取本地网络接口(返回网络接口的名称)
+int pcap_findalldevs(pcap_if_t **alld
                                 
                             </div>
                             <div class="publish-info">
@@ -692,9 +707,12 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    dns服务器配置过程1.dnsmasq1.1.安装dnsmasq1234#debiansudo apt install dnsmasq#rhelsudo yum install -y dnsmasq
+                                    dns服务器配置过程1.dnsmasq1.1.安装dnsmasq#debian
+sudo apt install dnsmasq
+#rhel
+sudo yum install -y dnsmasq
 
-1.2.修改dnsmasq配置文件1v
+1.2.修改dnsmasq配置文件vim
                                 
                             </div>
                             <div class="publish-info">
@@ -855,6 +873,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1073,6 +1093,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1089,6 +1120,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

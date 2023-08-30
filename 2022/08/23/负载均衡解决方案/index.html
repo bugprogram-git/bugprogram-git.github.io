@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="负载均衡解决方案, Hexo">
+    <meta name="keywords" content="负载均衡解决方案, MyBlog">
     <meta name="description" content="负载均衡解决方案常用的负载均衡解决方案有一下几种
 
 1.LVS
@@ -22,8 +22,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>负载均衡解决方案 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>负载均衡解决方案 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -70,7 +81,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -174,10 +185,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -410,6 +421,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -459,15 +473,187 @@
 <p><strong>8.Source Hashing(源地址散列)</strong></p>
 <p>“源地址散列”调度算法根据请求的源IP地址，作为散列键（Hash Key）从静态分配的散列表找出对应的服务器，若该服务器是可用的且未超载，将请求发送到该服务器，否则返回空。</p>
 <h5 id="4-Keepalived"><a href="#4-Keepalived" class="headerlink" title="4.Keepalived"></a>4.Keepalived</h5><p>keepalived是为lvs服务的,用来自动配置lvs集群</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装keepalived组件</span></span><br><span class="line">yum install -y keepalived</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#安装keepalived组件</span>
+yum <span class="token function">install</span> -y keepalived</code></pre>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">     acassen@firewall.loc</span><br><span class="line">     failover@firewall.loc</span><br><span class="line">     sysadmin@firewall.loc</span><br><span class="line">   &#125;</span><br><span class="line">   #配置告警发送邮件的邮件服务器相关信息</span><br><span class="line">   notification_email_from Alexandre.Cassen@firewall.loc</span><br><span class="line">   smtp_server 192.168.200.1</span><br><span class="line">   smtp_connect_timeout 30</span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">   vrrp_skip_check_adv_addr</span><br><span class="line">   vrrp_strict</span><br><span class="line">   vrrp_iptables #取消自动生成iptables规则</span><br><span class="line">   vrrp_garp_interval 0</span><br><span class="line">   vrrp_gna_interval 0</span><br><span class="line">&#125;</span><br><span class="line">#实例</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER</span><br><span class="line">    interface ens33</span><br><span class="line">    #集群id号</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    #优先级</span><br><span class="line">    priority 100</span><br><span class="line">    advert_int 1</span><br><span class="line">    #验证信息</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    #虚拟服务器ip地址,便于服务器故障时将虚拟ip地址漂移给其他的从节点</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.245.188/24</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">#虚拟服务器集群(用于vrrp实例调用)</span><br><span class="line">virtual_server 192.168.200.100 443 &#123;</span><br><span class="line">    delay_loop 6</span><br><span class="line">    lb_algo rr</span><br><span class="line">    #lvs调度类型</span><br><span class="line">    lb_kind DR</span><br><span class="line">    persistence_timeout 60</span><br><span class="line">    protocol TCP</span><br><span class="line">	#后端服务器的ip和端口号</span><br><span class="line">    real_server 192.168.201.100 443 &#123;</span><br><span class="line">        weight 1</span><br><span class="line">        #健康检查(SSL_GET/TCP/SSL_GET)</span><br><span class="line">        SSL_GET &#123;</span><br><span class="line">            url &#123;</span><br><span class="line">              path /</span><br><span class="line">              digest ff20ad2481f97b1754ef3e12ecd3a9cc</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123;</span><br><span class="line">              path /mrtg/</span><br><span class="line">              digest 9b3a0c85a887a256d6939da88aabd8cd #返回页面的md5值</span><br><span class="line">            &#125;</span><br><span class="line">            connect_timeout 3</span><br><span class="line">            nb_get_retry 3</span><br><span class="line">            delay_before_retry 3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">virtual_server 10.10.10.2 1358 &#123;</span><br><span class="line">    delay_loop 6</span><br><span class="line">    lb_algo rr </span><br><span class="line">    lb_kind NAT</span><br><span class="line">    persistence_timeout 50</span><br><span class="line">    protocol TCP</span><br><span class="line"></span><br><span class="line">    sorry_server 192.168.200.200 1358</span><br><span class="line"></span><br><span class="line">    real_server 192.168.200.2 1358 &#123;</span><br><span class="line">        weight 1</span><br><span class="line">        HTTP_GET &#123;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl2/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl3/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            connect_timeout 3</span><br><span class="line">            nb_get_retry 3</span><br><span class="line">            delay_before_retry 3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    real_server 192.168.200.3 1358 &#123;</span><br><span class="line">        weight 1</span><br><span class="line">        HTTP_GET &#123;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334c</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl2/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334c</span><br><span class="line">            &#125;</span><br><span class="line">            connect_timeout 3</span><br><span class="line">            nb_get_retry 3</span><br><span class="line">            delay_before_retry 3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">virtual_server 10.10.10.3 1358 &#123;</span><br><span class="line">    delay_loop 3</span><br><span class="line">    lb_algo rr </span><br><span class="line">    lb_kind NAT</span><br><span class="line">    persistence_timeout 50</span><br><span class="line">    protocol TCP</span><br><span class="line"></span><br><span class="line">    real_server 192.168.200.4 1358 &#123;</span><br><span class="line">        weight 1</span><br><span class="line">        HTTP_GET &#123;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl2/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl3/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            connect_timeout 3</span><br><span class="line">            nb_get_retry 3</span><br><span class="line">            delay_before_retry 3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    real_server 192.168.200.5 1358 &#123;</span><br><span class="line">        weight 1</span><br><span class="line">        HTTP_GET &#123;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl2/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            url &#123; </span><br><span class="line">              path /testurl3/test.jsp</span><br><span class="line">              digest 640205b7b0fc66c1ea91c463fac6334d</span><br><span class="line">            &#125;</span><br><span class="line">            connect_timeout 3</span><br><span class="line">            nb_get_retry 3</span><br><span class="line">            delay_before_retry 3</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-none"><code class="language-none">! Configuration File for keepalived
+
+global_defs &#123;
+   notification_email &#123;
+     acassen@firewall.loc
+     failover@firewall.loc
+     sysadmin@firewall.loc
+   &#125;
+   #配置告警发送邮件的邮件服务器相关信息
+   notification_email_from Alexandre.Cassen@firewall.loc
+   smtp_server 192.168.200.1
+   smtp_connect_timeout 30
+   router_id LVS_DEVEL
+   vrrp_skip_check_adv_addr
+   vrrp_strict
+   vrrp_iptables #取消自动生成iptables规则
+   vrrp_garp_interval 0
+   vrrp_gna_interval 0
+&#125;
+#实例
+vrrp_instance VI_1 &#123;
+    state MASTER
+    interface ens33
+    #集群id号
+    virtual_router_id 51
+    #优先级
+    priority 100
+    advert_int 1
+    #验证信息
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    #虚拟服务器ip地址,便于服务器故障时将虚拟ip地址漂移给其他的从节点
+    virtual_ipaddress &#123;
+        192.168.245.188&#x2F;24
+    &#125;
+&#125;
+#虚拟服务器集群(用于vrrp实例调用)
+virtual_server 192.168.200.100 443 &#123;
+    delay_loop 6
+    lb_algo rr
+    #lvs调度类型
+    lb_kind DR
+    persistence_timeout 60
+    protocol TCP
+	#后端服务器的ip和端口号
+    real_server 192.168.201.100 443 &#123;
+        weight 1
+        #健康检查(SSL_GET&#x2F;TCP&#x2F;SSL_GET)
+        SSL_GET &#123;
+            url &#123;
+              path &#x2F;
+              digest ff20ad2481f97b1754ef3e12ecd3a9cc
+            &#125;
+            url &#123;
+              path &#x2F;mrtg&#x2F;
+              digest 9b3a0c85a887a256d6939da88aabd8cd #返回页面的md5值
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+&#125;
+
+virtual_server 10.10.10.2 1358 &#123;
+    delay_loop 6
+    lb_algo rr 
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+
+    sorry_server 192.168.200.200 1358
+
+    real_server 192.168.200.2 1358 &#123;
+        weight 1
+        HTTP_GET &#123;
+            url &#123; 
+              path &#x2F;testurl&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl2&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl3&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+
+    real_server 192.168.200.3 1358 &#123;
+        weight 1
+        HTTP_GET &#123;
+            url &#123; 
+              path &#x2F;testurl&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334c
+            &#125;
+            url &#123; 
+              path &#x2F;testurl2&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334c
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+&#125;
+
+virtual_server 10.10.10.3 1358 &#123;
+    delay_loop 3
+    lb_algo rr 
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+
+    real_server 192.168.200.4 1358 &#123;
+        weight 1
+        HTTP_GET &#123;
+            url &#123; 
+              path &#x2F;testurl&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl2&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl3&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+
+    real_server 192.168.200.5 1358 &#123;
+        weight 1
+        HTTP_GET &#123;
+            url &#123; 
+              path &#x2F;testurl&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl2&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            url &#123; 
+              path &#x2F;testurl3&#x2F;test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            &#125;
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 
 <p>real server</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line"><span class="comment">#添加虚拟ip地址s</span></span><br><span class="line">ip addr add <span class="variable">$VIP</span>/PREFIX dev lo label lo:1</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/all/arp_announce
+<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/all/arp_ignore
+<span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/lo/arp_announce
+<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/lo/arp_ignore
+<span class="token comment">#添加虚拟ip地址s</span>
+<span class="token function">ip</span> addr <span class="token function">add</span> <span class="token variable">$VIP</span>/PREFIX dev lo label lo:1</code></pre>
 
 <p>调度器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#添加虚拟ip地址</span></span><br><span class="line">ip addr add <span class="variable">$VIP</span>/PREFIX dev ens33 label ens33:1</span><br><span class="line"><span class="comment">#配置路由</span></span><br><span class="line">ip route add <span class="variable">$VIP</span> dev ens33 ens33:1</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#添加虚拟ip地址</span>
+<span class="token function">ip</span> addr <span class="token function">add</span> <span class="token variable">$VIP</span>/PREFIX dev ens33 label ens33:1
+<span class="token comment">#配置路由</span>
+<span class="token function">ip</span> route <span class="token function">add</span> <span class="token variable">$VIP</span> dev ens33 ens33:1</code></pre>
 
 
 
@@ -486,13 +672,68 @@
 <p>HAProxy提供了基于Web的统计信息页面，展现健康状态和流量数据。基于此功能，使用者可以开发监控程序来监控HAProxy的状态</p>
 </li>
 </ul>
-<h5 id="3-Haproxy配置"><a href="#3-Haproxy配置" class="headerlink" title="3.Haproxy配置"></a>3.Haproxy配置</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">	<span class="built_in">log</span> /dev/log	local0</span><br><span class="line">	<span class="built_in">log</span> /dev/log	local1 notice</span><br><span class="line">	<span class="built_in">chroot</span> /var/lib/haproxy</span><br><span class="line">	stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners</span><br><span class="line">	stats <span class="built_in">timeout</span> 30s</span><br><span class="line">	user haproxy</span><br><span class="line">	group haproxy</span><br><span class="line">	daemon</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Default SSL material locations</span></span><br><span class="line">	ca-base /etc/ssl/certs</span><br><span class="line">	crt-base /etc/ssl/private</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># See: https://ssl-config.mozilla.org/#server=haproxy&amp;server-version=2.0.3&amp;config=intermediate</span></span><br><span class="line">	    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384</span><br><span class="line">	    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256</span><br><span class="line">	    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets</span><br><span class="line"></span><br><span class="line">defaults</span><br><span class="line">	<span class="built_in">log</span>	global</span><br><span class="line">	mode	http</span><br><span class="line">	option	httplog</span><br><span class="line">	option	dontlognull</span><br><span class="line">        <span class="built_in">timeout</span> connect 5000</span><br><span class="line">        <span class="built_in">timeout</span> client  50000</span><br><span class="line">        <span class="built_in">timeout</span> server  50000</span><br><span class="line">	errorfile 400 /etc/haproxy/errors/400.http</span><br><span class="line">	errorfile 403 /etc/haproxy/errors/403.http</span><br><span class="line">	errorfile 408 /etc/haproxy/errors/408.http</span><br><span class="line">	errorfile 500 /etc/haproxy/errors/500.http</span><br><span class="line">	errorfile 502 /etc/haproxy/errors/502.http</span><br><span class="line">	errorfile 503 /etc/haproxy/errors/503.http</span><br><span class="line">	errorfile 504 /etc/haproxy/errors/504.http</span><br><span class="line">frontend app<span class="comment">#前端请求分发器</span></span><br><span class="line">	<span class="built_in">bind</span> *:8080</span><br><span class="line">	mode http</span><br><span class="line">	default_backend servers</span><br><span class="line">backend servers<span class="comment">#后端真实服务器</span></span><br><span class="line">	server 192.168.0.2 192.168.0.2:80 check maxconn 2000<span class="comment">#check可以在服务器宕机的时候不再将请求分发给宕机服务器</span></span><br><span class="line">	server 192.168.0.2 192.168.0.2:81 check maxconn 2000</span><br><span class="line">listen admin_stats <span class="comment">#配置可视化面板</span></span><br><span class="line">	<span class="built_in">bind</span> *:8081</span><br><span class="line">	mode http</span><br><span class="line">	option httplog</span><br><span class="line">	stats refresh 4s</span><br><span class="line">	stats uri /dashboard</span><br><span class="line">	stats auth admin:admin</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+<h5 id="3-Haproxy配置"><a href="#3-Haproxy配置" class="headerlink" title="3.Haproxy配置"></a>3.Haproxy配置</h5><pre class="language-bash" data-language="bash"><code class="language-bash">global
+	log /dev/log	local0
+	log /dev/log	local1 notice
+	<span class="token function">chroot</span> /var/lib/haproxy
+	stats socket /run/haproxy/admin.sock mode <span class="token number">660</span> level admin expose-fd listeners
+	stats <span class="token function">timeout</span> 30s
+	user haproxy
+	group haproxy
+	daemon
+
+	<span class="token comment"># Default SSL material locations</span>
+	ca-base /etc/ssl/certs
+	crt-base /etc/ssl/private
+	
+	<span class="token comment"># See: https://ssl-config.mozilla.org/#server=haproxy&amp;server-version=2.0.3&amp;config=intermediate</span>
+	    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+	    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+	    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+defaults
+	log	global
+	mode	http
+	option	httplog
+	option	dontlognull
+        <span class="token function">timeout</span> connect <span class="token number">5000</span>
+        <span class="token function">timeout</span> client  <span class="token number">50000</span>
+        <span class="token function">timeout</span> server  <span class="token number">50000</span>
+	errorfile <span class="token number">400</span> /etc/haproxy/errors/400.http
+	errorfile <span class="token number">403</span> /etc/haproxy/errors/403.http
+	errorfile <span class="token number">408</span> /etc/haproxy/errors/408.http
+	errorfile <span class="token number">500</span> /etc/haproxy/errors/500.http
+	errorfile <span class="token number">502</span> /etc/haproxy/errors/502.http
+	errorfile <span class="token number">503</span> /etc/haproxy/errors/503.http
+	errorfile <span class="token number">504</span> /etc/haproxy/errors/504.http
+frontend app<span class="token comment">#前端请求分发器</span>
+	<span class="token builtin class-name">bind</span> *:8080
+	mode http
+	default_backend servers
+backend servers<span class="token comment">#后端真实服务器</span>
+	server <span class="token number">192.168</span>.0.2 <span class="token number">192.168</span>.0.2:80 check maxconn <span class="token number">2000</span><span class="token comment">#check可以在服务器宕机的时候不再将请求分发给宕机服务器</span>
+	server <span class="token number">192.168</span>.0.2 <span class="token number">192.168</span>.0.2:81 check maxconn <span class="token number">2000</span>
+listen admin_stats <span class="token comment">#配置可视化面板</span>
+	<span class="token builtin class-name">bind</span> *:8081
+	mode http
+	option httplog
+	stats refresh 4s
+	stats uri /dashboard
+	stats auth admin:admin
+	</code></pre>
 
 <p>启动haproxy服务器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart haproxy</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart haproxy</code></pre>
 
 <h3 id="3-Nginx"><a href="#3-Nginx" class="headerlink" title="3.Nginx"></a>3.Nginx</h3><h5 id="1-什么是Nginx"><a href="#1-什么是Nginx" class="headerlink" title="1.什么是Nginx?"></a>1.什么是Nginx?</h5><p>Nginx是一个高性能的web服务器和反向代理服务器</p>
-<h5 id="2-Nginx配置负载均衡"><a href="#2-Nginx配置负载均衡" class="headerlink" title="2.Nginx配置负载均衡"></a>2.Nginx配置负载均衡</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">upstream server &#123; </span><br><span class="line">      server 127.0.0.1:80; </span><br><span class="line">      server 127.0.0.1:81; </span><br><span class="line">&#125;<span class="comment">#配置上游服务器(默认调度算法为轮询)</span></span><br><span class="line">localtion /&#123;</span><br><span class="line">	<span class="comment">#配置后端实际处理请求的服务器</span></span><br><span class="line">	proxy_pass http://server;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-Nginx配置负载均衡"><a href="#2-Nginx配置负载均衡" class="headerlink" title="2.Nginx配置负载均衡"></a>2.Nginx配置负载均衡</h5><pre class="language-bash" data-language="bash"><code class="language-bash">upstream server <span class="token punctuation">&#123;</span> 
+      server <span class="token number">127.0</span>.0.1:80<span class="token punctuation">;</span> 
+      server <span class="token number">127.0</span>.0.1:81<span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span><span class="token comment">#配置上游服务器(默认调度算法为轮询)</span>
+localtion /<span class="token punctuation">&#123;</span>
+	<span class="token comment">#配置后端实际处理请求的服务器</span>
+	proxy_pass http://server<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 
 
@@ -524,7 +765,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/08/23/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">https://dreamaccount.github.io/2022/08/23/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</a>
+                    <a href="https://bugprogram-git.github.io/2022/08/23/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">https://bugprogram-git.github.io/2022/08/23/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -745,6 +986,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -917,6 +1161,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1135,6 +1381,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1151,6 +1408,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

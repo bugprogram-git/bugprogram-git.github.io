@@ -4,9 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iproute2的基本使用, Hexo">
+    <meta name="keywords" content="iproute2的基本使用, MyBlog">
     <meta name="description" content="iproute2的基本使用1.常用命令1.查看指定网卡的信息配置链路信息
-1234567ip link show eth0 									#查看网卡的链路信息ip link set eth0 up/down 							#设置网卡启动">
+ip link show eth0 									#查看网卡的链路信息
+ip link set eth0 up/down 							#设置网卡启动或者关闭
+i">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,8 +19,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>iproute2的基本使用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>iproute2的基本使用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +78,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +182,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,36 +418,56 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="iproute2的基本使用"><a href="#iproute2的基本使用" class="headerlink" title="iproute2的基本使用"></a>iproute2的基本使用</h1><h3 id="1-常用命令"><a href="#1-常用命令" class="headerlink" title="1.常用命令"></a>1.常用命令</h3><h4 id="1-查看指定网卡的信息"><a href="#1-查看指定网卡的信息" class="headerlink" title="1.查看指定网卡的信息"></a>1.查看指定网卡的信息</h4><p>配置链路信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ip <span class="built_in">link</span> show eth0 									<span class="comment">#查看网卡的链路信息</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth0 up/down 							<span class="comment">#设置网卡启动或者关闭</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth1 multicast on/off					<span class="comment">#打开/关闭网络接口的多播标志</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth1 mtu 1500							<span class="comment">#设置mtu值</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth1 txqueuelen 1000		</span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth1 name eth10							<span class="comment">#修改网卡标志</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> eth1 arp on								<span class="comment">#修改关联的arp标志</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> <span class="token function">link</span> show eth0 									<span class="token comment">#查看网卡的链路信息</span>
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth0 up/down 							<span class="token comment">#设置网卡启动或者关闭</span>
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth1 multicast on/off					<span class="token comment">#打开/关闭网络接口的多播标志</span>
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth1 mtu <span class="token number">1500</span>							<span class="token comment">#设置mtu值</span>
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth1 txqueuelen <span class="token number">1000</span>		
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth1 name eth10							<span class="token comment">#修改网卡标志</span>
+<span class="token function">ip</span> <span class="token function">link</span> <span class="token builtin class-name">set</span> eth1 arp on								<span class="token comment">#修改关联的arp标志</span></code></pre>
 
 <p>配置ip地址信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip addr show eth0 									<span class="comment">#查看网卡的ip地址</span></span><br><span class="line">ip addr add/del/change ipaddress/netprefix dev interface <span class="comment">#添加/删除/修改 网卡的ip地址</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> addr show eth0 									<span class="token comment">#查看网卡的ip地址</span>
+<span class="token function">ip</span> addr add/del/change ipaddress/netprefix dev interface <span class="token comment">#添加/删除/修改 网卡的ip地址</span>
+</code></pre>
 
 <p>配置路由信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add ipaddr/netmask via ipaddr dev eth0		<span class="comment">#配置路由</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> route <span class="token function">add</span> ipaddr/netmask via ipaddr dev eth0		<span class="token comment">#配置路由</span></code></pre>
 
 <p>配置网卡子接口</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr add IPADDRESS/PREFIX dev eth0 lable eth0:1 <span class="comment">#配置网卡子接口常用于单臂路由</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> addr <span class="token function">add</span> IPADDRESS/PREFIX dev eth0 lable eth0:1 <span class="token comment">#配置网卡子接口常用于单臂路由</span></code></pre>
 
 
 
 <p>配置策略路由</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置默认路由</span></span><br><span class="line">ip route add default via 192.168.0.1</span><br><span class="line"><span class="comment"># 添加新路由表 out3</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;3 out3&quot;</span> &gt;&gt; /etc/iproute2/rt_tables</span><br><span class="line"><span class="comment"># 给 out3 路由表添加默认路由</span></span><br><span class="line">ip route add default via 192.168.0.3 table out3</span><br><span class="line"><span class="comment"># 用 iptables 给访问 tcp 80 端口的数据打标</span></span><br><span class="line">iptables -t mangle -A OUTPUT -p tcp --dport 80 -j MARK --set-mark 3</span><br><span class="line"><span class="comment"># 将打标数据与 out3 路由表关联</span></span><br><span class="line">ip rule add fwmark 3 table out3  </span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 配置默认路由</span>
+<span class="token function">ip</span> route <span class="token function">add</span> default via <span class="token number">192.168</span>.0.1
+<span class="token comment"># 添加新路由表 out3</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"3 out3"</span> <span class="token operator">>></span> /etc/iproute2/rt_tables
+<span class="token comment"># 给 out3 路由表添加默认路由</span>
+<span class="token function">ip</span> route <span class="token function">add</span> default via <span class="token number">192.168</span>.0.3 table out3
+<span class="token comment"># 用 iptables 给访问 tcp 80 端口的数据打标</span>
+iptables -t mangle -A OUTPUT -p tcp --dport <span class="token number">80</span> -j MARK --set-mark <span class="token number">3</span>
+<span class="token comment"># 将打标数据与 out3 路由表关联</span>
+<span class="token function">ip</span> rule <span class="token function">add</span> fwmark <span class="token number">3</span> table out3  </code></pre>
 
 <p>系统默认有三个路由表</p>
 <p>Linux最多可以支持255张路由表，其中有3张表是内置的：<br>　　表255 本地路由表（Local table） 本地接口地址，广播地址，已及NAT地址都放在这个表。该路由表由系统自动维护，管理员不能直接修改。<br>　　表254 主路由表（Main table） 如果没有指明路由所属的表，所有的路由都默认都放在这个表里，一般来说，旧的路由工具（如route）所添加的路由都会加到这个表。一般是普通的路由。</p>
 <p>​		表253 默认路由表 （Default table） 一般来说默认的路由都放在这张表，但是如果特别指明放的也可以是所有的网关路由。</p>
 <p>查看路由规则内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route list table table_number</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> route list table table_number</code></pre>
 
 <p>添加规则</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip route add from ipaddress/netprefix  table table_num pref <span class="comment">#匹配该ip地址段的流量按路由表table_num处理</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ip</span> route <span class="token function">add</span> from ipaddress/netprefix  table table_num pref <span class="token comment">#匹配该ip地址段的流量按路由表table_num处理</span></code></pre>
 
 
 
@@ -466,7 +499,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/08/11/iproute2%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://dreamaccount.github.io/2022/08/11/iproute2%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/08/11/iproute2%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://bugprogram-git.github.io/2022/08/11/iproute2%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,6 +720,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -859,6 +895,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1077,6 +1115,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1093,6 +1142,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

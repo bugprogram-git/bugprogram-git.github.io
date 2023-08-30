@@ -4,10 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="dnsmasq配置教程, Hexo">
-    <meta name="description" content="dns服务器配置过程1.dnsmasq1.1.安装dnsmasq1234#debiansudo apt install dnsmasq#rhelsudo yum install -y dnsmasq
+    <meta name="keywords" content="dnsmasq配置教程, MyBlog">
+    <meta name="description" content="dns服务器配置过程1.dnsmasq1.1.安装dnsmasq#debian
+sudo apt install dnsmasq
+#rhel
+sudo yum install -y dnsmasq
 
-1.2.修改dnsmasq配置文件1v">
+1.2.修改dnsmasq配置文件vim">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,8 +21,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>dnsmasq配置教程 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>dnsmasq配置教程 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -66,7 +80,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -170,10 +184,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -397,21 +411,30 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="dns服务器配置过程"><a href="#dns服务器配置过程" class="headerlink" title="dns服务器配置过程"></a>dns服务器配置过程</h1><h2 id="1-dnsmasq"><a href="#1-dnsmasq" class="headerlink" title="1.dnsmasq"></a>1.dnsmasq</h2><h3 id="1-1-安装dnsmasq"><a href="#1-1-安装dnsmasq" class="headerlink" title="1.1.安装dnsmasq"></a>1.1.安装dnsmasq</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#debian</span></span><br><span class="line">sudo apt install dnsmasq</span><br><span class="line"><span class="comment">#rhel</span></span><br><span class="line">sudo yum install -y dnsmasq</span><br></pre></td></tr></table></figure>
+                <h1 id="dns服务器配置过程"><a href="#dns服务器配置过程" class="headerlink" title="dns服务器配置过程"></a>dns服务器配置过程</h1><h2 id="1-dnsmasq"><a href="#1-dnsmasq" class="headerlink" title="1.dnsmasq"></a>1.dnsmasq</h2><h3 id="1-1-安装dnsmasq"><a href="#1-1-安装dnsmasq" class="headerlink" title="1.1.安装dnsmasq"></a>1.1.安装dnsmasq</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#debian</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> dnsmasq
+<span class="token comment">#rhel</span>
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y dnsmasq</code></pre>
 
-<h3 id="1-2-修改dnsmasq配置文件"><a href="#1-2-修改dnsmasq配置文件" class="headerlink" title="1.2.修改dnsmasq配置文件"></a>1.2.修改dnsmasq配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/dnsmasq.conf</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-修改dnsmasq配置文件"><a href="#1-2-修改dnsmasq配置文件" class="headerlink" title="1.2.修改dnsmasq配置文件"></a>1.2.修改dnsmasq配置文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/dnsmasq.conf</code></pre>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cache-size=10240<span class="comment">#dns缓存记录大小</span></span><br><span class="line">listen-address=192.168.0.5<span class="comment">#绑定的ip地址</span></span><br><span class="line">addn-hosts=/etc/dnsmasq.hosts<span class="comment">#导入外部的dns解析数据</span></span><br><span class="line">resolv-conf=/etc/dnsmasq.dnsmasq.conf<span class="comment">#指定上游dns服务器的文件</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">cache-size<span class="token operator">=</span><span class="token number">10240</span><span class="token comment">#dns缓存记录大小</span>
+listen-address<span class="token operator">=</span><span class="token number">192.168</span>.0.5<span class="token comment">#绑定的ip地址</span>
+addn-hosts<span class="token operator">=</span>/etc/dnsmasq.hosts<span class="token comment">#导入外部的dns解析数据</span>
+resolv-conf<span class="token operator">=</span>/etc/dnsmasq.dnsmasq.conf<span class="token comment">#指定上游dns服务器的文件</span></code></pre>
 
 <h3 id="1-3-resolv-conf指定上游dns服务器可能不成功-未知原因"><a href="#1-3-resolv-conf指定上游dns服务器可能不成功-未知原因" class="headerlink" title="1.3.resolv-conf指定上游dns服务器可能不成功(未知原因)"></a>1.3.resolv-conf指定上游dns服务器可能不成功(未知原因)</h3><p>可以尝试修改&#x2F;etc&#x2F;init.d&#x2F;dnsmasq脚本</p>
 <p>RESOLV-CONF&#x3D;&#x2F;etc&#x2F;resolv-dnsmasq.conf</p>
-<h3 id="1-4-启动dns服务器"><a href="#1-4-启动dns服务器" class="headerlink" title="1.4.启动dns服务器"></a>1.4.启动dns服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start dnsmasq.service</span><br></pre></td></tr></table></figure>
-<h2 id="2-bind"><a href="#2-bind" class="headerlink" title="2.bind"></a>2.bind</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1-4-启动dns服务器"><a href="#1-4-启动dns服务器" class="headerlink" title="1.4.启动dns服务器"></a>1.4.启动dns服务器</h3><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start dnsmasq.service</code></pre>
+<h2 id="2-bind"><a href="#2-bind" class="headerlink" title="2.bind"></a>2.bind</h2><pre class="language-none"><code class="language-none"></code></pre>
 
 
 
@@ -441,7 +464,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/07/08/dnsmasq%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">https://dreamaccount.github.io/2022/07/08/dnsmasq%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</a>
+                    <a href="https://bugprogram-git.github.io/2022/07/08/dnsmasq%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">https://bugprogram-git.github.io/2022/07/08/dnsmasq%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -666,6 +689,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -838,6 +864,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1056,6 +1084,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1072,6 +1111,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

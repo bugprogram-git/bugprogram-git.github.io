@@ -4,17 +4,18 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="samba服务配置, Hexo">
+    <meta name="keywords" content="samba服务配置, MyBlog">
     <meta name="description" content="1.samba服务配置环境基于debian11
 
 1.安装服务必要的组件
 
-1sudo apt install samba
+sudo apt install samba
 
 
 2.配置共享目录
 &amp;#x2F;etc&amp;#x2F;samba&amp;#x2F;smb.conf
-12345678[sha">
+[share]
+comme">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -25,8 +26,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>samba服务配置 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>samba服务配置 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -73,7 +85,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -177,10 +189,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -413,6 +425,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -422,18 +437,26 @@
 <ul>
 <li>1.安装服务必要的组件</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install samba</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> samba</code></pre>
 
 <ul>
 <li><p>2.配置共享目录</p>
 <p>&#x2F;etc&#x2F;samba&#x2F;smb.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[share]</span><br><span class="line">comment = file share <span class="comment">#共享目录的描述信息</span></span><br><span class="line">path = /srv/smbshare <span class="comment">#共享目录的路径</span></span><br><span class="line">available = <span class="built_in">yes</span></span><br><span class="line">browsable = <span class="built_in">yes</span></span><br><span class="line">writable = <span class="built_in">yes</span>		  <span class="comment"># 可写权限</span></span><br><span class="line">valid <span class="built_in">users</span> = armbian <span class="comment"># 有效的访问用户</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>share<span class="token punctuation">]</span>
+comment <span class="token operator">=</span> <span class="token function">file</span> share <span class="token comment">#共享目录的描述信息</span>
+path <span class="token operator">=</span> /srv/smbshare <span class="token comment">#共享目录的路径</span>
+available <span class="token operator">=</span> <span class="token function">yes</span>
+browsable <span class="token operator">=</span> <span class="token function">yes</span>
+writable <span class="token operator">=</span> <span class="token function">yes</span>		  <span class="token comment"># 可写权限</span>
+valid <span class="token function">users</span> <span class="token operator">=</span> armbian <span class="token comment"># 有效的访问用户</span>
+</code></pre>
 </li>
 <li><p>3.添加samba用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo smbpasswd -a armbian <span class="comment">#这里添加的用户必须是系统已经存在的用户,这里设置的密码可以和系统用户的密码不一样</span></span><br><span class="line"><span class="comment">#用户在访问共享目录的时候权限除了取决于共享目录的配置权限还取决于系统用户对这个共享目录的访问权限</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> smbpasswd -a armbian <span class="token comment">#这里添加的用户必须是系统已经存在的用户,这里设置的密码可以和系统用户的密码不一样</span>
+<span class="token comment">#用户在访问共享目录的时候权限除了取决于共享目录的配置权限还取决于系统用户对这个共享目录的访问权限</span></code></pre>
 </li>
 <li><p>4.启动samba服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start smbd.service</span><br></pre></td></tr></table></figure></li>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl start smbd.service</code></pre></li>
 </ul>
 
                 
@@ -461,7 +484,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/10/15/samba%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/">https://dreamaccount.github.io/2022/10/15/samba%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/</a>
+                    <a href="https://bugprogram-git.github.io/2022/10/15/samba%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/">https://bugprogram-git.github.io/2022/10/15/samba%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -686,6 +709,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -858,6 +884,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1076,6 +1104,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1092,6 +1131,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

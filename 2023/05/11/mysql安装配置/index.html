@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="mysql安装配置, Hexo">
-    <meta name="description" content="mysql安装配置1.安装配置1.Archlinux1.安装mariadb1pacman -S mariadb
-2.初始化数据库1mariadb-install-db --user=mysql --basedir=/usr --datadi">
+    <meta name="keywords" content="mysql安装配置, MyBlog">
+    <meta name="description" content="mysql安装配置1.安装配置1.Archlinux1.安装mariadbpacman -S mariadb
+2.初始化数据库mariadb-install-db --user=mysql --basedir=/usr --datadir=">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>mysql安装配置 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>mysql安装配置 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,45 +416,99 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="mysql安装配置"><a href="#mysql安装配置" class="headerlink" title="mysql安装配置"></a>mysql安装配置</h1><h2 id="1-安装配置"><a href="#1-安装配置" class="headerlink" title="1.安装配置"></a>1.安装配置</h2><h3 id="1-Archlinux"><a href="#1-Archlinux" class="headerlink" title="1.Archlinux"></a>1.Archlinux</h3><h5 id="1-安装mariadb"><a href="#1-安装mariadb" class="headerlink" title="1.安装mariadb"></a>1.安装mariadb</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S mariadb</span><br></pre></td></tr></table></figure>
-<h5 id="2-初始化数据库"><a href="#2-初始化数据库" class="headerlink" title="2.初始化数据库"></a>2.初始化数据库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql</span><br></pre></td></tr></table></figure>
-<h5 id="3-启动数据库"><a href="#3-启动数据库" class="headerlink" title="3.启动数据库"></a>3.启动数据库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mariadb</span><br></pre></td></tr></table></figure>
+                <h1 id="mysql安装配置"><a href="#mysql安装配置" class="headerlink" title="mysql安装配置"></a>mysql安装配置</h1><h2 id="1-安装配置"><a href="#1-安装配置" class="headerlink" title="1.安装配置"></a>1.安装配置</h2><h3 id="1-Archlinux"><a href="#1-Archlinux" class="headerlink" title="1.Archlinux"></a>1.Archlinux</h3><h5 id="1-安装mariadb"><a href="#1-安装mariadb" class="headerlink" title="1.安装mariadb"></a>1.安装mariadb</h5><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S mariadb</code></pre>
+<h5 id="2-初始化数据库"><a href="#2-初始化数据库" class="headerlink" title="2.初始化数据库"></a>2.初始化数据库</h5><pre class="language-bash" data-language="bash"><code class="language-bash">mariadb-install-db --user<span class="token operator">=</span>mysql --basedir<span class="token operator">=</span>/usr --datadir<span class="token operator">=</span>/var/lib/mysql</code></pre>
+<h5 id="3-启动数据库"><a href="#3-启动数据库" class="headerlink" title="3.启动数据库"></a>3.启动数据库</h5><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start mariadb</code></pre>
 <h5 id="4-修改root密码"><a href="#4-修改root密码" class="headerlink" title="4.修改root密码"></a>4.修改root密码</h5><p>首次使用root用户登录不需要密码并且只能在本地登录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter user<span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;新密码&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">alter user<span class="token string">'root'</span>@<span class="token string">'localhost'</span> identified by <span class="token string">'新密码'</span><span class="token punctuation">;</span></code></pre>
 <p>如果要开启远程登录<br>对于mariadb来说同一个用户在本地登录和在远程登录，密码是互不干扰的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED BY <span class="string">&#x27;password&#x27;</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'password'</span> WITH GRANT OPTION<span class="token punctuation">;</span></code></pre>
 
-<h3 id="2-Centos"><a href="#2-Centos" class="headerlink" title="2.Centos"></a>2.Centos</h3><h4 id="1-1-从官网获取"><a href="#1-1-从官网获取" class="headerlink" title="1.1.从官网获取"></a>1.1.从官网获取</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-common-8.0.33-1.el7.x86_64.rpm</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-icu-data-files-8.0.33-1.el7.x86_64.rpm</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-libs-8.0.33-1.el7.x86_64.rpm</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-client-plugins-8.0.33-1.el7.x86_64.rpm</span><br><span class="line">wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-client-plugins-8.0.33-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">rpm -ivh *.rpm</span><br></pre></td></tr></table></figure>
+<h3 id="2-Centos"><a href="#2-Centos" class="headerlink" title="2.Centos"></a>2.Centos</h3><h4 id="1-1-从官网获取"><a href="#1-1-从官网获取" class="headerlink" title="1.1.从官网获取"></a>1.1.从官网获取</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-common-8.0.33-1.el7.x86_64.rpm
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-icu-data-files-8.0.33-1.el7.x86_64.rpm
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-libs-8.0.33-1.el7.x86_64.rpm
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-client-plugins-8.0.33-1.el7.x86_64.rpm
+<span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-community-client-plugins-8.0.33-1.el7.x86_64.rpm
+
+<span class="token function">rpm</span> -ivh *.rpm</code></pre>
 <h4 id="1-2-从yum源获取"><a href="#1-2-从yum源获取" class="headerlink" title="1.2 从yum源获取"></a>1.2 从yum源获取</h4><p>2.安装软件包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install mysql</span><br></pre></td></tr></table></figure>
-<h4 id="2-启动mysql"><a href="#2-启动mysql" class="headerlink" title="2.启动mysql"></a>2.启动mysql</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart mysqld</span><br><span class="line"><span class="comment">#启动mysql后mysql会自动初始化数据库</span></span><br></pre></td></tr></table></figure>
-<h4 id="3-修改密码"><a href="#3-修改密码" class="headerlink" title="3.修改密码"></a>3.修改密码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取密码</span></span><br><span class="line"><span class="built_in">tail</span> /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> mysql</code></pre>
+<h4 id="2-启动mysql"><a href="#2-启动mysql" class="headerlink" title="2.启动mysql"></a>2.启动mysql</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart mysqld
+<span class="token comment">#启动mysql后mysql会自动初始化数据库</span></code></pre>
+<h4 id="3-修改密码"><a href="#3-修改密码" class="headerlink" title="3.修改密码"></a>3.修改密码</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#获取密码</span>
+<span class="token function">tail</span> /var/log/mysqld.log</code></pre>
 <p>mysq8.0开始默认启用了validate_password组件<br>    如果出现密码问题，可以</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#登录mysql（这里的密码通过上面步骤获取）</span></span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line"><span class="comment">#mariadb/mysql (适用于相对较新的版本)</span></span><br><span class="line">alter user<span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified by <span class="string">&#x27;新密码&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#mariadb（适用于相对较老的版本）</span></span><br><span class="line">UPDATE mysql.user SET password = PASSWORD(<span class="string">&#x27;root&#x27;</span>) WHERE user = <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#刷新</span></span><br><span class="line">flush privileges</span><br><span class="line"></span><br><span class="line"><span class="comment">#开启远程登录</span></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED BY <span class="string">&#x27;password&#x27;</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
-<p>如果出现修改密码不符合策略可以卸载</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UNINSTALL COMPONENT <span class="string">&#x27;file://component_validate_password&#x27;</span>; <span class="comment">#卸载validate_password 这个组件</span></span><br><span class="line">INSTALL COMPONENT <span class="string">&#x27;file://component_validate_password&#x27;</span>;</span><br><span class="line"><span class="comment">#mysql默认会加载validate_password component,但是不会加载validate_password component</span></span><br><span class="line">install plugin validate_password soname <span class="string">&#x27;validate_password.so&#x27;</span>;</span><br><span class="line">UNINSTALL PLUGIN  validate_password;</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#修改密码</span>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改mysql配置文件</span></span><br><span class="line">vim /etc/my.cnf</span><br><span class="line"><span class="comment">#加入以下两行</span></span><br><span class="line">validate_password.policy=LOW</span><br><span class="line">validate_password.length=0</span><br><span class="line">validate_password.check_user_name=OFF</span><br><span class="line"><span class="comment">#这个用于关闭密码和用户名一样的时候密码不通过。（这些参数依赖与vaildate_password component)</span></span><br><span class="line"></span><br><span class="line">validate_password.number_count + validate_password.special_char_count + (2 * validate_password.mixed_case_count)</span><br></pre></td></tr></table></figure>
+<span class="token comment">#登录mysql（这里的密码通过上面步骤获取）</span>
+mysql -uroot -p
+
+<span class="token comment">#mariadb/mysql (适用于相对较新的版本)</span>
+alter user<span class="token string">'root'</span>@<span class="token string">'localhost'</span> identified by <span class="token string">'新密码'</span><span class="token punctuation">;</span>
+
+<span class="token comment">#mariadb（适用于相对较老的版本）</span>
+UPDATE mysql.user SET password <span class="token operator">=</span> PASSWORD<span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span> WHERE user <span class="token operator">=</span> <span class="token string">'root'</span><span class="token punctuation">;</span>
+
+<span class="token comment">#刷新</span>
+flush privileges
+
+<span class="token comment">#开启远程登录</span>
+GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'password'</span> WITH GRANT OPTION<span class="token punctuation">;</span></code></pre>
+<p>如果出现修改密码不符合策略可以卸载</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">UNINSTALL COMPONENT <span class="token string">'file://component_validate_password'</span><span class="token punctuation">;</span> <span class="token comment">#卸载validate_password 这个组件</span>
+INSTALL COMPONENT <span class="token string">'file://component_validate_password'</span><span class="token punctuation">;</span>
+<span class="token comment">#mysql默认会加载validate_password component,但是不会加载validate_password component</span>
+<span class="token function">install</span> plugin validate_password soname <span class="token string">'validate_password.so'</span><span class="token punctuation">;</span>
+UNINSTALL PLUGIN  validate_password<span class="token punctuation">;</span></code></pre>
+
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#修改mysql配置文件</span>
+<span class="token function">vim</span> /etc/my.cnf
+<span class="token comment">#加入以下两行</span>
+validate_password.policy<span class="token operator">=</span>LOW
+validate_password.length<span class="token operator">=</span><span class="token number">0</span>
+validate_password.check_user_name<span class="token operator">=</span>OFF
+<span class="token comment">#这个用于关闭密码和用户名一样的时候密码不通过。（这些参数依赖与vaildate_password component)</span>
+
+validate_password.number_count + validate_password.special_char_count + <span class="token punctuation">(</span><span class="token number">2</span> * validate_password.mixed_case_count<span class="token punctuation">)</span></code></pre>
 <h2 id="2-mysql配置主从复制"><a href="#2-mysql配置主从复制" class="headerlink" title="2.mysql配置主从复制"></a>2.mysql配置主从复制</h2><h5 id="2-1-mysql主从复制的原理"><a href="#2-1-mysql主从复制的原理" class="headerlink" title="2.1 mysql主从复制的原理"></a>2.1 mysql主从复制的原理</h5><ul>
 <li>1.mysql主库将数据的更改记录记录到二进制日志(binary log)中</li>
 <li>2.mysql从库将主库的更改记录的二进制日志同步到本地的中继日志(relay log)</li>
 <li>3.mysql从库读取中继日志,根据日志中的操作步骤,同步数据</li>
 </ul>
 <h5 id="2-2-配置主库"><a href="#2-2-配置主库" class="headerlink" title="2.2 配置主库"></a>2.2 配置主库</h5><p>修改配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id=1</span><br><span class="line">log-bin=localhost-binlog	<span class="comment">#日志文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#需要同步的表，不配置默认同步所有数据库</span></span><br><span class="line">binlog-do-db=db_a</span><br><span class="line">binlog-do-db=db_b</span><br><span class="line">binlog-do-db=db_c</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+server-id<span class="token operator">=</span><span class="token number">1</span>
+log-bin<span class="token operator">=</span>localhost-binlog	<span class="token comment">#日志文件</span>
+
+<span class="token comment">#需要同步的表，不配置默认同步所有数据库</span>
+binlog-do-db<span class="token operator">=</span>db_a
+binlog-do-db<span class="token operator">=</span>db_b
+binlog-do-db<span class="token operator">=</span>db_c</code></pre>
 <p>创建从复制的用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建slave用户</span></span><br><span class="line">create user slave@<span class="string">&#x27;%&#x27;</span> identified with mysql_native_password by <span class="string">&#x27;slave&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建slave用户</span>
+create user slave@<span class="token string">'%'</span> identified with mysql_native_password by <span class="token string">'slave'</span><span class="token punctuation">;</span></code></pre>
 <h5 id="2-3-配置从库"><a href="#2-3-配置从库" class="headerlink" title="2.3 配置从库"></a>2.3 配置从库</h5><p>修改serverid</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id=2</span><br><span class="line"><span class="comment">#这个server-id要和主库不一样</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>mysqld<span class="token punctuation">]</span>
+server-id<span class="token operator">=</span><span class="token number">2</span>
+<span class="token comment">#这个server-id要和主库不一样</span></code></pre>
 <p>修改要复制的数据库的地址以及验证信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">change master to </span><br><span class="line">master_host=<span class="string">&#x27;172.17.0.4&#x27;</span>,</span><br><span class="line">master_port=3306,</span><br><span class="line">master_user=<span class="string">&#x27;slave&#x27;</span>,</span><br><span class="line">master_password=<span class="string">&#x27;slave&#x27;</span>,</span><br><span class="line">master_log_file=<span class="string">&#x27;logbin.000002&#x27;</span>,</span><br><span class="line">master_log_pos=1825;<span class="comment">#这个参数可以由主库show master status得到</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">change master to 
+<span class="token assign-left variable">master_host</span><span class="token operator">=</span><span class="token string">'172.17.0.4'</span>,
+<span class="token assign-left variable">master_port</span><span class="token operator">=</span><span class="token number">3306</span>,
+<span class="token assign-left variable">master_user</span><span class="token operator">=</span><span class="token string">'slave'</span>,
+<span class="token assign-left variable">master_password</span><span class="token operator">=</span><span class="token string">'slave'</span>,
+<span class="token assign-left variable">master_log_file</span><span class="token operator">=</span><span class="token string">'logbin.000002'</span>,
+<span class="token assign-left variable">master_log_pos</span><span class="token operator">=</span><span class="token number">1825</span><span class="token punctuation">;</span><span class="token comment">#这个参数可以由主库show master status得到</span></code></pre>
 <p>开始复制</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">start slave</code></pre>
 
                 
             </div>
@@ -470,7 +535,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/05/11/mysql%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">https://dreamaccount.github.io/2023/05/11/mysql%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</a>
+                    <a href="https://bugprogram-git.github.io/2023/05/11/mysql%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">https://bugprogram-git.github.io/2023/05/11/mysql%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -679,6 +744,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -851,6 +919,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1069,6 +1139,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1085,6 +1166,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

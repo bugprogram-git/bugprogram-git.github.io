@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="硬链接和软链接, Hexo">
+    <meta name="keywords" content="硬链接和软链接, MyBlog">
     <meta name="description" content="硬链接和软链接1.inode的概念文件存储在磁盘上,磁盘在格式化文件系统后,分为两个部分,一个是inode存储区,一个是数据存储区,每个inode存储了这个文件的详细信息,这些信息一般有:
 
 1.文件的所属者
@@ -20,8 +20,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>硬链接和软链接 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>硬链接和软链接 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -68,7 +79,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -172,10 +183,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -408,6 +419,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -425,7 +439,7 @@
 <li>8.文件的大小</li>
 </ul>
 <p>用户可以使用stat命令查看这些信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stat</span> filename</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">stat</span> filename</code></pre>
 
 
 
@@ -433,7 +447,7 @@
 <p>linux并不使用文件名识别文件,而使用inode识别文件,因此linux下每个文件名都指向了一个inode,在用户访问文件时,linux内部首先会获取要访问文件的inode号码,从inode里面获取真正的数据存储区。获取文件数据,在删除文件的时候,文件的links减1,当links减到0时,inode会被删除  </p>
 <p>用户可以使用stat命令查看这些信息</p>
 <h3 id="2-硬链接"><a href="#2-硬链接" class="headerlink" title="2.硬链接"></a>2.硬链接</h3><p>硬链接和源文件拥有相同的inode,<br>linux使用ln 源文件名 目标文件名创建硬链接,</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> /path/to/sourcefile /path/to/destnaionfile</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ln</span> /path/to/sourcefile /path/to/destnaionfile</code></pre>
 
 <h3 id="3-软链接"><a href="#3-软链接" class="headerlink" title="3.软链接"></a>3.软链接</h3><p>​	软连接是一个存在的文件,但是文件里面存储的内容是目标文件的路径</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>硬链接和软链接最主要的区别就是硬链接文件指向的inode和链接的文件指向的inode是同一个，而软链接则是一个普通的文件但是它里面存放的信息是需要链接的文件的路径。</p>
@@ -463,7 +477,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/17/%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5/">https://dreamaccount.github.io/2022/04/17/%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/17/%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5/">https://bugprogram-git.github.io/2022/04/17/%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -585,13 +599,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/17/CVE-2022-0847%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%A4%8D%E7%8E%B0/">
+                <a href="/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="CVE-2022-0847漏洞原理及复现">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="docker学习笔记">
                         
-                        <span class="card-title">CVE-2022-0847漏洞原理及复现</span>
+                        <span class="card-title">docker学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -608,8 +622,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" class="post-category">
-                                    网络安全
+                            <a href="/categories/linux%E8%BF%90%E7%BB%B4/" class="post-category">
+                                    linux运维
                                 </a>
                             
                             
@@ -619,8 +633,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
-                        <span class="chip bg-color">漏洞复现</span>
+                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/">
+                        <span class="chip bg-color">软件配置使用</span>
                     </a>
                     
                 </div>
@@ -687,6 +701,9 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -860,6 +877,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1078,6 +1097,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1094,6 +1124,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

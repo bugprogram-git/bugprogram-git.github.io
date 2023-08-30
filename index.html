@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hexo">
-    <meta name="description" content="my blog">
+    <meta name="keywords" content="MyBlog">
+    <meta name="description" content="myblog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -101,7 +112,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -205,10 +216,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -380,7 +391,7 @@
         <div class="brand">
             <div class="title center-align">
                 
-                    subtitle
+                blog
                 
             </div>
 
@@ -642,7 +653,7 @@
                             
                                 1.获取网卡驱动源码点击跳转到realtek官网下载页面
 2.升级内核(可选)不确定这个网卡依赖还是不依赖内核，建议升级内核版本
-2.1 检查是否安装ELRepo1234yum  --disablerepo=&quot;*&quot;  -
+2.1 检查是否安装ELRepoyum  --disablerepo="*"  --enablerepo="e
                             
                         </div>
                         <div class="publish-info">
@@ -722,8 +733,8 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                mysql安装配置1.安装配置1.Archlinux1.安装mariadb1pacman -S mariadb
-2.初始化数据库1mariadb-install-db --user=mysql --basedir=/usr --datadi
+                                mysql安装配置1.安装配置1.Archlinux1.安装mariadbpacman -S mariadb
+2.初始化数据库mariadb-install-db --user=mysql --basedir=/usr --datadir=
                             
                         </div>
                         <div class="publish-info">
@@ -817,8 +828,9 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                keystone1.搭建keystone开发环境12#下载镜像docker pull keystoneenclaveorg/keystone:master
-2.进入到keystone开发环境1docker run -it --entrypo
+                                keystone1.搭建keystone开发环境#下载镜像
+docker pull keystoneenclaveorg/keystone:master
+2.进入到keystone开发环境docker run -it --entrypoin
                             
                         </div>
                         <div class="publish-info">
@@ -1116,6 +1128,8 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
+            
             <br>
             
             
@@ -1333,6 +1347,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1349,6 +1374,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="nginx使用教程, Hexo">
+    <meta name="keywords" content="nginx使用教程, MyBlog">
     <meta name="description" content="nginx使用教程1.什么是nginx?nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP&amp;#x2F;UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>nginx使用教程 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>nginx使用教程 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,16 +415,23 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="nginx使用教程"><a href="#nginx使用教程" class="headerlink" title="nginx使用教程"></a>nginx使用教程</h1><h3 id="1-什么是nginx"><a href="#1-什么是nginx" class="headerlink" title="1.什么是nginx?"></a>1.什么是nginx?</h3><p>nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP&#x2F;UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载很重的俄罗斯网站上运行，包括 Yandex、Mail.Ru、VK 和 Rambler。 根据 Netcraft 的数据，2022 年 5 月，nginx 服务或代理了 21.67% 最繁忙的网站。以下是一些成功案例：Dropbox、Netflix、Wordpress.com、FastMail.FM。</p>
-<h3 id="2-如何部署安装nginx"><a href="#2-如何部署安装nginx" class="headerlink" title="2.如何部署安装nginx"></a>2.如何部署安装nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y nginx <span class="comment">#Ubuntu/Debian</span></span><br><span class="line">sudo yum install -y nginx <span class="comment">#rhel/centos</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-如何部署安装nginx"><a href="#2-如何部署安装nginx" class="headerlink" title="2.如何部署安装nginx"></a>2.如何部署安装nginx</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> -y nginx <span class="token comment">#Ubuntu/Debian</span>
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y nginx <span class="token comment">#rhel/centos</span></code></pre>
 
 <h3 id="3-nginx的结构"><a href="#3-nginx的结构" class="headerlink" title="3.nginx的结构"></a>3.nginx的结构</h3><h4 id="3-1-nginx的启动方式"><a href="#3-1-nginx的启动方式" class="headerlink" title="3.1.nginx的启动方式"></a>3.1.nginx的启动方式</h4><p>nginx一般以守护进程启动,一个nginx服务至少包含一个master进程和一个work进程,master为nginx的守护进程用于管理work进程,和work进程为nginx接受请求后实际处理请求的进程</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">1((master nginx守护进程))--&gt;2((work1 工作进程1))</span><br><span class="line">1--&gt;3((work2 工作进程2))</span><br><span class="line">1--&gt;4((work3 工作进程3))</span><br></pre></td></tr></table></figure>
+<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
+1<span class="token text string">((master nginx守护进程))</span><span class="token arrow operator">--></span>2<span class="token text string">((work1 工作进程1))</span>
+1<span class="token arrow operator">--></span>3<span class="token text string">((work2 工作进程2))</span>
+1<span class="token arrow operator">--></span>4<span class="token text string">((work3 工作进程3))</span></code></pre>
 
 
 
@@ -426,19 +444,117 @@
 <li>4.普通匹配</li>
 </ul>
 <p>优先级自上而下</p>
-<h5 id="1-精确匹配"><a href="#1-精确匹配" class="headerlink" title="1.精确匹配"></a>1.精确匹配</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location = /get&#123;</span><br><span class="line">	root html;</span><br><span class="line">	<span class="built_in">return</span> 200 <span class="string">&quot;hello you get!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#精确匹配一旦成功不会去尝试匹配别的匹配规则</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-精确匹配"><a href="#1-精确匹配" class="headerlink" title="1.精确匹配"></a>1.精确匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location <span class="token operator">=</span> /get<span class="token punctuation">&#123;</span>
+	root html<span class="token punctuation">;</span>
+	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello you get!"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">#精确匹配一旦成功不会去尝试匹配别的匹配规则</span></code></pre>
 
-<h5 id="2-非正则匹配"><a href="#2-非正则匹配" class="headerlink" title="2.非正则匹配"></a>2.非正则匹配</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">location ^~&#123;</span><br><span class="line">	<span class="built_in">return</span> 200 <span class="string">&quot;hello,world&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#匹配成功后不会去尝试匹配正则规则</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-非正则匹配"><a href="#2-非正则匹配" class="headerlink" title="2.非正则匹配"></a>2.非正则匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">
+location ^~<span class="token punctuation">&#123;</span>
+	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello,world"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">#匹配成功后不会去尝试匹配正则规则</span></code></pre>
 
-<h5 id="3-正则匹配"><a href="#3-正则匹配" class="headerlink" title="3.正则匹配"></a>3.正则匹配</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~ \*.php$/ &#123;</span><br><span class="line">	<span class="built_in">return</span> 200 <span class="string">&quot;hello,location&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">location ~* \*.php$ &#123;</span><br><span class="line">	<span class="built_in">return</span> 200 <span class="string">&quot;  &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#~*为不区分大小写的正则匹配</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-正则匹配"><a href="#3-正则匹配" class="headerlink" title="3.正则匹配"></a>3.正则匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location ~ <span class="token punctuation">\</span>*.php$/ <span class="token punctuation">&#123;</span>
+	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello,location"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+location ~* <span class="token punctuation">\</span>*.php$ <span class="token punctuation">&#123;</span>
+	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">#~*为不区分大小写的正则匹配</span></code></pre>
 
-<h5 id="4-普通匹配-最长字符匹配"><a href="#4-普通匹配-最长字符匹配" class="headerlink" title="4.普通匹配(最长字符匹配)"></a>4.普通匹配(最长字符匹配)</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /get &#123;</span><br><span class="line">	root html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-普通匹配-最长字符匹配"><a href="#4-普通匹配-最长字符匹配" class="headerlink" title="4.普通匹配(最长字符匹配)"></a>4.普通匹配(最长字符匹配)</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location /get <span class="token punctuation">&#123;</span>
+	root html<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
-<h4 id="3-3-nginx的日志文件以及错误重定向"><a href="#3-3-nginx的日志文件以及错误重定向" class="headerlink" title="3.3.nginx的日志文件以及错误重定向"></a>3.3.nginx的日志文件以及错误重定向</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">access_log logs/access.log notice format;		<span class="comment">#设置访问日志的存储路径以及日志等级和记录的日志格式</span></span><br><span class="line">error_log logs/error.log error;					<span class="comment">#设置错误日志的存储路径和记录的日志格式</span></span><br><span class="line"></span><br><span class="line">error_page 404...(错误代码) /50x.html(重定向的location的地址)(也可以自定一个重定向的url)</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-nginx的日志文件以及错误重定向"><a href="#3-3-nginx的日志文件以及错误重定向" class="headerlink" title="3.3.nginx的日志文件以及错误重定向"></a>3.3.nginx的日志文件以及错误重定向</h4><pre class="language-bash" data-language="bash"><code class="language-bash">access_log logs/access.log notice <span class="token function">format</span><span class="token punctuation">;</span>		<span class="token comment">#设置访问日志的存储路径以及日志等级和记录的日志格式</span>
+error_log logs/error.log error<span class="token punctuation">;</span>					<span class="token comment">#设置错误日志的存储路径和记录的日志格式</span>
+
+error_page <span class="token number">404</span><span class="token punctuation">..</span>.<span class="token punctuation">(</span>错误代码<span class="token punctuation">)</span> /50x.html<span class="token punctuation">(</span>重定向的location的地址<span class="token punctuation">)</span><span class="token punctuation">(</span>也可以自定一个重定向的url<span class="token punctuation">)</span></code></pre>
 
 
 
-<h3 id="4-nginx配置文件"><a href="#4-nginx配置文件" class="headerlink" title="4.nginx配置文件"></a>4.nginx配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#常用的参数配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置nginx启动的用户和用户组</span></span><br><span class="line">user nobody;</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置nginx为守护进程方式启动</span></span><br><span class="line">daemon on;</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置nginx的worker进程数(一般配置为cpu核心数)nginx至少包含一个master进程(nginx的守护进程用于管理worker进程)</span></span><br><span class="line">worker_processes 1;				</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置nginx的错误日志的存放路径以及日志等级</span></span><br><span class="line">error_log logs/error.log notice;</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置events</span></span><br><span class="line">&#123;</span><br><span class="line">	worker_connections 1024;	<span class="comment">#设置每个worker进程最大支持的连接数(和操作系统允许打开最大的文件描述符也有关系)</span></span><br><span class="line">	use epoll;					<span class="comment">#设置处理事件的io模型</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置web服务</span></span><br><span class="line">http</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">#包含媒体文件类型</span></span><br><span class="line">	include mime.types;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#设置nginx默认的返回数据类型</span></span><br><span class="line">	default_type application/octet-stream;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#设置日志格式模板,可以用于后面日志调用</span></span><br><span class="line">	log_format main <span class="string">&quot;<span class="variable">$remote_addr</span>:<span class="variable">$time_local</span>:<span class="variable">$remote_user</span>:<span class="variable">$request</span>:<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span>&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#使用linux内核提供的sendfile来传输数据(sendfile系统调用在两个文件描述符之间直接传递数据(完全在内核中操作)，从而避免了数据在内核缓冲区和用户缓冲区之间的拷贝，操作效率很高，被称之为零拷贝。)</span></span><br><span class="line">	send_file on;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#(TCP_NOPUSH 是 FreeBSD 的一个 socket 选项，对应 Linux 的 TCP_CORK，Nginx 里统一用 tcp_nopush 来控制它，并且只有在启用了 sendfile 之后才生效。启用它之后，数据包会累计到一定大小之后才会发送，减小了额外开销，提高网络效率。)</span></span><br><span class="line">	tcp_nopush on;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#尽快发送(减小延迟,但是会增多io读取次数)</span></span><br><span class="line">	tcp_nodelay on;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#设置长连接的超时时间(长连接就是本来http一次完整的请求相应需要tcp三次握手四次挥手,长连接就是上一个处理完任务的连接先不进行释放,用于后续任务的再次数据收发,减少了响应时间,节省了网络资源)</span></span><br><span class="line">	keep_alive_timeout 65;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#开启压缩</span></span><br><span class="line">	gzip on;</span><br><span class="line">	<span class="comment">#指定gzip的压缩的文件类型</span></span><br><span class="line">	gzip_types application/javascript;</span><br><span class="line">	<span class="comment">#压缩等级(1-9)</span></span><br><span class="line">	gzip_comp_level 1;</span><br><span class="line">	<span class="comment">#指定gzip压缩后nginx加上响应头Accept-Endcoing</span></span><br><span class="line">	gzip_vary on</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#和操作系统有关系(一般使用默认即可)</span></span><br><span class="line">	gzip_buffers number size;</span><br><span class="line">	<span class="comment">#指定http的协议版本</span></span><br><span class="line">	gzip_http_version 1.0|1.1;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">#设置最小文件压缩的长度</span></span><br><span class="line">	gzip_min_length 1024;</span><br><span class="line">	</span><br><span class="line">	valid_referer none|blocked|server_names|string....//指定是否有效的referercd</span><br><span class="line">	<span class="comment">#设置是否对服务端返回的结构进行压缩</span></span><br><span class="line">	gzip_proxied off|expired|no-cache|no-store|private|no_last_modified|no_etag|auth|any;</span><br><span class="line">	<span class="comment">#设置服务</span></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;<span class="comment">#设置监听的端口</span></span><br><span class="line">		server_name localhost; <span class="comment">#服务端的名称(一般设置为域名)</span></span><br><span class="line">		location /&#123;	<span class="comment">#请求拦截器</span></span><br><span class="line">			root html;<span class="comment">#资源的根目录(实际请求的目录为location目录加上根目录)</span></span><br><span class="line">			<span class="comment">#alias html;#实际请求的目录为alias目录;</span></span><br><span class="line">			index index.html index.htm;<span class="comment">#设置主页的文件</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">#location ~*^server#~代表后面的表达式为一个正则表达式(~*为不区分大小写的正则表达式)</span></span><br><span class="line">		<span class="comment">#&#123;</span></span><br><span class="line">		<span class="comment">#	root html</span></span><br><span class="line">		<span class="comment">#	index index.php</span></span><br><span class="line">		<span class="comment">#&#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-nginx配置文件"><a href="#4-nginx配置文件" class="headerlink" title="4.nginx配置文件"></a>4.nginx配置文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#常用的参数配置</span>
+
+<span class="token comment">#配置nginx启动的用户和用户组</span>
+user nobody<span class="token punctuation">;</span>
+
+<span class="token comment">#配置nginx为守护进程方式启动</span>
+daemon on<span class="token punctuation">;</span>
+
+<span class="token comment">#配置nginx的worker进程数(一般配置为cpu核心数)nginx至少包含一个master进程(nginx的守护进程用于管理worker进程)</span>
+worker_processes <span class="token number">1</span><span class="token punctuation">;</span>				
+
+<span class="token comment">#配置nginx的错误日志的存放路径以及日志等级</span>
+error_log logs/error.log notice<span class="token punctuation">;</span>
+
+<span class="token comment">#配置events</span>
+<span class="token punctuation">&#123;</span>
+	worker_connections <span class="token number">1024</span><span class="token punctuation">;</span>	<span class="token comment">#设置每个worker进程最大支持的连接数(和操作系统允许打开最大的文件描述符也有关系)</span>
+	use epoll<span class="token punctuation">;</span>					<span class="token comment">#设置处理事件的io模型</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">#配置web服务</span>
+http
+<span class="token punctuation">&#123;</span>
+	<span class="token comment">#包含媒体文件类型</span>
+	include mime.types<span class="token punctuation">;</span>
+	
+	<span class="token comment">#设置nginx默认的返回数据类型</span>
+	default_type application/octet-stream<span class="token punctuation">;</span>
+	
+	<span class="token comment">#设置日志格式模板,可以用于后面日志调用</span>
+	log_format main <span class="token string">"<span class="token variable">$remote_addr</span>:<span class="token variable">$time_local</span>:<span class="token variable">$remote_user</span>:<span class="token variable">$request</span>:<span class="token variable">$status</span> <span class="token variable">$body_bytes_sent</span>"</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">#使用linux内核提供的sendfile来传输数据(sendfile系统调用在两个文件描述符之间直接传递数据(完全在内核中操作)，从而避免了数据在内核缓冲区和用户缓冲区之间的拷贝，操作效率很高，被称之为零拷贝。)</span>
+	send_file on<span class="token punctuation">;</span>
+	
+	<span class="token comment">#(TCP_NOPUSH 是 FreeBSD 的一个 socket 选项，对应 Linux 的 TCP_CORK，Nginx 里统一用 tcp_nopush 来控制它，并且只有在启用了 sendfile 之后才生效。启用它之后，数据包会累计到一定大小之后才会发送，减小了额外开销，提高网络效率。)</span>
+	tcp_nopush on<span class="token punctuation">;</span>
+	
+	<span class="token comment">#尽快发送(减小延迟,但是会增多io读取次数)</span>
+	tcp_nodelay on<span class="token punctuation">;</span>
+	
+	<span class="token comment">#设置长连接的超时时间(长连接就是本来http一次完整的请求相应需要tcp三次握手四次挥手,长连接就是上一个处理完任务的连接先不进行释放,用于后续任务的再次数据收发,减少了响应时间,节省了网络资源)</span>
+	keep_alive_timeout <span class="token number">65</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">#开启压缩</span>
+	<span class="token function">gzip</span> on<span class="token punctuation">;</span>
+	<span class="token comment">#指定gzip的压缩的文件类型</span>
+	gzip_types application/javascript<span class="token punctuation">;</span>
+	<span class="token comment">#压缩等级(1-9)</span>
+	gzip_comp_level <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token comment">#指定gzip压缩后nginx加上响应头Accept-Endcoing</span>
+	gzip_vary on
+	
+	<span class="token comment">#和操作系统有关系(一般使用默认即可)</span>
+	gzip_buffers number size<span class="token punctuation">;</span>
+	<span class="token comment">#指定http的协议版本</span>
+	gzip_http_version <span class="token number">1.0</span><span class="token operator">|</span><span class="token number">1.1</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">#设置最小文件压缩的长度</span>
+	gzip_min_length <span class="token number">1024</span><span class="token punctuation">;</span>
+	
+	valid_referer none<span class="token operator">|</span>blocked<span class="token operator">|</span>server_names<span class="token operator">|</span>string<span class="token punctuation">..</span><span class="token punctuation">..</span>//指定是否有效的referercd
+	<span class="token comment">#设置是否对服务端返回的结构进行压缩</span>
+	gzip_proxied off<span class="token operator">|</span>expired<span class="token operator">|</span>no-cache<span class="token operator">|</span>no-store<span class="token operator">|</span>private<span class="token operator">|</span>no_last_modified<span class="token operator">|</span>no_etag<span class="token operator">|</span>auth<span class="token operator">|</span>any<span class="token punctuation">;</span>
+	<span class="token comment">#设置服务</span>
+	server <span class="token punctuation">&#123;</span>
+		listen <span class="token number">80</span><span class="token punctuation">;</span><span class="token comment">#设置监听的端口</span>
+		server_name localhost<span class="token punctuation">;</span> <span class="token comment">#服务端的名称(一般设置为域名)</span>
+		location /<span class="token punctuation">&#123;</span>	<span class="token comment">#请求拦截器</span>
+			root html<span class="token punctuation">;</span><span class="token comment">#资源的根目录(实际请求的目录为location目录加上根目录)</span>
+			<span class="token comment">#alias html;#实际请求的目录为alias目录;</span>
+			index index.html index.htm<span class="token punctuation">;</span><span class="token comment">#设置主页的文件</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">#location ~*^server#~代表后面的表达式为一个正则表达式(~*为不区分大小写的正则表达式)</span>
+		<span class="token comment">#&#123;</span>
+		<span class="token comment">#	root html</span>
+		<span class="token comment">#	index index.php</span>
+		<span class="token comment">#&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 
 
@@ -470,7 +586,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/07/06/nginx%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">https://dreamaccount.github.io/2022/07/06/nginx%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</a>
+                    <a href="https://bugprogram-git.github.io/2022/07/06/nginx%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">https://bugprogram-git.github.io/2022/07/06/nginx%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -691,6 +807,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -863,6 +982,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1081,6 +1202,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1097,6 +1229,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

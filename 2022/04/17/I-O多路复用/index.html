@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="I/O多路复用, Hexo">
+    <meta name="keywords" content="I/O多路复用, MyBlog">
     <meta name="description" content="I&amp;#x2F;O多路复用1.什么是I&amp;#x2F;O多路复用I&amp;#x2F;O 多路复用是一种同步IO模型，实现一个线程可以监视多个文件句柄；一旦某个文件句柄就绪，就能够通知应用程序进行相应的读写操作；没有文件句柄就绪就会阻塞应用程序，交出CP">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>I/O多路复用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>I/O多路复用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,6 +415,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -422,17 +436,156 @@
 <li><p>3.epoll</p>
 </li>
 </ul>
-<h4 id="1-select实现I-x2F-O多路复用"><a href="#1-select实现I-x2F-O多路复用" class="headerlink" title="1.select实现I&#x2F;O多路复用"></a>1.select实现I&#x2F;O多路复用</h4><h5 id="1-1-涉及的api"><a href="#1-1-涉及的api" class="headerlink" title="1.1.涉及的api"></a>1.1.涉及的api</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/select.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">select</span><span class="params">(<span class="type">int</span> nfds,fd_set *readfds,fd_set *writefds,fd_set exceptfds,<span class="keyword">struct</span> timeval *timeout)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pselect</span><span class="params">(<span class="type">int</span> nfds,fd_set *readfds,fd_set *writefds,fd_set *exceptfds,<span class="keyword">struct</span> timeval *timeout,<span class="type">sigset_t</span> sigmask)</span>;</span><br><span class="line"><span class="comment">//功能:阻塞监听多个文件描述符的变化(可被信号打断)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数</span></span><br><span class="line"><span class="comment">//nfds为监听的最大文件描述符+1</span></span><br><span class="line"><span class="comment">//readfds,writefds,exceptfds分别为监听可读，可写,异常集合</span></span><br><span class="line"><span class="comment">//timeval为超时时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回值</span></span><br><span class="line"><span class="comment">//正常返回变化的文件描述符总个数,超时返回0,错误返回-1</span></span><br><span class="line"></span><br><span class="line">FD_ZERO(fd_set *<span class="built_in">set</span>);</span><br><span class="line"><span class="comment">//将集合清零</span></span><br><span class="line"></span><br><span class="line">FD_SET(<span class="type">int</span> fd,fd_set *<span class="built_in">set</span>);</span><br><span class="line"><span class="comment">//将文件描述符添加到集合</span></span><br><span class="line"></span><br><span class="line">FD_CLR(<span class="type">int</span> fd,fd_set *<span class="built_in">set</span>);</span><br><span class="line"><span class="comment">//将监听的文件描述符从集合中移除</span></span><br></pre></td></tr></table></figure>
+<h4 id="1-select实现I-x2F-O多路复用"><a href="#1-select实现I-x2F-O多路复用" class="headerlink" title="1.select实现I&#x2F;O多路复用"></a>1.select实现I&#x2F;O多路复用</h4><h5 id="1-1-涉及的api"><a href="#1-1-涉及的api" class="headerlink" title="1.1.涉及的api"></a>1.1.涉及的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
 
-<h5 id="1-2-操作实例"><a href="#1-2-操作实例" class="headerlink" title="1.2.操作实例"></a>1.2.操作实例</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/select.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> fd = New_Socket(argv[<span class="number">1</span>], argv[<span class="number">2</span>], <span class="number">10</span>);</span><br><span class="line">	<span class="keyword">if</span> (fd == <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Create Socket error!\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">	&#125;</span><br><span class="line">	fd_set fdset, rset;</span><br><span class="line">	<span class="comment">//创建监听集合</span></span><br><span class="line">	FD_ZERO(&amp;fdset);</span><br><span class="line">	<span class="comment">//将需要监听的文件描述符加入到监听集合</span></span><br><span class="line">	FD_SET(fd, &amp;fdset);</span><br><span class="line">    .....</span><br><span class="line">	<span class="type">int</span> maxfd = fd + <span class="number">1</span>;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">timeout</span> =</span> &#123; <span class="number">20</span>, <span class="number">20</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">		rset = fdset;</span><br><span class="line">		<span class="type">int</span> nfds = select(maxfd, &amp;rset, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;timeout);</span><br><span class="line">        <span class="comment">//maxfd为监听的最大的文件描述符+1,maxfd为为轮询机制,每次都会轮询所有的fd看是否发生异常</span></span><br><span class="line">		<span class="comment">// select函数返回值大于0代表有文件描述符有数据到来,返回值小于0代表发生了异常,返回值等于0代表超时</span></span><br><span class="line">		<span class="keyword">if</span> (nfds &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			perror(<span class="string">&quot;select&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (nfds == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;select timeout\n&quot;</span>);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> (FD_ISSET(fd, &amp;rset)) &#123;</span><br><span class="line">				Handler(fd, &amp;fdset);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">int</span> nfds<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>readfds<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>writefds<span class="token punctuation">,</span>fd_set exceptfds<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">pselect</span><span class="token punctuation">(</span><span class="token keyword">int</span> nfds<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>readfds<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>writefds<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>exceptfds<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token operator">*</span>timeout<span class="token punctuation">,</span><span class="token class-name">sigset_t</span> sigmask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//功能:阻塞监听多个文件描述符的变化(可被信号打断)</span>
 
-<h4 id="2-使用poll实现I-x2F-O多路复用"><a href="#2-使用poll实现I-x2F-O多路复用" class="headerlink" title="2.使用poll实现I&#x2F;O多路复用"></a>2.使用poll实现I&#x2F;O多路复用</h4><h5 id="2-1-涉及的api"><a href="#2-1-涉及的api" class="headerlink" title="2.1.涉及的api"></a>2.1.涉及的api</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;poll.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">               <span class="type">int</span>   fd;         <span class="comment">/* file descriptor */</span></span><br><span class="line">               <span class="type">short</span> events;     <span class="comment">/* requested events */</span></span><br><span class="line">               <span class="type">short</span> revents;    <span class="comment">/* returned events */</span></span><br><span class="line">           		&#125;;</span><br><span class="line"><span class="comment">//fd为监听的文件描述符</span></span><br><span class="line"><span class="comment">//events为监听的事件</span></span><br><span class="line"><span class="comment">//revents为发生的事件</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">poll</span><span class="params">(<span class="keyword">struct</span> pollfd *fds,<span class="type">nfds_t</span> nfds,<span class="type">int</span> timeout)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">ppoll</span><span class="params">(<span class="keyword">struct</span> pollfd *fds,<span class="type">nfds_t</span> nfds,cont <span class="keyword">struct</span> timespec *tmo_p,<span class="type">const</span> <span class="type">sigset_t</span> *sigmask)</span>;</span><br><span class="line"><span class="comment">//功能:同时监听多个文件描述符,底层原理和select一样,只是将原有的fd_set改为了struct pollfd结构体</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数 </span></span><br><span class="line"><span class="comment">//fds,监听的pollfd的数组指针,nfds,监听的文件描述符的个数,timeout为超时时间,sigmask为屏蔽的信号集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回值</span></span><br><span class="line"><span class="comment">//成功时返回一个正数(具有非零revents的结构体数量)</span></span><br><span class="line"><span class="comment">//错误时</span></span><br><span class="line"><span class="comment">// EFAULT 给出的参数不在可用的调用地址空间内.</span></span><br><span class="line"><span class="comment">// EINTR  被信号打断</span></span><br><span class="line"><span class="comment">// EINVAL nfds 值超过了 RLIMIT_NOFILE 值。</span></span><br><span class="line"><span class="comment">// EINVAL (ppoll()) The timeout value expressed in *ip is invalid (negative).</span></span><br><span class="line"><span class="comment">// ENOMEM 没有空间来分配文件描述符表</span></span><br></pre></td></tr></table></figure>
+<span class="token comment">//参数</span>
+<span class="token comment">//nfds为监听的最大文件描述符+1</span>
+<span class="token comment">//readfds,writefds,exceptfds分别为监听可读，可写,异常集合</span>
+<span class="token comment">//timeval为超时时间</span>
 
-<h5 id="2-2-操作实例"><a href="#2-2-操作实例" class="headerlink" title="2.2.操作实例"></a>2.2.操作实例</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> fd;<span class="comment">//需要监听的文件描述符</span></span><br><span class="line">    <span class="type">short</span> event;<span class="comment">//需要监听的事件</span></span><br><span class="line">    <span class="type">short</span> revent;<span class="comment">//已经发生的事件</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_FD 100</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> <span class="title">fd</span>[<span class="title">MAX_FD</span>];</span></span><br><span class="line">    <span class="comment">//设置监听事件和监听的文件描述符</span></span><br><span class="line">    fd[i].event = POLLIN</span><br><span class="line">    <span class="comment">//设置完成后</span></span><br><span class="line">    <span class="type">int</span> nfds = poll(<span class="keyword">struct</span> pollfd fds[], <span class="type">nfds_t</span> nfds, <span class="type">int</span> timeout);</span><br><span class="line">	<span class="comment">//比较revent看revent是否发生了变化,若发生了变化则文件描述符则该文件描述符有数据到来</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;MAX_FD,i++)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fd[i].revent &amp; POLLIN)</span><br><span class="line">        .....</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="token comment">//返回值</span>
+<span class="token comment">//正常返回变化的文件描述符总个数,超时返回0,错误返回-1</span>
 
-<h4 id="3-使用epoll实现I-x2F-O多路复用"><a href="#3-使用epoll实现I-x2F-O多路复用" class="headerlink" title="3.使用epoll实现I&#x2F;O多路复用"></a>3.使用epoll实现I&#x2F;O多路复用</h4><h5 id="3-1-涉及的api"><a href="#3-1-涉及的api" class="headerlink" title="3.1.涉及的api"></a>3.1.涉及的api</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">epoll_create</span><span class="params">(<span class="type">int</span> size)</span>;</span><br><span class="line"><span class="comment">// 内核中间加一个 ep 对象，把所有需要监听的 socket 都放到 ep 对象中,返回一个ep对象,linux2.6.8开始忽略了size的意义</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">epoll_ctl</span><span class="params">(<span class="type">int</span> epfd, <span class="type">int</span> op, <span class="type">int</span> fd, <span class="keyword">struct</span> epoll_event *event)</span>;</span><br><span class="line"><span class="comment">//负责把 socket 增加、删除到内核红黑树</span></span><br><span class="line"><span class="comment">//参数:epfd为ep对象,op为操作类型,fd为监听的文件描述符</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">epoll_wait</span><span class="params">(<span class="type">int</span> epfd, <span class="keyword">struct</span> epoll_event * events, <span class="type">int</span> maxevents, <span class="type">int</span> timeout)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">epoll_pwait</span><span class="params">(<span class="type">int</span> epfd, <span class="keyword">struct</span> epoll_event * events, <span class="type">int</span> maxevents, <span class="type">int</span> timeout,<span class="type">const</span> <span class="type">sigset_t</span> *sigmask)</span>;</span><br><span class="line"><span class="comment">//负责检测可读队列，没有可读 socket 则阻塞进程,epfd为ep对象,events,为发生存储已经发生事件的结构体数组，maxevents为最大可发生的事件的文件描述符的数量,timeout为超时时间</span></span><br></pre></td></tr></table></figure>
+<span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//将集合清零</span>
 
-<h5 id="3-2-操作实例"><a href="#3-2-操作实例" class="headerlink" title="3.2.操作实例"></a>3.2.操作实例</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/epoll.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">create_bind_listen</span><span class="params">(<span class="type">char</span> *address,<span class="type">char</span> *port,<span class="type">unsigned</span> <span class="type">int</span> backlog)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//......</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> fd = create_bind_listen(argv[<span class="number">1</span>],argv[<span class="number">2</span>],<span class="number">10</span>);</span><br><span class="line">    <span class="type">int</span> epfd = epoll_create(<span class="number">100</span>);</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">epoll_fd</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">event_epoll</span>[10];</span></span><br><span class="line">    epoll_fd.fd = fd;</span><br><span class="line">    epoll_fd.events = EPOLLIN;</span><br><span class="line">    epoll_fd.data.fd = fd;</span><br><span class="line">    epoll_ctl(epfd,EPOLL_CTL_ADD,&amp;epoll_fd);</span><br><span class="line">    <span class="type">int</span> event_count = epoll_wait(epfd,event_epoll,<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;event_count;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//handler(event_poll[i].fd);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span class="token function">FD_SET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//将文件描述符添加到集合</span>
+
+<span class="token function">FD_CLR</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//将监听的文件描述符从集合中移除</span></code></pre>
+
+<h5 id="1-2-操作实例"><a href="#1-2-操作实例" class="headerlink" title="1.2.操作实例"></a>1.2.操作实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;netinet/in.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;arpa/inet.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> fd <span class="token operator">=</span> <span class="token function">New_Socket</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Create Socket error!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	fd_set fdset<span class="token punctuation">,</span> rset<span class="token punctuation">;</span>
+	<span class="token comment">//创建监听集合</span>
+	<span class="token function">FD_ZERO</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//将需要监听的文件描述符加入到监听集合</span>
+	<span class="token function">FD_SET</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+	<span class="token keyword">int</span> maxfd <span class="token operator">=</span> fd <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">timeval</span> timeout <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">20</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		rset <span class="token operator">=</span> fdset<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> nfds <span class="token operator">=</span> <span class="token function">select</span><span class="token punctuation">(</span>maxfd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rset<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//maxfd为监听的最大的文件描述符+1,maxfd为为轮询机制,每次都会轮询所有的fd看是否发生异常</span>
+		<span class="token comment">// select函数返回值大于0代表有文件描述符有数据到来,返回值小于0代表发生了异常,返回值等于0代表超时</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>nfds <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"select"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">exit</span><span class="token punctuation">(</span>EXIT_FAILURE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nfds <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"select timeout\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">continue</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">FD_ISSET</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rset<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				<span class="token function">Handler</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h4 id="2-使用poll实现I-x2F-O多路复用"><a href="#2-使用poll实现I-x2F-O多路复用" class="headerlink" title="2.使用poll实现I&#x2F;O多路复用"></a>2.使用poll实现I&#x2F;O多路复用</h4><h5 id="2-1-涉及的api"><a href="#2-1-涉及的api" class="headerlink" title="2.1.涉及的api"></a>2.1.涉及的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h></span></span>
+
+<span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token punctuation">&#123;</span>
+               <span class="token keyword">int</span>   fd<span class="token punctuation">;</span>         <span class="token comment">/* file descriptor */</span>
+               <span class="token keyword">short</span> events<span class="token punctuation">;</span>     <span class="token comment">/* requested events */</span>
+               <span class="token keyword">short</span> revents<span class="token punctuation">;</span>    <span class="token comment">/* returned events */</span>
+           		<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token comment">//fd为监听的文件描述符</span>
+<span class="token comment">//events为监听的事件</span>
+<span class="token comment">//revents为发生的事件</span>
+
+<span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span><span class="token class-name">nfds_t</span> nfds<span class="token punctuation">,</span><span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">ppoll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span><span class="token class-name">nfds_t</span> nfds<span class="token punctuation">,</span>cont <span class="token keyword">struct</span> <span class="token class-name">timespec</span> <span class="token operator">*</span>tmo_p<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token class-name">sigset_t</span> <span class="token operator">*</span>sigmask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//功能:同时监听多个文件描述符,底层原理和select一样,只是将原有的fd_set改为了struct pollfd结构体</span>
+
+<span class="token comment">//参数 </span>
+<span class="token comment">//fds,监听的pollfd的数组指针,nfds,监听的文件描述符的个数,timeout为超时时间,sigmask为屏蔽的信号集合</span>
+
+<span class="token comment">//返回值</span>
+<span class="token comment">//成功时返回一个正数(具有非零revents的结构体数量)</span>
+<span class="token comment">//错误时</span>
+<span class="token comment">// EFAULT 给出的参数不在可用的调用地址空间内.</span>
+<span class="token comment">// EINTR  被信号打断</span>
+<span class="token comment">// EINVAL nfds 值超过了 RLIMIT_NOFILE 值。</span>
+<span class="token comment">// EINVAL (ppoll()) The timeout value expressed in *ip is invalid (negative).</span>
+<span class="token comment">// ENOMEM 没有空间来分配文件描述符表</span></code></pre>
+
+<h5 id="2-2-操作实例"><a href="#2-2-操作实例" class="headerlink" title="2.2.操作实例"></a>2.2.操作实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">pollfd</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> fd<span class="token punctuation">;</span><span class="token comment">//需要监听的文件描述符</span>
+    <span class="token keyword">short</span> event<span class="token punctuation">;</span><span class="token comment">//需要监听的事件</span>
+    <span class="token keyword">short</span> revent<span class="token punctuation">;</span><span class="token comment">//已经发生的事件</span>
+<span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAX_FD</span> <span class="token expression"><span class="token number">100</span></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">pollfd</span> fd<span class="token punctuation">[</span>MAX_FD<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">//设置监听事件和监听的文件描述符</span>
+    fd<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>event <span class="token operator">=</span> POLLIN
+    <span class="token comment">//设置完成后</span>
+    <span class="token keyword">int</span> nfds <span class="token operator">=</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> fds<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token class-name">nfds_t</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//比较revent看revent是否发生了变化,若发生了变化则文件描述符则该文件描述符有数据到来</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>MAX_FD<span class="token punctuation">,</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span>fd<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>revent <span class="token operator">&amp;</span> POLLIN<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h4 id="3-使用epoll实现I-x2F-O多路复用"><a href="#3-使用epoll实现I-x2F-O多路复用" class="headerlink" title="3.使用epoll实现I&#x2F;O多路复用"></a>3.使用epoll实现I&#x2F;O多路复用</h4><h5 id="3-1-涉及的api"><a href="#3-1-涉及的api" class="headerlink" title="3.1.涉及的api"></a>3.1.涉及的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 内核中间加一个 ep 对象，把所有需要监听的 socket 都放到 ep 对象中,返回一个ep对象,linux2.6.8开始忽略了size的意义</span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_ctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">int</span> op<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//负责把 socket 增加、删除到内核红黑树</span>
+<span class="token comment">//参数:epfd为ep对象,op为操作类型,fd为监听的文件描述符</span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span> events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">epoll_pwait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span> events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token class-name">sigset_t</span> <span class="token operator">*</span>sigmask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//负责检测可读队列，没有可读 socket 则阻塞进程,epfd为ep对象,events,为发生存储已经发生事件的结构体数组，maxevents为最大可发生的事件的文件描述符的数量,timeout为超时时间</span></code></pre>
+
+<h5 id="3-2-操作实例"><a href="#3-2-操作实例" class="headerlink" title="3.2.操作实例"></a>3.2.操作实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">int</span> <span class="token function">create_bind_listen</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>address<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>port<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> backlog<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">//......</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> fd <span class="token operator">=</span> <span class="token function">create_bind_listen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> epfd <span class="token operator">=</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> epoll_fd<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> event_epoll<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    epoll_fd<span class="token punctuation">.</span>fd <span class="token operator">=</span> fd<span class="token punctuation">;</span>
+    epoll_fd<span class="token punctuation">.</span>events <span class="token operator">=</span> EPOLLIN<span class="token punctuation">;</span>
+    epoll_fd<span class="token punctuation">.</span>data<span class="token punctuation">.</span>fd <span class="token operator">=</span> fd<span class="token punctuation">;</span>
+    <span class="token function">epoll_ctl</span><span class="token punctuation">(</span>epfd<span class="token punctuation">,</span>EPOLL_CTL_ADD<span class="token punctuation">,</span><span class="token operator">&amp;</span>epoll_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> event_count <span class="token operator">=</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span>epfd<span class="token punctuation">,</span>event_epoll<span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>event_count<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">//handler(event_poll[i].fd);</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 
                 
@@ -460,7 +613,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/17/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">https://dreamaccount.github.io/2022/04/17/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/17/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">https://bugprogram-git.github.io/2022/04/17/I-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -685,6 +838,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -857,6 +1013,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1075,6 +1233,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1091,6 +1260,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

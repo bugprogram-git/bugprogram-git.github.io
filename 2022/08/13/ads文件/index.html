@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ads文件, Hexo">
+    <meta name="keywords" content="ads文件, MyBlog">
     <meta name="description" content="ads文件基本概念:NTFS交换数据流（Alternate Data Streams，简称ADS）是NTFS磁盘格式的一个特性。在NTFS文件系统下，每个文件都可以存在多个数据流，意思是除了主文件流之外还可以有许多非主文件流寄宿在主文件流中">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>ads文件 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>ads文件 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -395,6 +406,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -402,7 +416,8 @@
             <div id="articleContent">
                 <h1 id="ads文件"><a href="#ads文件" class="headerlink" title="ads文件"></a>ads文件</h1><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念:"></a>基本概念:</h3><p>NTFS交换数据流（Alternate Data Streams，简称ADS）是NTFS磁盘格式的一个特性。在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/2152677">NTFS文件系统</a>下，每个文件都可以存在多个数据流，意思是除了主文件流之外还可以有许多非主文件流寄宿在主文件流中，这些利用NTFS数据流寄宿并隐藏在系统中的非主文件流我们称之为ADS流文件。虽然我们无法看到ADS流文件，但它们却是真实存在。下面通过一个实例来具体展现ADS流文件的创建、关联及隐藏过程。</p>
 <h3 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h3><p>在ntfs文件系统分区创建ads文件流有两种方式,一个是指在指定宿主文件的情况下创建ads文件流,二是创建一个单独的ads文件流,ads文件不能直接查看到,可以使用dir &#x2F;r命令查看,后缀带有$DATA的文件就是ads文件,ads文件不能直接使用type进行查看,可以使用notepad进行打开编辑</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> hello &gt; hello.txt:ads.txt <span class="comment">#以文件ads.txt为宿主文件,创建了ads文件ads.txt</span></span><br><span class="line"><span class="built_in">echo</span> hello &gt; :ads.txt <span class="comment">#创建一个没有宿主文件的单独ads文件(依赖于所在目录),(如果该文件在根分区目录下,只能借助第三方工具将其删除)</span></span><br></pre></td></tr></table></figure>
+<pre class="language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">echo</span> hello > hello<span class="token punctuation">.</span>txt:ads<span class="token punctuation">.</span>txt <span class="token comment">#以文件ads.txt为宿主文件,创建了ads文件ads.txt</span>
+<span class="token function">echo</span> hello > :ads<span class="token punctuation">.</span>txt <span class="token comment">#创建一个没有宿主文件的单独ads文件(依赖于所在目录),(如果该文件在根分区目录下,只能借助第三方工具将其删除)</span></code></pre>
 
 <p>可以通过使用ads文件隐藏木马,起到免杀的作用</p>
 <h3 id="移除ads文件的方法"><a href="#移除ads文件的方法" class="headerlink" title="移除ads文件的方法"></a>移除ads文件的方法</h3><p>1.删除顶层目录</p>
@@ -435,7 +450,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/08/13/ads%E6%96%87%E4%BB%B6/">https://dreamaccount.github.io/2022/08/13/ads%E6%96%87%E4%BB%B6/</a>
+                    <a href="https://bugprogram-git.github.io/2022/08/13/ads%E6%96%87%E4%BB%B6/">https://bugprogram-git.github.io/2022/08/13/ads%E6%96%87%E4%BB%B6/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -660,6 +675,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -832,6 +850,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1050,6 +1070,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1066,6 +1097,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

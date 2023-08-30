@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="keystone框架分析, Hexo">
+    <meta name="keywords" content="keystone框架分析, MyBlog">
     <meta name="description" content="1.RISC-V的PMP权限RISC-V PMP（Physical Memory Protection）是一种硬件保护机制，用于保护处理器的物理内存免受非授权访问。它可以为每个特权级别和每个地址范围设置访问权限，从而提供更细粒度的内存保护。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>keystone框架分析 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>keystone框架分析 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -395,6 +406,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -432,7 +446,23 @@
 </ul>
 <p>总之，PMP机制是一种硬件保护机制，用于保护处理器的物理内存免受非授权访问。它可以为每个特权级别和每个地址范围设置访问权限，从而提供更细粒度的内存保护。</p>
 <h4 id="1-3-源码分析"><a href="#1-3-源码分析" class="headerlink" title="1.3 源码分析"></a>1.3 源码分析</h4><p><strong>keystone关于PMP的源码分析</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pmp_region</span> //<span class="title">pmp</span>结构体</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">uint64_t</span> size;</span><br><span class="line">	<span class="type">uint8_t</span> addrmode;</span><br><span class="line">	<span class="type">uintptr_t</span> addr;</span><br><span class="line">	<span class="type">int</span> allow_overlap;</span><br><span class="line">	<span class="type">int</span> reg_idx;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">pmp_set_keystone</span><span class="params">(<span class="type">int</span> region_idx,<span class="type">uint8_t</span> perm)</span></span><br><span class="line">&#123;</span><br><span class="line">	.....</span><br><span class="line">	<span class="type">uint8_t</span> perm_bits = perm &amp; PMP_ALL_PERM;</span><br><span class="line">	pmpreg_id reg_idx = region_register_idx(region_idx);</span><br><span class="line">	<span class="type">uintptr_t</span> pmpcfg = region_pmpcfg_val(region_idx,reg_idx,perm_bits);<span class="comment">//PMP配置寄存器</span></span><br><span class="line">	<span class="type">uintptr_t</span> pmpaddr;</span><br><span class="line">	pmpaddr = region_pmpaddr_val(region_idx);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">pmp_region</span> <span class="token comment">//pmp结构体</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token class-name">uint64_t</span> size<span class="token punctuation">;</span>
+	<span class="token class-name">uint8_t</span> addrmode<span class="token punctuation">;</span>
+	<span class="token class-name">uintptr_t</span> addr<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> allow_overlap<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> reg_idx<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">pmp_set_keystone</span><span class="token punctuation">(</span><span class="token keyword">int</span> region_idx<span class="token punctuation">,</span><span class="token class-name">uint8_t</span> perm<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+	<span class="token class-name">uint8_t</span> perm_bits <span class="token operator">=</span> perm <span class="token operator">&amp;</span> PMP_ALL_PERM<span class="token punctuation">;</span>
+	pmpreg_id reg_idx <span class="token operator">=</span> <span class="token function">region_register_idx</span><span class="token punctuation">(</span>region_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token class-name">uintptr_t</span> pmpcfg <span class="token operator">=</span> <span class="token function">region_pmpcfg_val</span><span class="token punctuation">(</span>region_idx<span class="token punctuation">,</span>reg_idx<span class="token punctuation">,</span>perm_bits<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//PMP配置寄存器</span>
+	<span class="token class-name">uintptr_t</span> pmpaddr<span class="token punctuation">;</span>
+	pmpaddr <span class="token operator">=</span> <span class="token function">region_pmpaddr_val</span><span class="token punctuation">(</span>region_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>这里可以看出pmp_set_keystone干了几件事</p>
 <ul>
 <li>1.pmp_set_keystone函数通过传进的perm参数计算实际需要设置的perm参数</li>
@@ -441,22 +471,136 @@
 <h3 id="2-Keystone运行机制"><a href="#2-Keystone运行机制" class="headerlink" title="2.Keystone运行机制"></a>2.Keystone运行机制</h3><p>一个简单的demo程序一般由两个程序构成</p>
 <ul>
 <li>1.host程序，作为enclave的runtime，其中内存分配以及内存映射都是通过host程序进行系统调用实现</li>
-<li>2.eapp程序，作为实际运行的程序，依靠host程序作为runtime<br>一个简单的demo<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#host.cpp</span></span><br><span class="line"><span class="comment">//******************************************************************************</span></span><br><span class="line"><span class="comment">// Copyright (c) 2018, The Regents of the University of California (Regents).</span></span><br><span class="line"><span class="comment">// All Rights Reserved. See LICENSE for license details.</span></span><br><span class="line"><span class="comment">//------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;edge/edge_call.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;host/keystone.h&quot;</span></span></span><br><span class="line">using namespace Keystone;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> &#123;</span><br><span class="line">  Enclave enclave;</span><br><span class="line">  Params params;</span><br><span class="line">  params.setFreeMemSize(<span class="number">1024</span> * <span class="number">1024</span>);<span class="comment">//申请空间</span></span><br><span class="line">  params.setUntrustedMem(DEFAULT_UNTRUSTED_PTR, <span class="number">1024</span> * <span class="number">1024</span>); <span class="comment">//设置eapp的内存地址</span></span><br><span class="line">  enclave.init(argv[<span class="number">1</span>], argv[<span class="number">2</span>], params); <span class="comment">//初始化enclave</span></span><br><span class="line">  enclave.registerOcallDispatch(incoming_call_dispatch);</span><br><span class="line">  edge_call_init_internals(</span><br><span class="line">      (<span class="type">uintptr_t</span>)enclave.getSharedBuffer(), enclave.getSharedBufferSize());</span><br><span class="line">  enclave.run(); <span class="comment">//启动enclave</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>2.eapp程序，作为实际运行的程序，依靠host程序作为runtime<br>一个简单的demo<pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">host</span><span class="token expression"><span class="token punctuation">.</span>cpp</span></span>
+<span class="token comment">//******************************************************************************</span>
+<span class="token comment">// Copyright (c) 2018, The Regents of the University of California (Regents).</span>
+<span class="token comment">// All Rights Reserved. See LICENSE for license details.</span>
+<span class="token comment">//------------------------------------------------------------------------------</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"edge/edge_call.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"host/keystone.h"</span></span>
+using namespace Keystone<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  Enclave enclave<span class="token punctuation">;</span>
+  Params params<span class="token punctuation">;</span>
+  params<span class="token punctuation">.</span><span class="token function">setFreeMemSize</span><span class="token punctuation">(</span><span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//申请空间</span>
+  params<span class="token punctuation">.</span><span class="token function">setUntrustedMem</span><span class="token punctuation">(</span>DEFAULT_UNTRUSTED_PTR<span class="token punctuation">,</span> <span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//设置eapp的内存地址</span>
+  enclave<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> params<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//初始化enclave</span>
+  enclave<span class="token punctuation">.</span><span class="token function">registerOcallDispatch</span><span class="token punctuation">(</span>incoming_call_dispatch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">edge_call_init_internals</span><span class="token punctuation">(</span>
+      <span class="token punctuation">(</span><span class="token class-name">uintptr_t</span><span class="token punctuation">)</span>enclave<span class="token punctuation">.</span><span class="token function">getSharedBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> enclave<span class="token punctuation">.</span><span class="token function">getSharedBufferSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  enclave<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//启动enclave</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre></li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;hello, world!\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello, world!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>根据官方文档介绍</p>
 <p>一个enclave程序首先有一个连续的物理地址范围，成为EPM(enclave private memory)，不受信任的主机要运行enclave程序首先申请分配EPM,并用PT(page table) 和RT(Runtime table)进行初始化epm，一旦主机调用SM创建一个enclave，SM(security monitory) 就会使用PMP保护EPM，并对EPM进行权限控制，并且PMP都是通过内核进行传递再创建成功之后，SM将会对enclave初始化状态进行验证</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enclave.run --&gt;keystone_run_enclave --&gt;sbi_sm_run_enclave</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">enclave.run --<span class="token operator">></span>keystone_run_enclave --<span class="token operator">></span>sbi_sm_run_enclave</code></pre>
 <p>我们首先看run函数执行了什么</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">KeystoneDevice::__run(<span class="type">bool</span> resume, <span class="type">uintptr_t</span>* ret) &#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">keystone_ioctl_run_enclave</span> <span class="title">encl</span>;</span></span><br><span class="line">  encl.eid = eid;</span><br><span class="line">  Error error;</span><br><span class="line">  <span class="type">uint64_t</span> request;</span><br><span class="line">  <span class="keyword">if</span> (resume) &#123;</span><br><span class="line">    error   = Error::IoctlErrorResume;</span><br><span class="line">    request = KEYSTONE_IOC_RESUME_ENCLAVE;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    error   = Error::IoctlErrorRun;</span><br><span class="line">    request = KEYSTONE_IOC_RUN_ENCLAVE;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (ioctl(fd, request, &amp;encl)) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> error;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c">KeystoneDevice<span class="token operator">::</span><span class="token function">__run</span><span class="token punctuation">(</span>bool resume<span class="token punctuation">,</span> <span class="token class-name">uintptr_t</span><span class="token operator">*</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">keystone_ioctl_run_enclave</span> encl<span class="token punctuation">;</span>
+  encl<span class="token punctuation">.</span>eid <span class="token operator">=</span> eid<span class="token punctuation">;</span>
+  Error error<span class="token punctuation">;</span>
+  <span class="token class-name">uint64_t</span> request<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>resume<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    error   <span class="token operator">=</span> Error<span class="token operator">::</span>IoctlErrorResume<span class="token punctuation">;</span>
+    request <span class="token operator">=</span> KEYSTONE_IOC_RESUME_ENCLAVE<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    error   <span class="token operator">=</span> Error<span class="token operator">::</span>IoctlErrorRun<span class="token punctuation">;</span>
+    request <span class="token operator">=</span> KEYSTONE_IOC_RUN_ENCLAVE<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ioctl</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> request<span class="token punctuation">,</span> <span class="token operator">&amp;</span>encl<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">return</span> error<span class="token punctuation">;</span>
+
+  <span class="token punctuation">&#125;</span></code></pre>
 <p>我们发现run中调用了ioctl函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">keystone_fops</span> =</span> &#123;</span><br><span class="line">    .owner          = THIS_MODULE,</span><br><span class="line">    .mmap           = keystone_mmap,</span><br><span class="line">    .unlocked_ioctl = keystone_ioctl,</span><br><span class="line">    .release        = keystone_release</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">file_operations</span> keystone_fops <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">.</span>owner          <span class="token operator">=</span> THIS_MODULE<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>mmap           <span class="token operator">=</span> keystone_mmap<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>unlocked_ioctl <span class="token operator">=</span> keystone_ioctl<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span>release        <span class="token operator">=</span> keystone_release
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
 <p>接着看ioctl函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">keystone_ioctl</span><span class="params">(<span class="keyword">struct</span> file *filep, <span class="type">unsigned</span> <span class="type">int</span> cmd, <span class="type">unsigned</span> <span class="type">long</span> arg)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">long</span> ret;</span><br><span class="line">  <span class="type">char</span> data[<span class="number">512</span>];</span><br><span class="line">  <span class="type">size_t</span> ioc_size;</span><br><span class="line">  <span class="keyword">if</span> (!arg)</span><br><span class="line">    <span class="keyword">return</span> -EINVAL;</span><br><span class="line">  ioc_size = _IOC_SIZE(cmd);</span><br><span class="line">  ioc_size = ioc_size &gt; <span class="keyword">sizeof</span>(data) ? <span class="keyword">sizeof</span>(data) : ioc_size;</span><br><span class="line">  <span class="keyword">if</span> (copy_from_user(data,(<span class="type">void</span> __user *) arg, ioc_size))</span><br><span class="line">    <span class="keyword">return</span> -EFAULT;</span><br><span class="line">  <span class="keyword">switch</span> (cmd) &#123;</span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_CREATE_ENCLAVE:</span><br><span class="line">      ret = keystone_create_enclave(filep, (<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_FINALIZE_ENCLAVE:</span><br><span class="line">      ret = keystone_finalize_enclave((<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_DESTROY_ENCLAVE:</span><br><span class="line">      ret = keystone_destroy_enclave(filep, (<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_RUN_ENCLAVE:</span><br><span class="line">      ret = keystone_run_enclave((<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_RESUME_ENCLAVE:</span><br><span class="line">      ret = keystone_resume_enclave((<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="comment">/* Note that following commands could have been implemented as a part of ADD_PAGE ioctl.</span></span><br><span class="line"><span class="comment">     * However, there was a weird bug in compiler that generates a wrong control flow</span></span><br><span class="line"><span class="comment">     * that ends up with an illegal instruction if we combine switch-case and if statements.</span></span><br><span class="line"><span class="comment">     * We didn&#x27;t identified the exact problem, so we&#x27;ll have these until we figure out */</span></span><br><span class="line">    <span class="keyword">case</span> KEYSTONE_IOC_UTM_INIT:</span><br><span class="line">      ret = utm_init_ioctl(filep, (<span class="type">unsigned</span> <span class="type">long</span>) data);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> -ENOSYS;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (copy_to_user((<span class="type">void</span> __user*) arg, data, ioc_size))</span><br><span class="line">    <span class="keyword">return</span> -EFAULT;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">long</span> <span class="token function">keystone_ioctl</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filep<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">long</span> ret<span class="token punctuation">;</span>
+  <span class="token keyword">char</span> data<span class="token punctuation">[</span><span class="token number">512</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token class-name">size_t</span> ioc_size<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>arg<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>EINVAL<span class="token punctuation">;</span>
+  ioc_size <span class="token operator">=</span> <span class="token function">_IOC_SIZE</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ioc_size <span class="token operator">=</span> ioc_size <span class="token operator">></span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">:</span> ioc_size<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">copy_from_user</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">void</span> __user <span class="token operator">*</span><span class="token punctuation">)</span> arg<span class="token punctuation">,</span> ioc_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>EFAULT<span class="token punctuation">;</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>cmd<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_CREATE_ENCLAVE<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">keystone_create_enclave</span><span class="token punctuation">(</span>filep<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_FINALIZE_ENCLAVE<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">keystone_finalize_enclave</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_DESTROY_ENCLAVE<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">keystone_destroy_enclave</span><span class="token punctuation">(</span>filep<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_RUN_ENCLAVE<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">keystone_run_enclave</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_RESUME_ENCLAVE<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">keystone_resume_enclave</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token comment">/* Note that following commands could have been implemented as a part of ADD_PAGE ioctl.
+     * However, there was a weird bug in compiler that generates a wrong control flow
+     * that ends up with an illegal instruction if we combine switch-case and if statements.
+     * We didn't identified the exact problem, so we'll have these until we figure out */</span>
+    <span class="token keyword">case</span> KEYSTONE_IOC_UTM_INIT<span class="token operator">:</span>
+      ret <span class="token operator">=</span> <span class="token function">utm_init_ioctl</span><span class="token punctuation">(</span>filep<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">)</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+      <span class="token keyword">return</span> <span class="token operator">-</span>ENOSYS<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">copy_to_user</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> __user<span class="token operator">*</span><span class="token punctuation">)</span> arg<span class="token punctuation">,</span> data<span class="token punctuation">,</span> ioc_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>EFAULT<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>接着看enclave_run_enclave函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">keystone_run_enclave</span><span class="params">(<span class="type">unsigned</span> <span class="type">long</span> data)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">sbiret</span> <span class="title">ret</span>;</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">long</span> ueid;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">enclave</span>* <span class="title">enclave</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">keystone_ioctl_run_enclave</span> *<span class="title">arg</span> =</span> (<span class="keyword">struct</span> keystone_ioctl_run_enclave*) data;</span><br><span class="line">  ueid = arg-&gt;eid;</span><br><span class="line">  enclave = get_enclave_by_id(ueid);</span><br><span class="line">  <span class="keyword">if</span> (!enclave) &#123;</span><br><span class="line">    keystone_err(<span class="string">&quot;invalid enclave id\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> -EINVAL;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (enclave-&gt;eid &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    keystone_err(<span class="string">&quot;real enclave does not exist\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> -EINVAL;</span><br><span class="line">  &#125;</span><br><span class="line">  ret = sbi_sm_run_enclave(enclave-&gt;eid);</span><br><span class="line">  arg-&gt;error = ret.error;</span><br><span class="line">  arg-&gt;value = ret.value;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">keystone_run_enclave</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> data<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">sbiret</span> ret<span class="token punctuation">;</span>
+  <span class="token keyword">unsigned</span> <span class="token keyword">long</span> ueid<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">enclave</span><span class="token operator">*</span> enclave<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">keystone_ioctl_run_enclave</span> <span class="token operator">*</span>arg <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">keystone_ioctl_run_enclave</span><span class="token operator">*</span><span class="token punctuation">)</span> data<span class="token punctuation">;</span>
+  ueid <span class="token operator">=</span> arg<span class="token operator">-></span>eid<span class="token punctuation">;</span>
+  enclave <span class="token operator">=</span> <span class="token function">get_enclave_by_id</span><span class="token punctuation">(</span>ueid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>enclave<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">keystone_err</span><span class="token punctuation">(</span><span class="token string">"invalid enclave id\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>EINVAL<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>enclave<span class="token operator">-></span>eid <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">keystone_err</span><span class="token punctuation">(</span><span class="token string">"real enclave does not exist\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span>EINVAL<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  ret <span class="token operator">=</span> <span class="token function">sbi_sm_run_enclave</span><span class="token punctuation">(</span>enclave<span class="token operator">-></span>eid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  arg<span class="token operator">-></span>error <span class="token operator">=</span> ret<span class="token punctuation">.</span>error<span class="token punctuation">;</span>
+  arg<span class="token operator">-></span>value <span class="token operator">=</span> ret<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>我们看一下sbi_sm_run_enclave函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">sbi_sm_run_enclave</span><span class="params">((<span class="keyword">struct</span> sbi_trap_regs *)regs,<span class="type">unsigned</span> <span class="type">long</span> eid)</span></span><br><span class="line">&#123;</span><br><span class="line">	regs-&gt;a0 = run_enclave(regs,(<span class="type">unsigned</span> <span class="type">int</span>)eid);</span><br><span class="line">	regs-&gt;mepc += <span class="number">4</span>;</span><br><span class="line">	sbi_trap_exit(regs);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">sbi_sm_run_enclave</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sbi_trap_regs</span> <span class="token operator">*</span><span class="token punctuation">)</span>regs<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> eid<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	regs<span class="token operator">-></span>a0 <span class="token operator">=</span> <span class="token function">run_enclave</span><span class="token punctuation">(</span>regs<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>eid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	regs<span class="token operator">-></span>mepc <span class="token operator">+=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+	<span class="token function">sbi_trap_exit</span><span class="token punctuation">(</span>regs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 <p>pmp_set<br>这里我们可以清楚的看到，sbi_sm_run_enclave函数先是调用了run_enclave函数，然后将返回结果存储到a0,然后调用sbi_trap_exit(regs)函数返回，因此我们这里基本可以推测，eapp程序是作为host程序中的一个中断程序。<br>run_enclave中，完成以下操作：<br>1.修改寄存器组的值，对应需要run的那个enclave，并且把当前的寄存器组的值保存起来，（就像函数调用或者中断一样，调用函数或者执行中断函数首先需要保留现场，以便于执行完成之后可以正确的返回）</p>
 <p>2.翻转pmp的权限。<br>每个eapp拥有自己的运行权限，由于host程序最终要运行到eapp，因此这里通过反转pmp权限实现控制eapp的运行权限，可以这么理解，eapp的运行环境是host程序创建的，因此eapp运行之前需要通过host进行初始化。</p>
 <p>3。保存一些信息，用于之后的一些操作，例如检查之类的。比如保存当前的hart（硬件线程）对应的eid，以及是否在enclave中，用于之后的操作。</p>
@@ -488,7 +632,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/05/04/keystone%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/">https://dreamaccount.github.io/2023/05/04/keystone%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/</a>
+                    <a href="https://bugprogram-git.github.io/2023/05/04/keystone%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/">https://bugprogram-git.github.io/2023/05/04/keystone%E6%A1%86%E6%9E%B6%E5%88%86%E6%9E%90/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -709,6 +853,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -881,6 +1028,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1099,6 +1248,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1115,6 +1275,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

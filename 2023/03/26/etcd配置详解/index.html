@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="etcd配置详解, Hexo">
+    <meta name="keywords" content="etcd配置详解, MyBlog">
     <meta name="description" content="etcd配置详解1.什么是etcd？etcd是一个开源的分布式键值存储系统，它用于在集群中的多个节点之间共享数据。etcd最初由CoreOS团队开发，现在由Cloud Native Computing Foundation (CNCF) 维">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>etcd配置详解 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>etcd配置详解 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -391,6 +402,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -418,11 +432,67 @@
 </ul>
 <p>相对而言，etcd更加注重数据的一致性和高可用性，并提供了一些特定于分布式环境下的功能，例如基于租约的分布式锁。而Redis则更侧重于快速的读写性能和丰富的数据处理能力。</p>
 <h3 id="4-etcd配置"><a href="#4-etcd配置" class="headerlink" title="4.etcd配置"></a>4.etcd配置</h3><p>1.安装etcd</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#基于Archlinux</span></span><br><span class="line">pacman -S etcd <span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#基于Archlinux</span>
+pacman -S etcd <span class="token comment">#</span></code></pre>
 <p>2.配置etcd<br>由于Archlinux安装etcd后生成的etcd.service文件中并没有指定etcd的配置文件，因此我们可以修改&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;etcd.service文件的配置参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=etcd key-value store</span><br><span class="line">Documentation=https://github.com/etcd-io/etcd</span><br><span class="line">After=network-online.target local-fs.target remote-fs.target time-sync.target</span><br><span class="line">Wants=network-online.target local-fs.target remote-fs.target time-sync.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=etcd</span><br><span class="line">Type=notify</span><br><span class="line">Environment=ETCD_DATA_DIR=/var/lib/etcd</span><br><span class="line">Environment=ETCD_NAME=%m</span><br><span class="line">ExecStart=/usr/bin/etcd --config-file /etc/etcd/etcd.conf #这里指定配置文件</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=10s</span><br><span class="line">LimitNOFILE=40000</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<pre class="language-service" data-language="service"><code class="language-service">[Unit]
+Description&#x3D;etcd key-value store
+Documentation&#x3D;https:&#x2F;&#x2F;github.com&#x2F;etcd-io&#x2F;etcd
+After&#x3D;network-online.target local-fs.target remote-fs.target time-sync.target
+Wants&#x3D;network-online.target local-fs.target remote-fs.target time-sync.target
+
+[Service]
+User&#x3D;etcd
+Type&#x3D;notify
+Environment&#x3D;ETCD_DATA_DIR&#x3D;&#x2F;var&#x2F;lib&#x2F;etcd
+Environment&#x3D;ETCD_NAME&#x3D;%m
+ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;etcd --config-file &#x2F;etc&#x2F;etcd&#x2F;etcd.conf #这里指定配置文件
+Restart&#x3D;always
+RestartSec&#x3D;10s
+LimitNOFILE&#x3D;40000
+
+[Install]
+WantedBy&#x3D;multi-user.target</code></pre>
 <p>3.编辑etcd配置文件<br>etcd配置文件以yaml文件语法格式编写</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Cluster配置</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">&quot;etcd-node-1&quot;</span></span><br><span class="line"><span class="comment">#指定初始集群状态，&quot;new&quot;代表一个全新的未初始化的etcd集群</span></span><br><span class="line"><span class="attr">initial-cluster-state:</span> <span class="string">&quot;new&quot;</span></span><br><span class="line"><span class="attr">initial-cluster-token:</span> <span class="string">&quot;etcd-cluster-1&quot;</span></span><br><span class="line"><span class="attr">initial-cluster:</span> <span class="string">&quot;etcd-node-1=http://192.168.0.1:2380,etcd-node-2=http://192.168.0.2:2380,etcd-node-3=http://192.168.0.3:2380&quot;</span></span><br><span class="line"><span class="comment">#用于集群部署的，listen-peer-urls为其他etcd节点访问的url</span></span><br><span class="line"><span class="attr">listen-peer-urls:</span> <span class="string">&quot;http://192.168.0.1:2380&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Security配置</span></span><br><span class="line"><span class="attr">client-transport-security:</span></span><br><span class="line">  <span class="attr">cert-file:</span> <span class="string">&quot;/path/to/client.crt&quot;</span></span><br><span class="line">  <span class="attr">key-file:</span> <span class="string">&quot;/path/to/client.key&quot;</span></span><br><span class="line">  <span class="attr">trusted-ca-file:</span> <span class="string">&quot;/path/to/ca.crt&quot;</span></span><br><span class="line">  <span class="comment">#集群的证书，信任的ca证书，以及密钥</span></span><br><span class="line"><span class="attr">peer-transport-security:</span></span><br><span class="line">  <span class="attr">cert-file:</span> <span class="string">&quot;/path/to/peer.crt&quot;</span></span><br><span class="line">  <span class="attr">key-file:</span> <span class="string">&quot;/path/to/peer.key&quot;</span></span><br><span class="line">  <span class="attr">trusted-ca-file:</span> <span class="string">&quot;/path/to/ca.crt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Logging配置</span></span><br><span class="line"><span class="comment">#如果需要输出更多的调试信息，打开debug，在生产环境中建议关闭</span></span><br><span class="line"><span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment">#日志等级</span></span><br><span class="line"><span class="attr">log-level:</span> <span class="string">&quot;info&quot;</span></span><br><span class="line"><span class="attr">log-outputs:</span> [<span class="string">&quot;stdout&quot;</span>]</span><br><span class="line"><span class="comment">#如果要将日志输出到指定文件</span></span><br><span class="line"><span class="comment">#log-outputs: [&quot;file&quot;]</span></span><br><span class="line"><span class="comment">#log-file: &quot;/var/log/etcd/etcd.log&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Storage配置</span></span><br><span class="line"><span class="attr">data-dir:</span> <span class="string">&quot;/var/lib/etcd&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># API Server配置</span></span><br><span class="line"><span class="comment">#监听的地址2379端口为etcd V3版本的监听端口，V2版本为4001，可以根据具体版本进行修改</span></span><br><span class="line"><span class="attr">listen-client-urls:</span> <span class="string">&quot;http://0.0.0.0:2379,http://0.0.0.0:4001&quot;</span></span><br><span class="line"><span class="comment">#响应客户端请求在响应头中加入的地址和端口</span></span><br><span class="line"><span class="attr">advertise-client-urls:</span> <span class="string">&quot;http://192.168.0.1:2379,http://192.168.0.1:4001&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Cluster配置</span>
+<span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"etcd-node-1"</span>
+<span class="token comment">#指定初始集群状态，"new"代表一个全新的未初始化的etcd集群</span>
+<span class="token key atrule">initial-cluster-state</span><span class="token punctuation">:</span> <span class="token string">"new"</span>
+<span class="token key atrule">initial-cluster-token</span><span class="token punctuation">:</span> <span class="token string">"etcd-cluster-1"</span>
+<span class="token key atrule">initial-cluster</span><span class="token punctuation">:</span> <span class="token string">"etcd-node-1=http://192.168.0.1:2380,etcd-node-2=http://192.168.0.2:2380,etcd-node-3=http://192.168.0.3:2380"</span>
+<span class="token comment">#用于集群部署的，listen-peer-urls为其他etcd节点访问的url</span>
+<span class="token key atrule">listen-peer-urls</span><span class="token punctuation">:</span> <span class="token string">"http://192.168.0.1:2380"</span>
+
+<span class="token comment"># Security配置</span>
+<span class="token key atrule">client-transport-security</span><span class="token punctuation">:</span>
+  <span class="token key atrule">cert-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/client.crt"</span>
+  <span class="token key atrule">key-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/client.key"</span>
+  <span class="token key atrule">trusted-ca-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/ca.crt"</span>
+  <span class="token comment">#集群的证书，信任的ca证书，以及密钥</span>
+<span class="token key atrule">peer-transport-security</span><span class="token punctuation">:</span>
+  <span class="token key atrule">cert-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/peer.crt"</span>
+  <span class="token key atrule">key-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/peer.key"</span>
+  <span class="token key atrule">trusted-ca-file</span><span class="token punctuation">:</span> <span class="token string">"/path/to/ca.crt"</span>
+
+<span class="token comment"># Logging配置</span>
+<span class="token comment">#如果需要输出更多的调试信息，打开debug，在生产环境中建议关闭</span>
+<span class="token key atrule">debug</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+<span class="token comment">#日志等级</span>
+<span class="token key atrule">log-level</span><span class="token punctuation">:</span> <span class="token string">"info"</span>
+<span class="token key atrule">log-outputs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"stdout"</span><span class="token punctuation">]</span>
+<span class="token comment">#如果要将日志输出到指定文件</span>
+<span class="token comment">#log-outputs: ["file"]</span>
+<span class="token comment">#log-file: "/var/log/etcd/etcd.log"</span>
+
+<span class="token comment"># Storage配置</span>
+<span class="token key atrule">data-dir</span><span class="token punctuation">:</span> <span class="token string">"/var/lib/etcd"</span>
+
+<span class="token comment"># API Server配置</span>
+<span class="token comment">#监听的地址2379端口为etcd V3版本的监听端口，V2版本为4001，可以根据具体版本进行修改</span>
+<span class="token key atrule">listen-client-urls</span><span class="token punctuation">:</span> <span class="token string">"http://0.0.0.0:2379,http://0.0.0.0:4001"</span>
+<span class="token comment">#响应客户端请求在响应头中加入的地址和端口</span>
+<span class="token key atrule">advertise-client-urls</span><span class="token punctuation">:</span> <span class="token string">"http://192.168.0.1:2379,http://192.168.0.1:4001"</span>
+</code></pre>
 
                 
             </div>
@@ -449,7 +519,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/03/26/etcd%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/">https://dreamaccount.github.io/2023/03/26/etcd%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</a>
+                    <a href="https://bugprogram-git.github.io/2023/03/26/etcd%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/">https://bugprogram-git.github.io/2023/03/26/etcd%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -666,6 +736,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -838,6 +911,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1056,6 +1131,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1072,6 +1158,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

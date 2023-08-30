@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iptables的基本原理以及使用, Hexo">
+    <meta name="keywords" content="iptables的基本原理以及使用, MyBlog">
     <meta name="description" content="netfilter&amp;#x2F;iptables使用1.什么是iptables？netfliter&amp;#x2F;iptables是linux一个用来过滤流量以及数据包转发的内核模块
 是linux内核的一部分,iptables是linux中的一个">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>iptables的基本原理以及使用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>iptables的基本原理以及使用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -412,22 +426,179 @@
             <div id="articleContent">
                 <h1 id="netfilter-x2F-iptables使用"><a href="#netfilter-x2F-iptables使用" class="headerlink" title="netfilter&#x2F;iptables使用"></a>netfilter&#x2F;iptables使用</h1><h3 id="1-什么是iptables？"><a href="#1-什么是iptables？" class="headerlink" title="1.什么是iptables？"></a>1.什么是iptables？</h3><p>netfliter&#x2F;iptables是linux一个用来过滤流量以及数据包转发的内核模块</p>
 <p>是linux内核的一部分,iptables是linux中的一个工具,运行在用户空间,可以控制netfliter中增加修改删除数据包的处理规则,netfliter位于网卡和内核之间,可以控制计算机的进出流量</p>
-<h3 id="2-内核源码分析"><a href="#2-内核源码分析" class="headerlink" title="2.内核源码分析"></a>2.内核源码分析</h3><h5 id="1-hooks函数"><a href="#1-hooks函数" class="headerlink" title="1.hooks函数"></a>1.hooks函数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">nf_inet_hooks</span> &#123;</span></span><br><span class="line">	NF_INET_PRE_ROUTING,</span><br><span class="line">	NF_INET_LOCAL_IN,</span><br><span class="line">	NF_INET_FORWARD,</span><br><span class="line">	NF_INET_LOCAL_OUT,</span><br><span class="line">	NF_INET_POST_ROUTING,</span><br><span class="line">	NF_INET_NUMHOOKS,</span><br><span class="line">	NF_INET_INGRESS = NF       </span><br><span class="line"><span class="comment">//hooks函数定义</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-内核源码分析"><a href="#2-内核源码分析" class="headerlink" title="2.内核源码分析"></a>2.内核源码分析</h3><h5 id="1-hooks函数"><a href="#1-hooks函数" class="headerlink" title="1.hooks函数"></a>1.hooks函数</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">enum</span> <span class="token class-name">nf_inet_hooks</span> <span class="token punctuation">&#123;</span>
+	NF_INET_PRE_ROUTING<span class="token punctuation">,</span>
+	NF_INET_LOCAL_IN<span class="token punctuation">,</span>
+	NF_INET_FORWARD<span class="token punctuation">,</span>
+	NF_INET_LOCAL_OUT<span class="token punctuation">,</span>
+	NF_INET_POST_ROUTING<span class="token punctuation">,</span>
+	NF_INET_NUMHOOKS<span class="token punctuation">,</span>
+	NF_INET_INGRESS <span class="token operator">=</span> NF       
+<span class="token comment">//hooks函数定义</span></code></pre>
 
 <h5 id="2-第一个挂接点-NF-INET-PRE-ROUTING"><a href="#2-第一个挂接点-NF-INET-PRE-ROUTING" class="headerlink" title="2.第一个挂接点(NF_INET_PRE_ROUTING)"></a>2.第一个挂接点(NF_INET_PRE_ROUTING)</h5><p>这个挂接点是网卡接受数据之后第一个执行的hook</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//网卡接受数据后调用的第一个函数就是ip_rcv函数,ipv6为ip6_rcv</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">ip_rcv</span><span class="params">(<span class="keyword">struct</span> sk_buff *skb, <span class="keyword">struct</span> net_device *dev, <span class="keyword">struct</span> packet_type *pt,</span></span><br><span class="line"><span class="params">	   <span class="keyword">struct</span> net_device *orig_dev)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">net</span> *<span class="title">net</span> =</span> dev_net(dev);</span><br><span class="line"></span><br><span class="line">	skb = ip_rcv_core(skb, net);</span><br><span class="line">	<span class="keyword">if</span> (skb == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> NET_RX_DROP;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,</span><br><span class="line">		       net, <span class="literal">NULL</span>, skb, dev, <span class="literal">NULL</span>,</span><br><span class="line">		       ip_rcv_finish);<span class="comment">//下一个挂接点NF_INET_PRE_ROUTING</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">//网卡接受数据后调用的第一个函数就是ip_rcv函数,ipv6为ip6_rcv</span>
+<span class="token keyword">int</span> <span class="token function">ip_rcv</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">packet_type</span> <span class="token operator">*</span>pt<span class="token punctuation">,</span>
+	   <span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>orig_dev<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">net</span> <span class="token operator">*</span>net <span class="token operator">=</span> <span class="token function">dev_net</span><span class="token punctuation">(</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	skb <span class="token operator">=</span> <span class="token function">ip_rcv_core</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> net<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>skb <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> NET_RX_DROP<span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token function">NF_HOOK</span><span class="token punctuation">(</span>NFPROTO_IPV4<span class="token punctuation">,</span> NF_INET_PRE_ROUTING<span class="token punctuation">,</span>
+		       net<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> skb<span class="token punctuation">,</span> dev<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span>
+		       ip_rcv_finish<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//下一个挂接点NF_INET_PRE_ROUTING</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h5 id="3-第二个挂接点（NF-INET-LOCAL-IN"><a href="#3-第二个挂接点（NF-INET-LOCAL-IN" class="headerlink" title="3.第二个挂接点（NF_INET_LOCAL_IN)"></a>3.第二个挂接点（NF_INET_LOCAL_IN)</h5><p>这个挂接点在数据包进行路由之后,数据包目标ip是本机的时候执行的hook</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ip_local_deliver</span><span class="params">(<span class="keyword">struct</span> sk_buff *skb)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *	Reassemble IP fragments.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">net</span> *<span class="title">net</span> =</span> dev_net(skb-&gt;dev);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (ip_is_fragment(ip_hdr(skb))) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ip_defrag(net, skb, IP_DEFRAG_LOCAL_DELIVER))</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> NF_HOOK(NFPROTO_IPV4, NF_INET_LOCAL_IN,</span><br><span class="line">		       net, <span class="literal">NULL</span>, skb, skb-&gt;dev, <span class="literal">NULL</span>,</span><br><span class="line">		       ip_local_deliver_finish);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">ip_local_deliver</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token comment">/*
+	 *	Reassemble IP fragments.
+	 */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">net</span> <span class="token operator">*</span>net <span class="token operator">=</span> <span class="token function">dev_net</span><span class="token punctuation">(</span>skb<span class="token operator">-></span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ip_is_fragment</span><span class="token punctuation">(</span><span class="token function">ip_hdr</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ip_defrag</span><span class="token punctuation">(</span>net<span class="token punctuation">,</span> skb<span class="token punctuation">,</span> IP_DEFRAG_LOCAL_DELIVER<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> <span class="token function">NF_HOOK</span><span class="token punctuation">(</span>NFPROTO_IPV4<span class="token punctuation">,</span> NF_INET_LOCAL_IN<span class="token punctuation">,</span>
+		       net<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> skb<span class="token punctuation">,</span> skb<span class="token operator">-></span>dev<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span>
+		       ip_local_deliver_finish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h5 id="3-第三个挂接点-NF-INET-FORWARD"><a href="#3-第三个挂接点-NF-INET-FORWARD" class="headerlink" title="3.第三个挂接点(NF_INET_FORWARD)"></a>3.第三个挂接点(NF_INET_FORWARD)</h5><p>数据包进入网络层进行路由时,数据包路由选择后目标ip不是本机时执行的hook</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ip_forward</span><span class="params">(<span class="keyword">struct</span> sk_buff *skb)</span></span><br><span class="line">&#123;</span><br><span class="line">	u32 mtu;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">iphdr</span> *<span class="title">iph</span>;</span>	<span class="comment">/* Our header */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">rtable</span> *<span class="title">rt</span>;</span>	<span class="comment">/* Route we use */</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">ip_options</span> *<span class="title">opt</span>	=</span> &amp;(IPCB(skb)-&gt;opt);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">net</span> *<span class="title">net</span>;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* that should never happen */</span></span><br><span class="line">	<span class="keyword">if</span> (skb-&gt;pkt_type != PACKET_HOST)</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (unlikely(skb-&gt;sk))</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (skb_warn_if_lro(skb))</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!xfrm4_policy_check(<span class="literal">NULL</span>, XFRM_POLICY_FWD, skb))</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (IPCB(skb)-&gt;opt.router_alert &amp;&amp; ip_call_ra_chain(skb))</span><br><span class="line">		<span class="keyword">return</span> NET_RX_SUCCESS;</span><br><span class="line"></span><br><span class="line">	skb_forward_csum(skb);</span><br><span class="line">	net = dev_net(skb-&gt;dev);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *	According to the RFC, we must first decrease the TTL field. If</span></span><br><span class="line"><span class="comment">	 *	that reaches zero, we must reply an ICMP control message telling</span></span><br><span class="line"><span class="comment">	 *	that the packet&#x27;s lifetime expired.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (ip_hdr(skb)-&gt;ttl &lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">goto</span> too_many_hops;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!xfrm4_route_forward(skb))</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">	rt = skb_rtable(skb);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (opt-&gt;is_strictroute &amp;&amp; rt-&gt;rt_uses_gateway)</span><br><span class="line">		<span class="keyword">goto</span> sr_failed;</span><br><span class="line"></span><br><span class="line">	IPCB(skb)-&gt;flags |= IPSKB_FORWARDED;</span><br><span class="line">	mtu = ip_dst_mtu_maybe_forward(&amp;rt-&gt;dst, <span class="literal">true</span>);</span><br><span class="line">	<span class="keyword">if</span> (ip_exceeds_mtu(skb, mtu)) &#123;</span><br><span class="line">		IP_INC_STATS(net, IPSTATS_MIB_FRAGFAILS);</span><br><span class="line">		icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,</span><br><span class="line">			  htonl(mtu));</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* We are about to mangle packet. Copy it! */</span></span><br><span class="line">	<span class="keyword">if</span> (skb_cow(skb, LL_RESERVED_SPACE(rt-&gt;dst.dev)+rt-&gt;dst.header_len))</span><br><span class="line">		<span class="keyword">goto</span> drop;</span><br><span class="line">	iph = ip_hdr(skb);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Decrease ttl after skb cow done */</span></span><br><span class="line">	ip_decrease_ttl(iph);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *	We now generate an ICMP HOST REDIRECT giving the route</span></span><br><span class="line"><span class="comment">	 *	we calculated.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (IPCB(skb)-&gt;flags &amp; IPSKB_DOREDIRECT &amp;&amp; !opt-&gt;srr &amp;&amp;</span><br><span class="line">	    !skb_sec_path(skb))</span><br><span class="line">		ip_rt_send_redirect(skb);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (net-&gt;ipv4.sysctl_ip_fwd_update_priority)</span><br><span class="line">		skb-&gt;priority = rt_tos2priority(iph-&gt;tos);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> NF_HOOK(NFPROTO_IPV4, NF_INET_FORWARD,</span><br><span class="line">		       net, <span class="literal">NULL</span>, skb, skb-&gt;dev, rt-&gt;dst.dev,</span><br><span class="line">		       ip_forward_finish);</span><br><span class="line"></span><br><span class="line">sr_failed:</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 *	Strict routing permits no gatewaying</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	 icmp_send(skb, ICMP_DEST_UNREACH, ICMP_SR_FAILED, <span class="number">0</span>);</span><br><span class="line">	 <span class="keyword">goto</span> drop;</span><br><span class="line"></span><br><span class="line">too_many_hops:</span><br><span class="line">	<span class="comment">/* Tell the sender its packet died... */</span></span><br><span class="line">	__IP_INC_STATS(net, IPSTATS_MIB_INHDRERRORS);</span><br><span class="line">	icmp_send(skb, ICMP_TIME_EXCEEDED, ICMP_EXC_TTL, <span class="number">0</span>);</span><br><span class="line">drop:</span><br><span class="line">	kfree_skb(skb);</span><br><span class="line">	<span class="keyword">return</span> NET_RX_DROP;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">ip_forward</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	u32 mtu<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">iphdr</span> <span class="token operator">*</span>iph<span class="token punctuation">;</span>	<span class="token comment">/* Our header */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">rtable</span> <span class="token operator">*</span>rt<span class="token punctuation">;</span>	<span class="token comment">/* Route we use */</span>
+	<span class="token keyword">struct</span> <span class="token class-name">ip_options</span> <span class="token operator">*</span>opt	<span class="token operator">=</span> <span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token function">IPCB</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>opt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">net</span> <span class="token operator">*</span>net<span class="token punctuation">;</span>
+
+	<span class="token comment">/* that should never happen */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>skb<span class="token operator">-></span>pkt_type <span class="token operator">!=</span> PACKET_HOST<span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span>skb<span class="token operator">-></span>sk<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">skb_warn_if_lro</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">xfrm4_policy_check</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">,</span> XFRM_POLICY_FWD<span class="token punctuation">,</span> skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">IPCB</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>opt<span class="token punctuation">.</span>router_alert <span class="token operator">&amp;&amp;</span> <span class="token function">ip_call_ra_chain</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> NET_RX_SUCCESS<span class="token punctuation">;</span>
+
+	<span class="token function">skb_forward_csum</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	net <span class="token operator">=</span> <span class="token function">dev_net</span><span class="token punctuation">(</span>skb<span class="token operator">-></span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/*
+	 *	According to the RFC, we must first decrease the TTL field. If
+	 *	that reaches zero, we must reply an ICMP control message telling
+	 *	that the packet's lifetime expired.
+	 */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ip_hdr</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>ttl <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> too_many_hops<span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">xfrm4_route_forward</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+	rt <span class="token operator">=</span> <span class="token function">skb_rtable</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>opt<span class="token operator">-></span>is_strictroute <span class="token operator">&amp;&amp;</span> rt<span class="token operator">-></span>rt_uses_gateway<span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> sr_failed<span class="token punctuation">;</span>
+
+	<span class="token function">IPCB</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>flags <span class="token operator">|=</span> IPSKB_FORWARDED<span class="token punctuation">;</span>
+	mtu <span class="token operator">=</span> <span class="token function">ip_dst_mtu_maybe_forward</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>rt<span class="token operator">-></span>dst<span class="token punctuation">,</span> true<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ip_exceeds_mtu</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> mtu<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">IP_INC_STATS</span><span class="token punctuation">(</span>net<span class="token punctuation">,</span> IPSTATS_MIB_FRAGFAILS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">icmp_send</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> ICMP_DEST_UNREACH<span class="token punctuation">,</span> ICMP_FRAG_NEEDED<span class="token punctuation">,</span>
+			  <span class="token function">htonl</span><span class="token punctuation">(</span>mtu<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">/* We are about to mangle packet. Copy it! */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">skb_cow</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> <span class="token function">LL_RESERVED_SPACE</span><span class="token punctuation">(</span>rt<span class="token operator">-></span>dst<span class="token punctuation">.</span>dev<span class="token punctuation">)</span><span class="token operator">+</span>rt<span class="token operator">-></span>dst<span class="token punctuation">.</span>header_len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+	iph <span class="token operator">=</span> <span class="token function">ip_hdr</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/* Decrease ttl after skb cow done */</span>
+	<span class="token function">ip_decrease_ttl</span><span class="token punctuation">(</span>iph<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/*
+	 *	We now generate an ICMP HOST REDIRECT giving the route
+	 *	we calculated.
+	 */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">IPCB</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>flags <span class="token operator">&amp;</span> IPSKB_DOREDIRECT <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>opt<span class="token operator">-></span>srr <span class="token operator">&amp;&amp;</span>
+	    <span class="token operator">!</span><span class="token function">skb_sec_path</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token function">ip_rt_send_redirect</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>net<span class="token operator">-></span>ipv4<span class="token punctuation">.</span>sysctl_ip_fwd_update_priority<span class="token punctuation">)</span>
+		skb<span class="token operator">-></span>priority <span class="token operator">=</span> <span class="token function">rt_tos2priority</span><span class="token punctuation">(</span>iph<span class="token operator">-></span>tos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token function">NF_HOOK</span><span class="token punctuation">(</span>NFPROTO_IPV4<span class="token punctuation">,</span> NF_INET_FORWARD<span class="token punctuation">,</span>
+		       net<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> skb<span class="token punctuation">,</span> skb<span class="token operator">-></span>dev<span class="token punctuation">,</span> rt<span class="token operator">-></span>dst<span class="token punctuation">.</span>dev<span class="token punctuation">,</span>
+		       ip_forward_finish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+sr_failed<span class="token operator">:</span>
+	<span class="token comment">/*
+	 *	Strict routing permits no gatewaying
+	 */</span>
+	 <span class="token function">icmp_send</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> ICMP_DEST_UNREACH<span class="token punctuation">,</span> ICMP_SR_FAILED<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	 <span class="token keyword">goto</span> drop<span class="token punctuation">;</span>
+
+too_many_hops<span class="token operator">:</span>
+	<span class="token comment">/* Tell the sender its packet died... */</span>
+	<span class="token function">__IP_INC_STATS</span><span class="token punctuation">(</span>net<span class="token punctuation">,</span> IPSTATS_MIB_INHDRERRORS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">icmp_send</span><span class="token punctuation">(</span>skb<span class="token punctuation">,</span> ICMP_TIME_EXCEEDED<span class="token punctuation">,</span> ICMP_EXC_TTL<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+drop<span class="token operator">:</span>
+	<span class="token function">kfree_skb</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> NET_RX_DROP<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h5 id="4-第四个挂接点（NF-INET-LOCAL-OUT"><a href="#4-第四个挂接点（NF-INET-LOCAL-OUT" class="headerlink" title="4.第四个挂接点（NF_INET_LOCAL_OUT)"></a>4.第四个挂接点（NF_INET_LOCAL_OUT)</h5><p>本机数据向外发送数据时刚从传输层出来第一个执行的hook</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __ip_local_out(<span class="keyword">struct</span> net *net, <span class="keyword">struct</span> sock *sk, <span class="keyword">struct</span> sk_buff *skb)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">iphdr</span> *<span class="title">iph</span> =</span> ip_hdr(skb);</span><br><span class="line"></span><br><span class="line">	iph-&gt;tot_len = htons(skb-&gt;len);</span><br><span class="line">	ip_send_check(iph);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* if egress device is enslaved to an L3 master device pass the</span></span><br><span class="line"><span class="comment">	 * skb to its handler for processing</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	skb = l3mdev_ip_out(sk, skb);</span><br><span class="line">	<span class="keyword">if</span> (unlikely(!skb))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	skb-&gt;protocol = htons(ETH_P_IP);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT,</span><br><span class="line">		       net, sk, skb, <span class="literal">NULL</span>, skb_dst(skb)-&gt;dev,</span><br><span class="line">		       dst_output);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">__ip_local_out</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">net</span> <span class="token operator">*</span>net<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sock</span> <span class="token operator">*</span>sk<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">iphdr</span> <span class="token operator">*</span>iph <span class="token operator">=</span> <span class="token function">ip_hdr</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	iph<span class="token operator">-></span>tot_len <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span>skb<span class="token operator">-></span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">ip_send_check</span><span class="token punctuation">(</span>iph<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/* if egress device is enslaved to an L3 master device pass the
+	 * skb to its handler for processing
+	 */</span>
+	skb <span class="token operator">=</span> <span class="token function">l3mdev_ip_out</span><span class="token punctuation">(</span>sk<span class="token punctuation">,</span> skb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">unlikely</span><span class="token punctuation">(</span><span class="token operator">!</span>skb<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	skb<span class="token operator">-></span>protocol <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span>ETH_P_IP<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token function">nf_hook</span><span class="token punctuation">(</span>NFPROTO_IPV4<span class="token punctuation">,</span> NF_INET_LOCAL_OUT<span class="token punctuation">,</span>
+		       net<span class="token punctuation">,</span> sk<span class="token punctuation">,</span> skb<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token function">skb_dst</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>dev<span class="token punctuation">,</span>
+		       dst_output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h5 id="5-第五个挂接点-NF-INET-POST-ROUTING"><a href="#5-第五个挂接点-NF-INET-POST-ROUTING" class="headerlink" title="5.第五个挂接点(NF_INET_POST_ROUTING)"></a>5.第五个挂接点(NF_INET_POST_ROUTING)</h5><p>数据在执行路由选择之后即将进入链路层的时候执行的hook</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ip_output</span><span class="params">(<span class="keyword">struct</span> net *net, <span class="keyword">struct</span> sock *sk, <span class="keyword">struct</span> sk_buff *skb)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">net_device</span> *<span class="title">dev</span> =</span> skb_dst(skb)-&gt;dev, *indev = skb-&gt;dev;</span><br><span class="line"></span><br><span class="line">	IP_UPD_PO_STATS(net, IPSTATS_MIB_OUT, skb-&gt;len);</span><br><span class="line"></span><br><span class="line">	skb-&gt;dev = dev;</span><br><span class="line">	skb-&gt;protocol = htons(ETH_P_IP);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,</span><br><span class="line">			    net, sk, skb, indev, dev,</span><br><span class="line">			    ip_finish_output,</span><br><span class="line">			    !(IPCB(skb)-&gt;flags &amp; IPSKB_REROUTED));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">ip_output</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">net</span> <span class="token operator">*</span>net<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sock</span> <span class="token operator">*</span>sk<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sk_buff</span> <span class="token operator">*</span>skb<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">net_device</span> <span class="token operator">*</span>dev <span class="token operator">=</span> <span class="token function">skb_dst</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>dev<span class="token punctuation">,</span> <span class="token operator">*</span>indev <span class="token operator">=</span> skb<span class="token operator">-></span>dev<span class="token punctuation">;</span>
+
+	<span class="token function">IP_UPD_PO_STATS</span><span class="token punctuation">(</span>net<span class="token punctuation">,</span> IPSTATS_MIB_OUT<span class="token punctuation">,</span> skb<span class="token operator">-></span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	skb<span class="token operator">-></span>dev <span class="token operator">=</span> dev<span class="token punctuation">;</span>
+	skb<span class="token operator">-></span>protocol <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span>ETH_P_IP<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token function">NF_HOOK_COND</span><span class="token punctuation">(</span>NFPROTO_IPV4<span class="token punctuation">,</span> NF_INET_POST_ROUTING<span class="token punctuation">,</span>
+			    net<span class="token punctuation">,</span> sk<span class="token punctuation">,</span> skb<span class="token punctuation">,</span> indev<span class="token punctuation">,</span> dev<span class="token punctuation">,</span>
+			    ip_finish_output<span class="token punctuation">,</span>
+			    <span class="token operator">!</span><span class="token punctuation">(</span><span class="token function">IPCB</span><span class="token punctuation">(</span>skb<span class="token punctuation">)</span><span class="token operator">-></span>flags <span class="token operator">&amp;</span> IPSKB_REROUTED<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 
 
@@ -466,21 +637,39 @@
 </li>
 </ul>
 <h3 id="4-基本用法"><a href="#4-基本用法" class="headerlink" title="4.基本用法"></a>4.基本用法</h3><p>命令格式</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">iptables -t [table] COMMAND(chains) -p [protocol] -s [<span class="built_in">source</span> ip address] -d [destination ip address] ..... -j ACTION</span><br><span class="line">-R/I/A(修改/插入/追加)</span><br><span class="line">-t 指定表</span><br><span class="line">-p 指定协议（tcp/udp/icmp)</span><br><span class="line">-s 指定源ip地址(ip/mask)</span><br><span class="line">-d 指定目标ip地址</span><br><span class="line">--dport 指定目标端口</span><br><span class="line">--sport 指定源端口</span><br><span class="line">-j 指定处理类型(DROP/REJECT/ACCEPT/REDIRECT/MASQUERADE)(丢弃,丢弃并回应,允许,重定向,伪装源ip地址)</span><br><span class="line">-m 指定扩展类型(multiport/state/owner)</span><br><span class="line">--state 指定连接状态(NEW,ESTABLISHED)</span><br><span class="line">--tcp-flags(SYN,ACK,PSH,FIN,)</span><br><span class="line">--icmp-type(指定icmp的标志位,echo-request,echo-reply)</span><br><span class="line">-i 指定入站网卡</span><br><span class="line">-o 指定出战网卡</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">iptables -t <span class="token punctuation">[</span>table<span class="token punctuation">]</span> COMMAND<span class="token punctuation">(</span>chains<span class="token punctuation">)</span> -p <span class="token punctuation">[</span>protocol<span class="token punctuation">]</span> -s <span class="token punctuation">[</span>source <span class="token function">ip</span> address<span class="token punctuation">]</span> -d <span class="token punctuation">[</span>destination <span class="token function">ip</span> address<span class="token punctuation">]</span> <span class="token punctuation">..</span><span class="token punctuation">..</span>. -j ACTION
+-R/I/A<span class="token punctuation">(</span>修改/插入/追加<span class="token punctuation">)</span>
+-t 指定表
+-p 指定协议（tcp/udp/icmp<span class="token punctuation">)</span>
+-s 指定源ip地址<span class="token punctuation">(</span>ip/mask<span class="token punctuation">)</span>
+-d 指定目标ip地址
+--dport 指定目标端口
+--sport 指定源端口
+-j 指定处理类型<span class="token punctuation">(</span>DROP/REJECT/ACCEPT/REDIRECT/MASQUERADE<span class="token punctuation">)</span><span class="token punctuation">(</span>丢弃,丢弃并回应,允许,重定向,伪装源ip地址<span class="token punctuation">)</span>
+-m 指定扩展类型<span class="token punctuation">(</span>multiport/state/owner<span class="token punctuation">)</span>
+--state 指定连接状态<span class="token punctuation">(</span>NEW,ESTABLISHED<span class="token punctuation">)</span>
+--tcp-flags<span class="token punctuation">(</span>SYN,ACK,PSH,FIN,<span class="token punctuation">)</span>
+--icmp-type<span class="token punctuation">(</span>指定icmp的标志位,echo-request,echo-reply<span class="token punctuation">)</span>
+-i 指定入站网卡
+-o 指定出战网卡</code></pre>
 
-<h5 id="1-配置链的默认策略"><a href="#1-配置链的默认策略" class="headerlink" title="1.配置链的默认策略"></a>1.配置链的默认策略</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -P INPUT DROP/ACCEPT</span><br></pre></td></tr></table></figure>
+<h5 id="1-配置链的默认策略"><a href="#1-配置链的默认策略" class="headerlink" title="1.配置链的默认策略"></a>1.配置链的默认策略</h5><pre class="language-bash" data-language="bash"><code class="language-bash">iptables -t filter -P INPUT DROP/ACCEPT</code></pre>
 
 
 
-<h5 id="2-配置数据包过滤"><a href="#2-配置数据包过滤" class="headerlink" title="2.配置数据包过滤"></a>2.配置数据包过滤</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置</span></span><br><span class="line">iptables -t filter -I INPUT -t tcp -s 0.0.0.0/0 -d 0.0.0.0/0 --dport 80 -j DROP</span><br></pre></td></tr></table></figure>
+<h5 id="2-配置数据包过滤"><a href="#2-配置数据包过滤" class="headerlink" title="2.配置数据包过滤"></a>2.配置数据包过滤</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置</span>
+iptables -t filter -I INPUT -t tcp -s <span class="token number">0.0</span>.0.0/0 -d <span class="token number">0.0</span>.0.0/0 --dport <span class="token number">80</span> -j DROP</code></pre>
 
 
 
-<h5 id="3-配置nat"><a href="#3-配置nat" class="headerlink" title="3.配置nat"></a>3.配置nat</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置源地址转换</span></span><br><span class="line">iptables -t nat -I PREROUTING -s 0.0.0.0/0 -d 0.0.0.0 -j MASQUERADE</span><br><span class="line"><span class="comment">#配置目标地址转换</span></span><br><span class="line">iptables -t nat -I POSTROUTING -s 0.0.0.0/0 -d 0.0.0.0/0 -j DNAT --to-destination 192.168.50.1/24</span><br></pre></td></tr></table></figure>
+<h5 id="3-配置nat"><a href="#3-配置nat" class="headerlink" title="3.配置nat"></a>3.配置nat</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置源地址转换</span>
+iptables -t nat -I PREROUTING -s <span class="token number">0.0</span>.0.0/0 -d <span class="token number">0.0</span>.0.0 -j MASQUERADE
+<span class="token comment">#配置目标地址转换</span>
+iptables -t nat -I POSTROUTING -s <span class="token number">0.0</span>.0.0/0 -d <span class="token number">0.0</span>.0.0/0 -j DNAT --to-destination <span class="token number">192.168</span>.50.1/24</code></pre>
 
-<h5 id="4-配置保存iptables规则"><a href="#4-配置保存iptables规则" class="headerlink" title="4.配置保存iptables规则"></a>4.配置保存iptables规则</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables-save &gt; ./iptables.txt</span><br></pre></td></tr></table></figure>
+<h5 id="4-配置保存iptables规则"><a href="#4-配置保存iptables规则" class="headerlink" title="4.配置保存iptables规则"></a>4.配置保存iptables规则</h5><pre class="language-bash" data-language="bash"><code class="language-bash">iptables-save <span class="token operator">></span> ./iptables.txt</code></pre>
 
-<h5 id="5-配置导入iptables规则"><a href="#5-配置导入iptables规则" class="headerlink" title="5.配置导入iptables规则"></a>5.配置导入iptables规则</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables-restore &lt; ./iptables.txt</span><br></pre></td></tr></table></figure>
+<h5 id="5-配置导入iptables规则"><a href="#5-配置导入iptables规则" class="headerlink" title="5.配置导入iptables规则"></a>5.配置导入iptables规则</h5><pre class="language-bash" data-language="bash"><code class="language-bash">iptables-restore <span class="token operator">&lt;</span> ./iptables.txt</code></pre>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>iptable是linux中控制流量进出的非常有效的工具,在了解iptables的同时可以非常深刻的了解linux中接收流量后流量的走向。</p>
 <p>参考:<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/507786224">https://zhuanlan.zhihu.com/p/507786224</a></p>
@@ -510,7 +699,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/30/iptables%E4%BD%BF%E7%94%A8/">https://dreamaccount.github.io/2022/04/30/iptables%E4%BD%BF%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/30/iptables%E4%BD%BF%E7%94%A8/">https://bugprogram-git.github.io/2022/04/30/iptables%E4%BD%BF%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -735,6 +924,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -907,6 +1099,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1125,6 +1319,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1141,6 +1346,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Tor的技术原理, Hexo">
+    <meta name="keywords" content="Tor的技术原理, MyBlog">
     <meta name="description" content="Tor的技术原理1.Tor的历史1995年，美国海军研究实验室的科学家开始开发一套匿名系统，可以避免人们在互联网上的行迹被追 踪到。由于在该系统中，数据被层层密码保护，这个技术被称为叫作“洋葱路由”(tor)。
 2.Tor如何实现匿名访问?">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Tor的技术原理 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Tor的技术原理 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -413,7 +427,11 @@
                 <h1 id="Tor的技术原理"><a href="#Tor的技术原理" class="headerlink" title="Tor的技术原理"></a>Tor的技术原理</h1><h3 id="1-Tor的历史"><a href="#1-Tor的历史" class="headerlink" title="1.Tor的历史"></a>1.Tor的历史</h3><p>1995年，美国海军研究实验室的科学家开始开发一套匿名系统，可以避免人们在互联网上的行迹被追 踪到。由于在该系统中，数据被层层密码保护，这个技术被称为叫作“洋葱路由”(tor)。</p>
 <h3 id="2-Tor如何实现匿名访问"><a href="#2-Tor如何实现匿名访问" class="headerlink" title="2.Tor如何实现匿名访问?"></a>2.Tor如何实现匿名访问?</h3><p><strong>Tor客户端匿名原理</strong>:</p>
 <p>Tor是一个三重代理,客户端在接入tor网络的时候,Tor客户端会首先连接tor目录服务器通信获得全球活动的中继节点,然后从中选取三个作为节点的相关信息(ip地址,公钥,出口策略,带宽,在线时间)组成电路(cirdcuit),这三个节点分别叫入口节点、中继节点、出口节点。用户的流量在发送到暗网服务器的时候会依次经过这三个节点,只有最后一个节点知道目标服务器,第一个节点知道自身的ip地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">Client--&gt;GuardRelay</span><br><span class="line">GuardRelay--&gt;MiddleRelay</span><br><span class="line">MiddleRelay--&gt;ExitRelay</span><br><span class="line">ExitRelay--&gt;RealServer</span><br></pre></td></tr></table></figure>
+<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
+Client<span class="token arrow operator">--></span>GuardRelay
+GuardRelay<span class="token arrow operator">--></span>MiddleRelay
+MiddleRelay<span class="token arrow operator">--></span>ExitRelay
+ExitRelay<span class="token arrow operator">--></span>RealServer</code></pre>
 
 
 
@@ -427,20 +445,32 @@
 <li>4.服务器通过tor链路连接至汇合节点,并比对cookie,如果比对成功,客户端和目标站点建立通信</li>
 </ul>
 <p>至此客户端和目标站点中间隔了6个节点,分别是客户端入口节点、客户端中继节点、汇合点、服务器出口节点、服务器中继节点、服务器入口节点。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">Client--&gt;ClientGuardRelay</span><br><span class="line">ClientGuardRelay--&gt;ClientMiddleRelay;</span><br><span class="line">ClientMiddleRelay--&gt;ClientExitRelay;</span><br><span class="line"></span><br><span class="line">Server--&gt;ServerGuardRelay</span><br><span class="line">ServerGuardRelay--&gt;ServerMiddleRelay;</span><br><span class="line">ServerMiddleRelay--&gt;ServerExitRelay</span><br></pre></td></tr></table></figure>
+<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
+Client<span class="token arrow operator">--></span>ClientGuardRelay
+ClientGuardRelay<span class="token arrow operator">--></span>ClientMiddleRelay<span class="token punctuation">;</span>
+ClientMiddleRelay<span class="token arrow operator">--></span>ClientExitRelay<span class="token punctuation">;</span>
+
+Server<span class="token arrow operator">--></span>ServerGuardRelay
+ServerGuardRelay<span class="token arrow operator">--></span>ServerMiddleRelay<span class="token punctuation">;</span>
+ServerMiddleRelay<span class="token arrow operator">--></span>ServerExitRelay</code></pre>
 
 
 
 <p><strong>Tor数据包加密过程</strong></p>
 <p>首先客户端会选取三个作为节点作为通信的中继节点,并开始和这三个节点开始协商密钥对,每次发送数据时依次使用ExitNode的公钥,MiddleNode的公钥,GuardRelay的公钥对数据包进行加密。</p>
 <h3 id="3-如何搭建一个暗网网站"><a href="#3-如何搭建一个暗网网站" class="headerlink" title="3.如何搭建一个暗网网站?"></a>3.如何搭建一个暗网网站?</h3><p>安装tor</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install tor</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> tor</code></pre>
 
 <p>编辑tor配置文件&#x2F;etc&#x2F;tor&#x2F;torrc</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HiddenServiceDir /var/lib/tor/hidden_service/</span><br><span class="line">HiddenServicePort 80 127.0.0.1:10000 <span class="comment">#表示对外映射一个虚拟端口80提供服务,并将本地10000端口映射到80端口</span></span><br><span class="line">Socks5Proxy 127.0.0.0:1080 <span class="comment">#使用前置代理,用代理连接至tor网络</span></span><br><span class="line">HiddenServiceNumInstrductionPoints 10 <span class="comment">#最大数量的介绍节点</span></span><br><span class="line">HiddenServiceVersion 3<span class="comment">#使用第三代洋葱地址</span></span><br><span class="line">SOCKSPolicy accept 0.0.0.0 <span class="comment">#控制访问的客户端的ip地址段</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort <span class="token number">80</span> <span class="token number">127.0</span>.0.1:10000 <span class="token comment">#表示对外映射一个虚拟端口80提供服务,并将本地10000端口映射到80端口</span>
+Socks5Proxy <span class="token number">127.0</span>.0.0:1080 <span class="token comment">#使用前置代理,用代理连接至tor网络</span>
+HiddenServiceNumInstrductionPoints <span class="token number">10</span> <span class="token comment">#最大数量的介绍节点</span>
+HiddenServiceVersion <span class="token number">3</span><span class="token comment">#使用第三代洋葱地址</span>
+SOCKSPolicy accept <span class="token number">0.0</span>.0.0 <span class="token comment">#控制访问的客户端的ip地址段</span></code></pre>
 
 <p>启动tor服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start tor.service</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start tor.service</code></pre>
 
 <p>启动后目录&#x2F;var&#x2F;lib&#x2F;tor&#x2F;hidden_service下会生成两个文件hostname和private_key,分别是暗网的主机名和私钥,公钥就是暗网主机名	</p>
 <p>参考:</p>
@@ -471,7 +501,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/09/04/Tor%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/">https://dreamaccount.github.io/2022/09/04/Tor%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/</a>
+                    <a href="https://bugprogram-git.github.io/2022/09/04/Tor%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/">https://bugprogram-git.github.io/2022/09/04/Tor%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -696,6 +726,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -868,6 +901,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1086,6 +1121,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1102,6 +1148,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

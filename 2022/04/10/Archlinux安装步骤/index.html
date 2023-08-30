@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Archlinux安装步骤, Hexo">
-    <meta name="description" content="Archlinux安装步骤1.获取镜像,制作启动盘1234wget https://mirrors.ustc.edu.cn/archlinux/iso/2022.03.01/archlinux-2022.03.01-x86_64.iso#l">
+    <meta name="keywords" content="Archlinux安装步骤, MyBlog">
+    <meta name="description" content="Archlinux安装步骤1.获取镜像,制作启动盘wget https://mirrors.ustc.edu.cn/archlinux/iso/2022.03.01/archlinux-2022.03.01-x86_64.iso
+#linu">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Archlinux安装步骤 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Archlinux安装步骤 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,33 +416,126 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Archlinux安装步骤"><a href="#Archlinux安装步骤" class="headerlink" title="Archlinux安装步骤"></a>Archlinux安装步骤</h1><h2 id="1-获取镜像-制作启动盘"><a href="#1-获取镜像-制作启动盘" class="headerlink" title="1.获取镜像,制作启动盘"></a>1.获取镜像,制作启动盘</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.ustc.edu.cn/archlinux/iso/2022.03.01/archlinux-2022.03.01-x86_64.iso</span><br><span class="line"><span class="comment">#linux下面可以使用dd进行刻录</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span> ./archlinux.iso of=/dev/sda</span><br><span class="line"><span class="comment">#windows下可以使用rufus进行刻录</span></span><br></pre></td></tr></table></figure>
-<h2 id="2-基本安装环境配置"><a href="#2-基本安装环境配置" class="headerlink" title="2.基本安装环境配置"></a>2.基本安装环境配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#1.使用以太网,直接dhcpcd获取ip地址即可</span></span><br><span class="line">2.使用Wi-Fi</span><br><span class="line"><span class="comment">#进入网络配置</span></span><br><span class="line">iwctl</span><br><span class="line"><span class="comment">#扫面周围的wifi</span></span><br><span class="line">station wlan0 scan</span><br><span class="line"><span class="comment">#显示扫描到的wifi</span></span><br><span class="line">station wlan0 get-networks</span><br><span class="line"><span class="comment">#连接指定的Wi-Fi</span></span><br><span class="line">station wlan0 connect SSID</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#启动时间服务</span></span><br><span class="line">timedatectl set-ntp <span class="literal">true</span></span><br><span class="line"><span class="comment">#同步时间</span></span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
-<h2 id="3-磁盘分区和挂载"><a href="#3-磁盘分区和挂载" class="headerlink" title="3.磁盘分区和挂载"></a>3.磁盘分区和挂载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用fdisk工具进行磁盘分区</span></span><br><span class="line">fdisk /dev/sda</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#格式化文件系统</span></span><br><span class="line">mkfs.ext4 /dev/sda3     <span class="comment">#格式化根文件系统分区</span></span><br><span class="line">mkfs.swap /dev/sda2     <span class="comment">#格式化swap分区</span></span><br><span class="line">mkfs.vfat /dev/sda1     <span class="comment">#格式化boot文件系统分区</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#分区挂载</span></span><br><span class="line">mount /dev/sda3 /mnt</span><br><span class="line"><span class="built_in">mkdir</span> /mnt/boot</span><br><span class="line">mount /dev/sda1 /mnt/boot</span><br><span class="line">swapon /dev/sda2</span><br></pre></td></tr></table></figure>
-<h2 id="4-安装密钥"><a href="#4-安装密钥" class="headerlink" title="4.安装密钥"></a>4.安装密钥</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -S archlinux-keyring</span><br><span class="line">pacman -Sy <span class="comment">#获取软件包索引</span></span><br></pre></td></tr></table></figure>
+                <h1 id="Archlinux安装步骤"><a href="#Archlinux安装步骤" class="headerlink" title="Archlinux安装步骤"></a>Archlinux安装步骤</h1><h2 id="1-获取镜像-制作启动盘"><a href="#1-获取镜像-制作启动盘" class="headerlink" title="1.获取镜像,制作启动盘"></a>1.获取镜像,制作启动盘</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://mirrors.ustc.edu.cn/archlinux/iso/2022.03.01/archlinux-2022.03.01-x86_64.iso
+<span class="token comment">#linux下面可以使用dd进行刻录</span>
+<span class="token function">dd</span> <span class="token keyword">if</span> ./archlinux.iso <span class="token assign-left variable">of</span><span class="token operator">=</span>/dev/sda
+<span class="token comment">#windows下可以使用rufus进行刻录</span></code></pre>
+<h2 id="2-基本安装环境配置"><a href="#2-基本安装环境配置" class="headerlink" title="2.基本安装环境配置"></a>2.基本安装环境配置</h2><pre class="language-bash" data-language="bash"><code class="language-bash">
+<span class="token comment">#1.使用以太网,直接dhcpcd获取ip地址即可</span>
+<span class="token number">2</span>.使用Wi-Fi
+<span class="token comment">#进入网络配置</span>
+iwctl
+<span class="token comment">#扫面周围的wifi</span>
+station wlan0 scan
+<span class="token comment">#显示扫描到的wifi</span>
+station wlan0 get-networks
+<span class="token comment">#连接指定的Wi-Fi</span>
+station wlan0 connect SSID
 
-<h2 id="5-安装基础系统"><a href="#5-安装基础系统" class="headerlink" title="5.安装基础系统"></a>5.安装基础系统</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base linux linux-firmware wpa_supplicant dhcpcd neovim sudo openssh</span><br><span class="line"><span class="comment">#base为系统基本组件</span></span><br><span class="line"><span class="comment">#linux为linux内核</span></span><br><span class="line"><span class="comment">#linux-firmware包含了常见的设备驱动(可不选,但是后续需要根据自身硬件安装响应的驱动)</span></span><br><span class="line"><span class="comment">#wpa_supplicant是wifi连接工具</span></span><br><span class="line"><span class="comment">#dhcpcd是获取ip地址的dhcp客户端工具</span></span><br><span class="line"><span class="comment">#neovim是一个常用的编辑器</span></span><br></pre></td></tr></table></figure>
-<h2 id="6-进入安装好的系统-进行基本的系统配置"><a href="#6-进入安装好的系统-进行基本的系统配置" class="headerlink" title="6.进入安装好的系统,进行基本的系统配置"></a>6.进入安装好的系统,进行基本的系统配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成fstab文件</span></span><br><span class="line">genfstab /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line"></span><br><span class="line"><span class="comment">#chroot 到新的系统</span></span><br><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
-<h3 id="1-设置hostname和host"><a href="#1-设置hostname和host" class="headerlink" title="1.设置hostname和host"></a>1.设置hostname和host</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Arch&quot;</span> &gt; /etc/hostname</span><br><span class="line">vim /etc/hosts</span><br><span class="line">127.0.0.1   localhost</span><br><span class="line">::1         localhost</span><br><span class="line">127.0.1.1   archlinux.localdomain</span><br></pre></td></tr></table></figure>
-<h3 id="2-设置时间-地区和语言"><a href="#2-设置时间-地区和语言" class="headerlink" title="2.设置时间,地区和语言"></a>2.设置时间,地区和语言</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#设置时区</span></span><br><span class="line"><span class="built_in">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置语言</span></span><br><span class="line">vim /etc/locale.gen</span><br><span class="line">en_US.UTF-8.UTF-8</span><br><span class="line">zh_CN.UTF-8.UTF-8</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;LANG=en_US.UTF-8.UTF-8&quot;</span> &gt; /etc/locale.conf</span><br><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
-<h3 id="3-配置archlinuxcn库-可选"><a href="#3-配置archlinuxcn库-可选" class="headerlink" title="3.配置archlinuxcn库(可选)"></a>3.配置archlinuxcn库(可选)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加</span></span><br><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/<span class="variable">$arch</span></span><br><span class="line"></span><br><span class="line">pacman -S archlinuxcn-keyring</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="4-安装系统引导"><a href="#4-安装系统引导" class="headerlink" title="4.安装系统引导"></a>4.安装系统引导</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装grub软件包</span></span><br><span class="line">pacman -S grub efibootmgr amd-ucode</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装grub</span></span><br><span class="line">	grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Archlinux</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成grub配置文件</span></span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+
+<span class="token comment">#启动时间服务</span>
+timedatectl set-ntp <span class="token boolean">true</span>
+<span class="token comment">#同步时间</span>
+hwclock --systohc</code></pre>
+<h2 id="3-磁盘分区和挂载"><a href="#3-磁盘分区和挂载" class="headerlink" title="3.磁盘分区和挂载"></a>3.磁盘分区和挂载</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#使用fdisk工具进行磁盘分区</span>
+<span class="token function">fdisk</span> /dev/sda
+
+
+<span class="token comment">#格式化文件系统</span>
+mkfs.ext4 /dev/sda3     <span class="token comment">#格式化根文件系统分区</span>
+mkfs.swap /dev/sda2     <span class="token comment">#格式化swap分区</span>
+mkfs.vfat /dev/sda1     <span class="token comment">#格式化boot文件系统分区</span>
+
+<span class="token comment">#分区挂载</span>
+<span class="token function">mount</span> /dev/sda3 /mnt
+<span class="token function">mkdir</span> /mnt/boot
+<span class="token function">mount</span> /dev/sda1 /mnt/boot
+<span class="token function">swapon</span> /dev/sda2</code></pre>
+<h2 id="4-安装密钥"><a href="#4-安装密钥" class="headerlink" title="4.安装密钥"></a>4.安装密钥</h2><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S archlinux-keyring
+pacman -Sy <span class="token comment">#获取软件包索引</span></code></pre>
+
+<h2 id="5-安装基础系统"><a href="#5-安装基础系统" class="headerlink" title="5.安装基础系统"></a>5.安装基础系统</h2><pre class="language-bash" data-language="bash"><code class="language-bash">pacstrap /mnt base linux linux-firmware wpa_supplicant dhcpcd neovim <span class="token function">sudo</span> openssh
+<span class="token comment">#base为系统基本组件</span>
+<span class="token comment">#linux为linux内核</span>
+<span class="token comment">#linux-firmware包含了常见的设备驱动(可不选,但是后续需要根据自身硬件安装响应的驱动)</span>
+<span class="token comment">#wpa_supplicant是wifi连接工具</span>
+<span class="token comment">#dhcpcd是获取ip地址的dhcp客户端工具</span>
+<span class="token comment">#neovim是一个常用的编辑器</span></code></pre>
+<h2 id="6-进入安装好的系统-进行基本的系统配置"><a href="#6-进入安装好的系统-进行基本的系统配置" class="headerlink" title="6.进入安装好的系统,进行基本的系统配置"></a>6.进入安装好的系统,进行基本的系统配置</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成fstab文件</span>
+genfstab /mnt <span class="token operator">>></span> /mnt/etc/fstab
+
+<span class="token comment">#chroot 到新的系统</span>
+arch-chroot /mnt</code></pre>
+<h3 id="1-设置hostname和host"><a href="#1-设置hostname和host" class="headerlink" title="1.设置hostname和host"></a>1.设置hostname和host</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Arch"</span> <span class="token operator">></span> /etc/hostname
+<span class="token function">vim</span> /etc/hosts
+<span class="token number">127.0</span>.0.1   localhost
+::1         localhost
+<span class="token number">127.0</span>.1.1   archlinux.localdomain</code></pre>
+<h3 id="2-设置时间-地区和语言"><a href="#2-设置时间-地区和语言" class="headerlink" title="2.设置时间,地区和语言"></a>2.设置时间,地区和语言</h3><pre class="language-bash" data-language="bash"><code class="language-bash">
+<span class="token comment">#设置时区</span>
+<span class="token function">ln</span> -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+<span class="token comment">#配置语言</span>
+<span class="token function">vim</span> /etc/locale.gen
+en_US.UTF-8.UTF-8
+zh_CN.UTF-8.UTF-8
+<span class="token builtin class-name">echo</span> <span class="token string">"LANG=en_US.UTF-8.UTF-8"</span> <span class="token operator">></span> /etc/locale.conf
+locale-gen</code></pre>
+<h3 id="3-配置archlinuxcn库-可选"><a href="#3-配置archlinuxcn库-可选" class="headerlink" title="3.配置archlinuxcn库(可选)"></a>3.配置archlinuxcn库(可选)</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/pacman.conf
+
+<span class="token comment">#添加</span>
+<span class="token punctuation">[</span>archlinuxcn<span class="token punctuation">]</span>
+Server <span class="token operator">=</span> https://mirrors.ustc.edu.cn/archlinuxcn/<span class="token variable">$arch</span>
+
+pacman -S archlinuxcn-keyring
+</code></pre>
+<h3 id="4-安装系统引导"><a href="#4-安装系统引导" class="headerlink" title="4.安装系统引导"></a>4.安装系统引导</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#安装grub软件包</span>
+pacman -S grub efibootmgr amd-ucode
+
+<span class="token comment">#安装grub</span>
+	grub-install --target<span class="token operator">=</span>x86_64-efi --efi-directory<span class="token operator">=</span>/boot --bootloader-id<span class="token operator">=</span>Archlinux
+
+<span class="token comment">#生成grub配置文件</span>
+<span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg</code></pre>
 <p>&#96;</p>
-<h2 id="7-安装桌面环境（KDE）（可选）"><a href="#7-安装桌面环境（KDE）（可选）" class="headerlink" title="7.安装桌面环境（KDE）（可选）"></a>7.安装桌面环境（KDE）（可选）</h2><h3 id="1-安装基本软件"><a href="#1-安装基本软件" class="headerlink" title="1.安装基本软件"></a>1.安装基本软件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pacman -S xorg plasma konsole sddm xf86-video-ati dolphin</span><br><span class="line"><span class="comment">#xorg显示库</span></span><br><span class="line"><span class="comment">#sddm显示管理器</span></span><br><span class="line"><span class="comment">#xf86-video-ati amd gpu驱动</span></span><br><span class="line"><span class="comment">#konsole kde终端</span></span><br><span class="line"><span class="comment">#dolphin kde桌面的文件管理器</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-开机自启动"><a href="#2-开机自启动" class="headerlink" title="2.开机自启动"></a>2.开机自启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> sddm</span><br></pre></td></tr></table></figure>
+<h2 id="7-安装桌面环境（KDE）（可选）"><a href="#7-安装桌面环境（KDE）（可选）" class="headerlink" title="7.安装桌面环境（KDE）（可选）"></a>7.安装桌面环境（KDE）（可选）</h2><h3 id="1-安装基本软件"><a href="#1-安装基本软件" class="headerlink" title="1.安装基本软件"></a>1.安装基本软件</h3><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S xorg plasma konsole sddm xf86-video-ati dolphin
+<span class="token comment">#xorg显示库</span>
+<span class="token comment">#sddm显示管理器</span>
+<span class="token comment">#xf86-video-ati amd gpu驱动</span>
+<span class="token comment">#konsole kde终端</span>
+<span class="token comment">#dolphin kde桌面的文件管理器</span></code></pre>
+<h3 id="2-开机自启动"><a href="#2-开机自启动" class="headerlink" title="2.开机自启动"></a>2.开机自启动</h3><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl <span class="token builtin class-name">enable</span> sddm</code></pre>
 <h3 id="3-配置中文输入法-IBUS"><a href="#3-配置中文输入法-IBUS" class="headerlink" title="3.配置中文输入法(IBUS)"></a>3.配置中文输入法(IBUS)</h3><p>安装ibus和中文输入引擎</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S ibus ibus-pinyin</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S ibus ibus-pinyin</code></pre>
 <p>将ibus作为默认输入法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim .bashrc</span><br><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=ibus</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=@im=ibus</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=ibus</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> .bashrc
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">GTK_IM_MODULE</span><span class="token operator">=</span>ibus
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XMODIFIERS</span></span><span class="token operator">=</span>@im<span class="token operator">=</span>ibus
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">QT_IM_MODULE</span><span class="token operator">=</span>ibus</code></pre>
 <p>开机自动启动ibus守护程序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim .xprofile</span><br><span class="line">ibus-daemon -x -d </span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> .xprofile
+ibus-daemon -x -d </code></pre>
 
-<h2 id="8-完成安装"><a href="#8-完成安装" class="headerlink" title="8.完成安装"></a>8.完成安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置root用户密码</span></span><br><span class="line">passwd root</span><br><span class="line"></span><br><span class="line"><span class="comment">#退出chroot环境</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#卸载磁盘</span></span><br><span class="line">umount /mnt/boot</span><br><span class="line">umount /mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#重启系统并移除安装介质</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<h2 id="8-完成安装"><a href="#8-完成安装" class="headerlink" title="8.完成安装"></a>8.完成安装</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#设置root用户密码</span>
+<span class="token function">passwd</span> root
+
+<span class="token comment">#退出chroot环境</span>
+<span class="token builtin class-name">exit</span>
+
+<span class="token comment">#卸载磁盘</span>
+<span class="token function">umount</span> /mnt/boot
+<span class="token function">umount</span> /mnt
+
+<span class="token comment">#重启系统并移除安装介质</span>
+<span class="token function">reboot</span></code></pre>
                 
             </div>
             <hr/>
@@ -456,7 +561,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/10/Archlinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">https://dreamaccount.github.io/2022/04/10/Archlinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/10/Archlinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/">https://bugprogram-git.github.io/2022/04/10/Archlinux%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -627,7 +732,7 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/1970/01/01/centos%E8%A7%A3%E5%8E%8Binitrd/">
+                <a href="/1970/01/01/socks5%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA/">
                     <div class="card-image">
                         
                         
@@ -668,6 +773,9 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -841,6 +949,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1059,6 +1169,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1075,6 +1196,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

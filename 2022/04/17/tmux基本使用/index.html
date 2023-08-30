@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="tmux基本使用, Hexo">
+    <meta name="keywords" content="tmux基本使用, MyBlog">
     <meta name="description" content="tmux配置教程1.tmux是什么?tmux是一个终端复用工具，在实际开发运维中，可以用来保存当前工作状态，也可以将当前的单个终端拆分多个窗口。
 2.tmux的基本结构tmux为C&amp;#x2F;S架构，tmux进程为守护进程，独立于终端之外，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>tmux基本使用 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>tmux基本使用 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -415,12 +429,88 @@
 <h3 id="3-tmux的三个概念"><a href="#3-tmux的三个概念" class="headerlink" title="3.tmux的三个概念"></a>3.tmux的三个概念</h3><h5 id="1-session"><a href="#1-session" class="headerlink" title="1.session"></a>1.session</h5><p>  一个session就是一个会话，session为tmux的一个会话，一个tmux可以同时开多个session。</p>
 <h5 id="2-windows"><a href="#2-windows" class="headerlink" title="2.windows"></a>2.windows</h5><p>  window为session的子集，一个session可以有有多个window。</p>
 <h5 id="3-pannel"><a href="#3-pannel" class="headerlink" title="3.pannel"></a>3.pannel</h5><p>  一个pannel为一个窗格,为window的子集,一个window可以有多个pannel</p>
-<h3 id="4-tmux的安装使用"><a href="#4-tmux的安装使用" class="headerlink" title="4.tmux的安装使用"></a>4.tmux的安装使用</h3><h5 id="1-tmux的安装"><a href="#1-tmux的安装" class="headerlink" title="1.tmux的安装"></a>1.tmux的安装</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S tmux(安装环境为archlinux)</span><br></pre></td></tr></table></figure>
+<h3 id="4-tmux的安装使用"><a href="#4-tmux的安装使用" class="headerlink" title="4.tmux的安装使用"></a>4.tmux的安装使用</h3><h5 id="1-tmux的安装"><a href="#1-tmux的安装" class="headerlink" title="1.tmux的安装"></a>1.tmux的安装</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S tmux<span class="token punctuation">(</span>安装环境为archlinux<span class="token punctuation">)</span></code></pre>
 
 <h5 id="2-tmux配置文件"><a href="#2-tmux配置文件" class="headerlink" title="2.tmux配置文件"></a>2.tmux配置文件</h5><p>tmux系统配置文件为&#x2F;etc&#x2F;tmux.conf,用户配置文件为~&#x2F;.tmux.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解绑prefix键位</span></span><br><span class="line"><span class="built_in">set</span> -g default-terminal <span class="string">&quot;screen-256color&quot;</span></span><br><span class="line">unbind C-b</span><br><span class="line">unbind <span class="string">&#x27;&quot;&#x27;</span></span><br><span class="line">unbind <span class="string">&#x27;%&#x27;</span></span><br><span class="line"><span class="comment">#设置prefix键位为C-a</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-a</span><br><span class="line"><span class="built_in">bind</span> C-a send-prefix</span><br><span class="line"><span class="comment">#设置切分窗格键位为prefix和h以及prefix和v</span></span><br><span class="line"><span class="built_in">bind</span> h split-window -h</span><br><span class="line"><span class="built_in">bind</span> v split-window -v</span><br><span class="line"><span class="comment">#设置C-r为重载tmux配置文件(指定-n为不用使用prefix键位就可以触发)</span></span><br><span class="line">bind-key -n C-r source-file ~/.tmux.conf</span><br><span class="line"><span class="comment">#设置调整窗格大小键位(指定-r键位为不用每次触发的时候都要使用prefix键位(只要摁一次prefix键位就可以持续出发操作))</span></span><br><span class="line"><span class="built_in">bind</span> -r H resize-pane -L 5</span><br><span class="line"><span class="built_in">bind</span> -r J resize-pane -D 5</span><br><span class="line"><span class="built_in">bind</span> -r K resize-pane -U 5</span><br><span class="line"><span class="built_in">bind</span> -r L resize-pane -R 5</span><br><span class="line"><span class="comment">#bind k selectp -U</span></span><br><span class="line"><span class="comment">#bind h selectp -L</span></span><br><span class="line"><span class="comment">#bind j selectp -D</span></span><br><span class="line"><span class="comment">#bind l selectp -R</span></span><br><span class="line"><span class="comment">#bind -r ^k resizep -U 5</span></span><br><span class="line"><span class="comment">#bind -r ^h resizep -L 5</span></span><br><span class="line"><span class="comment">#bind -r ^j resizep -D 5</span></span><br><span class="line"><span class="comment">#bind -r ^l resizep -R 5</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解绑prefix键位</span>
+<span class="token builtin class-name">set</span> -g default-terminal <span class="token string">"screen-256color"</span>
+unbind C-b
+unbind <span class="token string">'"'</span>
+unbind <span class="token string">'%'</span>
+<span class="token comment">#设置prefix键位为C-a</span>
+<span class="token builtin class-name">set</span> -g prefix C-a
+<span class="token builtin class-name">bind</span> C-a send-prefix
+<span class="token comment">#设置切分窗格键位为prefix和h以及prefix和v</span>
+<span class="token builtin class-name">bind</span> h split-window -h
+<span class="token builtin class-name">bind</span> <span class="token function">v</span> split-window -v
+<span class="token comment">#设置C-r为重载tmux配置文件(指定-n为不用使用prefix键位就可以触发)</span>
+bind-key -n C-r source-file ~/.tmux.conf
+<span class="token comment">#设置调整窗格大小键位(指定-r键位为不用每次触发的时候都要使用prefix键位(只要摁一次prefix键位就可以持续出发操作))</span>
+<span class="token builtin class-name">bind</span> -r H resize-pane -L <span class="token number">5</span>
+<span class="token builtin class-name">bind</span> -r J resize-pane -D <span class="token number">5</span>
+<span class="token builtin class-name">bind</span> -r K resize-pane -U <span class="token number">5</span>
+<span class="token builtin class-name">bind</span> -r L resize-pane -R <span class="token number">5</span>
+<span class="token comment">#bind k selectp -U</span>
+<span class="token comment">#bind h selectp -L</span>
+<span class="token comment">#bind j selectp -D</span>
+<span class="token comment">#bind l selectp -R</span>
+<span class="token comment">#bind -r ^k resizep -U 5</span>
+<span class="token comment">#bind -r ^h resizep -L 5</span>
+<span class="token comment">#bind -r ^j resizep -D 5</span>
+<span class="token comment">#bind -r ^l resizep -R 5</span></code></pre>
 
-<h5 id="3-tmux常用命令"><a href="#3-tmux常用命令" class="headerlink" title="3.tmux常用命令"></a>3.tmux常用命令</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建一个tmux会话并在该tmux会话下创建一个窗口并在该窗口下创建一个pannel</span></span><br><span class="line">tmux</span><br><span class="line"><span class="comment">#查看tmux会话</span></span><br><span class="line">tmux list-session</span><br><span class="line"><span class="comment">#离开tmux会话</span></span><br><span class="line">tmux detach</span><br><span class="line"><span class="comment">#进入已经打开的tmux会话</span></span><br><span class="line">tmux attach</span><br><span class="line"><span class="comment">#Ctrl+b %：划分左右两个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b &quot;：划分上下两个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b &lt;arrow key&gt;：光标切换到其他窗格。&lt;arrow key&gt;是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。</span></span><br><span class="line"><span class="comment">#Ctrl+b ;：光标切换到上一个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b o：光标切换到下一个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b &#123;：当前窗格与上一个窗格交换位置。</span></span><br><span class="line"><span class="comment">#Ctrl+b &#125;：当前窗格与下一个窗格交换位置。</span></span><br><span class="line"><span class="comment">#Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b x：关闭当前窗格。</span></span><br><span class="line"><span class="comment">#Ctrl+b !：将当前窗格拆分为一个独立窗口。</span></span><br><span class="line"><span class="comment">#Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。</span></span><br><span class="line"><span class="comment">#Ctrl+b Ctrl+&lt;arrow key&gt;：按箭头方向调整窗格大小。</span></span><br><span class="line"><span class="comment">#Ctrl+b q：显示窗格编号。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#切换窗格</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到上方窗格</span></span><br><span class="line">tmux select-pane -U</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到下方窗格</span></span><br><span class="line">tmux select-pane -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到左边窗格</span></span><br><span class="line">tmux select-pane -L</span><br><span class="line"></span><br><span class="line"><span class="comment"># 光标切换到右边窗格</span></span><br><span class="line">tmux select-pane -R</span><br><span class="line"></span><br><span class="line"><span class="comment">#交换窗格</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前窗格上移</span></span><br><span class="line">tmux swap-pane -U</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前窗格下移</span></span><br><span class="line">tmux swap-pane -D</span><br><span class="line"><span class="comment">#窗口管理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个新的窗口</span></span><br><span class="line">tmux new-window <span class="string">&quot;window-name&quot;</span></span><br><span class="line"><span class="comment">#切换窗口</span></span><br><span class="line">tmux select-window -t &lt;window-number&gt; or &lt;window-name&gt;</span><br><span class="line"><span class="comment">#重命名window(修改当前窗口的名称)</span></span><br><span class="line">tmux rename-window <span class="string">&quot;new-name&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-tmux常用命令"><a href="#3-tmux常用命令" class="headerlink" title="3.tmux常用命令"></a>3.tmux常用命令</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建一个tmux会话并在该tmux会话下创建一个窗口并在该窗口下创建一个pannel</span>
+tmux
+<span class="token comment">#查看tmux会话</span>
+tmux list-session
+<span class="token comment">#离开tmux会话</span>
+tmux detach
+<span class="token comment">#进入已经打开的tmux会话</span>
+tmux attach
+<span class="token comment">#Ctrl+b %：划分左右两个窗格。</span>
+<span class="token comment">#Ctrl+b "：划分上下两个窗格。</span>
+<span class="token comment">#Ctrl+b &lt;arrow key>：光标切换到其他窗格。&lt;arrow key>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。</span>
+<span class="token comment">#Ctrl+b ;：光标切换到上一个窗格。</span>
+<span class="token comment">#Ctrl+b o：光标切换到下一个窗格。</span>
+<span class="token comment">#Ctrl+b &#123;：当前窗格与上一个窗格交换位置。</span>
+<span class="token comment">#Ctrl+b &#125;：当前窗格与下一个窗格交换位置。</span>
+<span class="token comment">#Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</span>
+<span class="token comment">#Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</span>
+<span class="token comment">#Ctrl+b x：关闭当前窗格。</span>
+<span class="token comment">#Ctrl+b !：将当前窗格拆分为一个独立窗口。</span>
+<span class="token comment">#Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。</span>
+<span class="token comment">#Ctrl+b Ctrl+&lt;arrow key>：按箭头方向调整窗格大小。</span>
+<span class="token comment">#Ctrl+b q：显示窗格编号。</span>
+
+<span class="token comment">#切换窗格</span>
+
+<span class="token comment"># 光标切换到上方窗格</span>
+tmux select-pane -U
+
+<span class="token comment"># 光标切换到下方窗格</span>
+tmux select-pane -D
+
+<span class="token comment"># 光标切换到左边窗格</span>
+tmux select-pane -L
+
+<span class="token comment"># 光标切换到右边窗格</span>
+tmux select-pane -R
+
+<span class="token comment">#交换窗格</span>
+
+<span class="token comment"># 当前窗格上移</span>
+tmux swap-pane -U
+
+<span class="token comment"># 当前窗格下移</span>
+tmux swap-pane -D
+<span class="token comment">#窗口管理</span>
+
+<span class="token comment">#创建一个新的窗口</span>
+tmux new-window <span class="token string">"window-name"</span>
+<span class="token comment">#切换窗口</span>
+tmux select-window -t <span class="token operator">&lt;</span>window-number<span class="token operator">></span> or <span class="token operator">&lt;</span>window-name<span class="token operator">></span>
+<span class="token comment">#重命名window(修改当前窗口的名称)</span>
+tmux rename-window <span class="token string">"new-name"</span></code></pre>
 
 
                 
@@ -448,7 +538,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/17/tmux%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://dreamaccount.github.io/2022/04/17/tmux%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/17/tmux%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://bugprogram-git.github.io/2022/04/17/tmux%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -673,6 +763,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -845,6 +938,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1063,6 +1158,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1079,6 +1185,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

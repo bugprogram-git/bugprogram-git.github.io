@@ -4,10 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="centos7.9解决RTL8125网卡不识别的问题, Hexo">
+    <meta name="keywords" content="centos7.9解决RTL8125网卡不识别的问题, MyBlog">
     <meta name="description" content="1.获取网卡驱动源码点击跳转到realtek官网下载页面
 2.升级内核(可选)不确定这个网卡依赖还是不依赖内核，建议升级内核版本
-2.1 检查是否安装ELRepo1234yum  --disablerepo=&amp;quot;*&amp;quot;  -">
+2.1 检查是否安装ELRepoyum  --disablerepo=&#34;*&#34;  --enablerepo=&#34;e">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,8 +18,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>centos7.9解决RTL8125网卡不识别的问题 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>centos7.9解决RTL8125网卡不识别的问题 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -66,7 +77,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -170,10 +181,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -397,6 +408,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -404,19 +418,65 @@
             <div id="articleContent">
                 <h3 id="1-获取网卡驱动源码"><a href="#1-获取网卡驱动源码" class="headerlink" title="1.获取网卡驱动源码"></a>1.获取网卡驱动源码</h3><p><a target="_blank" rel="noopener" href="https://www.realtek.com/zh/component/zoo/category/network-interface-controllers-10-100-1000m-gigabit-ethernet-pci-express-software">点击跳转到realtek官网下载页面</a></p>
 <h3 id="2-升级内核-可选"><a href="#2-升级内核-可选" class="headerlink" title="2.升级内核(可选)"></a>2.升级内核(可选)</h3><p>不确定这个网卡依赖还是不依赖内核，建议升级内核版本</p>
-<h5 id="2-1-检查是否安装ELRepo"><a href="#2-1-检查是否安装ELRepo" class="headerlink" title="2.1 检查是否安装ELRepo"></a>2.1 检查是否安装ELRepo</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum  --disablerepo=<span class="string">&quot;*&quot;</span>  --enablerepo=<span class="string">&quot;elrepo-kernel&quot;</span>  list  available</span><br><span class="line">已加载插件：fastestmirror</span><br><span class="line">Error getting repository data <span class="keyword">for</span> elrepo-kernel, repository not found</span><br><span class="line"><span class="comment"># 看到error说明没有安装ELRepo</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-2-升级安装ELRepo"><a href="#2-2-升级安装ELRepo" class="headerlink" title="2.2 升级安装ELRepo"></a>2.2 升级安装ELRepo</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum -y update</span><br><span class="line"><span class="comment">#载入ELRepo仓库的公共密钥</span></span><br><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line"></span><br><span class="line">yum -y update</span><br><span class="line"><span class="comment">#载入ELRepo仓库的公共密钥</span></span><br><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="2-3-查看可用安装包"><a href="#2-3-查看可用安装包" class="headerlink" title="2.3.查看可用安装包"></a>2.3.查看可用安装包</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看可用的系统内核包</span></span><br><span class="line">yum  --disablerepo=<span class="string">&quot;*&quot;</span>  --enablerepo=<span class="string">&quot;elrepo-kernel&quot;</span>  list  available</span><br><span class="line"></span><br><span class="line"><span class="comment"># 长期维护版本为lt，最新主线稳定版为ml</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-4-手动下载"><a href="#2-4-手动下载" class="headerlink" title="2.4 手动下载"></a>2.4 手动下载</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-headers-5.4.242-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-libs-5.4.242-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-devel-5.4.242-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm</span><br><span class="line"><span class="comment">#安装完成之后重新生成grub配置文件</span></span><br><span class="line"><span class="comment">#同样也可以删除掉旧的内核</span></span><br><span class="line">rpm -qa | grep kernel</span><br><span class="line"><span class="comment">#然后移除相关的旧的内核包</span></span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
-<h5 id="2-5-查看内核启动顺序"><a href="#2-5-查看内核启动顺序" class="headerlink" title="2.5 查看内核启动顺序"></a>2.5 查看内核启动顺序</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /boot/grub2/grub.cfg</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">0 : CentOS Linux (5.4.108-1.el7.elrepo.x86_64) 7 (Core)</span></span><br><span class="line"><span class="string">1 : CentOS Linux (3.10.0-1160.11.1.el7.x86_64) 7 (Core)</span></span><br><span class="line"><span class="string">2 : CentOS Linux (3.10.0-1160.el7.x86_64) 7 (Core)</span></span><br><span class="line"><span class="string">3 : CentOS Linux (0-rescue-20210128140208453518997635111697) 7 (Core)</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-6-安装辅助工具"><a href="#2-6-安装辅助工具" class="headerlink" title="2.6 安装辅助工具"></a>2.6 安装辅助工具</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y grub2-pc</span><br></pre></td></tr></table></figure>
-<h5 id="2-7-设置内核启动顺序"><a href="#2-7-设置内核启动顺序" class="headerlink" title="2.7 设置内核启动顺序"></a>2.7 设置内核启动顺序</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grub2-set-default 0</span><br></pre></td></tr></table></figure>
-<h5 id="2-8-重新生成grub配置文件"><a href="#2-8-重新生成grub配置文件" class="headerlink" title="2.8 重新生成grub配置文件"></a>2.8 重新生成grub配置文件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
-<h5 id="2-9-重启"><a href="#2-9-重启" class="headerlink" title="2.9 重启"></a>2.9 重启</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
-<h3 id="3-更换gcc"><a href="#3-更换gcc" class="headerlink" title="3.更换gcc"></a>3.更换gcc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-binutils-2.30-55.el7.1.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-c%2B%2B-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gdb-plugin-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gfortran-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-plugin-devel-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libquadmath-devel-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libstdc%2B%2B-devel-8.3.1-3.2.el7.x86_64.rpm</span><br><span class="line">wget https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-runtime-8.1-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<h5 id="2-1-检查是否安装ELRepo"><a href="#2-1-检查是否安装ELRepo" class="headerlink" title="2.1 检查是否安装ELRepo"></a>2.1 检查是否安装ELRepo</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum  --disablerepo<span class="token operator">=</span><span class="token string">"*"</span>  --enablerepo<span class="token operator">=</span><span class="token string">"elrepo-kernel"</span>  list  available
+已加载插件：fastestmirror
+Error getting repository data <span class="token keyword">for</span> elrepo-kernel, repository not found
+<span class="token comment"># 看到error说明没有安装ELRepo</span></code></pre>
+<h5 id="2-2-升级安装ELRepo"><a href="#2-2-升级安装ELRepo" class="headerlink" title="2.2 升级安装ELRepo"></a>2.2 升级安装ELRepo</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum -y update
+<span class="token comment">#载入ELRepo仓库的公共密钥</span>
+<span class="token function">rpm</span> --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+yum -y update
+<span class="token comment">#载入ELRepo仓库的公共密钥</span>
+<span class="token function">rpm</span> --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+</code></pre>
+<h5 id="2-3-查看可用安装包"><a href="#2-3-查看可用安装包" class="headerlink" title="2.3.查看可用安装包"></a>2.3.查看可用安装包</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看可用的系统内核包</span>
+yum  --disablerepo<span class="token operator">=</span><span class="token string">"*"</span>  --enablerepo<span class="token operator">=</span><span class="token string">"elrepo-kernel"</span>  list  available
+
+<span class="token comment"># 长期维护版本为lt，最新主线稳定版为ml</span></code></pre>
+<h5 id="2-4-手动下载"><a href="#2-4-手动下载" class="headerlink" title="2.4 手动下载"></a>2.4 手动下载</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-headers-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-libs-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-devel-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token comment">#安装完成之后重新生成grub配置文件</span>
+<span class="token comment">#同样也可以删除掉旧的内核</span>
+<span class="token function">rpm</span> -qa <span class="token operator">|</span> <span class="token function">grep</span> kernel
+<span class="token comment">#然后移除相关的旧的内核包</span>
+grub2-mkconfig -o /boot/grub2/grub.cfg</code></pre>
+<h5 id="2-5-查看内核启动顺序"><a href="#2-5-查看内核启动顺序" class="headerlink" title="2.5 查看内核启动顺序"></a>2.5 查看内核启动顺序</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> -F<span class="token punctuation">\</span>' <span class="token string">'$1=="menuentry " &#123;print i++ " : " $2&#125;'</span> /boot/grub2/grub.cfg
+
+<span class="token number">0</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">5.4</span>.108-1.el7.elrepo.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">1</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-1160.11.1.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">2</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-1160.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">3</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">0</span>-rescue-20210128140208453518997635111697<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span></code></pre>
+<h5 id="2-6-安装辅助工具"><a href="#2-6-安装辅助工具" class="headerlink" title="2.6 安装辅助工具"></a>2.6 安装辅助工具</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> -y grub2-pc</code></pre>
+<h5 id="2-7-设置内核启动顺序"><a href="#2-7-设置内核启动顺序" class="headerlink" title="2.7 设置内核启动顺序"></a>2.7 设置内核启动顺序</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> grub2-set-default <span class="token number">0</span></code></pre>
+<h5 id="2-8-重新生成grub配置文件"><a href="#2-8-重新生成grub配置文件" class="headerlink" title="2.8 重新生成grub配置文件"></a>2.8 重新生成grub配置文件</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> grub2-mkconfig -o /boot/grub2/grub.cfg</code></pre>
+<h5 id="2-9-重启"><a href="#2-9-重启" class="headerlink" title="2.9 重启"></a>2.9 重启</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">reboot</span></code></pre>
+<h3 id="3-更换gcc"><a href="#3-更换gcc" class="headerlink" title="3.更换gcc"></a>3.更换gcc</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-binutils-2.30-55.el7.1.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-c%2B%2B-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gdb-plugin-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gfortran-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-plugin-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libquadmath-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libstdc%2B%2B-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-runtime-8.1-1.el7.x86_64.rpm</code></pre>
 <p>将所有下载好的软件包安装完毕<br>激活toolchain</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/rh/devtoolset-8 </span><br><span class="line">./enable</span><br><span class="line"><span class="comment">#直接替换旧的gcc</span></span><br><span class="line"><span class="comment">#旧的gcc是运行的 /usr/bin/gcc，所以将该目录下的gcc/g++替换为刚安装的新版本gcc软连接，免得每次enable</span></span><br><span class="line"><span class="built_in">mv</span> /usr/bin/gcc /usr/bin/gcc-4.8.5 </span><br><span class="line"><span class="built_in">ln</span> -s /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc </span><br><span class="line"><span class="built_in">mv</span> /usr/bin/g++ /usr/bin/g++-4.8.5 </span><br><span class="line"><span class="built_in">ln</span> -s /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++ </span><br><span class="line">查看gcc版本是否已经升级成功</span><br><span class="line">gcc --version </span><br><span class="line">g++ --version</span><br></pre></td></tr></table></figure>
-<h3 id="4-开始编译第一步下载驱动源码，并安装"><a href="#4-开始编译第一步下载驱动源码，并安装" class="headerlink" title="4.开始编译第一步下载驱动源码，并安装"></a>4.开始编译第一步下载驱动源码，并安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> r8125-9.011.01 </span><br><span class="line">./autorun.sh</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /opt/rh/devtoolset-8 
+./enable
+<span class="token comment">#直接替换旧的gcc</span>
+<span class="token comment">#旧的gcc是运行的 /usr/bin/gcc，所以将该目录下的gcc/g++替换为刚安装的新版本gcc软连接，免得每次enable</span>
+<span class="token function">mv</span> /usr/bin/gcc /usr/bin/gcc-4.8.5 
+<span class="token function">ln</span> -s /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc 
+<span class="token function">mv</span> /usr/bin/g++ /usr/bin/g++-4.8.5 
+<span class="token function">ln</span> -s /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++ 
+查看gcc版本是否已经升级成功
+gcc --version 
+g++ --version</code></pre>
+<h3 id="4-开始编译第一步下载驱动源码，并安装"><a href="#4-开始编译第一步下载驱动源码，并安装" class="headerlink" title="4.开始编译第一步下载驱动源码，并安装"></a>4.开始编译第一步下载驱动源码，并安装</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> r8125-9.011.01 
+./autorun.sh</code></pre>
 
 
                 
@@ -444,7 +504,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3ETL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">https://dreamaccount.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3ETL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/</a>
+                    <a href="https://bugprogram-git.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3ETL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">https://bugprogram-git.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3ETL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -645,6 +705,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -817,6 +880,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1035,6 +1100,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1051,6 +1127,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

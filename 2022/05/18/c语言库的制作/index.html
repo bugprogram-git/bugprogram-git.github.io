@@ -4,12 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="c语言库的制作, Hexo">
+    <meta name="keywords" content="c语言库的制作, MyBlog">
     <meta name="description" content="c语言库的制作1.静态库和动态库的制作1.准备头文件和对应的api实现源码1.mylib.h
-12#include &amp;lt;stdio.h&amp;gt;int interface(void);
+#include &amp;lt;stdio.h&gt;
+int interface(void);
 
 1.mylib.c
-12345#include &amp;">
+#include &#34;mylib.h&#34;
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,8 +22,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>c语言库的制作 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>c语言库的制作 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -68,7 +81,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -172,10 +185,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -408,28 +421,56 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="c语言库的制作"><a href="#c语言库的制作" class="headerlink" title="c语言库的制作"></a>c语言库的制作</h1><h3 id="1-静态库和动态库的制作"><a href="#1-静态库和动态库的制作" class="headerlink" title="1.静态库和动态库的制作"></a>1.静态库和动态库的制作</h3><h5 id="1-准备头文件和对应的api实现源码"><a href="#1-准备头文件和对应的api实现源码" class="headerlink" title="1.准备头文件和对应的api实现源码"></a>1.准备头文件和对应的api实现源码</h5><p>1.mylib.h</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">interface</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token keyword">int</span> <span class="token function">interface</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 
 <p>1.mylib.c</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mylib.h&quot;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">interface</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;this is my first interface &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"mylib.h"</span></span>
+<span class="token keyword">int</span> <span class="token function">interface</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"this is my first interface "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
-<h6 id="1-制作静态库"><a href="#1-制作静态库" class="headerlink" title="1.制作静态库"></a>1.制作静态库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#编译目标文件</span></span><br><span class="line">gcc -c mylib.c -o mylib.o</span><br><span class="line"><span class="comment">#制作静态库文件</span></span><br><span class="line">ar crs libmylib.a mylib.o</span><br></pre></td></tr></table></figure>
+<h6 id="1-制作静态库"><a href="#1-制作静态库" class="headerlink" title="1.制作静态库"></a>1.制作静态库</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#编译目标文件</span>
+gcc -c mylib.c -o mylib.o
+<span class="token comment">#制作静态库文件</span>
+ar crs libmylib.a mylib.o</code></pre>
 
-<h6 id="2-制作动态库"><a href="#2-制作动态库" class="headerlink" title="2.制作动态库"></a>2.制作动态库</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#编译目标文件</span></span><br><span class="line">gcc -c mylib.c -o mylib.o</span><br><span class="line"><span class="comment">#制作动态链接库、</span></span><br><span class="line">gcc -shared -o libmylib.so mylib.o</span><br></pre></td></tr></table></figure>
+<h6 id="2-制作动态库"><a href="#2-制作动态库" class="headerlink" title="2.制作动态库"></a>2.制作动态库</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#编译目标文件</span>
+gcc -c mylib.c -o mylib.o
+<span class="token comment">#制作动态链接库、</span>
+gcc -shared -o libmylib.so mylib.o</code></pre>
 
 
 
-<h3 id="2-自定义库的使用"><a href="#2-自定义库的使用" class="headerlink" title="2.自定义库的使用"></a>2.自定义库的使用</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*main.c*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mylib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    interface();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-自定义库的使用"><a href="#2-自定义库的使用" class="headerlink" title="2.自定义库的使用"></a>2.自定义库的使用</h3><pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">/*main.c*/</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;mylib.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">interface</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
-<h6 id="1-静态库的使用"><a href="#1-静态库的使用" class="headerlink" title="1.静态库的使用"></a>1.静态库的使用</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#编译</span></span><br><span class="line">gcc -L. -lmylib main.c -o main</span><br><span class="line"><span class="comment">#运行</span></span><br><span class="line">./main</span><br></pre></td></tr></table></figure>
+<h6 id="1-静态库的使用"><a href="#1-静态库的使用" class="headerlink" title="1.静态库的使用"></a>1.静态库的使用</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#编译</span>
+gcc -L. -lmylib main.c -o main
+<span class="token comment">#运行</span>
+./main</code></pre>
 
-<h6 id="2-动态库的使用"><a href="#2-动态库的使用" class="headerlink" title="2.动态库的使用"></a>2.动态库的使用</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">编译目标文件</span><br><span class="line">gcc -L. -lmylib main.c -o main</span><br><span class="line"><span class="comment">#运行</span></span><br><span class="line"><span class="comment">#是指动态链接库的路径,(可以设置LD_LIBRARY_PATH的值或者是将编译好的动态链接库拷贝至/usr/lib路径下)</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=.</span><br><span class="line">./main</span><br></pre></td></tr></table></figure>
+<h6 id="2-动态库的使用"><a href="#2-动态库的使用" class="headerlink" title="2.动态库的使用"></a>2.动态库的使用</h6><pre class="language-bash" data-language="bash"><code class="language-bash">编译目标文件
+gcc -L. -lmylib main.c -o main
+<span class="token comment">#运行</span>
+<span class="token comment">#是指动态链接库的路径,(可以设置LD_LIBRARY_PATH的值或者是将编译好的动态链接库拷贝至/usr/lib路径下)</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>.
+./main</code></pre>
 
 
                 
@@ -457,7 +498,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/05/18/c%E8%AF%AD%E8%A8%80%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/">https://dreamaccount.github.io/2022/05/18/c%E8%AF%AD%E8%A8%80%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/</a>
+                    <a href="https://bugprogram-git.github.io/2022/05/18/c%E8%AF%AD%E8%A8%80%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/">https://bugprogram-git.github.io/2022/05/18/c%E8%AF%AD%E8%A8%80%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -682,6 +723,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -854,6 +898,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1072,6 +1118,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1088,6 +1145,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

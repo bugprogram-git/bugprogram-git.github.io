@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="归档: 1970/1, Hexo">
-    <meta name="description" content="my blog">
+    <meta name="keywords" content="归档: 1970/1, MyBlog">
+    <meta name="description" content="myblog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>归档: 1970/1 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>归档: 1970/1 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -337,7 +348,7 @@
         <div class="brand">
             <div class="title center-align">
                 
-                    subtitle
+                blog
                 
             </div>
 
@@ -492,7 +503,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/1970/01/01/centos%E8%A7%A3%E5%8E%8Binitrd/">
+                        <a href="/1970/01/01/socks5%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA/">
                             <div class="card-image">
                                 
                                 
@@ -504,11 +515,7 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    修复boot分区
-
-1.centos默认的grub安装命令为grub2-install不是grub-install
-2.hexdump命令所在的软件包为linux-utils1sudo yum install -y linux-utils
-
+                                    bash &lt;(curl -sL https://my.oofeye.com/work/Socks5/ss5.sh)
                                 
                             </div>
                             <div class="publish-info">
@@ -545,7 +552,7 @@
             <article class="cd-timeline-content" data-aos="fade-up">
                 <div class="article col s12 m6">
                     <div class="card">
-                        <a href="/1970/01/01/socks5%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA/">
+                        <a href="/1970/01/01/centos%E8%A7%A3%E5%8E%8Binitrd/">
                             <div class="card-image">
                                 
                                 
@@ -557,7 +564,11 @@
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                    1bash &lt;(curl -sL https://my.oofeye.com/work/Socks5/ss5.sh)
+                                    修复boot分区
+
+1.centos默认的grub安装命令为grub2-install不是grub-install
+2.hexdump命令所在的软件包为linux-utilssudo yum install -y linux-utils
+解
                                 
                             </div>
                             <div class="publish-info">
@@ -653,6 +664,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -871,6 +884,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -887,6 +911,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

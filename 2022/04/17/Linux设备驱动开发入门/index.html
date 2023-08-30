@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="linux设备驱动开发入门, Hexo">
+    <meta name="keywords" content="linux设备驱动开发入门, MyBlog">
     <meta name="description" content="linux设备驱动开发入门1.linux内核模块开发入门基本步骤
-12graph LR;a(编写内核模块代码)--&amp;gt;b(修改该目录下的Kconfig文件和Makefile)--&amp;gt;c(运行内核模块)
+graph LR;
+a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile)--&gt;c(运行内核模块)
 
-1.实例1234567891">
+1.实例#include &amp;lt;linu">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,8 +20,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>linux设备驱动开发入门 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>linux设备驱动开发入门 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -67,7 +79,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -171,10 +183,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -407,21 +419,67 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="linux设备驱动开发入门"><a href="#linux设备驱动开发入门" class="headerlink" title="linux设备驱动开发入门"></a>linux设备驱动开发入门</h1><h3 id="1-linux内核模块开发入门"><a href="#1-linux内核模块开发入门" class="headerlink" title="1.linux内核模块开发入门"></a>1.linux内核模块开发入门</h3><p>基本步骤</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile)--&gt;c(运行内核模块)</span><br></pre></td></tr></table></figure>
+<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
+a<span class="token text string">(编写内核模块代码)</span><span class="token arrow operator">--></span>b<span class="token text string">(修改该目录下的Kconfig文件和Makefile)</span><span class="token arrow operator">--></span>c<span class="token text string">(运行内核模块)</span></code></pre>
 
-<h5 id="1-实例"><a href="#1-实例" class="headerlink" title="1.实例"></a>1.实例</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">__init 和__exit为两个宏</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调用)</span></span><br><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">char</span> *b = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="type">int</span> c[<span class="number">5</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">module_param(a,<span class="type">int</span>,<span class="number">0664</span>);<span class="comment">//内核模块传参,传参后内核函数可以直接使用这些参数</span></span><br><span class="line">module_param(b,charp,<span class="number">0664</span>);</span><br><span class="line">module_param(c,<span class="type">int</span>,<span class="literal">NULL</span>,<span class="number">0664</span>);</span><br><span class="line"><span class="type">int</span> __init <span class="title function_">my_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">    <span class="comment">//init函数必须为int类型</span></span><br><span class="line">&#123;</span><br><span class="line">    printk(<span class="string">&quot;just a test for linux kernel module test!\n&quot;</span>);</span><br><span class="line">    printk(<span class="string">&quot;my init linux kernel module is running!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> __exit <span class="title function_">my_exit</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//exit函数必须为void类型</span></span><br><span class="line">    printk(<span class="string">&quot;just a test for linux kernel module test!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">module_init(my_init);</span><br><span class="line"><span class="comment">//当该内核模块插入时将会执行my_init函数</span></span><br><span class="line">module_exit(my_exit);</span><br><span class="line"><span class="comment">//当该内核模块移除时将会执行my_exit函数</span></span><br><span class="line">MODULE_LICENCE(<span class="string">&quot;GPL&quot;</span>);<span class="comment">//指定模块的开源协议</span></span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;bugprogram-git&quot;</span>);<span class="comment">//指定模块的作者</span></span><br><span class="line">MODULE_DESCRIPTION(<span class="string">&quot;just a kernel module test&quot;</span>);<span class="comment">//指定内核模块的详细信息</span></span><br><span class="line">MODULE_ALIAS(<span class="string">&quot;mymodule&quot;</span>);<span class="comment">//指定模块的别名</span></span><br><span class="line"><span class="comment">//这些MODLE_*的本质其实是定义在static字符数组用于存放指定字符串内容，这些字符串内容链接时存放在.modinfo字段,可以用modinfo命令来查看这些模块信息,用法</span></span><br><span class="line">modinfo $(MODULE_NAME)<span class="comment">//查看某个模块的信息</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-实例"><a href="#1-实例" class="headerlink" title="1.实例"></a>1.实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h></span></span>
+<span class="token comment">/*
+__init 和__exit为两个宏
+*/</span>
+<span class="token comment">// EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调用)</span>
+<span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>b <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> c<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token function">module_param</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//内核模块传参,传参后内核函数可以直接使用这些参数</span>
+<span class="token function">module_param</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span>charp<span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">module_param</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> __init <span class="token function">my_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+    <span class="token comment">//init函数必须为int类型</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"just a test for linux kernel module test!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"my init linux kernel module is running!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> __exit <span class="token function">my_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">//exit函数必须为void类型</span>
+    <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"just a test for linux kernel module test!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<h3 id="2-修改模块代码所在的目录的Kconfig文件"><a href="#2-修改模块代码所在的目录的Kconfig文件" class="headerlink" title="2.修改模块代码所在的目录的Kconfig文件"></a>2.修改模块代码所在的目录的Kconfig文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config MY_MODULE</span><br><span class="line">    tristate <span class="string">&quot;this is the linux kernel moule for test&quot;</span></span><br><span class="line">    <span class="built_in">help</span></span><br><span class="line">        just a <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<span class="token punctuation">&#125;</span>
+<span class="token function">module_init</span><span class="token punctuation">(</span>my_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//当该内核模块插入时将会执行my_init函数</span>
+<span class="token function">module_exit</span><span class="token punctuation">(</span>my_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//当该内核模块移除时将会执行my_exit函数</span>
+<span class="token function">MODULE_LICENCE</span><span class="token punctuation">(</span><span class="token string">"GPL"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//指定模块的开源协议</span>
+<span class="token function">MODULE_AUTHOR</span><span class="token punctuation">(</span><span class="token string">"bugprogram-git"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//指定模块的作者</span>
+<span class="token function">MODULE_DESCRIPTION</span><span class="token punctuation">(</span><span class="token string">"just a kernel module test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//指定内核模块的详细信息</span>
+<span class="token function">MODULE_ALIAS</span><span class="token punctuation">(</span><span class="token string">"mymodule"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//指定模块的别名</span>
+<span class="token comment">//这些MODLE_*的本质其实是定义在static字符数组用于存放指定字符串内容，这些字符串内容链接时存放在.modinfo字段,可以用modinfo命令来查看这些模块信息,用法</span>
+modinfo $<span class="token punctuation">(</span>MODULE_NAME<span class="token punctuation">)</span><span class="token comment">//查看某个模块的信息</span></code></pre>
 
-<h3 id="3-修改该目录下的Makefile文件"><a href="#3-修改该目录下的Makefile文件" class="headerlink" title="3.修改该目录下的Makefile文件"></a>3.修改该目录下的Makefile文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj-$(CONFIG_MY_MODULE)         += module.o</span><br><span class="line"><span class="comment">#(这里的module.o要和.c文件的文件名一致,MY_MODULE要和Kconfig文件里面的指定一致)</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-修改模块代码所在的目录的Kconfig文件"><a href="#2-修改模块代码所在的目录的Kconfig文件" class="headerlink" title="2.修改模块代码所在的目录的Kconfig文件"></a>2.修改模块代码所在的目录的Kconfig文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash">config MY_MODULE
+    tristate <span class="token string">"this is the linux kernel moule for test"</span>
+    <span class="token builtin class-name">help</span>
+        just a <span class="token builtin class-name">test</span></code></pre>
 
-<h3 id="4-运行内核模块"><a href="#4-运行内核模块" class="headerlink" title="4.运行内核模块"></a>4.运行内核模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dmesg -C    <span class="comment">#清除内核已打印的信息</span></span><br><span class="line">dmesg       <span class="comment">#查看内核打印信息</span></span><br><span class="line">lsmod<span class="comment">#显示当前系统已经载入的模块</span></span><br><span class="line">insmod<span class="comment">#将某个模块运行</span></span><br><span class="line">dmesg<span class="comment">#查看内核打印信息</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-修改该目录下的Makefile文件"><a href="#3-修改该目录下的Makefile文件" class="headerlink" title="3.修改该目录下的Makefile文件"></a>3.修改该目录下的Makefile文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash">obj-<span class="token variable"><span class="token variable">$(</span>CONFIG_MY_MODULE<span class="token variable">)</span></span>         <span class="token operator">+=</span> module.o
+<span class="token comment">#(这里的module.o要和.c文件的文件名一致,MY_MODULE要和Kconfig文件里面的指定一致)</span></code></pre>
+
+<h3 id="4-运行内核模块"><a href="#4-运行内核模块" class="headerlink" title="4.运行内核模块"></a>4.运行内核模块</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">dmesg</span> -C    <span class="token comment">#清除内核已打印的信息</span>
+<span class="token function">dmesg</span>       <span class="token comment">#查看内核打印信息</span>
+lsmod<span class="token comment">#显示当前系统已经载入的模块</span>
+insmod<span class="token comment">#将某个模块运行</span>
+<span class="token function">dmesg</span><span class="token comment">#查看内核打印信息</span></code></pre>
 
 <h2 id="5-linux设备驱动开发"><a href="#5-linux设备驱动开发" class="headerlink" title="5.linux设备驱动开发"></a>5.linux设备驱动开发</h2><p>linux内核用设备号来区分不同的设备,设备号是一个32位的无符号整数,dev_t类型,而且设备号可以分为两个部分,</p>
 <ul>
@@ -432,8 +490,33 @@
 <p>占20位</p>
 </li>
 </ul>
-<h4 id="常用的api"><a href="#常用的api" class="headerlink" title="常用的api"></a>常用的api</h4>  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">MAJOR(<span class="type">dev_t</span> dev);</span><br><span class="line"><span class="comment">//获取设备号的主设备号</span></span><br><span class="line">MINOR(<span class="type">dev_t</span> dev);</span><br><span class="line"><span class="comment">//获取设备的次设备号</span></span><br><span class="line">MKDEV(<span class="type">int</span> major,<span class="type">int</span> minor);</span><br><span class="line"><span class="comment">//创建一个设备</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">register_chrdev_region</span><span class="params">(<span class="type">dev_t</span> from,<span class="type">unsigned</span> count,<span class="type">char</span> *name)</span>;</span><br><span class="line"><span class="comment">//手动注册一个设备到内核</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">alloc_chrdev_regionda</span><span class="params">(<span class="type">dev_t</span> *dev,<span class="type">unsigned</span> baseminor,<span class="type">unsigned</span> count,<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//只需要主次设备号和fops即可注册设备</span></span><br><span class="line"><span class="type">int</span> __register_chrdev(<span class="type">unsigned</span> <span class="type">int</span> major, <span class="type">unsigned</span> <span class="type">int</span> baseminor,</span><br><span class="line">		      <span class="type">unsigned</span> <span class="type">int</span> count, <span class="type">const</span> <span class="type">char</span> *name,</span><br><span class="line">		      <span class="type">const</span> <span class="keyword">struct</span> file_operations *fops)</span><br><span class="line"><span class="type">void</span> <span class="title function_">unregister_chrdev_region</span><span class="params">(<span class="type">dev_t</span> from,<span class="type">unsigned</span> count)</span>;</span><br><span class="line"><span class="comment">//注销一个设备</span></span><br><span class="line"><span class="comment">//动态注册一个设备到内核中</span></span><br><span class="line"><span class="comment">//分配成功后会在/proc/devices中查看到设备号对应的设备名称</span></span><br><span class="line">cdev_alloc(<span class="type">void</span>);</span><br><span class="line">cdev_init(<span class="keyword">struct</span> cdev *dev,<span class="keyword">struct</span> file_operations *fops);</span><br><span class="line">cdev_add(<span class="keyword">struct</span> cdev *dev,<span class="type">dev_t</span> devnum,<span class="type">unsigned</span> <span class="type">int</span> count);</span><br><span class="line">cdev_del(<span class="keyword">struct</span> cdev *dev);</span><br><span class="line"><span class="comment">//将数据从内核空间拷贝到用户空间</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">copy_to_user</span><span class="params">(<span class="type">void</span> __user *to,<span class="type">const</span> <span class="type">void</span> *from,<span class="type">unsigned</span> <span class="type">long</span> n)</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">copy_from_user</span><span class="params">(<span class="type">void</span> *to,<span class="type">void</span> *from,<span class="type">unsigned</span> <span class="type">long</span> n)</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR;</span><br><span class="line">a(申请设备号)--&gt;b(注册设备号)--&gt;c(设置设备对应的file_ops)--&gt;d(将其加入到内核的链表中)</span><br></pre></td></tr></table></figure>
+<h4 id="常用的api"><a href="#常用的api" class="headerlink" title="常用的api"></a>常用的api</h4>  <pre class="language-c" data-language="c"><code class="language-c"><span class="token function">MAJOR</span><span class="token punctuation">(</span><span class="token class-name">dev_t</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//获取设备号的主设备号</span>
+<span class="token function">MINOR</span><span class="token punctuation">(</span><span class="token class-name">dev_t</span> dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//获取设备的次设备号</span>
+<span class="token function">MKDEV</span><span class="token punctuation">(</span><span class="token keyword">int</span> major<span class="token punctuation">,</span><span class="token keyword">int</span> minor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//创建一个设备</span>
+<span class="token keyword">int</span> <span class="token function">register_chrdev_region</span><span class="token punctuation">(</span><span class="token class-name">dev_t</span> from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> count<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//手动注册一个设备到内核</span>
+<span class="token keyword">int</span> <span class="token function">alloc_chrdev_regionda</span><span class="token punctuation">(</span><span class="token class-name">dev_t</span> <span class="token operator">*</span>dev<span class="token punctuation">,</span><span class="token keyword">unsigned</span> baseminor<span class="token punctuation">,</span><span class="token keyword">unsigned</span> count<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//只需要主次设备号和fops即可注册设备</span>
+<span class="token keyword">int</span> <span class="token function">__register_chrdev</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> major<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> baseminor<span class="token punctuation">,</span>
+		      <span class="token keyword">unsigned</span> <span class="token keyword">int</span> count<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span>
+		      <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">file_operations</span> <span class="token operator">*</span>fops<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">unregister_chrdev_region</span><span class="token punctuation">(</span><span class="token class-name">dev_t</span> from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//注销一个设备</span>
+<span class="token comment">//动态注册一个设备到内核中</span>
+<span class="token comment">//分配成功后会在/proc/devices中查看到设备号对应的设备名称</span>
+<span class="token function">cdev_alloc</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">cdev_init</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cdev</span> <span class="token operator">*</span>dev<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">file_operations</span> <span class="token operator">*</span>fops<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">cdev_add</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cdev</span> <span class="token operator">*</span>dev<span class="token punctuation">,</span><span class="token class-name">dev_t</span> devnum<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">cdev_del</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cdev</span> <span class="token operator">*</span>dev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//将数据从内核空间拷贝到用户空间</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">copy_to_user</span><span class="token punctuation">(</span><span class="token keyword">void</span> __user <span class="token operator">*</span>to<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">copy_from_user</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>to<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4>  <pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
+a<span class="token text string">(申请设备号)</span><span class="token arrow operator">--></span>b<span class="token text string">(注册设备号)</span><span class="token arrow operator">--></span>c<span class="token text string">(设置设备对应的file_ops)</span><span class="token arrow operator">--></span>d<span class="token text string">(将其加入到内核的链表中)</span></code></pre>
 
                 
             </div>
@@ -460,7 +543,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/17/linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">https://dreamaccount.github.io/2022/04/17/linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/17/linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">https://bugprogram-git.github.io/2022/04/17/linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -631,13 +714,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                <a href="/2022/04/17/CVE-2022-0847%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%A4%8D%E7%8E%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="docker学习笔记">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="CVE-2022-0847漏洞原理及复现">
                         
-                        <span class="card-title">docker学习笔记</span>
+                        <span class="card-title">CVE-2022-0847漏洞原理及复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -654,8 +737,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/linux%E8%BF%90%E7%BB%B4/" class="post-category">
-                                    linux运维
+                            <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" class="post-category">
+                                    网络安全
                                 </a>
                             
                             
@@ -665,8 +748,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8/">
-                        <span class="chip bg-color">软件配置使用</span>
+                    <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
+                        <span class="chip bg-color">漏洞复现</span>
                     </a>
                     
                 </div>
@@ -684,6 +767,9 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -857,6 +943,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1075,6 +1163,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1091,6 +1190,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Git使用入门, Hexo">
+    <meta name="keywords" content="Git使用入门, MyBlog">
     <meta name="description" content="Git使用入门1.什么是Git？Git是一个强大的分布式版本控制工具，最初由linus管理linux内核项目时开发，在项目开发的时候使用git可以存储代码、跟踪修订历史记录、合并代码更改，并在需要时恢复为较早的代码版本。
 2.Git的三个概">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Git使用入门 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Git使用入门 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -414,38 +428,132 @@
 <h3 id="2-Git的三个概念"><a href="#2-Git的三个概念" class="headerlink" title="2.Git的三个概念"></a>2.Git的三个概念</h3><h6 id="1-工作区"><a href="#1-工作区" class="headerlink" title="1.工作区"></a>1.工作区</h6><p>实际开发中能在git仓库目录下看到的目录</p>
 <h6 id="2-暂存区"><a href="#2-暂存区" class="headerlink" title="2.暂存区"></a>2.暂存区</h6><p>英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git&#x2F;index）中，所以我们把暂存区有时也叫作索引（index）。</p>
 <h6 id="3-版本库"><a href="#3-版本库" class="headerlink" title="3.版本库"></a>3.版本库</h6><p>工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。</p>
-<h3 id="3-安装git"><a href="#3-安装git" class="headerlink" title="3.安装git"></a>3.安装git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在ubuntu/debian上可以使用以下命令来安装git</span></span><br><span class="line">sudo apt install git</span><br><span class="line"><span class="comment">#基于archlinux </span></span><br><span class="line">sudo pacman -S git</span><br></pre></td></tr></table></figure>
+<h3 id="3-安装git"><a href="#3-安装git" class="headerlink" title="3.安装git"></a>3.安装git</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在ubuntu/debian上可以使用以下命令来安装git</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">git</span>
+<span class="token comment">#基于archlinux </span>
+<span class="token function">sudo</span> pacman -S <span class="token function">git</span></code></pre>
 <h3 id="4-配置git"><a href="#4-配置git" class="headerlink" title="4.配置git"></a>4.配置git</h3><p>git在使用之前需要初始化一些配置信息包括姓名和邮箱，用于日后管理项目提交commit时能很明显的看到是谁提交的commit</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;DreamAccount&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;fragmented666@gmail.com&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="5-git常用的命令"><a href="#5-git常用的命令" class="headerlink" title="5.git常用的命令"></a>5.git常用的命令</h3><h5 id="1-初始化git仓库"><a href="#1-初始化git仓库" class="headerlink" title="1.初始化git仓库"></a>1.初始化git仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init git-repo-name <span class="comment">#将git-repo-name替换成自己需要创建的git项目仓库的名字</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-提交代码"><a href="#2-提交代码" class="headerlink" title="2.提交代码"></a>2.提交代码</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将代码从工作区加入到暂存区</span></span><br><span class="line">git add . </span><br><span class="line"><span class="comment">#将代码从暂存区加入到版本库</span></span><br><span class="line">git commit -m <span class="string">&quot;update&quot;</span></span><br></pre></td></tr></table></figure>
-<h5 id="3-回退版本"><a href="#3-回退版本" class="headerlink" title="3.回退版本"></a>3.回退版本</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#舍弃当前提交，回滚到指定的版本上</span></span><br><span class="line">git reset --hard <span class="built_in">id</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将之前提交的代码从版本库重新放到暂存区</span></span><br><span class="line">git reset --soft <span class="built_in">id</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将之前提交的代码重新放到暂存区</span></span><br><span class="line">git reset --mixed <span class="built_in">id</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#将暂存区的代码重新放到工作区</span></span><br><span class="line">git reset .</span><br><span class="line"></span><br><span class="line"><span class="comment">#指定一个版本进行重做</span></span><br><span class="line">git revert <span class="built_in">id</span></span><br></pre></td></tr></table></figure>
-<h5 id="4-git分支操作"><a href="#4-git分支操作" class="headerlink" title="4.git分支操作"></a>4.git分支操作</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看当前分支</span></span><br><span class="line">git branch </span><br><span class="line"></span><br><span class="line"><span class="comment">#基于当前分支创建一个新的分支</span></span><br><span class="line">git branch <span class="variable">$&#123;BRANCH_NAME&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个分支将切换到该分支下</span></span><br><span class="line">git checkout -b <span class="variable">$&#123;BRANCH_NAME&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#切换分支</span></span><br><span class="line">git checkout <span class="variable">$&#123;BRANCH_NAME&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="5-git远程操作"><a href="#5-git远程操作" class="headerlink" title="5.git远程操作"></a>5.git远程操作</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看git远程主机的信息</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加远程主机</span></span><br><span class="line"><span class="comment">#git remote add &lt;远程主机名&gt; &lt;代码仓库地址&gt;</span></span><br><span class="line">git remote add origin https://github.com/DreamAccout/monitor.git</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除远程分支</span></span><br><span class="line"><span class="comment">#git push &lt;远程主机名&gt; --delete &lt;远程分支名&gt;</span></span><br><span class="line">git push origin --delete remoteBranchName</span><br><span class="line"></span><br><span class="line"><span class="comment">#推送到本地分支到远程分支(如果改远程分支不存在则进行创建)</span></span><br><span class="line"><span class="comment">#git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span></span><br><span class="line">git push -u origin master:master</span><br><span class="line"></span><br><span class="line"><span class="comment">#将远程分支克隆到本地</span></span><br><span class="line"><span class="comment">#git fetch &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span></span><br><span class="line">git fetch origin master:dev</span><br><span class="line"></span><br><span class="line"><span class="comment">#将远程分支合并到本地相当于git fetch &amp;&amp; git merge</span></span><br><span class="line"><span class="comment">#git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span></span><br><span class="line">git pull origin master:dev</span><br><span class="line"></span><br><span class="line"><span class="comment">#克隆一个远程仓库</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/DreamAccount/monitor.git</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config --global user.name <span class="token string">"DreamAccount"</span>
+<span class="token function">git</span> config --global user.email <span class="token string">"fragmented666@gmail.com"</span></code></pre>
+<h3 id="5-git常用的命令"><a href="#5-git常用的命令" class="headerlink" title="5.git常用的命令"></a>5.git常用的命令</h3><h5 id="1-初始化git仓库"><a href="#1-初始化git仓库" class="headerlink" title="1.初始化git仓库"></a>1.初始化git仓库</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> init git-repo-name <span class="token comment">#将git-repo-name替换成自己需要创建的git项目仓库的名字</span></code></pre>
+<h5 id="2-提交代码"><a href="#2-提交代码" class="headerlink" title="2.提交代码"></a>2.提交代码</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将代码从工作区加入到暂存区</span>
+<span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> 
+<span class="token comment">#将代码从暂存区加入到版本库</span>
+<span class="token function">git</span> commit -m <span class="token string">"update"</span></code></pre>
+<h5 id="3-回退版本"><a href="#3-回退版本" class="headerlink" title="3.回退版本"></a>3.回退版本</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#舍弃当前提交，回滚到指定的版本上</span>
+<span class="token function">git</span> reset --hard <span class="token function">id</span>
+
+<span class="token comment">#将之前提交的代码从版本库重新放到暂存区</span>
+<span class="token function">git</span> reset --soft <span class="token function">id</span>
+
+<span class="token comment">#将之前提交的代码重新放到暂存区</span>
+<span class="token function">git</span> reset --mixed <span class="token function">id</span>
+
+<span class="token comment">#将暂存区的代码重新放到工作区</span>
+<span class="token function">git</span> reset <span class="token builtin class-name">.</span>
+
+<span class="token comment">#指定一个版本进行重做</span>
+<span class="token function">git</span> revert <span class="token function">id</span></code></pre>
+<h5 id="4-git分支操作"><a href="#4-git分支操作" class="headerlink" title="4.git分支操作"></a>4.git分支操作</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看当前分支</span>
+<span class="token function">git</span> branch 
+
+<span class="token comment">#基于当前分支创建一个新的分支</span>
+<span class="token function">git</span> branch <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+
+<span class="token comment">#创建一个分支将切换到该分支下</span>
+<span class="token function">git</span> checkout -b <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+
+<span class="token comment">#切换分支</span>
+<span class="token function">git</span> checkout <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+</code></pre>
+<h5 id="5-git远程操作"><a href="#5-git远程操作" class="headerlink" title="5.git远程操作"></a>5.git远程操作</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看git远程主机的信息</span>
+<span class="token function">git</span> remote -v
+
+<span class="token comment">#添加远程主机</span>
+<span class="token comment">#git remote add &lt;远程主机名> &lt;代码仓库地址></span>
+<span class="token function">git</span> remote <span class="token function">add</span> origin https://github.com/DreamAccout/monitor.git
+
+
+<span class="token comment">#删除远程分支</span>
+<span class="token comment">#git push &lt;远程主机名> --delete &lt;远程分支名></span>
+<span class="token function">git</span> push origin --delete remoteBranchName
+
+<span class="token comment">#推送到本地分支到远程分支(如果改远程分支不存在则进行创建)</span>
+<span class="token comment">#git push &lt;远程主机名> &lt;本地分支名>:&lt;远程分支名></span>
+<span class="token function">git</span> push -u origin master:master
+
+<span class="token comment">#将远程分支克隆到本地</span>
+<span class="token comment">#git fetch &lt;远程主机名> &lt;远程分支名>:&lt;本地分支名></span>
+<span class="token function">git</span> fetch origin master:dev
+
+<span class="token comment">#将远程分支合并到本地相当于git fetch &amp;&amp; git merge</span>
+<span class="token comment">#git pull &lt;远程主机名> &lt;远程分支名>:&lt;本地分支名></span>
+<span class="token function">git</span> pull origin master:dev
+
+<span class="token comment">#克隆一个远程仓库</span>
+<span class="token function">git</span> clone https://github.com/DreamAccount/monitor.git</code></pre>
 <h5 id="6-git冲突解决"><a href="#6-git冲突解决" class="headerlink" title="6.git冲突解决"></a>6.git冲突解决</h5><p>在实际开发中,可能会存在以下情况，开发者在分支master上修改了文件a并将文件a提交到了代码仓库中,同时开发者在dev分支上也修改了文件a,这个时候如果我们在其中一个分支上合并另一个分支，这个时候就会引发冲突,因为git不知道我们实际要保留哪个修改记录,这个时候就需要开发者自行修改，然后重新git add . &amp;&amp; git commit -m “update“重新提交代码。<br>实际冲突的文件git将会用标识符进行标记</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="string">HEAD</span></span><br><span class="line"><span class="string">        //我是dev分支的修改记录</span></span><br><span class="line"><span class="string">=======</span></span><br><span class="line"><span class="string">//我是master分支的修改记录</span></span><br><span class="line"><span class="string">&gt;&gt;&gt;&gt;&gt;&gt;&gt; master</span></span><br><span class="line"><span class="string">#&lt;&lt;&lt;&lt;&lt;到=====是当前分支修改的内容</span></span><br><span class="line"><span class="string">#=====到&gt;&gt;&gt;&gt;&gt;&gt;是合并分支修改的内容</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;&lt;&lt;</span><span class="token operator">&lt;&lt;&lt;</span><span class="token operator">&lt;</span> HEAD
+        //我是dev分支的修改记录
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+//我是master分支的修改记录
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span> master
+<span class="token comment">#&lt;&lt;&lt;&lt;&lt;到=====是当前分支修改的内容</span>
+<span class="token comment">#=====到>>>>>>是合并分支修改的内容</span></code></pre>
 <h5 id="7-git-rebase用法"><a href="#7-git-rebase用法" class="headerlink" title="7.git rebase用法"></a>7.git rebase用法</h5><p>在开发过程中我们可能会出现代码提交历史太多，有很多个版本只进行了小的修改，这个时候我们经常会将多个提交历史进行合并</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将当前版本往前三个版本提交历史记录进行合并。</span></span><br><span class="line">git rebase -i HEAD~3</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将当前版本往前三个版本提交历史记录进行合并。</span>
+<span class="token function">git</span> rebase -i HEAD~3</code></pre>
 <p>有的时候我们如果合并一个分支会出现git提交历史记录变得分叉，显得十分不美观，这个时候就可以使用git rebase命令,将另一个分支的提交记录复制到本分支上。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase dev</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> rebase dev</code></pre>
 <h5 id="8-如何保存当前工作状态"><a href="#8-如何保存当前工作状态" class="headerlink" title="8.如何保存当前工作状态"></a>8.如何保存当前工作状态</h5><p>在实际的开发中,常常会出现这样的场景，你正在dev分支上开发项目,这个时候有个人和你说主线master上存在bug需要立马修复，这个时候你又不想提交代码，但是你不提交代码这个时候切换到master分支上你会发现master分支上也存在你加入到暂存区和工作区的代码，这个时候我们就需要用git stash 将工作区和暂存区的代码隐藏保存起来(官网是这样说的，但是实际上只能保存暂存区的代码,如果需要保存工作区的代码需要指定-u参数)，保存成功后再切换到master分支上修复bug。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将当前暂存区和工作去的文件进行隐藏保存</span></span><br><span class="line">git stash save <span class="string">&quot;stash file&quot;</span> -u</span><br><span class="line"></span><br><span class="line"><span class="comment">#将指定保存的文件进行恢复</span></span><br><span class="line">git stash pop <span class="comment">#默认使用最近一个进行恢复</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将当前暂存区和工作去的文件进行隐藏保存</span>
+<span class="token function">git</span> stash save <span class="token string">"stash file"</span> -u
+
+<span class="token comment">#将指定保存的文件进行恢复</span>
+<span class="token function">git</span> stash pop <span class="token comment">#默认使用最近一个进行恢复</span>
+
+</code></pre>
 <h5 id="9-git-reset和git-revert的区别"><a href="#9-git-reset和git-revert的区别" class="headerlink" title="9.git reset和git revert的区别"></a>9.git reset和git revert的区别</h5><p>git reset是回滚到指定的版本，并将指定版本后面的记录全部舍弃，但是git revert是指定一个版本进行重做，并不影响后面的版本，如果后面的版本对回退的版本提交文件也进行了修改，则revert就会引发冲突。</p>
-<h3 id="6-搭建git服务器"><a href="#6-搭建git服务器" class="headerlink" title="6.搭建git服务器"></a>6.搭建git服务器</h3><h5 id="1-创建一个git用户"><a href="#1-创建一个git用户" class="headerlink" title="1.创建一个git用户"></a>1.创建一个git用户</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -k /dev/null -s /usr/bin/git-shell git</span><br></pre></td></tr></table></figure>
-<h5 id="2-配置密钥"><a href="#2-配置密钥" class="headerlink" title="2.配置密钥"></a>2.配置密钥</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成密钥</span></span><br><span class="line">ssh-keygen -t rsa -b 2048 -C <span class="string">&quot;git-repo key&quot;</span> -f git-repo</span><br><span class="line"></span><br><span class="line"><span class="comment">#将公钥配置到git用户的ssh验证密钥</span></span><br><span class="line">sudo <span class="built_in">cat</span> git-repo.pub &gt; /home/git/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment">#将私钥保留在本地</span></span><br></pre></td></tr></table></figure>
-<h5 id="3-指定一个目录为git仓库目录"><a href="#3-指定一个目录为git仓库目录" class="headerlink" title="3.指定一个目录为git仓库目录"></a>3.指定一个目录为git仓库目录</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这里使用/srv/git-repo为git仓库目录</span></span><br><span class="line"><span class="comment">#将该目录的权限设为git用户</span></span><br><span class="line">sudo <span class="built_in">chown</span> git:git /srv/git=repo -R</span><br></pre></td></tr></table></figure>
-<h5 id="4-创建一个远程git仓库"><a href="#4-创建一个远程git仓库" class="headerlink" title="4.创建一个远程git仓库"></a>4.创建一个远程git仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建一个裸库</span></span><br><span class="line">git init --bare monitor.git <span class="comment">#将monitor.git换成自己的目录</span></span><br></pre></td></tr></table></figure>
-<h5 id="5-将远程仓库克隆到本地"><a href="#5-将远程仓库克隆到本地" class="headerlink" title="5.将远程仓库克隆到本地"></a>5.将远程仓库克隆到本地</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在这之前你必须要先配置好私钥</span></span><br><span class="line">git <span class="built_in">clone</span> git@example.com:/home/git/monitor.git</span><br></pre></td></tr></table></figure>
+<h3 id="6-搭建git服务器"><a href="#6-搭建git服务器" class="headerlink" title="6.搭建git服务器"></a>6.搭建git服务器</h3><h5 id="1-创建一个git用户"><a href="#1-创建一个git用户" class="headerlink" title="1.创建一个git用户"></a>1.创建一个git用户</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">useradd</span> -m -k /dev/null -s /usr/bin/git-shell <span class="token function">git</span></code></pre>
+<h5 id="2-配置密钥"><a href="#2-配置密钥" class="headerlink" title="2.配置密钥"></a>2.配置密钥</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成密钥</span>
+ssh-keygen -t rsa -b <span class="token number">2048</span> -C <span class="token string">"git-repo key"</span> -f git-repo
+
+<span class="token comment">#将公钥配置到git用户的ssh验证密钥</span>
+<span class="token function">sudo</span> <span class="token function">cat</span> git-repo.pub <span class="token operator">></span> /home/git/.ssh/authorized_keys
+
+<span class="token comment">#将私钥保留在本地</span></code></pre>
+<h5 id="3-指定一个目录为git仓库目录"><a href="#3-指定一个目录为git仓库目录" class="headerlink" title="3.指定一个目录为git仓库目录"></a>3.指定一个目录为git仓库目录</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#这里使用/srv/git-repo为git仓库目录</span>
+<span class="token comment">#将该目录的权限设为git用户</span>
+<span class="token function">sudo</span> <span class="token function">chown</span> git:git /srv/git<span class="token operator">=</span>repo -R</code></pre>
+<h5 id="4-创建一个远程git仓库"><a href="#4-创建一个远程git仓库" class="headerlink" title="4.创建一个远程git仓库"></a>4.创建一个远程git仓库</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建一个裸库</span>
+<span class="token function">git</span> init --bare monitor.git <span class="token comment">#将monitor.git换成自己的目录</span></code></pre>
+<h5 id="5-将远程仓库克隆到本地"><a href="#5-将远程仓库克隆到本地" class="headerlink" title="5.将远程仓库克隆到本地"></a>5.将远程仓库克隆到本地</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在这之前你必须要先配置好私钥</span>
+<span class="token function">git</span> clone git@example.com:/home/git/monitor.git</code></pre>
 <h3 id="7-配置github为远程仓库"><a href="#7-配置github为远程仓库" class="headerlink" title="7.配置github为远程仓库"></a>7.配置github为远程仓库</h3><p>1.将生成的私钥保留到本地</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将生成的私钥复制到.ssh目录下。</span></span><br><span class="line"><span class="comment">#生成的ssh密钥一般会自动在.ssh目录下，这个时候只需要将公钥id_rsa.pub上传到github上即可</span></span><br><span class="line"><span class="comment">#编辑.ssh/config (如果没有直接创建)</span></span><br><span class="line">Host github <span class="comment">#模板的名称</span></span><br><span class="line">        Hostname github.com <span class="comment">#指定的远程主机名</span></span><br><span class="line">        Port 22 <span class="comment">#指定的ssh端口</span></span><br><span class="line">        User git <span class="comment">#指定的登录的用户</span></span><br><span class="line">        Identityfile ~/.ssh/private_keys/github <span class="comment">#指定的登录的私钥，根据实际情况进行修改</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将生成的私钥复制到.ssh目录下。</span>
+<span class="token comment">#生成的ssh密钥一般会自动在.ssh目录下，这个时候只需要将公钥id_rsa.pub上传到github上即可</span>
+<span class="token comment">#编辑.ssh/config (如果没有直接创建)</span>
+Host github <span class="token comment">#模板的名称</span>
+        Hostname github.com <span class="token comment">#指定的远程主机名</span>
+        Port <span class="token number">22</span> <span class="token comment">#指定的ssh端口</span>
+        User <span class="token function">git</span> <span class="token comment">#指定的登录的用户</span>
+        Identityfile ~/.ssh/private_keys/github <span class="token comment">#指定的登录的私钥，根据实际情况进行修改</span></code></pre>
 
 <p>2.将生成的公钥上传到github中<br><img src="/images/github.png" alt="配置公钥到github"></p>
 <p>3.测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh -T github</span><br><span class="line"><span class="comment">#如果成功会出现以下提示</span></span><br><span class="line">Hi DreamAccount! You<span class="string">&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#如果配置了ssh模板可以直接</span></span><br><span class="line"><span class="string">ssh -T github(配置模板的名称)</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ssh</span> -T github
+<span class="token comment">#如果成功会出现以下提示</span>
+Hi DreamAccount<span class="token operator">!</span> You've successfully authenticated, but GitHub does not provide shell access.
+
+
+<span class="token comment">#如果配置了ssh模板可以直接</span>
+<span class="token function">ssh</span> -T github<span class="token punctuation">(</span>配置模板的名称<span class="token punctuation">)</span></code></pre>
 <p>4.创建github远程仓库<br><img src="/images/github-create.png" alt="github remote repository"><br>5.克隆远程仓库到本地</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> github:DreamAccount/monitor.git<span class="comment">#将DreamAccount替换成自己的用户名，monitor替换成自己的仓库名。</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">
+<span class="token function">git</span> clone github:DreamAccount/monitor.git<span class="token comment">#将DreamAccount替换成自己的用户名，monitor替换成自己的仓库名。</span></code></pre>
 <p>如果需要将代码推送到github上，先将代码进行提交到版本仓库只需要git push即可<br>例如我有一堆代码存放在dir目录下,如果需要将代码拷贝到刚刚克隆下的仓库，然后提交</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="built_in">dir</span>/* monitor/</span><br><span class="line"><span class="built_in">cd</span> monitor &amp;&amp; git add . &amp;&amp; git commit -m <span class="string">&quot;update release &quot;</span> &amp;&amp; git push</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> dir/* monitor/
+<span class="token builtin class-name">cd</span> monitor <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> commit -m <span class="token string">"update release "</span> <span class="token operator">&amp;&amp;</span> <span class="token function">git</span> push</code></pre>
                 
             </div>
             <hr/>
@@ -471,7 +579,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/12/20/Git%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/">https://dreamaccount.github.io/2022/12/20/Git%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/</a>
+                    <a href="https://bugprogram-git.github.io/2022/12/20/Git%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/">https://bugprogram-git.github.io/2022/12/20/Git%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -692,6 +800,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -864,6 +975,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1082,6 +1195,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1098,6 +1222,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

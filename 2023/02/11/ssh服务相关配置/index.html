@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ssh配置密钥, Hexo">
+    <meta name="keywords" content="ssh配置密钥, MyBlog">
     <meta name="description" content="1.什么是ssh？ssh是一种应用层协议，一般用于本地客户端登录到远程服务器进行相关作业，端口是22&amp;#x2F;TCP。
 2.ssh结构
 1.ssh服务器
@@ -23,8 +23,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>ssh配置密钥 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>ssh配置密钥 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -71,7 +82,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -175,10 +186,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -402,6 +413,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -416,16 +430,33 @@
 <li>1.密码认证</li>
 <li>2.密钥认证<br>基于安全性和便利性考量，我们一般使用密钥认证</li>
 </ul>
-<h2 id="4-ssh相关配置"><a href="#4-ssh相关配置" class="headerlink" title="4.ssh相关配置"></a>4.ssh相关配置</h2><h3 id="1-服务器配置"><a href="#1-服务器配置" class="headerlink" title="1.服务器配置"></a>1.服务器配置</h3><h4 id="1-生成密钥"><a href="#1-生成密钥" class="headerlink" title="1.生成密钥"></a>1.生成密钥</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#生成一对长度为2048的RSA密钥，指定注释为“rocky linux ECS”</span></span><br><span class="line">ssh-keygen -t rsa -b 2048 -C <span class="string">&quot;rocky linux ECS&quot;</span> -f rocky</span><br><span class="line"><span class="comment">#-t 为指定密钥算法类型</span></span><br><span class="line"><span class="comment">#-b 为密钥的长度一般指定2048足以，</span></span><br><span class="line"><span class="comment">#-C 指定密钥的注释</span></span><br><span class="line"><span class="comment">#-f 指定生成的密钥文件名称</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-ssh相关配置"><a href="#4-ssh相关配置" class="headerlink" title="4.ssh相关配置"></a>4.ssh相关配置</h2><h3 id="1-服务器配置"><a href="#1-服务器配置" class="headerlink" title="1.服务器配置"></a>1.服务器配置</h3><h4 id="1-生成密钥"><a href="#1-生成密钥" class="headerlink" title="1.生成密钥"></a>1.生成密钥</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成一对长度为2048的RSA密钥，指定注释为“rocky linux ECS”</span>
+ssh-keygen -t rsa -b <span class="token number">2048</span> -C <span class="token string">"rocky linux ECS"</span> -f rocky
+<span class="token comment">#-t 为指定密钥算法类型</span>
+<span class="token comment">#-b 为密钥的长度一般指定2048足以，</span>
+<span class="token comment">#-C 指定密钥的注释</span>
+<span class="token comment">#-f 指定生成的密钥文件名称</span>
+</code></pre>
 <p>上面这一步将会生成一对RSA密钥，公钥会以.pub为后缀,公钥放在被登录的服务器上，私钥自行留存，被用于以后进行登录服务器时进行身份验证使用。</p>
-<h4 id="2-配置密钥"><a href="#2-配置密钥" class="headerlink" title="2.配置密钥"></a>2.配置密钥</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将公钥配置在家目录的.ssh目录下</span></span><br><span class="line"><span class="built_in">cat</span> id_rsa.pub &gt; <span class="variable">$HOME</span>/.ssh/authorized_keys</span><br><span class="line"><span class="comment">#注意权限</span></span><br><span class="line"><span class="comment">#.ssh目录要配置成700权限authorized_keys密钥文件权限要配置成644</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-配置密钥"><a href="#2-配置密钥" class="headerlink" title="2.配置密钥"></a>2.配置密钥</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将公钥配置在家目录的.ssh目录下</span>
+<span class="token function">cat</span> id_rsa.pub <span class="token operator">></span> <span class="token environment constant">$HOME</span>/.ssh/authorized_keys
+<span class="token comment">#注意权限</span>
+<span class="token comment">#.ssh目录要配置成700权限authorized_keys密钥文件权限要配置成644</span></code></pre>
 <p>将公钥配置在服务器上，并且相关目录的权限要配置正确</p>
 <h4 id="3-其他相关配置"><a href="#3-其他相关配置" class="headerlink" title="3.其他相关配置"></a>3.其他相关配置</h4><p>为了服务器的安全考虑以及其他相关需求，我们一般要对服务器进行其他相关配置，ssh服务器的配置文件为&#x2F;etc&#x2F;ssh&#x2F;sshd_config</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#vim /etc/ssh/sshd_config</span></span><br><span class="line">PermitRootlogin <span class="built_in">yes</span><span class="comment">#指定是否允许root用户登录,如果一般不使用root用户登录建议关闭</span></span><br><span class="line">PasswordAuthentication <span class="comment">#指定是否允许通过密码认证方式登录,如果已经使用密钥登录建议关闭</span></span><br><span class="line">AuthorizedKeyFiles .ssh/authorized_key <span class="comment">#指定服务器公钥的存放路径，仅在使用密钥认证的情况下有用</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#vim /etc/ssh/sshd_config</span>
+PermitRootlogin <span class="token function">yes</span><span class="token comment">#指定是否允许root用户登录,如果一般不使用root用户登录建议关闭</span>
+PasswordAuthentication <span class="token comment">#指定是否允许通过密码认证方式登录,如果已经使用密钥登录建议关闭</span>
+AuthorizedKeyFiles .ssh/authorized_key <span class="token comment">#指定服务器公钥的存放路径，仅在使用密钥认证的情况下有用</span></code></pre>
 <h3 id="2-客户端配置"><a href="#2-客户端配置" class="headerlink" title="2.客户端配置"></a>2.客户端配置</h3><h4 id="1-配置密钥"><a href="#1-配置密钥" class="headerlink" title="1.配置密钥"></a>1.配置密钥</h4><p>将上次生成的密钥对中的私钥放在客户端目录，一般为了方便我们一般会定义一个ssh客户端配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="variable">$HOME</span>/.ssh/config</span><br><span class="line">Host armbian<span class="comment">#取的别名</span></span><br><span class="line">        Hostname 192.168.1.254<span class="comment">#登录的服务器的ip地址</span></span><br><span class="line">        Port 22<span class="comment">#ssh服务开放的端口，一般默认22</span></span><br><span class="line">        User root<span class="comment">#登录的用户名</span></span><br><span class="line">        Identityfile ~/.ssh/private_keys/armbian<span class="comment">#指定密钥的所在地</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> <span class="token environment constant">$HOME</span>/.ssh/config
+Host armbian<span class="token comment">#取的别名</span>
+        Hostname <span class="token number">192.168</span>.1.254<span class="token comment">#登录的服务器的ip地址</span>
+        Port <span class="token number">22</span><span class="token comment">#ssh服务开放的端口，一般默认22</span>
+        User root<span class="token comment">#登录的用户名</span>
+        Identityfile ~/.ssh/private_keys/armbian<span class="token comment">#指定密钥的所在地</span></code></pre>
 <p>将私钥放在配置文件指定的目录下面</p>
-<h4 id="2-使用-配置的别名登录服务器"><a href="#2-使用-配置的别名登录服务器" class="headerlink" title="2.使用 配置的别名登录服务器"></a>2.使用 配置的别名登录服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh armbian</span><br></pre></td></tr></table></figure>
+<h4 id="2-使用-配置的别名登录服务器"><a href="#2-使用-配置的别名登录服务器" class="headerlink" title="2.使用 配置的别名登录服务器"></a>2.使用 配置的别名登录服务器</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">ssh</span> armbian</code></pre>
                 
             </div>
             <hr/>
@@ -451,7 +482,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/02/11/ssh%E6%9C%8D%E5%8A%A1%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">https://dreamaccount.github.io/2023/02/11/ssh%E6%9C%8D%E5%8A%A1%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/</a>
+                    <a href="https://bugprogram-git.github.io/2023/02/11/ssh%E6%9C%8D%E5%8A%A1%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">https://bugprogram-git.github.io/2023/02/11/ssh%E6%9C%8D%E5%8A%A1%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -664,6 +695,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -836,6 +870,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1054,6 +1090,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1070,6 +1117,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

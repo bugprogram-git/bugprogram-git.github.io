@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="docker镜像的构建, Hexo">
+    <meta name="keywords" content="docker镜像的构建, MyBlog">
     <meta name="description" content="docker镜像的构建1.DockerfileDockerfile是构建docker镜像的脚本，它里面会告诉docker镜像构建程序如何构建一个特定的docker镜像
 2.overlayeroverlayer是docker镜像的镜像层，每一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>docker镜像的构建 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>docker镜像的构建 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -405,6 +416,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -412,11 +426,31 @@
             <div id="articleContent">
                 <h2 id="docker镜像的构建"><a href="#docker镜像的构建" class="headerlink" title="docker镜像的构建"></a>docker镜像的构建</h2><h3 id="1-Dockerfile"><a href="#1-Dockerfile" class="headerlink" title="1.Dockerfile"></a>1.Dockerfile</h3><p>Dockerfile是构建docker镜像的脚本，它里面会告诉docker镜像构建程序如何构建一个特定的docker镜像</p>
 <h3 id="2-overlayer"><a href="#2-overlayer" class="headerlink" title="2.overlayer"></a>2.overlayer</h3><p>overlayer是docker镜像的镜像层，每一个docker镜像由多个overlayer的组成，由于docker镜像存储使用了联合文件系统，每一个docker镜像由多个overlayer组成，多个docker镜像相同的overlayer进行共用，这使得不管是存储docker镜像还是运行docker容器，这都极大的节省了空间</p>
-<h3 id="3-Dockerfile语法"><a href="#3-Dockerfile语法" class="headerlink" title="3.Dockerfile语法"></a>3.Dockerfile语法</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:latest       <span class="comment">#以什么镜像为基础构建镜像</span></span><br><span class="line">MANTAINER bugprogram-git <span class="comment">#镜像的构建人</span></span><br><span class="line"><span class="keyword">ENV</span> hello=world <span class="comment">#设置环境变量，在镜像运行时，此参数仍然生效</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list \</span></span><br><span class="line"><span class="language-bash">&amp;&amp; apt update -y &amp;&amp; apt upgrade -y \</span></span><br><span class="line"><span class="language-bash">&amp;&amp; <span class="built_in">ln</span> -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \</span></span><br><span class="line"><span class="language-bash"></span></span><br></pre></td></tr></table></figure>
-<h3 id="4-docker镜像构建"><a href="#4-docker镜像构建" class="headerlink" title="4.docker镜像构建"></a>4.docker镜像构建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t myubuntu:latest -f ./Dockerfile .</span><br><span class="line"><span class="comment">#-f指定dockerfile文件名 </span></span><br><span class="line"><span class="comment">#-t指定构建的镜像名和tag</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-Dockerfile语法"><a href="#3-Dockerfile语法" class="headerlink" title="3.Dockerfile语法"></a>3.Dockerfile语法</h3><pre class="language-Dockerfile" data-language="Dockerfile"><code class="language-Dockerfile">FROM ubuntu:latest       #以什么镜像为基础构建镜像
+MANTAINER bugprogram-git #镜像的构建人
+ENV hello&#x3D;world #设置环境变量，在镜像运行时，此参数仍然生效
+RUN sed -i &#39;s&#x2F;archive.ubuntu.com&#x2F;mirrors.ustc.edu.cn&#x2F;g&#39; &#x2F;etc&#x2F;apt&#x2F;sources.list \
+&amp;&amp; apt update -y &amp;&amp; apt upgrade -y \
+&amp;&amp; ln -snf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime \
+</code></pre>
+<h3 id="4-docker镜像构建"><a href="#4-docker镜像构建" class="headerlink" title="4.docker镜像构建"></a>4.docker镜像构建</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build -t myubuntu:latest -f ./Dockerfile <span class="token builtin class-name">.</span>
+<span class="token comment">#-f指定dockerfile文件名 </span>
+<span class="token comment">#-t指定构建的镜像名和tag</span></code></pre>
 <h3 id="5-docker镜像多阶段构建"><a href="#5-docker镜像多阶段构建" class="headerlink" title="5.docker镜像多阶段构建"></a>5.docker镜像多阶段构建</h3><p>在实际构建docker镜像的过程中，有时候可能要先构建成中间产物，比如部署项目时，我们可能要先部署编译环境，然后构建成可执行程序的时候，然后在清理中间产物，导致整个构建过程十分的繁琐，因此自从Docker 17.05.0-ce之后，docker支持了多阶段构建镜像</p>
 <p>例如，部署golang程序，我们首先在golang的docker镜像上将源码编译成可执行程序，再将可执行程序部署到alpine镜像上构建成docker镜像。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="keyword">FROM</span> golang:alpine as builder</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./hello.go .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go build -o hello ./hello.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> bugprogram-git</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /hello . <span class="comment">#从上述构建的镜像中拷贝可执行程序拷贝到此镜像中</span></span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x hello</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> /hello</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="language-Dockerfile" data-language="Dockerfile"><code class="language-Dockerfile">	
+FROM golang:alpine as builder
+WORKDIR &#x2F;
+COPY .&#x2F;hello.go .
+RUN go build -o hello .&#x2F;hello.go
+
+FROM alpine
+MAINTAINER bugprogram-git
+WORKDIR &#x2F;
+COPY --from&#x3D;builder &#x2F;hello . #从上述构建的镜像中拷贝可执行程序拷贝到此镜像中
+RUN chmod +x hello
+ENTRYPOINT &#x2F;hello
+</code></pre>
 <h3 id="6-常用的docker基础镜像"><a href="#6-常用的docker基础镜像" class="headerlink" title="6.常用的docker基础镜像"></a>6.常用的docker基础镜像</h3><p><strong>alpine</strong><br>最常用的docker基础镜像，非常小，只有几MB，libc使用的musllib，和glibc不兼容，因此部署的可执行程序需要在musllib作为libc时进行编译，否则无法运行<br><strong>centos</strong><br>常用的运行环境，centos由于其稳定性是企业中最常用的linux发行版，<br><strong>ubuntu</strong><br>常用的编译环境，libc为glibc</p>
 
                 
@@ -444,7 +478,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/03/05/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%9E%84%E5%BB%BA/">https://dreamaccount.github.io/2023/03/05/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%9E%84%E5%BB%BA/</a>
+                    <a href="https://bugprogram-git.github.io/2023/03/05/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%9E%84%E5%BB%BA/">https://bugprogram-git.github.io/2023/03/05/docker%E9%95%9C%E5%83%8F%E7%9A%84%E6%9E%84%E5%BB%BA/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -661,6 +695,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -833,6 +870,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1051,6 +1090,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1067,6 +1117,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

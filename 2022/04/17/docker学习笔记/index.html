@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="docker学习笔记, Hexo">
+    <meta name="keywords" content="docker学习笔记, MyBlog">
     <meta name="description" content="docker学习笔记1.什么是docker?1.docker是一种基于容器的虚拟化技术，可以让开发者将开发的软件以及依赖打包成一个镜像然后发布到任何流行的linux或windows服务器上面，并且跟重要的是，在实际的生产环境中，开发和运维的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>docker学习笔记 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>docker学习笔记 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,6 +415,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -460,41 +474,475 @@
 </ul>
 <h3 id="4-docker组件"><a href="#4-docker组件" class="headerlink" title="4.docker组件"></a>4.docker组件</h3><h5 id="1-docker镜像"><a href="#1-docker镜像" class="headerlink" title="1.docker镜像"></a>1.docker镜像</h5><p>docker镜像是用于创建docker容器的模板，相当于面向对象编程中的类，一个docker镜像可以创建个docker容器</p>
 <p><strong>获取docker镜像</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取一个nginx:alpine镜像。</span></span><br><span class="line">docker pull nginx:alpine </span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#获取一个nginx:alpine镜像。</span>
+<span class="token function">docker</span> pull nginx:alpine </code></pre>
 <p><strong>构建docker镜像</strong><br>使用Dockerfile进行构建docker镜像(后面会提到)</p>
 <h5 id="2-docker容器"><a href="#2-docker容器" class="headerlink" title="2.docker容器"></a>2.docker容器</h5><p>实际提供服务的docker实例，基于docker镜像进行创建<br><strong>创建并运行容器</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker run -it image:tag <span class="built_in">command</span></span><br><span class="line"><span class="comment">#-i(interactive)以交互方式启动docker容器</span></span><br><span class="line"><span class="comment">#-t(tty)分配一个tty</span></span><br><span class="line"><span class="comment">#--hostname 指定容器内的主机名</span></span><br><span class="line"><span class="comment">#--name 指定容器的名称</span></span><br><span class="line"><span class="comment">#--privileged 赋予容器root权限</span></span><br><span class="line"><span class="comment">#-p 指定端口映射</span></span><br><span class="line"><span class="comment">#-v 映射容器卷</span></span><br><span class="line"><span class="comment">#command 指需要执行的命令</span></span><br><span class="line"><span class="comment">#注意:正在运行的docker容器一定要有一个前台进程,否则该docker会认为没有正在运行的进程,即退出该容器</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run -it image:tag <span class="token builtin class-name">command</span>
+<span class="token comment">#-i(interactive)以交互方式启动docker容器</span>
+<span class="token comment">#-t(tty)分配一个tty</span>
+<span class="token comment">#--hostname 指定容器内的主机名</span>
+<span class="token comment">#--name 指定容器的名称</span>
+<span class="token comment">#--privileged 赋予容器root权限</span>
+<span class="token comment">#-p 指定端口映射</span>
+<span class="token comment">#-v 映射容器卷</span>
+<span class="token comment">#command 指需要执行的命令</span>
+<span class="token comment">#注意:正在运行的docker容器一定要有一个前台进程,否则该docker会认为没有正在运行的进程,即退出该容器</span></code></pre>
 
 <p><strong>启动或停止docker容器</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看所有的容器</span></span><br><span class="line">docker ps -a</span><br><span class="line"><span class="comment">#启动一个docker容器</span></span><br><span class="line">docker start $(container_id)</span><br><span class="line">docker stop $(container_id)</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看所有的容器</span>
+<span class="token function">docker</span> <span class="token function">ps</span> -a
+<span class="token comment">#启动一个docker容器</span>
+<span class="token function">docker</span> start <span class="token variable"><span class="token variable">$(</span>container_id<span class="token variable">)</span></span>
+<span class="token function">docker</span> stop <span class="token variable"><span class="token variable">$(</span>container_id<span class="token variable">)</span></span></code></pre>
 
 <p><strong>和docker容器进行交互</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it /bin/bash</span><br><span class="line"><span class="comment">#在容器内重新开启一个shell,并且进入到该shell</span></span><br><span class="line">docker attach container_id</span><br><span class="line"><span class="comment">#进入到指定容器id内正在运行的终端</span></span><br><span class="line">docker top container_id</span><br><span class="line"><span class="comment">#查看某容器内的进程情况</span></span><br><span class="line">docker logs container_id</span><br><span class="line"><span class="comment">#查看某容器的日志</span></span><br><span class="line">docker inspect container_id</span><br><span class="line"><span class="comment">#查看某容器的配置以及详细信息</span></span><br><span class="line">docker commit -a <span class="string">&quot;&quot;</span> -m <span class="string">&quot;&quot;</span> container_id image:tag</span><br><span class="line"><span class="comment">#将某一个容器打包成镜像</span></span><br><span class="line">docker <span class="built_in">export</span> container_id &gt; ubuntu.tar</span><br><span class="line"><span class="comment">#导出一个docker容器(不包含映射的容器卷以及映射路径)</span></span><br><span class="line"><span class="built_in">cat</span> docker/ubuntu.tar | docker import - <span class="built_in">test</span>/ubuntu:v1</span><br><span class="line"><span class="comment">#将一个tar包导入成docker镜像</span></span><br><span class="line">docker <span class="built_in">rm</span> container_id</span><br><span class="line"><span class="comment">#删除一个docker容器</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> -it /bin/bash
+<span class="token comment">#在容器内重新开启一个shell,并且进入到该shell</span>
+<span class="token function">docker</span> attach container_id
+<span class="token comment">#进入到指定容器id内正在运行的终端</span>
+<span class="token function">docker</span> <span class="token function">top</span> container_id
+<span class="token comment">#查看某容器内的进程情况</span>
+<span class="token function">docker</span> logs container_id
+<span class="token comment">#查看某容器的日志</span>
+<span class="token function">docker</span> inspect container_id
+<span class="token comment">#查看某容器的配置以及详细信息</span>
+<span class="token function">docker</span> commit -a <span class="token string">""</span> -m <span class="token string">""</span> container_id image:tag
+<span class="token comment">#将某一个容器打包成镜像</span>
+<span class="token function">docker</span> <span class="token builtin class-name">export</span> container_id <span class="token operator">></span> ubuntu.tar
+<span class="token comment">#导出一个docker容器(不包含映射的容器卷以及映射路径)</span>
+<span class="token function">cat</span> docker/ubuntu.tar <span class="token operator">|</span> <span class="token function">docker</span> <span class="token function">import</span> - test/ubuntu:v1
+<span class="token comment">#将一个tar包导入成docker镜像</span>
+<span class="token function">docker</span> <span class="token function">rm</span> container_id
+<span class="token comment">#删除一个docker容器</span></code></pre>
 <h5 id="3-docker数据卷"><a href="#3-docker数据卷" class="headerlink" title="3.docker数据卷"></a>3.docker数据卷</h5><p>  因为docker容器中的数据在docker容器删除后会全部消失,因此可以借助docker容器数据卷来实现docker容i数据的本地持久化。docker容器数据卷永久有效,除非手动删除,并且docker数据卷可以让多个docker容器共享数据</p>
-<p><strong>数据卷的创建</strong><br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create volume_name</span><br></pre></td></tr></table></figure></p>
-<p><strong>数据卷的挂载</strong><br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">  docker run -it -v volume_name:container_path image_name</span><br><span class="line">``````</span><br><span class="line"></span><br><span class="line"><span class="comment">##### 4.docker网络</span></span><br><span class="line"></span><br><span class="line">为docker容器提供网络</span><br><span class="line">docker网络中一共有5种网络模式</span><br><span class="line"></span><br><span class="line">* bridge</span><br><span class="line">  docker的默认网络模式,创建一块虚拟网卡连接上物理网卡,所有的docker将库创建一对虚拟接口,veth&amp;eth0一个在容器内，一个在网桥上,网桥提供路由功能,(可以想象为虚拟机内的nat模式)</span><br><span class="line"></span><br><span class="line">* macvlan</span><br><span class="line">  创建一个虚拟网卡,直接连接至物理网卡,该网络模式下容器分配的ip地址和物理机在同一个网段(相当于虚拟机内的桥接模式)</span><br><span class="line"></span><br><span class="line">* host</span><br><span class="line">  与宿主机共享网卡</span><br><span class="line"></span><br><span class="line">* container</span><br><span class="line">  和已经存在的容器共享一块网卡</span><br><span class="line"></span><br><span class="line">* none</span><br><span class="line">  不创建网络,无法联网  </span><br><span class="line"></span><br><span class="line">**docker网络的创建**</span><br><span class="line">```bash</span><br><span class="line">  <span class="comment">#创建一个桥接的docker网络</span></span><br><span class="line">docker network creat -d bridge --subnet=172.20.0.1/24 --gateway=172.20.0.1 -o parent=eth0 mybridge</span><br></pre></td></tr></table></figure></p>
-<h5 id="5-dockerfile"><a href="#5-dockerfile" class="headerlink" title="5.dockerfile"></a>5.dockerfile</h5><p><strong>什么是Dockerfile?</strong><br>  dockerfile是一个用于构建docker镜像的脚本,docker可以读取dockerfile文件自动构建docker镜像<br><strong>dockerfile如何使用?</strong><br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#当dockerfile命名为Dockerfile并且当前在dockerfile路径下,如果命名不一样需要在构建镜像的时候用-f指定构建脚本</span></span><br><span class="line">docker build -t name:tag .</span><br><span class="line"><span class="comment">#指定dockerfile文件路径</span></span><br><span class="line">docker build -f /path/to/dockerfile -t name:tag</span><br></pre></td></tr></table></figure><br> <strong>docker语法</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM</span><br><span class="line"><span class="comment">#表明以哪个镜像作为基础镜像</span></span><br><span class="line">MAINTAINER</span><br><span class="line"><span class="comment">#表明构建镜像的作者</span></span><br><span class="line">WORKDIR</span><br><span class="line"><span class="comment">#表明工作的初始路径</span></span><br><span class="line">RUN</span><br><span class="line"><span class="comment">#表明运行的命令</span></span><br><span class="line">EXPOSE</span><br><span class="line"><span class="comment">#表明暴露的端口</span></span><br><span class="line">CMD</span><br><span class="line"><span class="comment">#表明默认运行的命令</span></span><br></pre></td></tr></table></figure>
-<p>  <strong>实例dockerfile</strong></p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:latest</span><br><span class="line"><span class="keyword">MAINTAINER</span> bugprogram-git</span><br><span class="line"><span class="keyword">ENV</span> TZ=Asia/Shanghai</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> sed -i <span class="string">&#x27;s/archive.ubuntu.com/mirrors.aliyun.com/g&#x27;</span> /etc/apt/sources.list \ </span></span><br><span class="line">&amp;&amp; apt-get update \</span><br><span class="line">&amp;&amp; ln -snf /usr/share/zoneinfo/$TZ /etc/localtime </span><br><span class="line">&amp;&amp; echo $TZ &gt; /etc/timezone \</span><br><span class="line">apt-get install -y tzdata unzip wget npm curl \</span><br><span class="line">&amp;&amp; apt-get clean \</span><br><span class="line">&amp;&amp; apt-get autoclean \</span><br><span class="line">&amp;&amp; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> /minecraft \</span></span><br><span class="line"><span class="language-bash">&amp;&amp; <span class="built_in">mkdir</span> /minecraft/dashboard \</span></span><br><span class="line"><span class="language-bash">&amp;&amp; wget https://github.com/Suwings/MCSManager/archive/refs/tags/v8.6.23.zip \</span></span><br><span class="line"><span class="language-bash">&amp;&amp; unzip v8.6.23.zip -d /minecraft/dashboard </span></span><br><span class="line"><span class="comment">#同样的后面的文件名以及解压的目录名要根据实际情况进行修改</span></span><br><span class="line">&amp;&amp; mv /minecraft/dashboard/MCSManager-<span class="number">8.6</span>.<span class="number">23</span>/* /minecraft/dashboard </span><br><span class="line">&amp;&amp; rm -rf /minecraft/dashboard/MCSManager-<span class="number">8.6</span>.<span class="number">23</span> \</span><br><span class="line">&amp;&amp; apt purge  -y unzip wget \</span><br><span class="line">&amp;&amp; apt autoremove -y \</span><br><span class="line">&amp;&amp; rm /v8.<span class="number">6.23</span>.zip \</span><br><span class="line">&amp;&amp; cd /minecraft/dashboard &amp;&amp; npm install</span><br><span class="line"><span class="keyword">EXPOSE</span> [<span class="number">19132</span>,<span class="number">23333</span>]</span><br><span class="line"><span class="comment">#对外暴露的端口</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> <span class="built_in">cd</span> /minecraft/dashboard/ &amp;&amp; npm start</span></span><br></pre></td></tr></table></figure>
+<p><strong>数据卷的创建</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume create volume_name</code></pre></p>
+<p><strong>数据卷的挂载</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash">  <span class="token function">docker</span> run -it -v volume_name:container_path image_name
+`````<span class="token variable"><span class="token variable">`</span>
 
-<h3 id="5-docker安装和配置"><a href="#5-docker安装和配置" class="headerlink" title="5.docker安装和配置"></a>5.docker安装和配置</h3><h5 id="1-docker安装"><a href="#1-docker安装" class="headerlink" title="1.docker安装"></a>1.docker安装</h5><h6 id="1-脚本安装"><a href="#1-脚本安装" class="headerlink" title="1.脚本安装"></a>1.脚本安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">./get-docker.sh</span><br></pre></td></tr></table></figure>
-<h6 id="2-包管理器安装"><a href="#2-包管理器安装" class="headerlink" title="2.包管理器安装"></a>2.包管理器安装</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#基于archlinux</span></span><br><span class="line">pacman -S docker</span><br><span class="line"><span class="comment">#基于debian/ubuntu</span></span><br><span class="line">apt install docker.io</span><br></pre></td></tr></table></figure>
+<span class="token comment">##### 4.docker网络</span>
+
+为docker容器提供网络
+docker网络中一共有5种网络模式
+
+* bridge
+  docker的默认网络模式,创建一块虚拟网卡连接上物理网卡,所有的docker将库创建一对虚拟接口,veth<span class="token operator">&amp;</span>eth0一个在容器内，一个在网桥上,网桥提供路由功能,<span class="token punctuation">(</span>可以想象为虚拟机内的nat模式<span class="token punctuation">)</span>
+
+* macvlan
+  创建一个虚拟网卡,直接连接至物理网卡,该网络模式下容器分配的ip地址和物理机在同一个网段<span class="token punctuation">(</span>相当于虚拟机内的桥接模式<span class="token punctuation">)</span>
+
+* <span class="token function">host</span>
+  与宿主机共享网卡
+
+* container
+  和已经存在的容器共享一块网卡
+
+* none
+  不创建网络,无法联网  
+
+**docker网络的创建**
+<span class="token variable">`</span></span>``bash
+  <span class="token comment">#创建一个桥接的docker网络</span>
+<span class="token function">docker</span> network creat -d bridge --subnet<span class="token operator">=</span><span class="token number">172.20</span>.0.1/24 --gateway<span class="token operator">=</span><span class="token number">172.20</span>.0.1 -o <span class="token assign-left variable">parent</span><span class="token operator">=</span>eth0 mybridge</code></pre></p>
+<h5 id="5-dockerfile"><a href="#5-dockerfile" class="headerlink" title="5.dockerfile"></a>5.dockerfile</h5><p><strong>什么是Dockerfile?</strong><br>  dockerfile是一个用于构建docker镜像的脚本,docker可以读取dockerfile文件自动构建docker镜像<br><strong>dockerfile如何使用?</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#当dockerfile命名为Dockerfile并且当前在dockerfile路径下,如果命名不一样需要在构建镜像的时候用-f指定构建脚本</span>
+<span class="token function">docker</span> build -t name:tag <span class="token builtin class-name">.</span>
+<span class="token comment">#指定dockerfile文件路径</span>
+<span class="token function">docker</span> build -f /path/to/dockerfile -t name:tag</code></pre><br> <strong>docker语法</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">FROM
+<span class="token comment">#表明以哪个镜像作为基础镜像</span>
+MAINTAINER
+<span class="token comment">#表明构建镜像的作者</span>
+WORKDIR
+<span class="token comment">#表明工作的初始路径</span>
+RUN
+<span class="token comment">#表明运行的命令</span>
+EXPOSE
+<span class="token comment">#表明暴露的端口</span>
+CMD
+<span class="token comment">#表明默认运行的命令</span></code></pre>
+<p>  <strong>实例dockerfile</strong></p>
+<pre class="language-docker" data-language="docker"><code class="language-docker"><span class="token instruction"><span class="token keyword">FROM</span> ubuntu:latest</span>
+<span class="token instruction"><span class="token keyword">MAINTAINER</span> bugprogram-git</span>
+<span class="token instruction"><span class="token keyword">ENV</span> TZ=Asia/Shanghai</span>
+<span class="token instruction"><span class="token keyword">WORKDIR</span> /</span>
+<span class="token instruction"><span class="token keyword">RUN</span> sed -i <span class="token string">'s/archive.ubuntu.com/mirrors.aliyun.com/g'</span> /etc/apt/sources.list \ </span>
+&amp;&amp; apt-get update \
+&amp;&amp; ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
+&amp;&amp; echo $TZ > /etc/timezone \
+apt-get install -y tzdata unzip wget npm curl \
+&amp;&amp; apt-get clean \
+&amp;&amp; apt-get autoclean \
+&amp;&amp; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+<span class="token instruction"><span class="token keyword">RUN</span> mkdir /minecraft <span class="token operator">\</span>
+&amp;&amp; mkdir /minecraft/dashboard <span class="token operator">\</span>
+&amp;&amp; wget https://github.com/Suwings/MCSManager/archive/refs/tags/v8.6.23.zip <span class="token operator">\</span>
+&amp;&amp; unzip v8.6.23.zip -d /minecraft/dashboard </span>
+<span class="token comment">#同样的后面的文件名以及解压的目录名要根据实际情况进行修改</span>
+&amp;&amp; mv /minecraft/dashboard/MCSManager-8.6.23/* /minecraft/dashboard 
+&amp;&amp; rm -rf /minecraft/dashboard/MCSManager-8.6.23 \
+&amp;&amp; apt purge  -y unzip wget \
+&amp;&amp; apt autoremove -y \
+&amp;&amp; rm /v8.6.23.zip \
+&amp;&amp; cd /minecraft/dashboard &amp;&amp; npm install
+<span class="token instruction"><span class="token keyword">EXPOSE</span> [19132,23333]</span>
+<span class="token comment">#对外暴露的端口</span>
+<span class="token instruction"><span class="token keyword">ENTRYPOINT</span> cd /minecraft/dashboard/ &amp;&amp; npm start</span></code></pre>
+
+<h3 id="5-docker安装和配置"><a href="#5-docker安装和配置" class="headerlink" title="5.docker安装和配置"></a>5.docker安装和配置</h3><h5 id="1-docker安装"><a href="#1-docker安装" class="headerlink" title="1.docker安装"></a>1.docker安装</h5><h6 id="1-脚本安装"><a href="#1-脚本安装" class="headerlink" title="1.脚本安装"></a>1.脚本安装</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> -fsSL https://get.docker.com -o get-docker.sh
+./get-docker.sh</code></pre>
+<h6 id="2-包管理器安装"><a href="#2-包管理器安装" class="headerlink" title="2.包管理器安装"></a>2.包管理器安装</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#基于archlinux</span>
+pacman -S <span class="token function">docker</span>
+<span class="token comment">#基于debian/ubuntu</span>
+<span class="token function">apt</span> <span class="token function">install</span> docker.io</code></pre>
 
 <h5 id="2-docker配置"><a href="#2-docker配置" class="headerlink" title="2.docker配置"></a>2.docker配置</h5><p><strong>docker配置非root用户使用</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#如果系统不存在docker组</span></span><br><span class="line">groupadd docker</span><br><span class="line">usermod -aG docker <span class="variable">$&#123;USER&#125;</span><span class="comment">#</span></span><br><span class="line">newgrp docker</span><br><span class="line">systemctl restart </span><br><span class="line"><span class="comment">#重新登陆系统生效</span></span><br><span class="line"><span class="comment">#-a(append)附加</span></span><br><span class="line"><span class="comment">#-G指定组</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#如果系统不存在docker组</span>
+<span class="token function">groupadd</span> <span class="token function">docker</span>
+<span class="token function">usermod</span> -aG <span class="token function">docker</span> <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span><span class="token comment">#</span>
+newgrp <span class="token function">docker</span>
+systemctl restart 
+<span class="token comment">#重新登陆系统生效</span>
+<span class="token comment">#-a(append)附加</span>
+<span class="token comment">#-G指定组</span></code></pre>
 
 <p><strong>docker换源</strong><br>编辑&#x2F;etc&#x2F;docker&#x2F;daemon.json文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://ustc-edu-cn.mirror.aliyuncs.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://ghcr.io&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#换源后需要重启docker才能生效</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">&#123;</span>
+  <span class="token string">"registry-mirrors"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+    <span class="token string">"https://hub-mirror.c.163.com"</span>,
+    <span class="token string">"https://ustc-edu-cn.mirror.aliyuncs.com"</span>,
+    <span class="token string">"https://ghcr.io"</span>,
+    <span class="token string">"https://mirror.baidubce.com"</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">#换源后需要重启docker才能生效</span></code></pre>
 
 <p><strong>docker的启动和停止</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用systemd进行管理docker启动和停止</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#docker启动</span></span><br><span class="line">systemctl start docker.service</span><br><span class="line"></span><br><span class="line"><span class="comment">#docker停止</span></span><br><span class="line">systemctl stop docker.service</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#使用systemd进行管理docker启动和停止</span>
+
+<span class="token comment">#docker启动</span>
+systemctl start docker.service
+
+<span class="token comment">#docker停止</span>
+systemctl stop docker.service</code></pre>
 
 
 <h3 id="6-docker-compose"><a href="#6-docker-compose" class="headerlink" title="6.docker-compose"></a>6.docker-compose</h3><h5 id="1-什么是docker-compose"><a href="#1-什么是docker-compose" class="headerlink" title="1.什么是docker-compose?"></a>1.什么是docker-compose?</h5><p>  docker-compose是一个用python写的容器编排工具,在连续部署多个容器的时候,可以使用一个docker-compose脚本实现一次部署多个容器,大大提高了容器编排效率</p>
-<h5 id="2-如何使用docker-compose进行容器编排？"><a href="#2-如何使用docker-compose进行容器编排？" class="headerlink" title="2.如何使用docker-compose进行容器编排？"></a>2.如何使用docker-compose进行容器编排？</h5><p><strong>实例</strong><br>  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.0&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">  <span class="comment">#容器名称</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="comment">#指定构建的上下文路径</span></span><br><span class="line">    <span class="attr">image:</span></span><br><span class="line">    <span class="comment">#指定镜像的名称</span></span><br><span class="line">      <span class="string">nginx:alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="comment">#指定映射的端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5000:5000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">    <span class="comment">#指定挂载的容器卷</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">volumes:/code</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:latest</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line"><span class="comment">#定义网络</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">default:</span></span><br><span class="line">    <span class="attr">external:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">my-pre-existing-network</span></span><br><span class="line">      <span class="comment">#这里不能使用默认的docker0网络,只能使用用户自定义的网络</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="2-如何使用docker-compose进行容器编排？"><a href="#2-如何使用docker-compose进行容器编排？" class="headerlink" title="2.如何使用docker-compose进行容器编排？"></a>2.如何使用docker-compose进行容器编排？</h5><p><strong>实例</strong><br>  <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.0'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">web</span><span class="token punctuation">:</span>
+  <span class="token comment">#容器名称</span>
+    <span class="token key atrule">build</span><span class="token punctuation">:</span> .
+    <span class="token comment">#指定构建的上下文路径</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span>
+    <span class="token comment">#指定镜像的名称</span>
+      nginx<span class="token punctuation">:</span>alpine
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token comment">#指定映射的端口</span>
+      <span class="token punctuation">-</span> <span class="token string">"5000:5000"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+    <span class="token comment">#指定挂载的容器卷</span>
+    <span class="token punctuation">-</span> volumes<span class="token punctuation">:</span>/code
+    <span class="token key atrule">links</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> redis
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span>latest
+<span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+<span class="token comment">#定义网络</span>
+<span class="token key atrule">networks</span><span class="token punctuation">:</span>
+  <span class="token key atrule">default</span><span class="token punctuation">:</span>
+    <span class="token key atrule">external</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>pre<span class="token punctuation">-</span>existing<span class="token punctuation">-</span>network
+      <span class="token comment">#这里不能使用默认的docker0网络,只能使用用户自定义的网络</span></code></pre></p>
 <p>docker-compose常用的一些属性如下:</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br></pre></td><td class="code"><pre><span class="line">Compose和Docker兼容性：</span><br><span class="line">    Compose 文件格式有3个版本,分别为1, 2.x 和 3.x</span><br><span class="line">    目前主流的为 3.x 其支持 docker 1.13.0 及其以上的版本</span><br><span class="line"></span><br><span class="line">常用参数：</span><br><span class="line">    version           <span class="comment"># 指定 compose 文件的版本</span></span><br><span class="line">    services          <span class="comment"># 定义所有的 service 信息, services 下面的第一级别的 key 既是一个 service 的名称</span></span><br><span class="line"></span><br><span class="line">        build                 <span class="comment"># 指定包含构建上下文的路径, 或作为一个对象，该对象具有 context 和指定的 dockerfile 文件以及 args 参数值</span></span><br><span class="line">            context               <span class="comment"># context: 指定 Dockerfile 文件所在的路径</span></span><br><span class="line">            dockerfile            <span class="comment"># dockerfile: 指定 context 指定的目录下面的 Dockerfile 的名称(默认为 Dockerfile)</span></span><br><span class="line">            args                  <span class="comment"># args: Dockerfile 在 build 过程中需要的参数 (等同于 docker container build --build-arg 的作用)</span></span><br><span class="line">            cache_from            <span class="comment"># v3.2中新增的参数, 指定缓存的镜像列表 (等同于 docker container build --cache_from 的作用)</span></span><br><span class="line">            labels                <span class="comment"># v3.3中新增的参数, 设置镜像的元数据 (等同于 docker container build --labels 的作用)</span></span><br><span class="line">            shm_size              <span class="comment"># v3.5中新增的参数, 设置容器 /dev/shm 分区的大小 (等同于 docker container build --shm-size 的作用)</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">command</span>               <span class="comment"># 覆盖容器启动后默认执行的命令, 支持 shell 格式和 [] 格式</span></span><br><span class="line"></span><br><span class="line">        container_name        <span class="comment"># 指定容器的名称 (等同于 docker run --name 的作用)</span></span><br><span class="line"></span><br><span class="line">        deploy                <span class="comment"># v3 版本以上, 指定与部署和运行服务相关的配置, deploy 部分是 docker stack 使用的, docker stack 依赖 docker swarm</span></span><br><span class="line">            endpoint_mode         <span class="comment"># v3.3 版本中新增的功能, 指定服务暴露的方式</span></span><br><span class="line">                vip                   <span class="comment"># Docker 为该服务分配了一个虚拟 IP(VIP), 作为客户端的访问服务的地址</span></span><br><span class="line">                dnsrr                 <span class="comment"># DNS轮询, Docker 为该服务设置 DNS 条目, 使得服务名称的 DNS 查询返回一个 IP 地址列表, 客户端直接访问其中的一个地址</span></span><br><span class="line">            labels                <span class="comment"># 指定服务的标签，这些标签仅在服务上设置</span></span><br><span class="line">            mode                  <span class="comment"># 指定 deploy 的模式</span></span><br><span class="line">                global                <span class="comment"># 每个集群节点都只有一个容器</span></span><br><span class="line">                replicated            <span class="comment"># 用户可以指定集群中容器的数量(默认)</span></span><br><span class="line">            placement             <span class="comment"># 不知道怎么用</span></span><br><span class="line">            replicas              <span class="comment"># deploy 的 mode 为 replicated 时, 指定容器副本的数量</span></span><br><span class="line">            resources             <span class="comment"># 资源限制</span></span><br><span class="line">                limits                <span class="comment"># 设置容器的资源限制</span></span><br><span class="line">                    cpus: <span class="string">&quot;0.5&quot;</span>           <span class="comment"># 设置该容器最多只能使用 50% 的 CPU </span></span><br><span class="line">                    memory: 50M           <span class="comment"># 设置该容器最多只能使用 50M 的内存空间 </span></span><br><span class="line">                reservations          <span class="comment"># 设置为容器预留的系统资源(随时可用)</span></span><br><span class="line">                    cpus: <span class="string">&quot;0.2&quot;</span>           <span class="comment"># 为该容器保留 20% 的 CPU</span></span><br><span class="line">                    memory: 20M           <span class="comment"># 为该容器保留 20M 的内存空间</span></span><br><span class="line">            restart_policy        <span class="comment"># 定义容器重启策略, 用于代替 restart 参数</span></span><br><span class="line">                condition             <span class="comment"># 定义容器重启策略(接受三个参数)</span></span><br><span class="line">                    none                  <span class="comment"># 不尝试重启</span></span><br><span class="line">                    on-failure            <span class="comment"># 只有当容器内部应用程序出现问题才会重启</span></span><br><span class="line">                    any                   <span class="comment"># 无论如何都会尝试重启(默认)</span></span><br><span class="line">                delay                 <span class="comment"># 尝试重启的间隔时间(默认为 0s)</span></span><br><span class="line">                max_attempts          <span class="comment"># 尝试重启次数(默认一直尝试重启)</span></span><br><span class="line">                window                <span class="comment"># 检查重启是否成功之前的等待时间(即如果容器启动了, 隔多少秒之后去检测容器是否正常, 默认 0s)</span></span><br><span class="line">            update_config         <span class="comment"># 用于配置滚动更新配置</span></span><br><span class="line">                parallelism           <span class="comment"># 一次性更新的容器数量</span></span><br><span class="line">                delay                 <span class="comment"># 更新一组容器之间的间隔时间</span></span><br><span class="line">                failure_action        <span class="comment"># 定义更新失败的策略</span></span><br><span class="line">                    <span class="built_in">continue</span>              <span class="comment"># 继续更新</span></span><br><span class="line">                    rollback              <span class="comment"># 回滚更新</span></span><br><span class="line">                    pause                 <span class="comment"># 暂停更新(默认)</span></span><br><span class="line">                monitor               <span class="comment"># 每次更新后的持续时间以监视更新是否失败(单位: ns|us|ms|s|m|h) (默认为0)</span></span><br><span class="line">                max_failure_ratio     <span class="comment"># 回滚期间容忍的失败率(默认值为0)</span></span><br><span class="line">                order                 <span class="comment"># v3.4 版本中新增的参数, 回滚期间的操作顺序</span></span><br><span class="line">                    stop-first            <span class="comment">#旧任务在启动新任务之前停止(默认)</span></span><br><span class="line">                    start-first           <span class="comment">#首先启动新任务, 并且正在运行的任务暂时重叠</span></span><br><span class="line">            rollback_config       <span class="comment"># v3.7 版本中新增的参数, 用于定义在 update_config 更新失败的回滚策略</span></span><br><span class="line">                parallelism           <span class="comment"># 一次回滚的容器数, 如果设置为0, 则所有容器同时回滚</span></span><br><span class="line">                delay                 <span class="comment"># 每个组回滚之间的时间间隔(默认为0)</span></span><br><span class="line">                failure_action        <span class="comment"># 定义回滚失败的策略</span></span><br><span class="line">                    <span class="built_in">continue</span>              <span class="comment"># 继续回滚</span></span><br><span class="line">                    pause                 <span class="comment"># 暂停回滚</span></span><br><span class="line">                monitor               <span class="comment"># 每次回滚任务后的持续时间以监视失败(单位: ns|us|ms|s|m|h) (默认为0)</span></span><br><span class="line">                max_failure_ratio     <span class="comment"># 回滚期间容忍的失败率(默认值0)</span></span><br><span class="line">                order                 <span class="comment"># 回滚期间的操作顺序</span></span><br><span class="line">                    stop-first            <span class="comment"># 旧任务在启动新任务之前停止(默认)</span></span><br><span class="line">                    start-first           <span class="comment"># 首先启动新任务, 并且正在运行的任务暂时重叠</span></span><br><span class="line"></span><br><span class="line">            注意：</span><br><span class="line">                支持 docker-compose up 和 docker-compose run 但不支持 docker stack deploy 的子选项</span><br><span class="line">                security_opt  container_name  devices  tmpfs  stop_signal  links    cgroup_parent</span><br><span class="line">                network_mode  external_links  restart  build  userns_mode  sysctls</span><br><span class="line"></span><br><span class="line">        devices               <span class="comment"># 指定设备映射列表 (等同于 docker run --device 的作用)</span></span><br><span class="line"></span><br><span class="line">        depends_on            <span class="comment"># 定义容器启动顺序 (此选项解决了容器之间的依赖关系， 此选项在 v3 版本中 使用 swarm 部署时将忽略该选项)</span></span><br><span class="line">            示例：</span><br><span class="line">                docker-compose up 以依赖顺序启动服务，下面例子中 redis 和 db 服务在 web 启动前启动</span><br><span class="line">                默认情况下使用 docker-compose up web 这样的方式启动 web 服务时，也会启动 redis 和 db 两个服务，因为在配置文件中定义了依赖关系</span><br><span class="line">                version: <span class="string">&#x27;3&#x27;</span></span><br><span class="line">                services:</span><br><span class="line">                    web:</span><br><span class="line">                        build: .</span><br><span class="line">                        depends_on:</span><br><span class="line">                            - db      </span><br><span class="line">                            - redis  </span><br><span class="line">                    redis:</span><br><span class="line">                        image: redis</span><br><span class="line">                    db:</span><br><span class="line">                        image: postgres                             </span><br><span class="line"></span><br><span class="line">        dns                   <span class="comment"># 设置 DNS 地址(等同于 docker run --dns 的作用)</span></span><br><span class="line"></span><br><span class="line">        dns_search            <span class="comment"># 设置 DNS 搜索域(等同于 docker run --dns-search 的作用)</span></span><br><span class="line"></span><br><span class="line">        tmpfs                 <span class="comment"># v2 版本以上, 挂载目录到容器中, 作为容器的临时文件系统(等同于 docker run --tmpfs 的作用, 在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        entrypoint            <span class="comment"># 覆盖容器的默认 entrypoint 指令 (等同于 docker run --entrypoint 的作用)</span></span><br><span class="line"></span><br><span class="line">        env_file              <span class="comment"># 从指定文件中读取变量设置为容器中的环境变量, 可以是单个值或者一个文件列表, 如果多个文件中的变量重名则后面的变量覆盖前面的变量, environment 的值覆盖 env_file 的值</span></span><br><span class="line">            文件格式：</span><br><span class="line">                RACK_ENV=development </span><br><span class="line"></span><br><span class="line">        environment           <span class="comment"># 设置环境变量， environment 的值可以覆盖 env_file 的值 (等同于 docker run --env 的作用)</span></span><br><span class="line"></span><br><span class="line">        expose                <span class="comment"># 暴露端口, 但是不能和宿主机建立映射关系, 类似于 Dockerfile 的 EXPOSE 指令</span></span><br><span class="line"></span><br><span class="line">        external_links        <span class="comment"># 连接不在 docker-compose.yml 中定义的容器或者不在 compose 管理的容器(docker run 启动的容器, 在 v3 版本中使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        extra_hosts           <span class="comment"># 添加 host 记录到容器中的 /etc/hosts 中 (等同于 docker run --add-host 的作用)</span></span><br><span class="line"></span><br><span class="line">        healthcheck           <span class="comment"># v2.1 以上版本, 定义容器健康状态检查, 类似于 Dockerfile 的 HEALTHCHECK 指令</span></span><br><span class="line">            <span class="built_in">test</span>                  <span class="comment"># 检查容器检查状态的命令, 该选项必须是一个字符串或者列表, 第一项必须是 NONE, CMD 或 CMD-SHELL, 如果其是一个字符串则相当于 CMD-SHELL 加该字符串</span></span><br><span class="line">                NONE                  <span class="comment"># 禁用容器的健康状态检测</span></span><br><span class="line">                CMD                   <span class="comment"># test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost&quot;]</span></span><br><span class="line">                CMD-SHELL             <span class="comment"># test: [&quot;CMD-SHELL&quot;, &quot;curl -f http://localhost || exit 1&quot;] 或者　test: curl -f https://localhost || exit 1</span></span><br><span class="line">            interval: 1m30s       <span class="comment"># 每次检查之间的间隔时间</span></span><br><span class="line">            <span class="built_in">timeout</span>: 10s          <span class="comment"># 运行命令的超时时间</span></span><br><span class="line">            retries: 3            <span class="comment"># 重试次数</span></span><br><span class="line">            start_period: 40s     <span class="comment"># v3.4 以上新增的选项, 定义容器启动时间间隔</span></span><br><span class="line">            <span class="built_in">disable</span>: <span class="literal">true</span>         <span class="comment"># true 或 false, 表示是否禁用健康状态检测和　test: NONE 相同</span></span><br><span class="line"></span><br><span class="line">        image                 <span class="comment"># 指定 docker 镜像, 可以是远程仓库镜像、本地镜像</span></span><br><span class="line"></span><br><span class="line">        init                  <span class="comment"># v3.7 中新增的参数, true 或 false 表示是否在容器中运行一个 init, 它接收信号并传递给进程</span></span><br><span class="line"></span><br><span class="line">        isolation             <span class="comment"># 隔离容器技术, 在 Linux 中仅支持 default 值</span></span><br><span class="line"></span><br><span class="line">        labels                <span class="comment"># 使用 Docker 标签将元数据添加到容器, 与 Dockerfile 中的 LABELS 类似</span></span><br><span class="line"></span><br><span class="line">        links                 <span class="comment"># 链接到其它服务中的容器, 该选项是 docker 历史遗留的选项, 目前已被用户自定义网络名称空间取代, 最终有可能被废弃 (在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        logging               <span class="comment"># 设置容器日志服务</span></span><br><span class="line">            driver                <span class="comment"># 指定日志记录驱动程序, 默认 json-file (等同于 docker run --log-driver 的作用)</span></span><br><span class="line">            options               <span class="comment"># 指定日志的相关参数 (等同于 docker run --log-opt 的作用)</span></span><br><span class="line">                max-size              <span class="comment"># 设置单个日志文件的大小, 当到达这个值后会进行日志滚动操作</span></span><br><span class="line">                max-file              <span class="comment"># 日志文件保留的数量</span></span><br><span class="line"></span><br><span class="line">        network_mode          <span class="comment"># 指定网络模式 (等同于 docker run --net 的作用, 在使用 swarm 部署时将忽略该选项)         </span></span><br><span class="line"></span><br><span class="line">        networks              <span class="comment"># 将容器加入指定网络 (等同于 docker network connect 的作用), networks 可以位于 compose 文件顶级键和 services 键的二级键</span></span><br><span class="line">            aliases               <span class="comment"># 同一网络上的容器可以使用服务名称或别名连接到其中一个服务的容器</span></span><br><span class="line">            ipv4_address      <span class="comment"># IP V4 格式</span></span><br><span class="line">            ipv6_address      <span class="comment"># IP V6 格式</span></span><br><span class="line"></span><br><span class="line">            示例:</span><br><span class="line">                version: <span class="string">&#x27;3.7&#x27;</span></span><br><span class="line">                services: </span><br><span class="line">                    <span class="built_in">test</span>: </span><br><span class="line">                        image: nginx:1.14-alpine</span><br><span class="line">                        container_name: mynginx</span><br><span class="line">                        <span class="built_in">command</span>: ifconfig</span><br><span class="line">                        networks: </span><br><span class="line">                            app_net:                                <span class="comment"># 调用下面 networks 定义的 app_net 网络</span></span><br><span class="line">                            ipv4_address: 172.16.238.10</span><br><span class="line">                networks:</span><br><span class="line">                    app_net:</span><br><span class="line">                        driver: bridge</span><br><span class="line">                        ipam:</span><br><span class="line">                            driver: default</span><br><span class="line">                            config:</span><br><span class="line">                                - subnet: 172.16.238.0/24</span><br><span class="line"></span><br><span class="line">        pid: <span class="string">&#x27;host&#x27;</span>           <span class="comment"># 共享宿主机的 进程空间(PID)</span></span><br><span class="line"></span><br><span class="line">        ports                 <span class="comment"># 建立宿主机和容器之间的端口映射关系, ports 支持两种语法格式</span></span><br><span class="line">            SHORT 语法格式示例:</span><br><span class="line">                - <span class="string">&quot;3000&quot;</span>                            <span class="comment"># 暴露容器的 3000 端口, 宿主机的端口由 docker 随机映射一个没有被占用的端口</span></span><br><span class="line">                - <span class="string">&quot;3000-3005&quot;</span>                       <span class="comment"># 暴露容器的 3000 到 3005 端口, 宿主机的端口由 docker 随机映射没有被占用的端口</span></span><br><span class="line">                - <span class="string">&quot;8000:8000&quot;</span>                       <span class="comment"># 容器的 8000 端口和宿主机的 8000 端口建立映射关系</span></span><br><span class="line">                - <span class="string">&quot;9090-9091:8080-8081&quot;</span></span><br><span class="line">                - <span class="string">&quot;127.0.0.1:8001:8001&quot;</span>             <span class="comment"># 指定映射宿主机的指定地址的</span></span><br><span class="line">                - <span class="string">&quot;127.0.0.1:5000-5010:5000-5010&quot;</span>   </span><br><span class="line">                - <span class="string">&quot;6060:6060/udp&quot;</span>                   <span class="comment"># 指定协议</span></span><br><span class="line"></span><br><span class="line">            LONG 语法格式示例:(v3.2 新增的语法格式)</span><br><span class="line">                ports:</span><br><span class="line">                    - target: 80                    <span class="comment"># 容器端口</span></span><br><span class="line">                      published: 8080               <span class="comment"># 宿主机端口</span></span><br><span class="line">                      protocol: tcp                 <span class="comment"># 协议类型</span></span><br><span class="line">                      mode: host                    <span class="comment"># host 在每个节点上发布主机端口,  ingress 对于群模式端口进行负载均衡</span></span><br><span class="line"></span><br><span class="line">        secrets               <span class="comment"># 不知道怎么用</span></span><br><span class="line"></span><br><span class="line">        security_opt          <span class="comment"># 为每个容器覆盖默认的标签 (在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        stop_grace_period     <span class="comment"># 指定在发送了 SIGTERM 信号之后, 容器等待多少秒之后退出(默认 10s)</span></span><br><span class="line"></span><br><span class="line">        stop_signal           <span class="comment"># 指定停止容器发送的信号 (默认为 SIGTERM 相当于 kill PID; SIGKILL 相当于 kill -9 PID; 在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        sysctls               <span class="comment"># 设置容器中的内核参数 (在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        ulimits               <span class="comment"># 设置容器的 limit</span></span><br><span class="line"></span><br><span class="line">        userns_mode           <span class="comment"># 如果Docker守护程序配置了用户名称空间, 则禁用此服务的用户名称空间 (在使用 swarm 部署时将忽略该选项)</span></span><br><span class="line"></span><br><span class="line">        volumes               <span class="comment"># 定义容器和宿主机的卷映射关系, 其和 networks 一样可以位于 services 键的二级键和 compose 顶级键, 如果需要跨服务间使用则在顶级键定义, 在 services 中引用</span></span><br><span class="line">            SHORT 语法格式示例:</span><br><span class="line">                volumes:</span><br><span class="line">                    - /var/lib/mysql                <span class="comment"># 映射容器内的 /var/lib/mysql 到宿主机的一个随机目录中</span></span><br><span class="line">                    - /opt/data:/var/lib/mysql      <span class="comment"># 映射容器内的 /var/lib/mysql 到宿主机的 /opt/data</span></span><br><span class="line">                    - ./cache:/tmp/cache            <span class="comment"># 映射容器内的 /var/lib/mysql 到宿主机 compose 文件所在的位置</span></span><br><span class="line">                    - ~/configs:/etc/configs/:ro    <span class="comment"># 映射容器宿主机的目录到容器中去, 权限只读</span></span><br><span class="line">                    - datavolume:/var/lib/mysql     <span class="comment"># datavolume 为 volumes 顶级键定义的目录, 在此处直接调用</span></span><br><span class="line"></span><br><span class="line">            LONG 语法格式示例:(v3.2 新增的语法格式)</span><br><span class="line">                version: <span class="string">&quot;3.2&quot;</span></span><br><span class="line">                services:</span><br><span class="line">                    web:</span><br><span class="line">                        image: nginx:alpine</span><br><span class="line">                        ports:</span><br><span class="line">                            - <span class="string">&quot;80:80&quot;</span></span><br><span class="line">                        volumes:</span><br><span class="line">                            - <span class="built_in">type</span>: volume                  <span class="comment"># mount 的类型, 必须是 bind、volume 或 tmpfs</span></span><br><span class="line">                                <span class="built_in">source</span>: mydata              <span class="comment"># 宿主机目录</span></span><br><span class="line">                                target: /data               <span class="comment"># 容器目录</span></span><br><span class="line">                                volume:                     <span class="comment"># 配置额外的选项, 其 key 必须和 type 的值相同</span></span><br><span class="line">                                    nocopy: <span class="literal">true</span>                <span class="comment"># volume 额外的选项, 在创建卷时禁用从容器复制数据</span></span><br><span class="line">                            - <span class="built_in">type</span>: <span class="built_in">bind</span>                    <span class="comment"># volume 模式只指定容器路径即可, 宿主机路径随机生成; bind 需要指定容器和数据机的映射路径</span></span><br><span class="line">                                <span class="built_in">source</span>: ./static</span><br><span class="line">                                target: /opt/app/static</span><br><span class="line">                                read_only: <span class="literal">true</span>             <span class="comment"># 设置文件系统为只读文件系统</span></span><br><span class="line">                volumes:</span><br><span class="line">                    mydata:                                 <span class="comment"># 定义在 volume, 可在所有服务中调用</span></span><br><span class="line"></span><br><span class="line">        restart               <span class="comment"># 定义容器重启策略(在使用 swarm 部署时将忽略该选项, 在 swarm 使用 restart_policy 代替 restart)</span></span><br><span class="line">            no                    <span class="comment"># 禁止自动重启容器(默认)</span></span><br><span class="line">            always                <span class="comment"># 无论如何容器都会重启</span></span><br><span class="line">            on-failure            <span class="comment"># 当出现 on-failure 报错时, 容器重新启动</span></span><br><span class="line"></span><br><span class="line">        其他选项：</span><br><span class="line">            domainname, hostname, ipc, mac_address, privileged, read_only, shm_size, stdin_open, <span class="built_in">tty</span>, user, working_dir</span><br><span class="line">            上面这些选项都只接受单个值和 docker run 的对应参数类似</span><br><span class="line"></span><br><span class="line">        对于值为时间的可接受的值：</span><br><span class="line">            2.5s</span><br><span class="line">            10s</span><br><span class="line">            1m30s</span><br><span class="line">            2h32m</span><br><span class="line">            5h34m56s</span><br><span class="line">            时间单位: us, ms, s, m， h</span><br><span class="line">        对于值为大小的可接受的值：</span><br><span class="line">            2b</span><br><span class="line">            1024kb</span><br><span class="line">            2048k</span><br><span class="line">            300m</span><br><span class="line">            1gb</span><br><span class="line">            单位: b, k, m, g 或者 kb, mb, gb</span><br><span class="line">    networks          <span class="comment"># 定义 networks 信息</span></span><br><span class="line">        driver                <span class="comment"># 指定网络模式, 大多数情况下, 它 bridge 于单个主机和 overlay Swarm 上</span></span><br><span class="line">            bridge                <span class="comment"># Docker 默认使用 bridge 连接单个主机上的网络</span></span><br><span class="line">            overlay               <span class="comment"># overlay 驱动程序创建一个跨多个节点命名的网络</span></span><br><span class="line">            host                  <span class="comment"># 共享主机网络名称空间(等同于 docker run --net=host)</span></span><br><span class="line">            none                  <span class="comment"># 等同于 docker run --net=none</span></span><br><span class="line">        driver_opts           <span class="comment"># v3.2以上版本, 传递给驱动程序的参数, 这些参数取决于驱动程序</span></span><br><span class="line">        attachable            <span class="comment"># driver 为 overlay 时使用, 如果设置为 true 则除了服务之外，独立容器也可以附加到该网络; 如果独立容器连接到该网络，则它可以与其他 Docker 守护进程连接到的该网络的服务和独立容器进行通信</span></span><br><span class="line">        ipam                  <span class="comment"># 自定义 IPAM 配置. 这是一个具有多个属性的对象, 每个属性都是可选的</span></span><br><span class="line">            driver                <span class="comment"># IPAM 驱动程序, bridge 或者 default</span></span><br><span class="line">            config                <span class="comment"># 配置项</span></span><br><span class="line">                subnet                <span class="comment"># CIDR格式的子网，表示该网络的网段</span></span><br><span class="line">        external              <span class="comment"># 外部网络, 如果设置为 true 则 docker-compose up 不会尝试创建它, 如果它不存在则引发错误</span></span><br><span class="line">        name                  <span class="comment"># v3.5 以上版本, 为此网络设置名称</span></span><br><span class="line">文件格式示例：</span><br><span class="line">    version: <span class="string">&quot;3&quot;</span></span><br><span class="line">    services:</span><br><span class="line">      redis:</span><br><span class="line">        image: redis:alpine</span><br><span class="line">        ports:</span><br><span class="line">          - <span class="string">&quot;6379&quot;</span></span><br><span class="line">        networks:</span><br><span class="line">          - frontend</span><br><span class="line">        deploy:</span><br><span class="line">          replicas: 2</span><br><span class="line">          update_config:</span><br><span class="line">            parallelism: 2</span><br><span class="line">            delay: 10s</span><br><span class="line">          restart_policy:</span><br><span class="line">            condition: on-failure</span><br><span class="line">      db:</span><br><span class="line">        image: postgres:9.4</span><br><span class="line">        volumes:</span><br><span class="line">          - db-data:/var/lib/postgresql/data</span><br><span class="line">        networks:</span><br><span class="line">          - backend</span><br><span class="line">        deploy:</span><br><span class="line">          placement:</span><br><span class="line">            constraints: [node.role == manager]</span><br></pre></td></tr></table></figure>
+  <pre class="language-bash" data-language="bash"><code class="language-bash">Compose和Docker兼容性：
+    Compose 文件格式有3个版本,分别为1, <span class="token number">2</span>.x 和 <span class="token number">3</span>.x
+    目前主流的为 <span class="token number">3</span>.x 其支持 <span class="token function">docker</span> <span class="token number">1.13</span>.0 及其以上的版本
+
+常用参数：
+    version           <span class="token comment"># 指定 compose 文件的版本</span>
+    services          <span class="token comment"># 定义所有的 service 信息, services 下面的第一级别的 key 既是一个 service 的名称</span>
+
+        build                 <span class="token comment"># 指定包含构建上下文的路径, 或作为一个对象，该对象具有 context 和指定的 dockerfile 文件以及 args 参数值</span>
+            context               <span class="token comment"># context: 指定 Dockerfile 文件所在的路径</span>
+            dockerfile            <span class="token comment"># dockerfile: 指定 context 指定的目录下面的 Dockerfile 的名称(默认为 Dockerfile)</span>
+            args                  <span class="token comment"># args: Dockerfile 在 build 过程中需要的参数 (等同于 docker container build --build-arg 的作用)</span>
+            cache_from            <span class="token comment"># v3.2中新增的参数, 指定缓存的镜像列表 (等同于 docker container build --cache_from 的作用)</span>
+            labels                <span class="token comment"># v3.3中新增的参数, 设置镜像的元数据 (等同于 docker container build --labels 的作用)</span>
+            shm_size              <span class="token comment"># v3.5中新增的参数, 设置容器 /dev/shm 分区的大小 (等同于 docker container build --shm-size 的作用)</span>
+
+        <span class="token builtin class-name">command</span>               <span class="token comment"># 覆盖容器启动后默认执行的命令, 支持 shell 格式和 [] 格式</span>
+
+        container_name        <span class="token comment"># 指定容器的名称 (等同于 docker run --name 的作用)</span>
+
+        deploy                <span class="token comment"># v3 版本以上, 指定与部署和运行服务相关的配置, deploy 部分是 docker stack 使用的, docker stack 依赖 docker swarm</span>
+            endpoint_mode         <span class="token comment"># v3.3 版本中新增的功能, 指定服务暴露的方式</span>
+                vip                   <span class="token comment"># Docker 为该服务分配了一个虚拟 IP(VIP), 作为客户端的访问服务的地址</span>
+                dnsrr                 <span class="token comment"># DNS轮询, Docker 为该服务设置 DNS 条目, 使得服务名称的 DNS 查询返回一个 IP 地址列表, 客户端直接访问其中的一个地址</span>
+            labels                <span class="token comment"># 指定服务的标签，这些标签仅在服务上设置</span>
+            mode                  <span class="token comment"># 指定 deploy 的模式</span>
+                global                <span class="token comment"># 每个集群节点都只有一个容器</span>
+                replicated            <span class="token comment"># 用户可以指定集群中容器的数量(默认)</span>
+            placement             <span class="token comment"># 不知道怎么用</span>
+            replicas              <span class="token comment"># deploy 的 mode 为 replicated 时, 指定容器副本的数量</span>
+            resources             <span class="token comment"># 资源限制</span>
+                limits                <span class="token comment"># 设置容器的资源限制</span>
+                    cpus: <span class="token string">"0.5"</span>           <span class="token comment"># 设置该容器最多只能使用 50% 的 CPU </span>
+                    memory: 50M           <span class="token comment"># 设置该容器最多只能使用 50M 的内存空间 </span>
+                reservations          <span class="token comment"># 设置为容器预留的系统资源(随时可用)</span>
+                    cpus: <span class="token string">"0.2"</span>           <span class="token comment"># 为该容器保留 20% 的 CPU</span>
+                    memory: 20M           <span class="token comment"># 为该容器保留 20M 的内存空间</span>
+            restart_policy        <span class="token comment"># 定义容器重启策略, 用于代替 restart 参数</span>
+                condition             <span class="token comment"># 定义容器重启策略(接受三个参数)</span>
+                    none                  <span class="token comment"># 不尝试重启</span>
+                    on-failure            <span class="token comment"># 只有当容器内部应用程序出现问题才会重启</span>
+                    any                   <span class="token comment"># 无论如何都会尝试重启(默认)</span>
+                delay                 <span class="token comment"># 尝试重启的间隔时间(默认为 0s)</span>
+                max_attempts          <span class="token comment"># 尝试重启次数(默认一直尝试重启)</span>
+                window                <span class="token comment"># 检查重启是否成功之前的等待时间(即如果容器启动了, 隔多少秒之后去检测容器是否正常, 默认 0s)</span>
+            update_config         <span class="token comment"># 用于配置滚动更新配置</span>
+                parallelism           <span class="token comment"># 一次性更新的容器数量</span>
+                delay                 <span class="token comment"># 更新一组容器之间的间隔时间</span>
+                failure_action        <span class="token comment"># 定义更新失败的策略</span>
+                    <span class="token builtin class-name">continue</span>              <span class="token comment"># 继续更新</span>
+                    rollback              <span class="token comment"># 回滚更新</span>
+                    pause                 <span class="token comment"># 暂停更新(默认)</span>
+                monitor               <span class="token comment"># 每次更新后的持续时间以监视更新是否失败(单位: ns|us|ms|s|m|h) (默认为0)</span>
+                max_failure_ratio     <span class="token comment"># 回滚期间容忍的失败率(默认值为0)</span>
+                order                 <span class="token comment"># v3.4 版本中新增的参数, 回滚期间的操作顺序</span>
+                    stop-first            <span class="token comment">#旧任务在启动新任务之前停止(默认)</span>
+                    start-first           <span class="token comment">#首先启动新任务, 并且正在运行的任务暂时重叠</span>
+            rollback_config       <span class="token comment"># v3.7 版本中新增的参数, 用于定义在 update_config 更新失败的回滚策略</span>
+                parallelism           <span class="token comment"># 一次回滚的容器数, 如果设置为0, 则所有容器同时回滚</span>
+                delay                 <span class="token comment"># 每个组回滚之间的时间间隔(默认为0)</span>
+                failure_action        <span class="token comment"># 定义回滚失败的策略</span>
+                    <span class="token builtin class-name">continue</span>              <span class="token comment"># 继续回滚</span>
+                    pause                 <span class="token comment"># 暂停回滚</span>
+                monitor               <span class="token comment"># 每次回滚任务后的持续时间以监视失败(单位: ns|us|ms|s|m|h) (默认为0)</span>
+                max_failure_ratio     <span class="token comment"># 回滚期间容忍的失败率(默认值0)</span>
+                order                 <span class="token comment"># 回滚期间的操作顺序</span>
+                    stop-first            <span class="token comment"># 旧任务在启动新任务之前停止(默认)</span>
+                    start-first           <span class="token comment"># 首先启动新任务, 并且正在运行的任务暂时重叠</span>
+
+            注意：
+                支持 <span class="token function">docker-compose</span> up 和 <span class="token function">docker-compose</span> run 但不支持 <span class="token function">docker</span> stack deploy 的子选项
+                security_opt  container_name  devices  tmpfs  stop_signal  links    cgroup_parent
+                network_mode  external_links  restart  build  userns_mode  sysctls
+
+        devices               <span class="token comment"># 指定设备映射列表 (等同于 docker run --device 的作用)</span>
+
+        depends_on            <span class="token comment"># 定义容器启动顺序 (此选项解决了容器之间的依赖关系， 此选项在 v3 版本中 使用 swarm 部署时将忽略该选项)</span>
+            示例：
+                <span class="token function">docker-compose</span> up 以依赖顺序启动服务，下面例子中 redis 和 db 服务在 web 启动前启动
+                默认情况下使用 <span class="token function">docker-compose</span> up web 这样的方式启动 web 服务时，也会启动 redis 和 db 两个服务，因为在配置文件中定义了依赖关系
+                version: <span class="token string">'3'</span>
+                services:
+                    web:
+                        build: <span class="token builtin class-name">.</span>
+                        depends_on:
+                            - db      
+                            - redis  
+                    redis:
+                        image: redis
+                    db:
+                        image: postgres                             
+
+        dns                   <span class="token comment"># 设置 DNS 地址(等同于 docker run --dns 的作用)</span>
+
+        dns_search            <span class="token comment"># 设置 DNS 搜索域(等同于 docker run --dns-search 的作用)</span>
+
+        tmpfs                 <span class="token comment"># v2 版本以上, 挂载目录到容器中, 作为容器的临时文件系统(等同于 docker run --tmpfs 的作用, 在使用 swarm 部署时将忽略该选项)</span>
+
+        entrypoint            <span class="token comment"># 覆盖容器的默认 entrypoint 指令 (等同于 docker run --entrypoint 的作用)</span>
+
+        env_file              <span class="token comment"># 从指定文件中读取变量设置为容器中的环境变量, 可以是单个值或者一个文件列表, 如果多个文件中的变量重名则后面的变量覆盖前面的变量, environment 的值覆盖 env_file 的值</span>
+            文件格式：
+                <span class="token assign-left variable">RACK_ENV</span><span class="token operator">=</span>development 
+
+        environment           <span class="token comment"># 设置环境变量， environment 的值可以覆盖 env_file 的值 (等同于 docker run --env 的作用)</span>
+
+        expose                <span class="token comment"># 暴露端口, 但是不能和宿主机建立映射关系, 类似于 Dockerfile 的 EXPOSE 指令</span>
+
+        external_links        <span class="token comment"># 连接不在 docker-compose.yml 中定义的容器或者不在 compose 管理的容器(docker run 启动的容器, 在 v3 版本中使用 swarm 部署时将忽略该选项)</span>
+
+        extra_hosts           <span class="token comment"># 添加 host 记录到容器中的 /etc/hosts 中 (等同于 docker run --add-host 的作用)</span>
+
+        healthcheck           <span class="token comment"># v2.1 以上版本, 定义容器健康状态检查, 类似于 Dockerfile 的 HEALTHCHECK 指令</span>
+            <span class="token builtin class-name">test</span>                  <span class="token comment"># 检查容器检查状态的命令, 该选项必须是一个字符串或者列表, 第一项必须是 NONE, CMD 或 CMD-SHELL, 如果其是一个字符串则相当于 CMD-SHELL 加该字符串</span>
+                NONE                  <span class="token comment"># 禁用容器的健康状态检测</span>
+                CMD                   <span class="token comment"># test: ["CMD", "curl", "-f", "http://localhost"]</span>
+                CMD-<span class="token environment constant">SHELL</span>             <span class="token comment"># test: ["CMD-SHELL", "curl -f http://localhost || exit 1"] 或者　test: curl -f https://localhost || exit 1</span>
+            interval: 1m30s       <span class="token comment"># 每次检查之间的间隔时间</span>
+            timeout: 10s          <span class="token comment"># 运行命令的超时时间</span>
+            retries: <span class="token number">3</span>            <span class="token comment"># 重试次数</span>
+            start_period: 40s     <span class="token comment"># v3.4 以上新增的选项, 定义容器启动时间间隔</span>
+            disable: <span class="token boolean">true</span>         <span class="token comment"># true 或 false, 表示是否禁用健康状态检测和　test: NONE 相同</span>
+
+        image                 <span class="token comment"># 指定 docker 镜像, 可以是远程仓库镜像、本地镜像</span>
+
+        init                  <span class="token comment"># v3.7 中新增的参数, true 或 false 表示是否在容器中运行一个 init, 它接收信号并传递给进程</span>
+
+        isolation             <span class="token comment"># 隔离容器技术, 在 Linux 中仅支持 default 值</span>
+
+        labels                <span class="token comment"># 使用 Docker 标签将元数据添加到容器, 与 Dockerfile 中的 LABELS 类似</span>
+
+        links                 <span class="token comment"># 链接到其它服务中的容器, 该选项是 docker 历史遗留的选项, 目前已被用户自定义网络名称空间取代, 最终有可能被废弃 (在使用 swarm 部署时将忽略该选项)</span>
+
+        logging               <span class="token comment"># 设置容器日志服务</span>
+            driver                <span class="token comment"># 指定日志记录驱动程序, 默认 json-file (等同于 docker run --log-driver 的作用)</span>
+            options               <span class="token comment"># 指定日志的相关参数 (等同于 docker run --log-opt 的作用)</span>
+                max-size              <span class="token comment"># 设置单个日志文件的大小, 当到达这个值后会进行日志滚动操作</span>
+                max-file              <span class="token comment"># 日志文件保留的数量</span>
+
+        network_mode          <span class="token comment"># 指定网络模式 (等同于 docker run --net 的作用, 在使用 swarm 部署时将忽略该选项)         </span>
+
+        networks              <span class="token comment"># 将容器加入指定网络 (等同于 docker network connect 的作用), networks 可以位于 compose 文件顶级键和 services 键的二级键</span>
+            aliases               <span class="token comment"># 同一网络上的容器可以使用服务名称或别名连接到其中一个服务的容器</span>
+            ipv4_address      <span class="token comment"># IP V4 格式</span>
+            ipv6_address      <span class="token comment"># IP V6 格式</span>
+
+            示例:
+                version: <span class="token string">'3.7'</span>
+                services: 
+                    test: 
+                        image: nginx:1.14-alpine
+                        container_name: mynginx
+                        command: <span class="token function">ifconfig</span>
+                        networks: 
+                            app_net:                                <span class="token comment"># 调用下面 networks 定义的 app_net 网络</span>
+                            ipv4_address: <span class="token number">172.16</span>.238.10
+                networks:
+                    app_net:
+                        driver: bridge
+                        ipam:
+                            driver: default
+                            config:
+                                - subnet: <span class="token number">172.16</span>.238.0/24
+
+        pid: <span class="token string">'host'</span>           <span class="token comment"># 共享宿主机的 进程空间(PID)</span>
+
+        ports                 <span class="token comment"># 建立宿主机和容器之间的端口映射关系, ports 支持两种语法格式</span>
+            SHORT 语法格式示例:
+                - <span class="token string">"3000"</span>                            <span class="token comment"># 暴露容器的 3000 端口, 宿主机的端口由 docker 随机映射一个没有被占用的端口</span>
+                - <span class="token string">"3000-3005"</span>                       <span class="token comment"># 暴露容器的 3000 到 3005 端口, 宿主机的端口由 docker 随机映射没有被占用的端口</span>
+                - <span class="token string">"8000:8000"</span>                       <span class="token comment"># 容器的 8000 端口和宿主机的 8000 端口建立映射关系</span>
+                - <span class="token string">"9090-9091:8080-8081"</span>
+                - <span class="token string">"127.0.0.1:8001:8001"</span>             <span class="token comment"># 指定映射宿主机的指定地址的</span>
+                - <span class="token string">"127.0.0.1:5000-5010:5000-5010"</span>   
+                - <span class="token string">"6060:6060/udp"</span>                   <span class="token comment"># 指定协议</span>
+
+            LONG 语法格式示例:<span class="token punctuation">(</span>v3.2 新增的语法格式<span class="token punctuation">)</span>
+                ports:
+                    - target: <span class="token number">80</span>                    <span class="token comment"># 容器端口</span>
+                      published: <span class="token number">8080</span>               <span class="token comment"># 宿主机端口</span>
+                      protocol: tcp                 <span class="token comment"># 协议类型</span>
+                      mode: <span class="token function">host</span>                    <span class="token comment"># host 在每个节点上发布主机端口,  ingress 对于群模式端口进行负载均衡</span>
+
+        secrets               <span class="token comment"># 不知道怎么用</span>
+
+        security_opt          <span class="token comment"># 为每个容器覆盖默认的标签 (在使用 swarm 部署时将忽略该选项)</span>
+
+        stop_grace_period     <span class="token comment"># 指定在发送了 SIGTERM 信号之后, 容器等待多少秒之后退出(默认 10s)</span>
+
+        stop_signal           <span class="token comment"># 指定停止容器发送的信号 (默认为 SIGTERM 相当于 kill PID; SIGKILL 相当于 kill -9 PID; 在使用 swarm 部署时将忽略该选项)</span>
+
+        sysctls               <span class="token comment"># 设置容器中的内核参数 (在使用 swarm 部署时将忽略该选项)</span>
+
+        ulimits               <span class="token comment"># 设置容器的 limit</span>
+
+        userns_mode           <span class="token comment"># 如果Docker守护程序配置了用户名称空间, 则禁用此服务的用户名称空间 (在使用 swarm 部署时将忽略该选项)</span>
+
+        volumes               <span class="token comment"># 定义容器和宿主机的卷映射关系, 其和 networks 一样可以位于 services 键的二级键和 compose 顶级键, 如果需要跨服务间使用则在顶级键定义, 在 services 中引用</span>
+            SHORT 语法格式示例:
+                volumes:
+                    - /var/lib/mysql                <span class="token comment"># 映射容器内的 /var/lib/mysql 到宿主机的一个随机目录中</span>
+                    - /opt/data:/var/lib/mysql      <span class="token comment"># 映射容器内的 /var/lib/mysql 到宿主机的 /opt/data</span>
+                    - ./cache:/tmp/cache            <span class="token comment"># 映射容器内的 /var/lib/mysql 到宿主机 compose 文件所在的位置</span>
+                    - ~/configs:/etc/configs/:ro    <span class="token comment"># 映射容器宿主机的目录到容器中去, 权限只读</span>
+                    - datavolume:/var/lib/mysql     <span class="token comment"># datavolume 为 volumes 顶级键定义的目录, 在此处直接调用</span>
+
+            LONG 语法格式示例:<span class="token punctuation">(</span>v3.2 新增的语法格式<span class="token punctuation">)</span>
+                version: <span class="token string">"3.2"</span>
+                services:
+                    web:
+                        image: nginx:alpine
+                        ports:
+                            - <span class="token string">"80:80"</span>
+                        volumes:
+                            - type: volume                  <span class="token comment"># mount 的类型, 必须是 bind、volume 或 tmpfs</span>
+                                source: mydata              <span class="token comment"># 宿主机目录</span>
+                                target: /data               <span class="token comment"># 容器目录</span>
+                                volume:                     <span class="token comment"># 配置额外的选项, 其 key 必须和 type 的值相同</span>
+                                    nocopy: <span class="token boolean">true</span>                <span class="token comment"># volume 额外的选项, 在创建卷时禁用从容器复制数据</span>
+                            - type: <span class="token builtin class-name">bind</span>                    <span class="token comment"># volume 模式只指定容器路径即可, 宿主机路径随机生成; bind 需要指定容器和数据机的映射路径</span>
+                                source: ./static
+                                target: /opt/app/static
+                                read_only: <span class="token boolean">true</span>             <span class="token comment"># 设置文件系统为只读文件系统</span>
+                volumes:
+                    mydata:                                 <span class="token comment"># 定义在 volume, 可在所有服务中调用</span>
+
+        restart               <span class="token comment"># 定义容器重启策略(在使用 swarm 部署时将忽略该选项, 在 swarm 使用 restart_policy 代替 restart)</span>
+            no                    <span class="token comment"># 禁止自动重启容器(默认)</span>
+            always                <span class="token comment"># 无论如何容器都会重启</span>
+            on-failure            <span class="token comment"># 当出现 on-failure 报错时, 容器重新启动</span>
+
+        其他选项：
+            domainname, hostname, ipc, mac_address, privileged, read_only, shm_size, stdin_open, tty, user, working_dir
+            上面这些选项都只接受单个值和 <span class="token function">docker</span> run 的对应参数类似
+
+        对于值为时间的可接受的值：
+            <span class="token number">2</span>.5s
+            10s
+            1m30s
+            2h32m
+            5h34m56s
+            时间单位: us, ms, s, m， h
+        对于值为大小的可接受的值：
+            2b
+            1024kb
+            2048k
+            300m
+            1gb
+            单位: b, k, m, g 或者 kb, mb, gb
+    networks          <span class="token comment"># 定义 networks 信息</span>
+        driver                <span class="token comment"># 指定网络模式, 大多数情况下, 它 bridge 于单个主机和 overlay Swarm 上</span>
+            bridge                <span class="token comment"># Docker 默认使用 bridge 连接单个主机上的网络</span>
+            overlay               <span class="token comment"># overlay 驱动程序创建一个跨多个节点命名的网络</span>
+            <span class="token function">host</span>                  <span class="token comment"># 共享主机网络名称空间(等同于 docker run --net=host)</span>
+            none                  <span class="token comment"># 等同于 docker run --net=none</span>
+        driver_opts           <span class="token comment"># v3.2以上版本, 传递给驱动程序的参数, 这些参数取决于驱动程序</span>
+        attachable            <span class="token comment"># driver 为 overlay 时使用, 如果设置为 true 则除了服务之外，独立容器也可以附加到该网络; 如果独立容器连接到该网络，则它可以与其他 Docker 守护进程连接到的该网络的服务和独立容器进行通信</span>
+        ipam                  <span class="token comment"># 自定义 IPAM 配置. 这是一个具有多个属性的对象, 每个属性都是可选的</span>
+            driver                <span class="token comment"># IPAM 驱动程序, bridge 或者 default</span>
+            config                <span class="token comment"># 配置项</span>
+                subnet                <span class="token comment"># CIDR格式的子网，表示该网络的网段</span>
+        external              <span class="token comment"># 外部网络, 如果设置为 true 则 docker-compose up 不会尝试创建它, 如果它不存在则引发错误</span>
+        name                  <span class="token comment"># v3.5 以上版本, 为此网络设置名称</span>
+文件格式示例：
+    version: <span class="token string">"3"</span>
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+          - <span class="token string">"6379"</span>
+        networks:
+          - frontend
+        deploy:
+          replicas: <span class="token number">2</span>
+          update_config:
+            parallelism: <span class="token number">2</span>
+            delay: 10s
+          restart_policy:
+            condition: on-failure
+      db:
+        image: postgres:9.4
+        volumes:
+          - db-data:/var/lib/postgresql/data
+        networks:
+          - backend
+        deploy:
+          placement:
+            constraints: <span class="token punctuation">[</span>node.role <span class="token operator">==</span> manager<span class="token punctuation">]</span></code></pre>
 
 <h3 id="7-小结"><a href="#7-小结" class="headerlink" title="7.小结"></a>7.小结</h3><p>docker是一个非常方便的服务部署工具，不仅解决了开发环境和运行环境的不一致性，并且使用docker进行部署的服务非常容易进行迁移，并且docker使用联合文件系统，极大地节省了运行docker容器时候地资源，在实际生产开发中非常值得使用。</p>
 
@@ -523,7 +971,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">https://dreamaccount.github.io/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">https://bugprogram-git.github.io/2022/04/17/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -645,55 +1093,6 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/17/linux%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="linux设备驱动开发入门">
-                        
-                        <span class="card-title">linux设备驱动开发入门</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-17
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" class="post-category">
-                                    软件开发
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/linux%E5%86%85%E6%A0%B8%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">linux内核驱动开发</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2022/04/17/CVE-2022-0847%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E5%8F%8A%E5%A4%8D%E7%8E%B0/">
                     <div class="card-image">
                         
@@ -710,9 +1109,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-17
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-17
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -737,6 +1136,55 @@
             </div>
         </div>
         
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/17/%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="硬链接和软链接">
+                        
+                        <span class="card-title">硬链接和软链接</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    计算机基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
     </div>
 </article>
 
@@ -747,6 +1195,9 @@
 <!-- 代码块功能依赖 -->
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
 
 
 <!-- 代码语言 -->
@@ -920,6 +1371,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1138,6 +1591,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1154,6 +1618,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Archlinux打包软件包步骤, Hexo">
+    <meta name="keywords" content="Archlinux打包软件包步骤, MyBlog">
     <meta name="description" content="Archlinux打包软件包步骤1.介绍archlinux中的软件包都是通过makepkg来打包的,makepkg工具会读取一个PKGBUILD的脚本,按照脚本里面的规则自动构建软件包,打包完成后会在打包的目录下面生成一个.pkg.tar.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,8 +16,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Archlinux打包软件包步骤 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Archlinux打包软件包步骤 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -64,7 +75,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -168,10 +179,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -404,6 +415,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -458,11 +472,13 @@
 <p>  此函数会抓取并解压源文件,执行完prepare函数后执行此函数</p>
 <p>  3.build()</p>
 <p>  此函数第一步先进入源代码的目录下,makepkg会在执行build函数之前更改当前目录为pkgdir目录</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$pkgdir</span>/<span class="variable">$pkgname</span>-<span class="variable">$pkgver</span>&quot;</span></span><br><span class="line">./configure --prefix=/usr</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable">$pkgdir</span>/<span class="token variable">$pkgname</span>-<span class="token variable">$pkgver</span>"</span>
+./configure --prefix<span class="token operator">=</span>/usr
+<span class="token function">make</span></code></pre>
 
 <p>  4.package()</p>
 <p>  此函数会将编译好的文件安装值伪root环境下面</p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make DESTDIR=<span class="string">&quot;<span class="variable">$pkgdir</span>/&quot;</span> install </span><br></pre></td></tr></table></figure>
+  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$pkgdir</span>/"</span> <span class="token function">install</span> </code></pre>
 
 
                 
@@ -490,7 +506,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2022/04/24/Archlinux%E6%89%93%E5%8C%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%AD%A5%E9%AA%A4/">https://dreamaccount.github.io/2022/04/24/Archlinux%E6%89%93%E5%8C%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%AD%A5%E9%AA%A4/</a>
+                    <a href="https://bugprogram-git.github.io/2022/04/24/Archlinux%E6%89%93%E5%8C%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%AD%A5%E9%AA%A4/">https://bugprogram-git.github.io/2022/04/24/Archlinux%E6%89%93%E5%8C%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%AD%A5%E9%AA%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -715,6 +731,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -887,6 +906,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1105,6 +1126,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1121,6 +1153,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 

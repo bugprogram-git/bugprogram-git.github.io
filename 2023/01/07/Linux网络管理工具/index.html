@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux网络管理工具, Hexo">
+    <meta name="keywords" content="Linux网络管理工具, MyBlog">
     <meta name="description" content="Linux网络管理工具1.systemd-networkdsystemd自带的网络管理工具，一般仅用于有线网卡的网络配置或者是不需要验证的无线网络配置
 1.描述网络配置的操作由 systemd-networkd.service(8) 执行。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,19 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <title>Linux网络管理工具 | Hexo</title>
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <title>Linux网络管理工具 | MyBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -65,7 +76,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">MyBlog</span>
                 </a>
             </div>
             
@@ -169,10 +180,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">MyBlog</div>
         <div class="logo-desc">
             
-            my blog
+            myblog
             
         </div>
     </div>
@@ -392,6 +403,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
 
         
 
@@ -598,14 +612,41 @@
 <h6 id="EgressUntagged"><a href="#EgressUntagged" class="headerlink" title="EgressUntagged"></a>EgressUntagged</h6><p>可以设为一个单独的 ID 或 “M-N” 格式表示的ID范围。 此处设置的 VLAN ID 将被用于在出口上 untag 帧。 设置此选项将会隐含的使用 <code>VLAN=</code> 并将 VLAN ID 同时应用于进入的帧。</p>
 <h6 id="PVID"><a href="#PVID" class="headerlink" title="PVID"></a>PVID</h6><p>为所有进入的 untag 帧设置 Port VLAN ID 。此选项仅可使用一次。 设置此选项将会隐含的使用 <code>VLAN=</code> 并将 VLAN ID 同时应用于进入的帧。</p>
 <h4 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h4><h6 id="1-指定网卡配置静态ip"><a href="#1-指定网卡配置静态ip" class="headerlink" title="1.指定网卡配置静态ip"></a>1.指定网卡配置静态ip</h6><p>&#x2F;etc&#x2F;systemd&#x2F;network&#x2F;50-static.network</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Match]</span><br><span class="line">Name=enp2s0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Address=192.168.0.15/24</span><br><span class="line">Gateway=192.168.0.1</span><br></pre></td></tr></table></figure>
+<pre class="language-none"><code class="language-none">[Match]
+Name&#x3D;enp2s0
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># /etc/systemd/network/80-dhcp.network</span><br><span class="line">[Match]</span><br><span class="line">Name=en*</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">DHCP=yes</span><br></pre></td></tr></table></figure>
-<h6 id="2-桥接网卡"><a href="#2-桥接网卡" class="headerlink" title="2.桥接网卡"></a>2.桥接网卡</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># /etc/systemd/network/25-bridge-static.network</span><br><span class="line">[Match]</span><br><span class="line">Name=bridge0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Address=192.168.0.15/24</span><br><span class="line">Gateway=192.168.0.1</span><br><span class="line">DNS=192.168.0.1</span><br></pre></td></tr></table></figure>
+[Network]
+Address&#x3D;192.168.0.15&#x2F;24
+Gateway&#x3D;192.168.0.1</code></pre>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># /etc/systemd/network/25-bridge-slave-interface-1.network</span><br><span class="line">[Match]</span><br><span class="line">Name=enp2s0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Bridge=bridge0</span><br></pre></td></tr></table></figure>
+<pre class="language-none"><code class="language-none"># &#x2F;etc&#x2F;systemd&#x2F;network&#x2F;80-dhcp.network
+[Match]
+Name&#x3D;en*
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># /etc/systemd/network/25-bridge-slave-interface-2.network</span><br><span class="line">[Match]</span><br><span class="line">Name=wlp3s0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Bridge=bridge0</span><br></pre></td></tr></table></figure>
+[Network]
+DHCP&#x3D;yes</code></pre>
+<h6 id="2-桥接网卡"><a href="#2-桥接网卡" class="headerlink" title="2.桥接网卡"></a>2.桥接网卡</h6><pre class="language-none"><code class="language-none"># &#x2F;etc&#x2F;systemd&#x2F;network&#x2F;25-bridge-static.network
+[Match]
+Name&#x3D;bridge0
+
+[Network]
+Address&#x3D;192.168.0.15&#x2F;24
+Gateway&#x3D;192.168.0.1
+DNS&#x3D;192.168.0.1</code></pre>
+
+<pre class="language-none"><code class="language-none"># &#x2F;etc&#x2F;systemd&#x2F;network&#x2F;25-bridge-slave-interface-1.network
+[Match]
+Name&#x3D;enp2s0
+
+[Network]
+Bridge&#x3D;bridge0</code></pre>
+
+<pre class="language-none"><code class="language-none"># &#x2F;etc&#x2F;systemd&#x2F;network&#x2F;25-bridge-slave-interface-2.network
+[Match]
+Name&#x3D;wlp3s0
+
+[Network]
+Bridge&#x3D;bridge0</code></pre>
 <p>创建一个网桥，并将 “<code>enp2s0</code>“ 与 “<code>wlp3s0</code>“ 添加进去。 同时为网桥配置一个静态地址，静态设置的网关也将被用作默认路由。 设置的DNS服务器将会被添加到全局DNS服务器列表中。</p>
 <p>&#x2F;etc&#x2F;systemd&#x2F;network&#x2F;20-bridge-slave-interface-vlan.network<br>[Match]<br>Name&#x3D;enp2s0</p>
 <p>[Network]<br>Bridge&#x3D;bridge0</p>
@@ -657,70 +698,124 @@
 <li><a target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=nm-connection-editor">nm-connection-editor</a>包 提供图形界面；</li>
 <li><a target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=network-manager-applet">network-manager-applet</a>包 提供系统托盘图标（<code>nm-applet</code>）。</li>
 </ul>
-<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S networkmanager</span><br><span class="line"><span class="comment">#此软件包包含一个守护程序、一个命令行界面（`nmcli`）和一个基于 curses 的界面（`nmtui`）。</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S networkmanager
+<span class="token comment">#此软件包包含一个守护程序、一个命令行界面（`nmcli`）和一个基于 curses 的界面（`nmtui`）。</span></code></pre>
 
 <h3 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h3><h4 id="1-nmcli"><a href="#1-nmcli" class="headerlink" title="1.nmcli"></a>1.nmcli</h4><h5 id="1-常用的命令"><a href="#1-常用的命令" class="headerlink" title="1.常用的命令"></a>1.常用的命令</h5><p>1.显示附近的 Wi-Fi 网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device wifi list</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device wifi list</code></pre>
 
 <p>2.连接到 Wi-Fi 网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device wifi connect _SSID_或_BSSID_ password _密码_</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device wifi connect _SSID_或_BSSID_ password _密码_</code></pre>
 
 <p>3.连接到隐藏的 Wi-Fi 网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device wifi connect _SSID_或_BSSID_ password _密码_ hidden <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device wifi connect _SSID_或_BSSID_ password _密码_ hidden <span class="token function">yes</span></code></pre>
 
 <p>4.连接到 <code>wlan1</code> 网络接口上的 Wi-Fi</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device wifi connect _SSID_或_BSSID_ password _密码_ ifname wlan1 _profile_name_</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device wifi connect _SSID_或_BSSID_ password _密码_ ifname wlan1 _profile_name_</code></pre>
 
 <p>5.断开网络接口上的连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device disconnect ifname eth0</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device disconnect ifname eth0</code></pre>
 
 <p>6.显示连接列表及其名称、UUID、类型和支持设备</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection show</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection show</code></pre>
 
 <p>7.激活连接（即使用现有配置文件连接到网络）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection up _name_或_uuid_</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection up _name_或_uuid_</code></pre>
 
 <p>8.删除连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection delete _name_或_uuid_</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection delete _name_或_uuid_</code></pre>
 
 <p>9.显示所有网络设备及其状态</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli device</code></pre>
 
 <p>10.关闭 Wi-Fi</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli radio wifi off</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli radio wifi off</code></pre>
 
 <h5 id="2-编辑连接"><a href="#2-编辑连接" class="headerlink" title="2.编辑连接"></a>2.编辑连接</h5><p>1.获取连接列表</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection</code></pre>
 
 <p>2.nmcli交互式编辑器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`nmcli connection edit <span class="string">&#x27;Wired connection 2&#x27;</span>`.</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token variable"><span class="token variable">`</span>nmcli connection edit <span class="token string">'Wired connection 2'</span><span class="token variable">`</span></span><span class="token builtin class-name">.</span></code></pre>
 
 <p>3.nmcli命令行界面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection modify <span class="string">&#x27;Wired connection 2&#x27;</span> _setting_._property_ _value_</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection modify <span class="token string">'Wired connection 2'</span> _setting_._property_ _value_</code></pre>
 
 <p>连接文件<br>&#x2F;etc&#x2F;NetworkManager&#x2F;system-connections&#x2F;<br>4.重载连接文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli connection reload</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">nmcli connection reload</code></pre>
 <h4 id="2-nmtui"><a href="#2-nmtui" class="headerlink" title="2.nmtui"></a>2.nmtui</h4><p>nmtui为networkmanager的交互式图形化管理工具</p>
 <h2 id="3-iwd"><a href="#3-iwd" class="headerlink" title="3.iwd"></a>3.iwd</h2><h3 id="1-描述-2"><a href="#1-描述-2" class="headerlink" title="1.描述"></a>1.描述</h3><p><a target="_blank" rel="noopener" href="https://iwd.wiki.kernel.org/">iwd</a> (iNet wireless daemon，iNet 无线守护程序) 是由英特尔（Intel）为 Linux 编写的一个无线网络守护程序。该项目的核心目标是不依赖任何外部库，而是最大程度地利用 Linux 内核提供的功能来优化资源利用。</p>
 <p>iwd 可以独立工作，也可以和 <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/ConnMan" title="ConnMan">ConnMan</a>、<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/Systemd-networkd" title="Systemd-networkd">systemd-networkd</a> 和 <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/NetworkManager#Using_iwd_as_the_Wi-Fi_backend" title="NetworkManager">NetworkManager</a> 这样更完善的网络管理器结合使用。</p>
-<h3 id="2-安装-1"><a href="#2-安装-1" class="headerlink" title="2.安装"></a>2.安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pacman -S iwd</span><br><span class="line"><span class="comment">#iwd软件包 软件包提供了客户端程序 `iwctl`、守护程序 `iwd` 和 WiFi 监控工具 `iwmon`</span></span><br><span class="line"><span class="comment">#[iwgtk]CNRepo 提供 iwd 的 GUI 前端和托盘图标。</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-使用-1"><a href="#3-使用-1" class="headerlink" title="3.使用"></a>3.使用</h3><h4 id="1-iwctl"><a href="#1-iwctl" class="headerlink" title="1.iwctl"></a>1.iwctl</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入交互式命令行</span></span><br><span class="line">iwctl</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看帮助</span></span><br><span class="line">[iwd]<span class="comment"># help</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#首先，如果不知道你的网络设备名称，请列出所有 WiFi 设备：</span></span><br><span class="line">[iwd]<span class="comment"># device list</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#然后，要开始扫描网络（注意：这个命令不会输出任何内容），执行：</span></span><br><span class="line">[iwd]<span class="comment"># station device scan</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#再然后，就可以列出所有可用的网络：</span></span><br><span class="line">[iwd]<span class="comment"># station device get-networks</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#最后，要连接到一个网络</span></span><br><span class="line">[iwd]<span class="comment"># station device connect SSID</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#如果要求输入网络密码，将会提示用户输入。此外，连接操作可以应用成命令行参数的形式：</span></span><br><span class="line">iwctl --passphrase passphrase station device connectSSID</span><br><span class="line"></span><br><span class="line"><span class="comment">#要断开网络连接：</span></span><br><span class="line">[iwd]<span class="comment"># station device disconnect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#要显示 WiFi 设备详细情况，比如 MAC 地址：</span></span><br><span class="line">[iwd]<span class="comment"># device device show</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#要显示包括 WiFi 设备的连接网络在内的连接状态：</span></span><br><span class="line">[iwd]<span class="comment"># station device show</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#要列出以前连接过的网络：</span></span><br><span class="line">[iwd]<span class="comment"># known-networks list</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#要忘记已知的网络：</span></span><br><span class="line">[iwd]<span class="comment"># known-networks SSID forget</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-安装-1"><a href="#2-安装-1" class="headerlink" title="2.安装"></a>2.安装</h3><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S iwd
+<span class="token comment">#iwd软件包 软件包提供了客户端程序 `iwctl`、守护程序 `iwd` 和 WiFi 监控工具 `iwmon`</span>
+<span class="token comment">#[iwgtk]CNRepo 提供 iwd 的 GUI 前端和托盘图标。</span></code></pre>
+<h3 id="3-使用-1"><a href="#3-使用-1" class="headerlink" title="3.使用"></a>3.使用</h3><h4 id="1-iwctl"><a href="#1-iwctl" class="headerlink" title="1.iwctl"></a>1.iwctl</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#进入交互式命令行</span>
+iwctl
+
+<span class="token comment">#查看帮助</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># help</span>
+
+<span class="token comment">#首先，如果不知道你的网络设备名称，请列出所有 WiFi 设备：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># device list</span>
+
+<span class="token comment">#然后，要开始扫描网络（注意：这个命令不会输出任何内容），执行：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># station device scan</span>
+
+<span class="token comment">#再然后，就可以列出所有可用的网络：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># station device get-networks</span>
+
+<span class="token comment">#最后，要连接到一个网络</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># station device connect SSID</span>
+
+<span class="token comment">#如果要求输入网络密码，将会提示用户输入。此外，连接操作可以应用成命令行参数的形式：</span>
+iwctl --passphrase passphrase station device connectSSID
+
+<span class="token comment">#要断开网络连接：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># station device disconnect</span>
+
+<span class="token comment">#要显示 WiFi 设备详细情况，比如 MAC 地址：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># device device show</span>
+
+<span class="token comment">#要显示包括 WiFi 设备的连接网络在内的连接状态：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># station device show</span>
+
+<span class="token comment">#要列出以前连接过的网络：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># known-networks list</span>
+
+<span class="token comment">#要忘记已知的网络：</span>
+<span class="token punctuation">[</span>iwd<span class="token punctuation">]</span><span class="token comment"># known-networks SSID forget</span></code></pre>
 <h2 id="4-wpa-supplicant"><a href="#4-wpa-supplicant" class="headerlink" title="4.wpa_supplicant"></a>4.wpa_supplicant</h2><h3 id="1-描述-3"><a href="#1-描述-3" class="headerlink" title="1.描述"></a>1.描述</h3><p><a target="_blank" rel="noopener" href="https://hostap.epitest.fi/wpa_supplicant/">wpa_supplicant</a> 是跨平台的 WPA <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Supplicant_(computer)" title="wikipedia:Supplicant (computer)">请求者程序（supplicant）</a>，支持 WEP、WPA 和 WPA2(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IEEE_802.11i-2004" title="wikipedia:IEEE 802.11i-2004">IEEE 802.11i</a>).。可以在桌面、笔记本甚至嵌入式系统中使用。</p>
 <h3 id="2-安装-2"><a href="#2-安装-2" class="headerlink" title="2.安装"></a>2.安装</h3><p><a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/%E5%AE%89%E8%A3%85" title="安装">安装</a> <a target="_blank" rel="noopener" href="https://archlinux.org/packages/?name=wpa_supplicant">wpa_supplicant</a>包 软件包。此软件包提供了主程序 _wpa_supplicant_，密码工具 <em>wpa_passphrase</em> 和文字界面前端 <em>wpa_cli</em>.</p>
 <p>此外软件包 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/wpa_supplicant_gui/">wpa_supplicant_gui</a>AUR 提供了图形界面 _wpa_gui_。 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/wpa-cute/">wpa-cute</a>AUR 是 <em>wpa_gui</em> 的一个分支，提供了额外的修正和改进。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S wpa_supplicant</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S wpa_supplicant</code></pre>
 <h3 id="3-使用-2"><a href="#3-使用-2" class="headerlink" title="3.使用"></a>3.使用</h3><p>配置文件<br>&#x2F;etc&#x2F;wpa_supplicant&#x2F;wpa_supplicant.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctrl_interface=/run/wpa_supplicant</span><br><span class="line">update_config=1</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token assign-left variable">ctrl_interface</span><span class="token operator">=</span>/run/wpa_supplicant
+<span class="token assign-left variable">update_config</span><span class="token operator">=</span><span class="token number">1</span></code></pre>
 <p>连接网络</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpa_supplicant -B -i _interface_ -c /etc/wpa_supplicant/wpa_supplicant.conf</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">wpa_supplicant -B -i _interface_ -c /etc/wpa_supplicant/wpa_supplicant.conf</code></pre>
 <p>生成配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpa_passphrase MYSSID passphrase &gt; /etc/wpa_supplicant/example.conf</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">wpa_passphrase MYSSID passphrase <span class="token operator">></span> /etc/wpa_supplicant/example.conf</code></pre>
 <h2 id="5-dhcpcd"><a href="#5-dhcpcd" class="headerlink" title="5.dhcpcd"></a>5.dhcpcd</h2><h3 id="1-描述-4"><a href="#1-描述-4" class="headerlink" title="1.描述"></a>1.描述</h3><p><em>hcpcd</em> 是 DHCP 和 DHCPv6 客户端，是目前功能最丰富的开源 DHCP 客户端。<a target="_blank" rel="noopener" href="https://roy.marples.name/projects/dhcpcd">项目主页</a>包含了完整的功能列表。</p>
-<h3 id="2-安装-3"><a href="#2-安装-3" class="headerlink" title="2.安装"></a>2.安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S dhcpcd</span><br></pre></td></tr></table></figure>
-<h3 id="3-使用-3"><a href="#3-使用-3" class="headerlink" title="3.使用"></a>3.使用</h3><h4 id="1-获取ip地址"><a href="#1-获取ip地址" class="headerlink" title="1.获取ip地址"></a>1.获取ip地址</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取ip地址</span></span><br><span class="line">dhcpcd</span><br></pre></td></tr></table></figure>
-<h4 id="2-设置静态IP地址"><a href="#2-设置静态IP地址" class="headerlink" title="2. 设置静态IP地址"></a>2. 设置静态IP地址</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/dhcpcd.conf</span><br><span class="line"></span><br><span class="line">interface eth0</span><br><span class="line">static ip_address=192.168.0.10/24	</span><br><span class="line">static routers=192.168.0.1</span><br><span class="line">static domain_name_servers=192.168.0.1 8.8.8.8</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装-3"><a href="#2-安装-3" class="headerlink" title="2.安装"></a>2.安装</h3><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S dhcpcd</code></pre>
+<h3 id="3-使用-3"><a href="#3-使用-3" class="headerlink" title="3.使用"></a>3.使用</h3><h4 id="1-获取ip地址"><a href="#1-获取ip地址" class="headerlink" title="1.获取ip地址"></a>1.获取ip地址</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#获取ip地址</span>
+dhcpcd</code></pre>
+<h4 id="2-设置静态IP地址"><a href="#2-设置静态IP地址" class="headerlink" title="2. 设置静态IP地址"></a>2. 设置静态IP地址</h4><pre class="language-bash" data-language="bash"><code class="language-bash">/etc/dhcpcd.conf
+
+interface eth0
+static <span class="token assign-left variable">ip_address</span><span class="token operator">=</span><span class="token number">192.168</span>.0.10/24	
+static <span class="token assign-left variable">routers</span><span class="token operator">=</span><span class="token number">192.168</span>.0.1
+static <span class="token assign-left variable">domain_name_servers</span><span class="token operator">=</span><span class="token number">192.168</span>.0.1 <span class="token number">8.8</span>.8.8</code></pre>
 <h4 id="3-设置回落地址"><a href="#3-设置回落地址" class="headerlink" title="3.设置回落地址"></a>3.设置回落地址</h4><p>在dhcp续约失败时，会启用此ip配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/etc/dhcpcd.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># define static profile</span></span><br><span class="line">profile static_eth0</span><br><span class="line">static ip_address=192.168.1.23/24</span><br><span class="line">static routers=192.168.1.1</span><br><span class="line">static domain_name_servers=192.168.1.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># fallback to static profile on eth0</span></span><br><span class="line">interface _eth0_</span><br><span class="line">fallback static_eth0</span><br></pre></td></tr></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">/etc/dhcpcd.conf
+
+<span class="token comment"># define static profile</span>
+profile static_eth0
+static <span class="token assign-left variable">ip_address</span><span class="token operator">=</span><span class="token number">192.168</span>.1.23/24
+static <span class="token assign-left variable">routers</span><span class="token operator">=</span><span class="token number">192.168</span>.1.1
+static <span class="token assign-left variable">domain_name_servers</span><span class="token operator">=</span><span class="token number">192.168</span>.1.1
+
+<span class="token comment"># fallback to static profile on eth0</span>
+interface _eth0_
+fallback static_eth0</code></pre>
 
                 
             </div>
@@ -747,7 +842,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://dreamaccount.github.io/2023/01/07/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">https://dreamaccount.github.io/2023/01/07/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</a>
+                    <a href="https://bugprogram-git.github.io/2023/01/07/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">https://bugprogram-git.github.io/2023/01/07/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -956,6 +1051,9 @@
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
 
 <!-- 代码语言 -->
 
@@ -1128,6 +1226,8 @@
             <a href="/about" target="_blank">404NotFound</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
             
             <br>
             
@@ -1346,6 +1446,17 @@ $(function () {
     
 
     
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://bugprogram-git.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
     
     
 
@@ -1362,6 +1473,16 @@ $(function () {
     
 
     <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
     <!-- Baidu Push -->
 
