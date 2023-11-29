@@ -6,7 +6,7 @@
   <link href="https://bugprogram-git.github.io/atom.xml" rel="self"/>
   
   <link href="https://bugprogram-git.github.io/"/>
-  <updated>2023-11-28T08:37:49.446Z</updated>
+  <updated>2023-11-29T04:27:21.359Z</updated>
   <id>https://bugprogram-git.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://bugprogram-git.github.io/2023/11/29/l2tp/"/>
+    <id>https://bugprogram-git.github.io/2023/11/29/l2tp/</id>
+    <published>2023-11-29T04:27:21.359Z</published>
+    <updated>2023-11-29T04:27:21.359Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;1-预操作&quot;&gt;&lt;a href=&quot;#1-预操作&quot; class=&quot;headerlink&quot; title=&quot;1.预操作&quot;&gt;&lt;/a&gt;1.预操作&lt;/h3&gt;&lt;h5 id=&quot;1-安装组件&quot;&gt;&lt;a href=&quot;#1-安装组件&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title></title>
@@ -29,27 +50,6 @@
         
         
     <summary type="html">&lt;pre class=&quot;language-bash&quot; data-language=&quot;bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;bash&lt;/span&gt; &lt;span class=&quot;token</summary>
-        
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://bugprogram-git.github.io/2023/11/28/l2tp/"/>
-    <id>https://bugprogram-git.github.io/2023/11/28/l2tp/</id>
-    <published>2023-11-28T08:37:49.170Z</published>
-    <updated>2023-11-28T08:37:49.170Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;1-预操作&quot;&gt;&lt;a href=&quot;#1-预操作&quot; class=&quot;headerlink&quot; title=&quot;1.预操作&quot;&gt;&lt;/a&gt;1.预操作&lt;/h3&gt;&lt;h5 id=&quot;1-安装组件&quot;&gt;&lt;a href=&quot;#1-安装组件&quot; class=&quot;headerlink&quot;</summary>
         
       
     

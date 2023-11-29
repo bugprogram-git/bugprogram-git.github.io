@@ -392,14 +392,14 @@ modprobe l2t">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-11-28
+                    2023-11-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-11-28
+                    2023-11-29
                 </div>
                 
 
@@ -450,8 +450,8 @@ defaultroute
 usepeerdns
 debug
 connect-delay <span class="token number">5000</span>
-name <span class="token string">"2111605319"</span> <span class="token comment">#vpn账号</span>
-password <span class="token string">"yh20021007"</span> <span class="token comment">#vpn密码</span></code></pre>
+name <span class="token string">"xxxx"</span> <span class="token comment">#vpn账号</span>
+password <span class="token string">"xxxx"</span> <span class="token comment">#vpn密码</span></code></pre>
 <h3 id="4-配置预共享密钥"><a href="#4-配置预共享密钥" class="headerlink" title="4.配置预共享密钥"></a>4.配置预共享密钥</h3><p>vim /etc/ipsec.secrets<br>添加</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">:</span> PSK <span class="token string">"njfu.edu"</span></code></pre>
 <h3 id="5-配置ipsec"><a href="#5-配置ipsec" class="headerlink" title="5.配置ipsec"></a>5.配置ipsec</h3><p>vim /etc/ipsec.conf</p>
@@ -494,6 +494,7 @@ ipsec status</code></pre>
 <p>如果显示<br>Security Associations (1 up, 0 connecting):<br>       myvpn[1]: ESTABLISHED 17 minutes ago, 172.19.123.72[172.19.123.72]…121.248.154.251[121.248.154.251]<br>       myvpn{1}:  INSTALLED, TRANSPORT, reqid 1, ESP in UDP SPIs: c7ed658e_i 8cd83099_o<br>       myvpn{1}:   172.19.123.72/32[udp/l2f] === 121.248.154.251/32[udp/l2f]</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#执行指令 如果发现有个ppp的网卡，即连接成功</span>
 <span class="token function">ip</span> addr</code></pre>
+
                 
             </div>
             <hr/>
@@ -519,7 +520,7 @@ ipsec status</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://bugprogram-git.github.io/2023/11/28/l2tp/">https://bugprogram-git.github.io/2023/11/28/l2tp/</a>
+                    <a href="https://bugprogram-git.github.io/2023/11/29/l2tp/">https://bugprogram-git.github.io/2023/11/29/l2tp/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -632,7 +633,7 @@ ipsec status</code></pre>
         repo: '',
         owner: '',
         admin: null,
-        id: '2023-11-28T16-37-49',
+        id: '2023-11-29T12-27-21',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -660,11 +661,12 @@ ipsec status</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/11/28/socks5%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA/">
+                <a href="/2023/11/29/l2tp/">
                     <div class="card-image">
                         
                         
@@ -680,9 +682,9 @@ ipsec status</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -691,6 +693,7 @@ ipsec status</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -701,7 +704,7 @@ ipsec status</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/11/28/go%20learing/">
+                <a href="/2023/11/28/socks5%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA/">
                     <div class="card-image">
                         
                         
