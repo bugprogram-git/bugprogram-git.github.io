@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="嵌入式linux, MyBlog">
-    <meta name="description" content="1.启动步骤1.加载bootloader（uboot)2.加载设备树3.加载linux内核，initrd.img ,挂载跟文件系统4.tty，登录系统
-">
+    <meta name="keywords" content="centos7.9解决RTL8125网卡不识别的问题, Tech">
+    <meta name="description" content="1.获取网卡驱动源码点击跳转到realtek官网下载页面
+2.升级内核(可选)不确定这个网卡依赖还是不依赖内核，建议升级内核版本
+2.1 检查是否安装ELRepoyum  --disablerepo=&#34;*&#34;  --enablerepo=&#34;e">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -29,7 +30,7 @@
 </script>
 
 
-    <title>嵌入式linux | MyBlog</title>
+    <title>centos7.9解决RTL8125网卡不识别的问题 | Tech</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -76,7 +77,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">MyBlog</span>
+                    <span class="logo-span">Tech</span>
                 </a>
             </div>
             
@@ -180,10 +181,10 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">MyBlog</div>
+        <div class="logo-name">Tech</div>
         <div class="logo-desc">
             
-            myblog
+            Tech
             
         </div>
     </div>
@@ -346,12 +347,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">嵌入式linux</h1>
+                    <h1 class="description center-align post-title">centos7.9解决RTL8125网卡不识别的问题</h1>
                 </div>
             </div>
         </div>
@@ -373,9 +374,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/">
+                                <span class="chip bg-color">软件配置</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -387,14 +392,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-06-25
+                    2023-05-15
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-06
+                    2023-11-28
                 </div>
                 
 
@@ -416,7 +421,68 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-启动步骤"><a href="#1-启动步骤" class="headerlink" title="1.启动步骤"></a>1.启动步骤</h3><p>1.加载bootloader（uboot)<br>2.加载设备树<br>3.加载linux内核，initrd.img ,挂载跟文件系统<br>4.tty，登录系统</p>
+                <h3 id="1-获取网卡驱动源码"><a href="#1-获取网卡驱动源码" class="headerlink" title="1.获取网卡驱动源码"></a>1.获取网卡驱动源码</h3><p><a target="_blank" rel="noopener" href="https://www.realtek.com/zh/component/zoo/category/network-interface-controllers-10-100-1000m-gigabit-ethernet-pci-express-software">点击跳转到realtek官网下载页面</a></p>
+<h3 id="2-升级内核-可选"><a href="#2-升级内核-可选" class="headerlink" title="2.升级内核(可选)"></a>2.升级内核(可选)</h3><p>不确定这个网卡依赖还是不依赖内核，建议升级内核版本</p>
+<h5 id="2-1-检查是否安装ELRepo"><a href="#2-1-检查是否安装ELRepo" class="headerlink" title="2.1 检查是否安装ELRepo"></a>2.1 检查是否安装ELRepo</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum  --disablerepo<span class="token operator">=</span><span class="token string">"*"</span>  --enablerepo<span class="token operator">=</span><span class="token string">"elrepo-kernel"</span>  list  available
+已加载插件：fastestmirror
+Error getting repository data <span class="token keyword">for</span> elrepo-kernel, repository not found
+<span class="token comment"># 看到error说明没有安装ELRepo</span></code></pre>
+<h5 id="2-2-升级安装ELRepo"><a href="#2-2-升级安装ELRepo" class="headerlink" title="2.2 升级安装ELRepo"></a>2.2 升级安装ELRepo</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum -y update
+<span class="token comment">#载入ELRepo仓库的公共密钥</span>
+<span class="token function">rpm</span> --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+yum -y update
+<span class="token comment">#载入ELRepo仓库的公共密钥</span>
+<span class="token function">rpm</span> --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+</code></pre>
+<h5 id="2-3-查看可用安装包"><a href="#2-3-查看可用安装包" class="headerlink" title="2.3.查看可用安装包"></a>2.3.查看可用安装包</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看可用的系统内核包</span>
+yum  --disablerepo<span class="token operator">=</span><span class="token string">"*"</span>  --enablerepo<span class="token operator">=</span><span class="token string">"elrepo-kernel"</span>  list  available
+
+<span class="token comment"># 长期维护版本为lt，最新主线稳定版为ml</span></code></pre>
+<h5 id="2-4-手动下载"><a href="#2-4-手动下载" class="headerlink" title="2.4 手动下载"></a>2.4 手动下载</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-headers-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-libs-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-devel-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token function">wget</span> http://linux-mirrors.fnal.gov/linux/elrepo/archive/kernel/el7/x86_64/RPMS/kernel-lt-tools-5.4.242-1.el7.elrepo.x86_64.rpm
+<span class="token comment">#安装完成之后重新生成grub配置文件</span>
+<span class="token comment">#同样也可以删除掉旧的内核</span>
+<span class="token function">rpm</span> -qa <span class="token operator">|</span> <span class="token function">grep</span> kernel
+<span class="token comment">#然后移除相关的旧的内核包</span>
+grub2-mkconfig -o /boot/grub2/grub.cfg</code></pre>
+<h5 id="2-5-查看内核启动顺序"><a href="#2-5-查看内核启动顺序" class="headerlink" title="2.5 查看内核启动顺序"></a>2.5 查看内核启动顺序</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">awk</span> -F<span class="token punctuation">\</span>' <span class="token string">'$1=="menuentry " &#123;print i++ " : " $2&#125;'</span> /boot/grub2/grub.cfg
+
+<span class="token number">0</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">5.4</span>.108-1.el7.elrepo.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">1</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-1160.11.1.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">2</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-1160.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+<span class="token number">3</span> <span class="token builtin class-name">:</span> CentOS Linux <span class="token punctuation">(</span><span class="token number">0</span>-rescue-20210128140208453518997635111697<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span></code></pre>
+<h5 id="2-6-安装辅助工具"><a href="#2-6-安装辅助工具" class="headerlink" title="2.6 安装辅助工具"></a>2.6 安装辅助工具</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> -y grub2-pc</code></pre>
+<h5 id="2-7-设置内核启动顺序"><a href="#2-7-设置内核启动顺序" class="headerlink" title="2.7 设置内核启动顺序"></a>2.7 设置内核启动顺序</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> grub2-set-default <span class="token number">0</span></code></pre>
+<h5 id="2-8-重新生成grub配置文件"><a href="#2-8-重新生成grub配置文件" class="headerlink" title="2.8 重新生成grub配置文件"></a>2.8 重新生成grub配置文件</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> grub2-mkconfig -o /boot/grub2/grub.cfg</code></pre>
+<h5 id="2-9-重启"><a href="#2-9-重启" class="headerlink" title="2.9 重启"></a>2.9 重启</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">reboot</span></code></pre>
+<h3 id="3-更换gcc"><a href="#3-更换gcc" class="headerlink" title="3.更换gcc"></a>3.更换gcc</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-binutils-2.30-55.el7.1.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-c%2B%2B-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gdb-plugin-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-gfortran-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-gcc-plugin-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libquadmath-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-libstdc%2B%2B-devel-8.3.1-3.2.el7.x86_64.rpm
+<span class="token function">wget</span> https://mirrors.ustc.edu.cn/centos/7.9.2009/sclo/x86_64/rh/Packages/d/devtoolset-8-runtime-8.1-1.el7.x86_64.rpm</code></pre>
+<p>将所有下载好的软件包安装完毕<br>激活toolchain</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /opt/rh/devtoolset-8 
+./enable
+<span class="token comment">#直接替换旧的gcc</span>
+<span class="token comment">#旧的gcc是运行的 /usr/bin/gcc，所以将该目录下的gcc/g++替换为刚安装的新版本gcc软连接，免得每次enable</span>
+<span class="token function">mv</span> /usr/bin/gcc /usr/bin/gcc-4.8.5 
+<span class="token function">ln</span> -s /opt/rh/devtoolset-8/root/bin/gcc /usr/bin/gcc 
+<span class="token function">mv</span> /usr/bin/g++ /usr/bin/g++-4.8.5 
+<span class="token function">ln</span> -s /opt/rh/devtoolset-8/root/bin/g++ /usr/bin/g++ 
+查看gcc版本是否已经升级成功
+gcc --version 
+g++ --version</code></pre>
+<h3 id="4-开始编译第一步下载驱动源码，并安装"><a href="#4-开始编译第一步下载驱动源码，并安装" class="headerlink" title="4.开始编译第一步下载驱动源码，并安装"></a>4.开始编译第一步下载驱动源码，并安装</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> r8125-9.011.01 
+./autorun.sh</code></pre>
+
 
                 
             </div>
@@ -443,7 +509,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://bugprogram-git.github.io/2023/06/25/%E5%B5%8C%E5%85%A5%E5%BC%8Flinux/">https://bugprogram-git.github.io/2023/06/25/%E5%B5%8C%E5%85%A5%E5%BC%8Flinux/</a>
+                    <a href="https://bugprogram-git.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3RTL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">https://bugprogram-git.github.io/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3RTL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -480,7 +546,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/">
+                                    <span class="chip bg-color">软件配置</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -556,7 +626,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2023-06-25T21-47-28',
+        id: '2023-05-15T18-02-20',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -584,18 +654,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/06/25/%E5%B5%8C%E5%85%A5%E5%BC%8Flinux/">
+                <a href="/2023/11/28/centos%E8%A7%A3%E5%8E%8Binitrd/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="嵌入式linux">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">嵌入式linux</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -605,9 +674,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-06-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -616,7 +685,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -627,13 +695,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3ETL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">
+                <a href="/2023/05/15/centos7%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="centos7.9解决RTL8125网卡不识别的问题">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="centos7磁盘扩容">
                         
-                        <span class="card-title">centos7.9解决RTL8125网卡不识别的问题</span>
+                        <span class="card-title">centos7磁盘扩容</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -653,14 +721,6 @@
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/">
-                        <span class="chip bg-color">软件配置</span>
-                    </a>
-                    
                 </div>
                 
             </div>
