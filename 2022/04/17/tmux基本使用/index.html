@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="tmux基本使用, Tech">
     <meta name="description" content="tmux配置教程1.tmux是什么?tmux是一个终端复用工具，在实际开发运维中，可以用来保存当前工作状态，也可以将当前的单个终端拆分多个窗口。
-2.tmux的基本结构tmux为C&amp;#x2F;S架构，tmux进程为守护进程，独立于终端之外，">
+2.tmux的基本结构tmux为C/S架构，tmux进程为守护进程，独立于终端之外，在不使用t">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -64,7 +64,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -430,13 +433,13 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="tmux配置教程"><a href="#tmux配置教程" class="headerlink" title="tmux配置教程"></a>tmux配置教程</h1><h3 id="1-tmux是什么"><a href="#1-tmux是什么" class="headerlink" title="1.tmux是什么?"></a>1.tmux是什么?</h3><p>tmux是一个终端复用工具，在实际开发运维中，可以用来保存当前工作状态，也可以将当前的单个终端拆分多个窗口。</p>
-<h3 id="2-tmux的基本结构"><a href="#2-tmux的基本结构" class="headerlink" title="2.tmux的基本结构"></a>2.tmux的基本结构</h3><p>tmux为C&#x2F;S架构，tmux进程为守护进程，独立于终端之外，在不使用tmux的情况下，在当前终端执行的所有任务都为当前终端的子进程，而在使用了tmux之后，在tmux下执行的任务为tmux的子进程,而tmux为一个守护进程，因此不用担心在退出当前终端或者远程ssh突然断网时，执行的任务被杀死的情况。</p>
+<h3 id="2-tmux的基本结构"><a href="#2-tmux的基本结构" class="headerlink" title="2.tmux的基本结构"></a>2.tmux的基本结构</h3><p>tmux为C/S架构，tmux进程为守护进程，独立于终端之外，在不使用tmux的情况下，在当前终端执行的所有任务都为当前终端的子进程，而在使用了tmux之后，在tmux下执行的任务为tmux的子进程,而tmux为一个守护进程，因此不用担心在退出当前终端或者远程ssh突然断网时，执行的任务被杀死的情况。</p>
 <h3 id="3-tmux的三个概念"><a href="#3-tmux的三个概念" class="headerlink" title="3.tmux的三个概念"></a>3.tmux的三个概念</h3><h5 id="1-session"><a href="#1-session" class="headerlink" title="1.session"></a>1.session</h5><p>  一个session就是一个会话，session为tmux的一个会话，一个tmux可以同时开多个session。</p>
 <h5 id="2-windows"><a href="#2-windows" class="headerlink" title="2.windows"></a>2.windows</h5><p>  window为session的子集，一个session可以有有多个window。</p>
 <h5 id="3-pannel"><a href="#3-pannel" class="headerlink" title="3.pannel"></a>3.pannel</h5><p>  一个pannel为一个窗格,为window的子集,一个window可以有多个pannel</p>
 <h3 id="4-tmux的安装使用"><a href="#4-tmux的安装使用" class="headerlink" title="4.tmux的安装使用"></a>4.tmux的安装使用</h3><h5 id="1-tmux的安装"><a href="#1-tmux的安装" class="headerlink" title="1.tmux的安装"></a>1.tmux的安装</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> pacman -S tmux<span class="token punctuation">(</span>安装环境为archlinux<span class="token punctuation">)</span></code></pre>
 
-<h5 id="2-tmux配置文件"><a href="#2-tmux配置文件" class="headerlink" title="2.tmux配置文件"></a>2.tmux配置文件</h5><p>tmux系统配置文件为&#x2F;etc&#x2F;tmux.conf,用户配置文件为~&#x2F;.tmux.conf</p>
+<h5 id="2-tmux配置文件"><a href="#2-tmux配置文件" class="headerlink" title="2.tmux配置文件"></a>2.tmux配置文件</h5><p>tmux系统配置文件为/etc/tmux.conf,用户配置文件为~/.tmux.conf</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解绑prefix键位</span>
 <span class="token builtin class-name">set</span> -g default-terminal <span class="token string">"screen-256color"</span>
 unbind C-b
@@ -474,17 +477,17 @@ tmux detach
 tmux attach
 <span class="token comment">#Ctrl+b %：划分左右两个窗格。</span>
 <span class="token comment">#Ctrl+b "：划分上下两个窗格。</span>
-<span class="token comment">#Ctrl+b &lt;arrow key>：光标切换到其他窗格。&lt;arrow key>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。</span>
+<span class="token comment">#Ctrl+b &lt;arrow key&gt;：光标切换到其他窗格。&lt;arrow key&gt;是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。</span>
 <span class="token comment">#Ctrl+b ;：光标切换到上一个窗格。</span>
 <span class="token comment">#Ctrl+b o：光标切换到下一个窗格。</span>
-<span class="token comment">#Ctrl+b &#123;：当前窗格与上一个窗格交换位置。</span>
-<span class="token comment">#Ctrl+b &#125;：当前窗格与下一个窗格交换位置。</span>
+<span class="token comment">#Ctrl+b {：当前窗格与上一个窗格交换位置。</span>
+<span class="token comment">#Ctrl+b }：当前窗格与下一个窗格交换位置。</span>
 <span class="token comment">#Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。</span>
 <span class="token comment">#Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。</span>
 <span class="token comment">#Ctrl+b x：关闭当前窗格。</span>
 <span class="token comment">#Ctrl+b !：将当前窗格拆分为一个独立窗口。</span>
 <span class="token comment">#Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。</span>
-<span class="token comment">#Ctrl+b Ctrl+&lt;arrow key>：按箭头方向调整窗格大小。</span>
+<span class="token comment">#Ctrl+b Ctrl+&lt;arrow key&gt;：按箭头方向调整窗格大小。</span>
 <span class="token comment">#Ctrl+b q：显示窗格编号。</span>
 
 <span class="token comment">#切换窗格</span>
@@ -513,7 +516,7 @@ tmux swap-pane -D
 <span class="token comment">#创建一个新的窗口</span>
 tmux new-window <span class="token string">"window-name"</span>
 <span class="token comment">#切换窗口</span>
-tmux select-window -t <span class="token operator">&lt;</span>window-number<span class="token operator">></span> or <span class="token operator">&lt;</span>window-name<span class="token operator">></span>
+tmux select-window -t <span class="token operator">&lt;</span>window-number<span class="token operator">&gt;</span> or <span class="token operator">&lt;</span>window-name<span class="token operator">&gt;</span>
 <span class="token comment">#重命名window(修改当前窗口的名称)</span>
 tmux rename-window <span class="token string">"new-name"</span></code></pre>
 

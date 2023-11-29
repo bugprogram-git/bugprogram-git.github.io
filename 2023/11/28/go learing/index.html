@@ -11,8 +11,8 @@ import (
 	&#34;os&#34;
 	&#34;bufio&#34;
 )
-func main()&amp;#123;
-	var newreader *bufio.Rea">
+func main(){
+	var newreader *bufio.Reader =">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -70,7 +70,10 @@ func main()&amp;#123;
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -428,32 +431,32 @@ func main()&amp;#123;
 	<span class="token string">"os"</span>
 	<span class="token string">"bufio"</span>
 <span class="token punctuation">)</span>
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	<span class="token keyword">var</span> newreader <span class="token operator">*</span>bufio<span class="token punctuation">.</span>Reader <span class="token operator">=</span> bufio<span class="token punctuation">.</span><span class="token function">NewReader</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>Stdin<span class="token punctuation">)</span>
 	input<span class="token punctuation">,</span>err <span class="token operator">:=</span> newreader<span class="token punctuation">.</span><span class="token function">ReadString</span><span class="token punctuation">(</span><span class="token char">'\n'</span><span class="token punctuation">)</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>err<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>err<span class="token operator">==</span><span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"you input string is %s"</span><span class="token punctuation">,</span>input<span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>文件io</p>
 <pre class="language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
 	<span class="token string">"fmt"</span>
 	<span class="token string">"os"</span>
 	<span class="token string">"bufio"</span>
 <span class="token punctuation">)</span>
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	inputfile<span class="token punctuation">,</span>inputerr <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">"file.txt"</span><span class="token punctuation">)</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>input <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>input <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"open file error!"</span><span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">}</span>
 	<span class="token keyword">defer</span> inputfile<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	newfilereader <span class="token operator">:=</span> bufio<span class="token punctuation">.</span><span class="token function">NewReader</span><span class="token punctuation">(</span>inputfile<span class="token punctuation">)</span>
 	inputstring<span class="token punctuation">,</span>inputerr <span class="token operator">:=</span> newfilereader<span class="token punctuation">.</span><span class="token function">ReadString</span><span class="token punctuation">(</span><span class="token char">'\n'</span><span class="token punctuation">)</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>inputerr <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>inputerr <span class="token operator">!=</span> <span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"read file error!"</span><span class="token punctuation">)</span>
-	<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">}</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"input string is :%s"</span><span class="token punctuation">,</span>inputstring<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>或者</p>
 <pre class="language-go" data-language="go"><code class="language-go"><span class="token keyword">import</span> <span class="token punctuation">(</span>
 	<span class="token string">"fmt"</span>
@@ -461,12 +464,12 @@ func main()&amp;#123;
 	<span class="token string">"io/ioutil"</span>
 	<span class="token string">"bufio"</span>
 <span class="token punctuation">)</span>
-<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	
-<span class="token punctuation">&#125;</span></code></pre>
-<p>go 包管理<br>Go 1.5 引入了vendor 机制，但是需要手动设置环境变量 GO15VENDOREXPERIMENT&#x3D; 1，Go编译器才能启用。</p>
+<span class="token punctuation">}</span></code></pre>
+<p>go 包管理<br>Go 1.5 引入了vendor 机制，但是需要手动设置环境变量 GO15VENDOREXPERIMENT= 1，Go编译器才能启用。</p>
 <p>从Go1.6起，默认开启 vendor 目录查找，vendor 机制就是在包中引入 vendor 目录，将依赖的外部包复制到 vendor 目录下，编译器在查找外部依赖包时，优先在 vendor 目录下查找。整个查找第三方包的流程如下：</p>
-<p>在当前vendor目录（如果当前目录存在vendor目录的话）查找依赖包；<br>如果当前目录不存在vendor目录，则到上一级目录继续查找；<br>重复步骤2，直到到达$GOPATH&#x2F;src目录，查找vendor目录中是否存在依赖包；<br>如何没有查找到依赖包，则继续在$GOROOT目录查找；<br>如果没有查找到，则继续在$GOPATH&#x2F;src目录查找。<br>在发布 1.6 版本时，该环境变量的值已经默认设置为 1 了，该值可以使用 go env 命令查看。在发布 1.7 版本时，已去掉该环境变量，默认开启 vendor 特性。</p>
+<p>在当前vendor目录（如果当前目录存在vendor目录的话）查找依赖包；<br>如果当前目录不存在vendor目录，则到上一级目录继续查找；<br>重复步骤2，直到到达$GOPATH/src目录，查找vendor目录中是否存在依赖包；<br>如何没有查找到依赖包，则继续在$GOROOT目录查找；<br>如果没有查找到，则继续在$GOPATH/src目录查找。<br>在发布 1.6 版本时，该环境变量的值已经默认设置为 1 了，该值可以使用 go env 命令查看。在发布 1.7 版本时，已去掉该环境变量，默认开启 vendor 特性。</p>
 
                 
             </div>

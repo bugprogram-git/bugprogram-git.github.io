@@ -13,9 +13,9 @@ sudo apt install samba
 
 
 2.配置共享目录
-&amp;#x2F;etc&amp;#x2F;samba&amp;#x2F;smb.conf
+/etc/samba/smb.conf
 [share]
-comme">
+comment = file share">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -73,7 +73,10 @@ comme">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -446,7 +449,7 @@ comme">
 
 <ul>
 <li><p>2.配置共享目录</p>
-<p>&#x2F;etc&#x2F;samba&#x2F;smb.conf</p>
+<p>/etc/samba/smb.conf</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>share<span class="token punctuation">]</span>
 comment <span class="token operator">=</span> <span class="token function">file</span> share <span class="token comment">#共享目录的描述信息</span>
 path <span class="token operator">=</span> /srv/smbshare <span class="token comment">#共享目录的路径</span>

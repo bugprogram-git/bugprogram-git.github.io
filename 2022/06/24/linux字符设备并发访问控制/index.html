@@ -5,11 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="linux字符设备并发访问控制, Tech">
-    <meta name="description" content="linux字符设备并发访问控制1.使用原子变量1.1.原子变量类型typedef struct&amp;#123;
+    <meta name="description" content="linux字符设备并发访问控制1.使用原子变量1.1.原子变量类型typedef struct{
     int counter;
-&amp;#125;atomic_t;
+}atomic_t;
 
-1.2.常用的apistatic inline void ato">
+1.2.常用的apistatic inline void atomic_set(at">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -67,7 +67,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -432,9 +435,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="linux字符设备并发访问控制"><a href="#linux字符设备并发访问控制" class="headerlink" title="linux字符设备并发访问控制"></a>linux字符设备并发访问控制</h1><h3 id="1-使用原子变量"><a href="#1-使用原子变量" class="headerlink" title="1.使用原子变量"></a>1.使用原子变量</h3><h5 id="1-1-原子变量类型"><a href="#1-1-原子变量类型" class="headerlink" title="1.1.原子变量类型"></a>1.1.原子变量类型</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span><span class="token punctuation">&#123;</span>
+                <h1 id="linux字符设备并发访问控制"><a href="#linux字符设备并发访问控制" class="headerlink" title="linux字符设备并发访问控制"></a>linux字符设备并发访问控制</h1><h3 id="1-使用原子变量"><a href="#1-使用原子变量" class="headerlink" title="1.使用原子变量"></a>1.使用原子变量</h3><h5 id="1-1-原子变量类型"><a href="#1-1-原子变量类型" class="headerlink" title="1.1.原子变量类型"></a>1.1.原子变量类型</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span><span class="token punctuation">{</span>
     <span class="token keyword">int</span> counter<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token class-name">atomic_t</span><span class="token punctuation">;</span></code></pre>
+<span class="token punctuation">}</span><span class="token class-name">atomic_t</span><span class="token punctuation">;</span></code></pre>
 
 <h5 id="1-2-常用的api"><a href="#1-2-常用的api" class="headerlink" title="1.2.常用的api"></a>1.2.常用的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">atomic_set</span><span class="token punctuation">(</span><span class="token class-name">atomic_t</span> <span class="token operator">*</span>v<span class="token punctuation">,</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//设置原子变量的值</span>
 
@@ -447,7 +450,7 @@
 <h3 id="2-使用自旋锁"><a href="#2-使用自旋锁" class="headerlink" title="2.使用自旋锁"></a>2.使用自旋锁</h3><h5 id="2-1-自旋锁类型"><a href="#2-1-自旋锁类型" class="headerlink" title="2.1.自旋锁类型"></a>2.1.自旋锁类型</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token class-name">spinlock_t</span> lock<span class="token punctuation">;</span></code></pre>
 
 <h5 id="2-2-常用的api"><a href="#2-2-常用的api" class="headerlink" title="2.2.常用的api"></a>2.2.常用的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">//需包含头文件</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/spinlock.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/spinlock.h&gt;</span></span>
 <span class="token function">spin_lock_init</span><span class="token punctuation">(</span><span class="token class-name">spinlock_t</span> <span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>					<span class="token comment">//初始化自旋锁</span>
 <span class="token function">spin_lock</span><span class="token punctuation">(</span><span class="token class-name">spinlock_t</span> <span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>						<span class="token comment">//获得自旋锁(成功立即返回),否则直到获得该自旋锁的进程释放该自旋锁</span>
 <span class="token function">spin_trylock</span><span class="token punctuation">(</span><span class="token class-name">spinlock_t</span> <span class="token operator">*</span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>						<span class="token comment">//成功获得自旋锁立即返回,否则返回假</span>
@@ -455,7 +458,7 @@
 
 <h3 id="3-使用信号量"><a href="#3-使用信号量" class="headerlink" title="3.使用信号量"></a>3.使用信号量</h3><h5 id="3-1-信号量类型"><a href="#3-1-信号量类型" class="headerlink" title="3.1.信号量类型"></a>3.1.信号量类型</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token class-name">sem_t</span> sem</code></pre>
 
-<h5 id="3-2-常用的api"><a href="#3-2-常用的api" class="headerlink" title="3.2.常用的api"></a>3.2.常用的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/semaphore.h></span></span>
+<h5 id="3-2-常用的api"><a href="#3-2-常用的api" class="headerlink" title="3.2.常用的api"></a>3.2.常用的api</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/semaphore.h&gt;</span></span>
 <span class="token keyword">void</span> <span class="token function">sema_init</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">semaphore</span> <span class="token operator">*</span>sem<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//初始化信号量</span>
 <span class="token keyword">int</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">semaphore</span> <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>					<span class="token comment">//深度睡眠</span>
 <span class="token keyword">int</span> <span class="token function">down_interruptible</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">semaphore</span> <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//浅度睡眠</span>

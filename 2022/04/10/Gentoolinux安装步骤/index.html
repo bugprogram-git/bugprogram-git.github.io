@@ -65,7 +65,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -445,7 +448,7 @@
 iwlist wlan0 scan
 
 <span class="token comment">#连接wifi</span>
-wpa_passpharse SSID password <span class="token operator">></span> wifi.conf
+wpa_passpharse SSID password <span class="token operator">&gt;</span> wifi.conf
 wpa_supplicant -c wifi.conf -B -i wlan0<span class="token comment">#wlan为无线网卡名称,自行根据自己的网卡型号进行改动</span>
 
 
@@ -487,7 +490,7 @@ Partition number <span class="token punctuation">(</span><span class="token numb
 
 Partition number <span class="token punctuation">(</span><span class="token number">1</span>-128, default <span class="token number">1</span><span class="token punctuation">)</span>: <span class="token number">1</span>
 First sector <span class="token punctuation">(</span><span class="token number">2048</span>-60549086, default <span class="token number">2048</span><span class="token punctuation">)</span>: 
-Last sector, +/-sectors or +/-size<span class="token punctuation">&#123;</span>K,M,G,T,P<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">2048</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +256M
+Last sector, +/-sectors or +/-size<span class="token punctuation">{</span>K,M,G,T,P<span class="token punctuation">}</span> <span class="token punctuation">(</span><span class="token number">2048</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +256M
  
 Created a new partition <span class="token number">1</span> of <span class="token builtin class-name">type</span> <span class="token string">'Linux filesystem'</span> and of size <span class="token number">256</span> MiB.</code></pre>
 
@@ -504,7 +507,7 @@ Changed <span class="token builtin class-name">type</span> of partition <span cl
 
 Partition number <span class="token punctuation">(</span><span class="token number">2</span>-128, default <span class="token number">2</span><span class="token punctuation">)</span>: 
 First sector <span class="token punctuation">(</span><span class="token number">526336</span>-60549086, default <span class="token number">526336</span><span class="token punctuation">)</span>: 
-Last sector, +/-sectors or +/-size<span class="token punctuation">&#123;</span>K,M,G,T,P<span class="token punctuation">&#125;</span> <span class="token punctuation">(</span><span class="token number">526336</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +4G
+Last sector, +/-sectors or +/-size<span class="token punctuation">{</span>K,M,G,T,P<span class="token punctuation">}</span> <span class="token punctuation">(</span><span class="token number">526336</span>-60549086, default <span class="token number">60549086</span><span class="token punctuation">)</span>: +4G
  
 Created a new partition <span class="token number">2</span> of <span class="token builtin class-name">type</span> <span class="token string">'Linux filesystem'</span> and of size <span class="token number">4</span> GiB.</code></pre>
 
@@ -543,15 +546,15 @@ Device       Start      End  Sectors  Size Type
 </tr>
 </thead>
 <tbody><tr>
-<td>&#x2F;dev&#x2F;sda1</td>
+<td>/dev/sda1</td>
 <td>启动分区</td>
 </tr>
 <tr>
-<td>&#x2F;dev&#x2F;sda2</td>
+<td>/dev/sda2</td>
 <td>swap分区</td>
 </tr>
 <tr>
-<td>&#x2F;dev&#x2F;sda3</td>
+<td>/dev/sda3</td>
 <td>根分区</td>
 </tr>
 </tbody></table>
@@ -561,7 +564,7 @@ Device       Start      End  Sectors  Size Type
 <p>swap分区</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkswap</span> /dev/sda2</code></pre>
 
-<p>根分区,可采用(ext3&#x2F;4 xfs btrfs ntfs jfs…..)使用非ext文件系统在后面编译linux内核的时候要启动linux内核对该文件系统的支持</p>
+<p>根分区,可采用(ext3/4 xfs btrfs ntfs jfs…..)使用非ext文件系统在后面编译linux内核的时候要启动linux内核对该文件系统的支持</p>
 <p>这里采用btrfs文件系统</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">mkfs.btrfs /dev/sda3</code></pre>
 
@@ -583,10 +586,10 @@ Device       Start      End  Sectors  Size Type
 <span class="token comment"># Please consult /usr/share/portage/config/make.conf.example for a more</span>
 <span class="token comment"># detailed example.</span>
 <span class="token assign-left variable">COMMON_FLAGS</span><span class="token operator">=</span><span class="token string">"-march=native -O3 -pipe -fstack-protector-strong"</span> <span class="token comment">#设置编译参数(-march=native可以根据cpu指令集进行优化,-O3优化级别)</span>
-<span class="token assign-left variable">CFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>    <span class="token comment">#C编译参数</span>
-<span class="token assign-left variable">CXXFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>  <span class="token comment">#C++编译参数</span>
-<span class="token assign-left variable">FCFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>
-<span class="token assign-left variable">FFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;COMMON_FLAGS&#125;</span>"</span>
+<span class="token assign-left variable">CFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${COMMON_FLAGS}</span>"</span>    <span class="token comment">#C编译参数</span>
+<span class="token assign-left variable">CXXFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${COMMON_FLAGS}</span>"</span>  <span class="token comment">#C++编译参数</span>
+<span class="token assign-left variable">FCFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${COMMON_FLAGS}</span>"</span>
+<span class="token assign-left variable">FFLAGS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${COMMON_FLAGS}</span>"</span>
 <span class="token assign-left variable">ACCEPT_KEYWORDS</span><span class="token operator">=</span><span class="token string">"amd64"</span>  <span class="token comment">#可接受的软件包等级(稳定与不稳定)(这里为全局keyworkds,若想为特定软件包指定特定的Keyworkds(可以在/etc/protage/portage.accpet_keywords</span>
 <span class="token assign-left variable">ACCEPT_LICENSE</span><span class="token operator">=</span><span class="token string">"*"</span>      <span class="token comment">#可接受的软件包许可证</span>
 <span class="token assign-left variable">MAKEOPTS</span><span class="token operator">=</span><span class="token string">"-j8 -l7.2"</span>    <span class="token comment">#根据cpu核心数来配置(一般配置为cpu核心数+1),如果机器配置不够尽量将线程数调低一些,方式内存爆.</span>
@@ -628,7 +631,7 @@ Device       Start      End  Sectors  Size Type
 <span class="token comment"># This sets the language of build output to English.</span>
 <span class="token comment"># Please keep this setting intact when reporting bugs.</span>
 <span class="token assign-left variable">LC_MESSAGES</span><span class="token operator">=</span>C
-<span class="token assign-left variable">GENTOO_MIRRORS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;USTC&#125;</span>"</span>            <span class="token comment">#配置Gentoo镜像源(软件镜像源)</span>
+<span class="token assign-left variable">GENTOO_MIRRORS</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${USTC}</span>"</span>            <span class="token comment">#配置Gentoo镜像源(软件镜像源)</span>
 <span class="token comment">#全局USE</span>
 <span class="token assign-left variable">USE</span><span class="token operator">=</span><span class="token string">"-X -qt5 "</span></code></pre>
 
@@ -674,7 +677,7 @@ sync-openpgp-key-refresh-retry-delay-mult <span class="token operator">=</span> 
 <span class="token function">chmod</span> <span class="token number">1777</span> /dev/shm</code></pre>
 <h5 id="4-进入到新的系统进行基本系统配置"><a href="#4-进入到新的系统进行基本系统配置" class="headerlink" title="4.进入到新的系统进行基本系统配置"></a>4.进入到新的系统进行基本系统配置</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">chroot</span> /mnt/gentoo /bin/bash
 <span class="token builtin class-name">source</span> /etc/profile
-<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PS1</span></span><span class="token operator">=</span><span class="token string">"(chroot)<span class="token variable">$&#123;<span class="token environment constant">PS1</span>&#125;</span>"</span></code></pre>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PS1</span></span><span class="token operator">=</span><span class="token string">"(chroot)<span class="token variable">${<span class="token environment constant">PS1</span>}</span>"</span></code></pre>
 
 <h4 id="8-开始整个系统的编译"><a href="#8-开始整个系统的编译" class="headerlink" title="8.开始整个系统的编译"></a>8.开始整个系统的编译</h4><h5 id="1-获取ebuild快照"><a href="#1-获取ebuild快照" class="headerlink" title="1.获取ebuild快照"></a>1.获取ebuild快照</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge-webrsync</code></pre>
 
@@ -688,7 +691,7 @@ Available profile symlink targets:
 
 <h5 id="3-安装一些常用的软件"><a href="#3-安装一些常用的软件" class="headerlink" title="3.安装一些常用的软件"></a>3.安装一些常用的软件</h5><pre class="language-bash" data-language="bash"><code class="language-bash">emerge --ask app-portage/cpuid2cpuflags<span class="token comment">#用于查看cpu参数,可以将参数配置到portage配置文件中使得可以针对cpu参数进行优化</span></code></pre>
 
-<h5 id="4-配置USE标签"><a href="#4-配置USE标签" class="headerlink" title="4.配置USE标签"></a>4.配置USE标签</h5><p>USE标记是Gentoo中用于配置特定软件包如何编译,一般分为全局USE和特定软件包USE<br>(&#x2F;etc&#x2F;portage&#x2F;package.use&#x2F;*特定软件包,&#x2F;etc&#x2F;portage&#x2F;make.conf全局USE)</p>
+<h5 id="4-配置USE标签"><a href="#4-配置USE标签" class="headerlink" title="4.配置USE标签"></a>4.配置USE标签</h5><p>USE标记是Gentoo中用于配置特定软件包如何编译,一般分为全局USE和特定软件包USE<br>(/etc/portage/package.use/*特定软件包,/etc/portage/make.conf全局USE)</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">sys-devel/gcc cet pgo go lto nptl -objc -objc++ -objc-gc -fixed-point -d
 sys-devel/gdb cet lzma multitarget python server source-highlight xml xxhash
 sys-devel/clang static-analyzer
@@ -798,10 +801,10 @@ dracut --kver<span class="token operator">=</span><span class="token number">5.1
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成fstab文件</span>
 blkid
 <span class="token comment">#如果使用的archlinux的livecd,可以使用archlinux的genfstab自动生成fstab文件</span>
-<span class="token comment">#genfstab /mnt/gentoo > /mnt/gentoo/etc/fstab</span>
+<span class="token comment">#genfstab /mnt/gentoo &gt; /mnt/gentoo/etc/fstab</span>
 
 <span class="token comment">#建议使用uuid</span>
-blkid <span class="token operator">>></span> /etc/fstab
+blkid <span class="token operator">&gt;&gt;</span> /etc/fstab
 修改/etc/fstab文件
 <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"203C-2BDD"</span>        /boot   vfat    defaults <span class="token number">0</span> <span class="token number">1</span>
 <span class="token assign-left variable">UUID</span><span class="token operator">=</span><span class="token string">"5afdfbc9-0c66-4a13-8f29-da00199af5de"</span> /   ext4 defaults defaults,noatime,discard <span class="token number">0</span> <span class="token number">2</span>

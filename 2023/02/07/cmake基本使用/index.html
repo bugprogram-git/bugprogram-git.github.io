@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -421,19 +424,19 @@
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">CMAKE_INCLUDE_PATH</span><span class="token operator">=</span>/usr/include
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">CMAKE_LIBRARY_PATH</span><span class="token operator">=</span>/usr/lib</code></pre>
 <h3 id="3-CMakeLists-txt的编写规则"><a href="#3-CMakeLists-txt的编写规则" class="headerlink" title="3.CMakeLists.txt的编写规则"></a>3.CMakeLists.txt的编写规则</h3><p>脚本关键字一般使用大写，当然使用小写也是可以的</p>
-<h5 id="1-CMAKE-MINIMUM-REQUIRED"><a href="#1-CMAKE-MINIMUM-REQUIRED" class="headerlink" title="1.CMAKE_MINIMUM_REQUIRED"></a>1.CMAKE_MINIMUM_REQUIRED</h5><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token variable">CMAKE_MINIMUM_REQUIRED</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token punctuation">$&#123;</span><span class="token property">VERSION</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<h5 id="1-CMAKE-MINIMUM-REQUIRED"><a href="#1-CMAKE-MINIMUM-REQUIRED" class="headerlink" title="1.CMAKE_MINIMUM_REQUIRED"></a>1.CMAKE_MINIMUM_REQUIRED</h5><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token variable">CMAKE_MINIMUM_REQUIRED</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token punctuation">${</span><span class="token property">VERSION</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token comment">#用于指定该cmake脚本兼容的最低cmake版本</span>
 <span class="token variable">CMAKE_MINIMUM_REQUIRED</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.12</span><span class="token punctuation">)</span>
 <span class="token comment">#这里表明cmake兼容的最低版本为3.12</span></code></pre>
-<h4 id="2-PROJECT"><a href="#2-PROJECT" class="headerlink" title="2.PROJECT"></a>2.PROJECT</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">PROJECT</span><span class="token punctuation">(</span>project_name <span class="token punctuation">$&#123;</span>program_language<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<h4 id="2-PROJECT"><a href="#2-PROJECT" class="headerlink" title="2.PROJECT"></a>2.PROJECT</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">PROJECT</span><span class="token punctuation">(</span>project_name <span class="token punctuation">${</span>program_language<span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token comment">#指定该项目的名称和该项目支持的变成语言</span>
 <span class="token function">PROJECT</span><span class="token punctuation">(</span>shadowsocks-libev C <span class="token punctuation">)</span>
 <span class="token comment">#这里指定项目名称为shadowsocks-libev,支持的变成语言为C,如果不指定此项默认支持所有变成语言</span></code></pre>
-<h4 id="3-INCLUDE-DIRECTORY"><a href="#3-INCLUDE-DIRECTORY" class="headerlink" title="3.INCLUDE_DIRECTORY"></a>3.INCLUDE_DIRECTORY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">INCLUDE_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>PATH<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<h4 id="3-INCLUDE-DIRECTORY"><a href="#3-INCLUDE-DIRECTORY" class="headerlink" title="3.INCLUDE_DIRECTORY"></a>3.INCLUDE_DIRECTORY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">INCLUDE_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">${</span>PATH<span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token comment">#指定包含头文件的包含路径</span>
 <span class="token property">INCLUDE_DIRECTORIES</span><span class="token punctuation">(</span>/usr/include<span class="token punctuation">)</span>
 <span class="token comment">#指定项目头文件的包含路径为/usr/include</span></code></pre>
-<h4 id="4-LINK-DIRECTORIES"><a href="#4-LINK-DIRECTORIES" class="headerlink" title="4.LINK_DIRECTORIES"></a>4.LINK_DIRECTORIES</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">LINK_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>PATH<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<h4 id="4-LINK-DIRECTORIES"><a href="#4-LINK-DIRECTORIES" class="headerlink" title="4.LINK_DIRECTORIES"></a>4.LINK_DIRECTORIES</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token property">LINK_DIRECTORIES</span><span class="token punctuation">(</span><span class="token punctuation">${</span>PATH<span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token comment">#指定链接库的路径</span>
 <span class="token property">LINK_DIRECTORIES</span><span class="token punctuation">(</span>/usr/lib<span class="token punctuation">)</span>
 <span class="token comment">#指定链接库的路径为/usr/lib</span></code></pre>
@@ -449,11 +452,11 @@
 <span class="token variable">CMAKE_C_COMPILER</span>    <span class="token comment">#指定cmake使用什么编译器进行编译项目</span>
 <span class="token variable">CMAKE_CXX_COMPILER</span>   <span class="token comment">#指定cmake使用什么c++编译器进行编译项目</span></code></pre>
 
-<h4 id="6-ADD-LIBRARY"><a href="#6-ADD-LIBRARY" class="headerlink" title="6.ADD_LIBRARY"></a>6.ADD_LIBRARY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>&lt;name<span class="token punctuation">></span> <span class="token namespace">STATIC</span>/<span class="token namespace">SHARED</span>/MODULE &lt;source<span class="token punctuation">></span><span class="token punctuation">)</span>
+<h4 id="6-ADD-LIBRARY"><a href="#6-ADD-LIBRARY" class="headerlink" title="6.ADD_LIBRARY"></a>6.ADD_LIBRARY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">ADD_LIBRARY</span><span class="token punctuation">(</span>&lt;name<span class="token punctuation">&gt;</span> <span class="token namespace">STATIC</span>/<span class="token namespace">SHARED</span>/MODULE &lt;source<span class="token punctuation">&gt;</span><span class="token punctuation">)</span>
 <span class="token comment">#指定源代码路径以及生成的库的类型和名称</span>
-<span class="token comment">#&lt;name>为指定生成库的名称</span>
+<span class="token comment">#&lt;name&gt;为指定生成库的名称</span>
 <span class="token comment">#STATIC/SHARED 指定生成静态或者动态库</span>
-<span class="token comment">#&lt;source>指定源代码的路径</span></code></pre>
+<span class="token comment">#&lt;source&gt;指定源代码的路径</span></code></pre>
 <h4 id="7-AUX-SOURCE-DIRECTORY"><a href="#7-AUX-SOURCE-DIRECTORY" class="headerlink" title="7.AUX_SOURCE_DIRECTORY"></a>7.AUX_SOURCE_DIRECTORY</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake"><span class="token function">AUX_SOURCE_DIRECTORY</span><span class="token punctuation">(</span>src <span class="token property">SOURCE_DIR</span><span class="token punctuation">)</span>
 <span class="token comment">#扫描一个目录的文件并将该目录的文件定义成一个变量</span></code></pre>
 <h4 id="8-其他常用的关键字"><a href="#8-其他常用的关键字" class="headerlink" title="8.其他常用的关键字"></a>8.其他常用的关键字</h4><pre class="language-cmake" data-language="cmake"><code class="language-cmake">TARGET_LINK_DIRECTORIES
@@ -465,7 +468,7 @@ TARGET_INCLUDE_DIRECTORIES
 <span class="token comment">#指定生成的目标文件链接的头文件目录</span>
 
 MESSAGE
-<span class="token function">MESSAGE</span><span class="token punctuation">(</span>type<span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">message</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
+<span class="token function">MESSAGE</span><span class="token punctuation">(</span>type<span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">message</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
 type
 <span class="token number">1</span>.STATUS 非重要信息
 <span class="token number">2</span>.WARNING 警告信息，会继续执行

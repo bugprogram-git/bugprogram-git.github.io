@@ -7,9 +7,9 @@
     <meta name="keywords" content="linux设备驱动开发入门, Tech">
     <meta name="description" content="linux设备驱动开发入门1.linux内核模块开发入门基本步骤
 graph LR;
-a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile)--&gt;c(运行内核模块)
+a(编写内核模块代码)--&amp;gt;b(修改该目录下的Kconfig文件和Makefile)--&amp;gt;c(运行内核模块)
 
-1.实例#include &amp;lt;linu">
+1.实例#include &amp;l">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -67,7 +67,10 @@ a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -433,34 +436,34 @@ a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="linux设备驱动开发入门"><a href="#linux设备驱动开发入门" class="headerlink" title="linux设备驱动开发入门"></a>linux设备驱动开发入门</h1><h3 id="1-linux内核模块开发入门"><a href="#1-linux内核模块开发入门" class="headerlink" title="1.linux内核模块开发入门"></a>1.linux内核模块开发入门</h3><p>基本步骤</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-a<span class="token text string">(编写内核模块代码)</span><span class="token arrow operator">--></span>b<span class="token text string">(修改该目录下的Kconfig文件和Makefile)</span><span class="token arrow operator">--></span>c<span class="token text string">(运行内核模块)</span></code></pre>
+<pre class="mermaid">graph LR;
+a(编写内核模块代码)--&gt;b(修改该目录下的Kconfig文件和Makefile)--&gt;c(运行内核模块)</pre>
 
-<h5 id="1-实例"><a href="#1-实例" class="headerlink" title="1.实例"></a>1.实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h></span></span>
+<h5 id="1-实例"><a href="#1-实例" class="headerlink" title="1.实例"></a>1.实例</h5><pre class="language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h&gt;</span></span>
 <span class="token comment">/*
 __init 和__exit为两个宏
 */</span>
 <span class="token comment">// EXPORT_SYMBOL(gx);(声明符号表，使得该变量或者函数可以被其他模块调用)</span>
 <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> <span class="token operator">*</span>b <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> c<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> c<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token function">module_param</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//内核模块传参,传参后内核函数可以直接使用这些参数</span>
 <span class="token function">module_param</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span>charp<span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">module_param</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">,</span><span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> __init <span class="token function">my_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
     <span class="token comment">//init函数必须为int类型</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"just a test for linux kernel module test!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"my init linux kernel module is running!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">void</span> __exit <span class="token function">my_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token comment">//exit函数必须为void类型</span>
     <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"just a test for linux kernel module test!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token function">module_init</span><span class="token punctuation">(</span>my_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//当该内核模块插入时将会执行my_init函数</span>
 <span class="token function">module_exit</span><span class="token punctuation">(</span>my_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -520,8 +523,8 @@ insmod<span class="token comment">#将某个模块运行</span>
 <span class="token comment">//将数据从内核空间拷贝到用户空间</span>
 <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">copy_to_user</span><span class="token punctuation">(</span><span class="token keyword">void</span> __user <span class="token operator">*</span>to<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token function">copy_from_user</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>to<span class="token punctuation">,</span><span class="token keyword">void</span> <span class="token operator">*</span>from<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4>  <pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-a<span class="token text string">(申请设备号)</span><span class="token arrow operator">--></span>b<span class="token text string">(注册设备号)</span><span class="token arrow operator">--></span>c<span class="token text string">(设置设备对应的file_ops)</span><span class="token arrow operator">--></span>d<span class="token text string">(将其加入到内核的链表中)</span></code></pre>
+<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4>  <pre class="mermaid">  graph LR;
+  a(申请设备号)--&gt;b(注册设备号)--&gt;c(设置设备对应的file_ops)--&gt;d(将其加入到内核的链表中)</pre>
 
                 
             </div>

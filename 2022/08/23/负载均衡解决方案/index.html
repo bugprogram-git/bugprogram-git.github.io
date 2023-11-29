@@ -69,7 +69,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -446,17 +449,17 @@
 <li>2.服务器池</li>
 <li>3.共享存储</li>
 </ul>
-<h5 id="2-LVS负载均衡方式"><a href="#2-LVS负载均衡方式" class="headerlink" title="2.LVS负载均衡方式"></a>2.LVS负载均衡方式</h5><p>**VS&#x2F;NAT(网络地址转换模式) **</p>
+<h5 id="2-LVS负载均衡方式"><a href="#2-LVS负载均衡方式" class="headerlink" title="2.LVS负载均衡方式"></a>2.LVS负载均衡方式</h5><p>**VS/NAT(网络地址转换模式) **</p>
 <p>前提条件:</p>
 <p>实际的服务器的网关要指向负载均衡器。</p>
 <p>请求响应过程:</p>
 <p>负载均衡器绑定一个虚拟的ip地址,客户端访问虚拟ip地址后,负载均衡器将请求的目标地址进行目标地址转换(DNAT),将请求分发给实际的服务器,服务器对请求进行响应后,由于负载均衡器是实际服务器的网关,这时,负载均衡器对响应包进行源地址转换(SNAT)。</p>
-<p><strong>VS&#x2F;DR(直接路由模式)</strong></p>
+<p><strong>VS/DR(直接路由模式)</strong></p>
 <p>前提条件:</p>
 <p>负载均衡器和实际的服务器要绑定同一个虚拟ip,并且要在同一个内部网络下。</p>
 <p>请求响应过程:</p>
 <p>客户端访问访问虚拟ip,负载均衡器收到请求,将请求的mac地址修改实际服务器的mac地址,导致请求发送给实际的服务器,由于负载均衡器和实际的服务器绑定了同一个虚拟ip地址,实际的服务器可以直接对客户端进行响应。</p>
-<p><strong>VS&#x2F;TUN(隧道模式)</strong></p>
+<p><strong>VS/TUN(隧道模式)</strong></p>
 <p>前提条件:</p>
 <p>调度器和实际的服务器都要绑定同一个虚拟ip地址,并且调度器和后端服务器要支持隧道技术,调度器和后端服务器可以在任意网络环境下。</p>
 <p>请求响应过程:</p>
@@ -483,12 +486,12 @@ yum <span class="token function">install</span> -y keepalived</code></pre>
 
 <pre class="language-none"><code class="language-none">! Configuration File for keepalived
 
-global_defs &#123;
-   notification_email &#123;
+global_defs {
+   notification_email {
      acassen@firewall.loc
      failover@firewall.loc
      sysadmin@firewall.loc
-   &#125;
+   }
    #配置告警发送邮件的邮件服务器相关信息
    notification_email_from Alexandre.Cassen@firewall.loc
    smtp_server 192.168.200.1
@@ -499,9 +502,9 @@ global_defs &#123;
    vrrp_iptables #取消自动生成iptables规则
    vrrp_garp_interval 0
    vrrp_gna_interval 0
-&#125;
+}
 #实例
-vrrp_instance VI_1 &#123;
+vrrp_instance VI_1 {
     state MASTER
     interface ens33
     #集群id号
@@ -510,17 +513,17 @@ vrrp_instance VI_1 &#123;
     priority 100
     advert_int 1
     #验证信息
-    authentication &#123;
+    authentication {
         auth_type PASS
         auth_pass 1111
-    &#125;
+    }
     #虚拟服务器ip地址,便于服务器故障时将虚拟ip地址漂移给其他的从节点
-    virtual_ipaddress &#123;
-        192.168.245.188&#x2F;24
-    &#125;
-&#125;
+    virtual_ipaddress {
+        192.168.245.188/24
+    }
+}
 #虚拟服务器集群(用于vrrp实例调用)
-virtual_server 192.168.200.100 443 &#123;
+virtual_server 192.168.200.100 443 {
     delay_loop 6
     lb_algo rr
     #lvs调度类型
@@ -528,26 +531,26 @@ virtual_server 192.168.200.100 443 &#123;
     persistence_timeout 60
     protocol TCP
 	#后端服务器的ip和端口号
-    real_server 192.168.201.100 443 &#123;
+    real_server 192.168.201.100 443 {
         weight 1
-        #健康检查(SSL_GET&#x2F;TCP&#x2F;SSL_GET)
-        SSL_GET &#123;
-            url &#123;
-              path &#x2F;
+        #健康检查(SSL_GET/TCP/SSL_GET)
+        SSL_GET {
+            url {
+              path /
               digest ff20ad2481f97b1754ef3e12ecd3a9cc
-            &#125;
-            url &#123;
-              path &#x2F;mrtg&#x2F;
+            }
+            url {
+              path /mrtg/
               digest 9b3a0c85a887a256d6939da88aabd8cd #返回页面的md5值
-            &#125;
+            }
             connect_timeout 3
             nb_get_retry 3
             delay_before_retry 3
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
-virtual_server 10.10.10.2 1358 &#123;
+virtual_server 10.10.10.2 1358 {
     delay_loop 6
     lb_algo rr 
     lb_kind NAT
@@ -556,101 +559,101 @@ virtual_server 10.10.10.2 1358 &#123;
 
     sorry_server 192.168.200.200 1358
 
-    real_server 192.168.200.2 1358 &#123;
+    real_server 192.168.200.2 1358 {
         weight 1
-        HTTP_GET &#123;
-            url &#123; 
-              path &#x2F;testurl&#x2F;test.jsp
+        HTTP_GET {
+            url { 
+              path /testurl/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl2&#x2F;test.jsp
+            }
+            url { 
+              path /testurl2/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl3&#x2F;test.jsp
+            }
+            url { 
+              path /testurl3/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
+            }
             connect_timeout 3
             nb_get_retry 3
             delay_before_retry 3
-        &#125;
-    &#125;
+        }
+    }
 
-    real_server 192.168.200.3 1358 &#123;
+    real_server 192.168.200.3 1358 {
         weight 1
-        HTTP_GET &#123;
-            url &#123; 
-              path &#x2F;testurl&#x2F;test.jsp
+        HTTP_GET {
+            url { 
+              path /testurl/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334c
-            &#125;
-            url &#123; 
-              path &#x2F;testurl2&#x2F;test.jsp
+            }
+            url { 
+              path /testurl2/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334c
-            &#125;
+            }
             connect_timeout 3
             nb_get_retry 3
             delay_before_retry 3
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 
-virtual_server 10.10.10.3 1358 &#123;
+virtual_server 10.10.10.3 1358 {
     delay_loop 3
     lb_algo rr 
     lb_kind NAT
     persistence_timeout 50
     protocol TCP
 
-    real_server 192.168.200.4 1358 &#123;
+    real_server 192.168.200.4 1358 {
         weight 1
-        HTTP_GET &#123;
-            url &#123; 
-              path &#x2F;testurl&#x2F;test.jsp
+        HTTP_GET {
+            url { 
+              path /testurl/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl2&#x2F;test.jsp
+            }
+            url { 
+              path /testurl2/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl3&#x2F;test.jsp
+            }
+            url { 
+              path /testurl3/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
+            }
             connect_timeout 3
             nb_get_retry 3
             delay_before_retry 3
-        &#125;
-    &#125;
+        }
+    }
 
-    real_server 192.168.200.5 1358 &#123;
+    real_server 192.168.200.5 1358 {
         weight 1
-        HTTP_GET &#123;
-            url &#123; 
-              path &#x2F;testurl&#x2F;test.jsp
+        HTTP_GET {
+            url { 
+              path /testurl/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl2&#x2F;test.jsp
+            }
+            url { 
+              path /testurl2/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
-            url &#123; 
-              path &#x2F;testurl3&#x2F;test.jsp
+            }
+            url { 
+              path /testurl3/test.jsp
               digest 640205b7b0fc66c1ea91c463fac6334d
-            &#125;
+            }
             connect_timeout 3
             nb_get_retry 3
             delay_before_retry 3
-        &#125;
-    &#125;
-&#125;
+        }
+    }
+}
 </code></pre>
 
 <p>real server</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/all/arp_announce
-<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/all/arp_ignore
-<span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/lo/arp_announce
-<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">></span> /proc/sys/net/ipv4/conf/lo/arp_ignore
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">&gt;</span> /proc/sys/net/ipv4/conf/all/arp_announce
+<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">&gt;</span> /proc/sys/net/ipv4/conf/all/arp_ignore
+<span class="token builtin class-name">echo</span> <span class="token string">"2"</span> <span class="token operator">&gt;</span> /proc/sys/net/ipv4/conf/lo/arp_announce
+<span class="token builtin class-name">echo</span> <span class="token string">"1"</span> <span class="token operator">&gt;</span> /proc/sys/net/ipv4/conf/lo/arp_ignore
 <span class="token comment">#添加虚拟ip地址s</span>
 <span class="token function">ip</span> addr <span class="token function">add</span> <span class="token variable">$VIP</span>/PREFIX dev lo label lo:1</code></pre>
 
@@ -671,7 +674,7 @@ virtual_server 10.10.10.3 1358 &#123;
 <p>支持TCP和HTTP两种健康检查模式</p>
 </li>
 <li><p>会话保持</p>
-<p>对于未实现会话共享的应用集群，可通过Insert Cookie&#x2F;Rewrite Cookie&#x2F;Prefix Cookie，以及上述的多种Hash方式实现会话保持</p>
+<p>对于未实现会话共享的应用集群，可通过Insert Cookie/Rewrite Cookie/Prefix Cookie，以及上述的多种Hash方式实现会话保持</p>
 </li>
 <li><p>监控与统计</p>
 <p>HAProxy提供了基于Web的统计信息页面，展现健康状态和流量数据。基于此功能，使用者可以开发监控程序来监控HAProxy的状态</p>
@@ -731,14 +734,14 @@ listen admin_stats <span class="token comment">#配置可视化面板</span>
 <pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart haproxy</code></pre>
 
 <h3 id="3-Nginx"><a href="#3-Nginx" class="headerlink" title="3.Nginx"></a>3.Nginx</h3><h5 id="1-什么是Nginx"><a href="#1-什么是Nginx" class="headerlink" title="1.什么是Nginx?"></a>1.什么是Nginx?</h5><p>Nginx是一个高性能的web服务器和反向代理服务器</p>
-<h5 id="2-Nginx配置负载均衡"><a href="#2-Nginx配置负载均衡" class="headerlink" title="2.Nginx配置负载均衡"></a>2.Nginx配置负载均衡</h5><pre class="language-bash" data-language="bash"><code class="language-bash">upstream server <span class="token punctuation">&#123;</span> 
+<h5 id="2-Nginx配置负载均衡"><a href="#2-Nginx配置负载均衡" class="headerlink" title="2.Nginx配置负载均衡"></a>2.Nginx配置负载均衡</h5><pre class="language-bash" data-language="bash"><code class="language-bash">upstream server <span class="token punctuation">{</span> 
       server <span class="token number">127.0</span>.0.1:80<span class="token punctuation">;</span> 
       server <span class="token number">127.0</span>.0.1:81<span class="token punctuation">;</span> 
-<span class="token punctuation">&#125;</span><span class="token comment">#配置上游服务器(默认调度算法为轮询)</span>
-localtion /<span class="token punctuation">&#123;</span>
+<span class="token punctuation">}</span><span class="token comment">#配置上游服务器(默认调度算法为轮询)</span>
+localtion /<span class="token punctuation">{</span>
 	<span class="token comment">#配置后端实际处理请求的服务器</span>
 	proxy_pass http://server<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 
 
 

@@ -5,11 +5,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="libev学习笔记, Tech">
-    <meta name="description" content="libev学习笔记1.什么是libev?libev是一个强大的网络reactor,支持多种事件(信号,I&amp;#x2F;O,定时器…..)
+    <meta name="description" content="libev学习笔记1.什么是libev?libev是一个强大的网络reactor,支持多种事件(信号,I/O,定时器…..)
 //基本数据类型的宏定义
 
 # define EV_A  loop 
-# define EV_A_ EV">
+# define EV_A_ EV_A,
+#">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -67,7 +68,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -432,7 +436,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="libev学习笔记"><a href="#libev学习笔记" class="headerlink" title="libev学习笔记"></a>libev学习笔记</h1><h3 id="1-什么是libev"><a href="#1-什么是libev" class="headerlink" title="1.什么是libev?"></a>1.什么是libev?</h3><p>libev是一个强大的网络reactor,支持多种事件(信号,I&#x2F;O,定时器…..)</p>
+                <h1 id="libev学习笔记"><a href="#libev学习笔记" class="headerlink" title="libev学习笔记"></a>libev学习笔记</h1><h3 id="1-什么是libev"><a href="#1-什么是libev" class="headerlink" title="1.什么是libev?"></a>1.什么是libev?</h3><p>libev是一个强大的网络reactor,支持多种事件(信号,I/O,定时器…..)</p>
 <pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">//基本数据类型的宏定义</span>
 
 <span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">define</span> <span class="token macro-name">EV_A</span>  <span class="token expression">loop </span></span>
@@ -441,20 +445,20 @@
 <span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">define</span> <span class="token macro-name">EV_P_</span> <span class="token expression">EV_P<span class="token punctuation">,</span></span></span>
 
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">ev_io</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token function">EV_WATCHER_LIST</span> <span class="token punctuation">(</span>ev_io<span class="token punctuation">)</span>
   <span class="token keyword">int</span> fd<span class="token punctuation">;</span>     <span class="token comment">/* ro */</span>
   <span class="token keyword">int</span> events<span class="token punctuation">;</span> <span class="token comment">/* ro */</span>
-<span class="token punctuation">&#125;</span> ev_io<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> ev_io<span class="token punctuation">;</span>
 
   <span class="token keyword">struct</span> <span class="token class-name">ev_loop</span>
-  <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">{</span>
     ev_tstamp ev_rt_now<span class="token punctuation">;</span>
-    <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">ev_rt_now</span> <span class="token expression"><span class="token punctuation">(</span><span class="token punctuation">(</span>loop<span class="token punctuation">)</span><span class="token operator">-></span>ev_rt_now<span class="token punctuation">)</span></span></span>
+    <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">ev_rt_now</span> <span class="token expression"><span class="token punctuation">(</span><span class="token punctuation">(</span>loop<span class="token punctuation">)</span><span class="token operator">-&gt;</span>ev_rt_now<span class="token punctuation">)</span></span></span>
     <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VAR</span><span class="token expression"><span class="token punctuation">(</span>name<span class="token punctuation">,</span>decl<span class="token punctuation">)</span> decl<span class="token punctuation">;</span></span></span>
       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ev_vars.h"</span></span>
     <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">undef</span> <span class="token expression">VAR</span></span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code></pre>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 
 <h3 id="2-使用方法"><a href="#2-使用方法" class="headerlink" title="2.使用方法"></a>2.使用方法</h3><h4 id="1-创建ev-loop对象"><a href="#1-创建ev-loop对象" class="headerlink" title="1.创建ev_loop对象"></a>1.创建ev_loop对象</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">ev_loop</span> <span class="token operator">*</span><span class="token function">ev_loop_new</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//创建一个ev_loop对象,这里的flag用于选择什么backend来实现多路复用</span>
@@ -517,24 +521,24 @@ bool <span class="token function">ev_is_pending</span> <span class="token punctu
 <span class="token keyword">int</span> <span class="token function">ev_clear_pending</span> <span class="token punctuation">(</span>loop<span class="token punctuation">,</span> ev_TYPE <span class="token operator">*</span>watcher<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// 清除watcher pending状态并且返回事件</span></code></pre></li>
 </ul>
 <h4 id="5-实例"><a href="#5-实例" class="headerlink" title="5.实例"></a>5.实例</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">//一个简单的io驱动事件</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ev.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ev.h&gt;</span></span>
 <span class="token keyword">void</span> <span class="token function">stdin_cb</span><span class="token punctuation">(</span>EV_P_ ev_io <span class="token operator">*</span>w<span class="token punctuation">,</span><span class="token keyword">int</span> revents<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"hello,world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">ev_io_stop</span><span class="token punctuation">(</span>EV_A_ w<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">ev_break</span><span class="token punctuation">(</span>EV_A_ EVBREAK_ALL<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">ev_loop</span> <span class="token operator">*</span>loop<span class="token operator">=</span> EV_DEFAULT<span class="token punctuation">;</span>
     ev_io stdin_watcher<span class="token punctuation">;</span>
     <span class="token function">ev_io_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>stdin_watcher<span class="token punctuation">,</span>stdin_cb<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>EV_READ<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//初始化watcher,设置事件处理的回调函数</span>
     <span class="token function">ev_io_start</span><span class="token punctuation">(</span>loop<span class="token punctuation">,</span><span class="token operator">&amp;</span>stdin_watcher<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//设置reactor的watcher</span>
     <span class="token function">ev_run</span><span class="token punctuation">(</span>loop<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//开始监听事件的到来,一旦事件到来,指向对应的watcher中的回调函数</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 
 <h4 id="6-和epoll对比"><a href="#6-和epoll对比" class="headerlink" title="6.和epoll对比"></a>6.和epoll对比</h4><p>ev_loop相当于struct event_base *base,监听集合<br>watcher相当于struct event *event,但是相比于epoll中的event,watcher中设置了相应的回调函数。<br>ev_run相当于epoll_wait函数开始监听事件的到来,到事件到来的时候调用相应的回调函数处理相应的事件</p>
 

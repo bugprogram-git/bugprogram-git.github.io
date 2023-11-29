@@ -64,7 +64,10 @@ ospf数据直接封装在ip数据报中,属于网络层协议,协议号为8">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -431,13 +434,13 @@ ospf数据直接封装在ip数据报中,属于网络层协议,协议号为8">
             <div id="articleContent">
                 <h1 id="OSPF协议"><a href="#OSPF协议" class="headerlink" title="OSPF协议"></a>OSPF协议</h1><h3 id="1-什么是OSPF"><a href="#1-什么是OSPF" class="headerlink" title="1.什么是OSPF?"></a>1.什么是OSPF?</h3><p>ospf(开放最短路径优先)是一种基于链路状态的路由协议,具有路由变化收敛快、无路由环路、支持变长子网掩码(VLSM)和汇总、层次区域划分等优点</p>
 <p>ospf数据直接封装在ip数据报中,属于网络层协议,协议号为89</p>
-<p>ospf使用多播地址进行通信,ip地址为224.0.0.5和224.0.0.6,224.0.0.5为非dr&#x2F;bdr路由器监听的地址,224.0.0.6为dr&#x2F;bdr监听的地址</p>
+<p>ospf使用多播地址进行通信,ip地址为224.0.0.5和224.0.0.6,224.0.0.5为非dr/bdr路由器监听的地址,224.0.0.6为dr/bdr监听的地址</p>
 <h3 id="2-OSPF在不同的网络中使用的通信地址"><a href="#2-OSPF在不同的网络中使用的通信地址" class="headerlink" title="2.OSPF在不同的网络中使用的通信地址"></a>2.OSPF在不同的网络中使用的通信地址</h3><ul>
 <li><p><strong>点到点网络</strong>:<br>是连接单独的一对路由器的网络,点到点网络上的有效邻居总是可以形成邻接关系的,在这种网络上,ospf包使用的目标地址是224.0.0.5。</p>
 </li>
 <li><p><strong>广播型网络</strong>:</p>
-<p>在广播行网络中(比如以太网),这样的网络会推举一个DR(指定路由器)和BDR(备份指定路由器),DR&#x2F;BDR的发送的OSPF包的目标地址为224.0.0.5;而除了DR&#x2F;BDR以外的OSPF包的目标地址为224.0.0.6</p>
-<p>在广播型网络中,所有的路由器都使用224.0.0.5的ip地址发送hello包,用来维持邻居关系,非DR&#x2F;BDR路由都以224.0.0.6的地址发送lsa更新,而只有DR&#x2F;BDR路由监听这个地址,反过来,DR路由使用224.0.0.5来发送更新到非DR路由</p>
+<p>在广播行网络中(比如以太网),这样的网络会推举一个DR(指定路由器)和BDR(备份指定路由器),DR/BDR的发送的OSPF包的目标地址为224.0.0.5;而除了DR/BDR以外的OSPF包的目标地址为224.0.0.6</p>
+<p>在广播型网络中,所有的路由器都使用224.0.0.5的ip地址发送hello包,用来维持邻居关系,非DR/BDR路由都以224.0.0.6的地址发送lsa更新,而只有DR/BDR路由监听这个地址,反过来,DR路由使用224.0.0.5来发送更新到非DR路由</p>
 </li>
 </ul>
 <h3 id="3-OSPF协议报文类型"><a href="#3-OSPF协议报文类型" class="headerlink" title="3.OSPF协议报文类型"></a>3.OSPF协议报文类型</h3><ul>

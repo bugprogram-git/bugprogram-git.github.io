@@ -64,7 +64,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -433,10 +436,10 @@
 <h3 id="2-overlayer"><a href="#2-overlayer" class="headerlink" title="2.overlayer"></a>2.overlayer</h3><p>overlayer是docker镜像的镜像层，每一个docker镜像由多个overlayer的组成，由于docker镜像存储使用了联合文件系统，每一个docker镜像由多个overlayer组成，多个docker镜像相同的overlayer进行共用，这使得不管是存储docker镜像还是运行docker容器，这都极大的节省了空间</p>
 <h3 id="3-Dockerfile语法"><a href="#3-Dockerfile语法" class="headerlink" title="3.Dockerfile语法"></a>3.Dockerfile语法</h3><pre class="language-Dockerfile" data-language="Dockerfile"><code class="language-Dockerfile">FROM ubuntu:latest       #以什么镜像为基础构建镜像
 MANTAINER bugprogram-git #镜像的构建人
-ENV hello&#x3D;world #设置环境变量，在镜像运行时，此参数仍然生效
-RUN sed -i &#39;s&#x2F;archive.ubuntu.com&#x2F;mirrors.ustc.edu.cn&#x2F;g&#39; &#x2F;etc&#x2F;apt&#x2F;sources.list \
+ENV hello=world #设置环境变量，在镜像运行时，此参数仍然生效
+RUN sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
 &amp;&amp; apt update -y &amp;&amp; apt upgrade -y \
-&amp;&amp; ln -snf &#x2F;usr&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime \
+&amp;&amp; ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 </code></pre>
 <h3 id="4-docker镜像构建"><a href="#4-docker镜像构建" class="headerlink" title="4.docker镜像构建"></a>4.docker镜像构建</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> build -t myubuntu:latest -f ./Dockerfile <span class="token builtin class-name">.</span>
 <span class="token comment">#-f指定dockerfile文件名 </span>
@@ -445,16 +448,16 @@ RUN sed -i &#39;s&#x2F;archive.ubuntu.com&#x2F;mirrors.ustc.edu.cn&#x2F;g&#39; &
 <p>例如，部署golang程序，我们首先在golang的docker镜像上将源码编译成可执行程序，再将可执行程序部署到alpine镜像上构建成docker镜像。</p>
 <pre class="language-Dockerfile" data-language="Dockerfile"><code class="language-Dockerfile">	
 FROM golang:alpine as builder
-WORKDIR &#x2F;
-COPY .&#x2F;hello.go .
-RUN go build -o hello .&#x2F;hello.go
+WORKDIR /
+COPY ./hello.go .
+RUN go build -o hello ./hello.go
 
 FROM alpine
 MAINTAINER bugprogram-git
-WORKDIR &#x2F;
-COPY --from&#x3D;builder &#x2F;hello . #从上述构建的镜像中拷贝可执行程序拷贝到此镜像中
+WORKDIR /
+COPY --from=builder /hello . #从上述构建的镜像中拷贝可执行程序拷贝到此镜像中
 RUN chmod +x hello
-ENTRYPOINT &#x2F;hello
+ENTRYPOINT /hello
 </code></pre>
 <h3 id="6-常用的docker基础镜像"><a href="#6-常用的docker基础镜像" class="headerlink" title="6.常用的docker基础镜像"></a>6.常用的docker基础镜像</h3><p><strong>alpine</strong><br>最常用的docker基础镜像，非常小，只有几MB，libc使用的musllib，和glibc不兼容，因此部署的可执行程序需要在musllib作为libc时进行编译，否则无法运行<br><strong>centos</strong><br>常用的运行环境，centos由于其稳定性是企业中最常用的linux发行版，<br><strong>ubuntu</strong><br>常用的编译环境，libc为glibc</p>
 

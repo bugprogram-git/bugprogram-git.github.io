@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="linux字符设备驱动开发入门, Tech">
     <meta name="description" content="linux字符设备驱动开发入门1.基本步骤graph LR;
-	a(&#34;申请设备号&#34;)--&gt;b(&#34;注册设备号&#34;)--&gt;c(&#34;设置设备对应的file_operations&#34;)--&gt;d(&#34;加入到内核链表&#34;)
-	ab(&#34;MKDEV(major,mi">
+    a(&#34;申请设备号&#34;)--&amp;gt;b(&#34;注册设备号&#34;)--&amp;gt;c(&#34;设置设备对应的file_operations&#34;)--&amp;gt;d(&#34;加入到内核链表&#34;)
+    ab(">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -65,7 +65,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -430,81 +433,81 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="linux字符设备驱动开发入门"><a href="#linux字符设备驱动开发入门" class="headerlink" title="linux字符设备驱动开发入门"></a>linux字符设备驱动开发入门</h1><h3 id="1-基本步骤"><a href="#1-基本步骤" class="headerlink" title="1.基本步骤"></a>1.基本步骤</h3><pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-	a<span class="token text string">("申请设备号")</span><span class="token arrow operator">--></span>b<span class="token text string">("注册设备号")</span><span class="token arrow operator">--></span>c<span class="token text string">("设置设备对应的file_operations")</span><span class="token arrow operator">--></span>d<span class="token text string">("加入到内核链表")</span>
-	ab<span class="token text string">("MKDEV(major,minor)")</span><span class="token arrow operator">--></span>ac<span class="token text string">("register_chrdev_region()")</span><span class="token arrow operator">--></span>ad<span class="token text string">("cdev_init()")</span><span class="token arrow operator">--></span>ae<span class="token text string">("cdev_add()")</span></code></pre>
+                <h1 id="linux字符设备驱动开发入门"><a href="#linux字符设备驱动开发入门" class="headerlink" title="linux字符设备驱动开发入门"></a>linux字符设备驱动开发入门</h1><h3 id="1-基本步骤"><a href="#1-基本步骤" class="headerlink" title="1.基本步骤"></a>1.基本步骤</h3><pre class="mermaid">graph LR;
+    a("申请设备号")--&gt;b("注册设备号")--&gt;c("设置设备对应的file_operations")--&gt;d("加入到内核链表")
+    ab("MKDEV(major,minor)")--&gt;ac("register_chrdev_region()")--&gt;ad("cdev_init()")--&gt;ae("cdev_add()")</pre>
 
 <h3 id="2-实例"><a href="#2-实例" class="headerlink" title="2.实例"></a>2.实例</h3><pre class="language-c" data-language="c"><code class="language-c"><span class="token comment">//驱动程序源码</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/init.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/fs.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/uaccess.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/init.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/module.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/kernel.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/fs.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;linux/uaccess.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">BUFFER_SIZE</span><span class="token expression"><span class="token punctuation">;</span></span></span>
 <span class="token keyword">struct</span> <span class="token class-name">mychar</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token class-name">dev_t</span> devnum<span class="token punctuation">;</span>
     <span class="token keyword">unsigned</span> <span class="token keyword">long</span> curlen<span class="token punctuation">;</span>
     <span class="token keyword">struct</span> <span class="token class-name">dev</span> mydev<span class="token punctuation">;</span>
     <span class="token keyword">char</span> buffer<span class="token punctuation">[</span>BUFFER_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>mychardev<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>mychardev<span class="token punctuation">;</span>
 <span class="token comment">//设备打开函数</span>
 <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">mychar_open</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">inode</span> <span class="token operator">*</span>node<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filp<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token comment">//获取结构体地址</span>
-    filp<span class="token operator">-></span>private_data <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">container_of</span><span class="token punctuation">(</span>node<span class="token operator">-></span>i_cdev<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">mychar</span><span class="token punctuation">,</span>mydev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    filp<span class="token operator">-&gt;</span>private_data <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">container_of</span><span class="token punctuation">(</span>node<span class="token operator">-&gt;</span>i_cdev<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">mychar</span><span class="token punctuation">,</span>mydev<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">mychar_close</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">inode</span> <span class="token operator">*</span>node<span class="token punctuation">,</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filp<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">static</span> <span class="token keyword">long</span> <span class="token function">mychar_read</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filp<span class="token punctuation">,</span><span class="token keyword">char</span> __user <span class="token operator">*</span>buffer<span class="token punctuation">,</span><span class="token keyword">long</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> count<span class="token punctuation">,</span><span class="token keyword">long</span> <span class="token keyword">long</span> <span class="token keyword">int</span> <span class="token operator">*</span>pos<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">static</span> <span class="token keyword">long</span> <span class="token function">mychar_write</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filp<span class="token punctuation">,</span><span class="token keyword">const</span> <span class="token keyword">char</span> __user <span class="token operator">*</span>buffer<span class="token punctuation">,</span><span class="token keyword">long</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> count<span class="token punctuation">,</span><span class="token keyword">long</span> <span class="token keyword">long</span> <span class="token keyword">int</span> <span class="token operator">*</span>pos<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">static</span> <span class="token keyword">long</span> <span class="token function">mychar_ioctl</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>filp<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> arg<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">int</span> __init <span class="token function">my_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token comment">//申请设备号</span>
     mychardev<span class="token punctuation">.</span>devnum <span class="token operator">=</span> <span class="token function">MKDEV</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//注册设备号</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">register_chrdev_region</span><span class="token punctuation">(</span>mychardev<span class="token punctuation">.</span>devnum<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"mychar"</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">alloc_chrdev_region</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mychardev<span class="token punctuation">.</span>devnum<span class="token punctuation">,</span><span class="token number">256</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"mychar"</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">{</span>
             <span class="token function">printk</span><span class="token punctuation">(</span><span class="token string">"register devnum error!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
     <span class="token keyword">struct</span> <span class="token class-name">file_operations</span> fops<span class="token operator">=</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
         <span class="token punctuation">.</span>owner <span class="token operator">=</span> THIS_MODULE<span class="token punctuation">,</span>
         <span class="token punctuation">.</span>open <span class="token operator">=</span> mychar_open<span class="token punctuation">,</span>
         <span class="token punctuation">.</span>release <span class="token operator">=</span> mychar_close<span class="token punctuation">,</span>
         <span class="token punctuation">.</span>read <span class="token operator">=</span> mychar_read<span class="token punctuation">,</span>
         <span class="token punctuation">.</span>write <span class="token operator">=</span> mychar_write<span class="token punctuation">,</span>
         <span class="token punctuation">.</span>unlocked_ioctl <span class="token operator">=</span> mychar_ioctl<span class="token punctuation">,</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">}</span>
     <span class="token comment">//设置对应的文件操作函数</span>
     <span class="token function">cdev_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mychardev<span class="token punctuation">.</span>mydev<span class="token punctuation">,</span><span class="token operator">&amp;</span>fops<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//加入到内核链表</span>
     <span class="token function">cdev_add</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mychardev<span class="token punctuation">.</span>mydev<span class="token punctuation">,</span>mychardev<span class="token punctuation">.</span>devnum<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token keyword">void</span> __exit <span class="token function">my_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token function">cdev_del</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mychardev<span class="token punctuation">.</span>mydev<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">unregister_chrdev_region</span><span class="token punctuation">(</span>mychardev<span class="token punctuation">.</span>devnum<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
 <span class="token function">module_init</span><span class="token punctuation">(</span>my_init<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">module_exit</span><span class="token punctuation">(</span>my_exit<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -512,14 +515,14 @@
 <span class="token function">MODULE_AUTHOR</span><span class="token punctuation">(</span><span class="token string">"404NotFound"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">MODULE_DESCRIPTION</span><span class="token punctuation">(</span><span class="token string">"just a char devices driver!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 
-<pre class="language-Makefile" data-language="Makefile"><code class="language-Makefile">&#x2F;&#x2F;项目的Makefile
-KERNELDIR ?&#x3D; &#x2F;lib&#x2F;modules&#x2F;$(shell uname -r)&#x2F;build
-PWD ?&#x3D; $(shell pwd)
+<pre class="language-Makefile" data-language="Makefile"><code class="language-Makefile">//项目的Makefile
+KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+PWD ?= $(shell pwd)
 modules:
-	$(MAKE) -C $(KERNELDIR) M&#x3D;$(PWD) modules
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 clean:
 	rm *.o *.mod *.symvers
-obj-m +&#x3D; main.o</code></pre>
+obj-m += main.o</code></pre>
 
 
                 

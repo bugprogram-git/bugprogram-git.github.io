@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -445,7 +448,7 @@
 <ul>
 <li>持续交付和部署</li>
 </ul>
-<p>对开发和运维（DevOps）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。<br>使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfile 来进行镜像构建，并结合 持续集成(Continuous Integration) 系统进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至结合 持续部署(Continuous Delivery&#x2F;Deployment) 系统进行自动部署。<br>而且使用 Dockerfile 使镜像构建透明化，不仅仅开发团队可以理解应用运行环境，也方便运维团队理解应用运行所需条件，帮助更好的生产环境中部署该镜像。</p>
+<p>对开发和运维（DevOps）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。<br>使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。开发人员可以通过 Dockerfile 来进行镜像构建，并结合 持续集成(Continuous Integration) 系统进行集成测试，而运维人员则可以直接在生产环境中快速部署该镜像，甚至结合 持续部署(Continuous Delivery/Deployment) 系统进行自动部署。<br>而且使用 Dockerfile 使镜像构建透明化，不仅仅开发团队可以理解应用运行环境，也方便运维团队理解应用运行所需条件，帮助更好的生产环境中部署该镜像。</p>
 <ul>
 <li>更轻松的迁移</li>
 </ul>
@@ -467,7 +470,7 @@
 <p><img src="/images/docker-on-linux.png" alt="&quot;docker&quot;"></p>
 </li>
 </ul>
-<h5 id="2-docker体系结构"><a href="#2-docker体系结构" class="headerlink" title="2.docker体系结构"></a>2.docker体系结构</h5><p>docker采用C&#x2F;S结构，docker daemon作为server接收client的请求，client和server可以运行在同一台机器上，也可以使用socket通信的方式运行在不同的机器上面</p>
+<h5 id="2-docker体系结构"><a href="#2-docker体系结构" class="headerlink" title="2.docker体系结构"></a>2.docker体系结构</h5><p>docker采用C/S结构，docker daemon作为server接收client的请求，client和server可以运行在同一台机器上，也可以使用socket通信的方式运行在不同的机器上面</p>
 <ul>
 <li>docker守护进程(docker deamon)</li>
 </ul>
@@ -514,15 +517,15 @@
 <span class="token comment">#查看某容器的配置以及详细信息</span>
 <span class="token function">docker</span> commit -a <span class="token string">""</span> -m <span class="token string">""</span> container_id image:tag
 <span class="token comment">#将某一个容器打包成镜像</span>
-<span class="token function">docker</span> <span class="token builtin class-name">export</span> container_id <span class="token operator">></span> ubuntu.tar
+<span class="token function">docker</span> <span class="token builtin class-name">export</span> container_id <span class="token operator">&gt;</span> ubuntu.tar
 <span class="token comment">#导出一个docker容器(不包含映射的容器卷以及映射路径)</span>
 <span class="token function">cat</span> docker/ubuntu.tar <span class="token operator">|</span> <span class="token function">docker</span> <span class="token function">import</span> - test/ubuntu:v1
 <span class="token comment">#将一个tar包导入成docker镜像</span>
 <span class="token function">docker</span> <span class="token function">rm</span> container_id
 <span class="token comment">#删除一个docker容器</span></code></pre>
 <h5 id="3-docker数据卷"><a href="#3-docker数据卷" class="headerlink" title="3.docker数据卷"></a>3.docker数据卷</h5><p>  因为docker容器中的数据在docker容器删除后会全部消失,因此可以借助docker容器数据卷来实现docker容i数据的本地持久化。docker容器数据卷永久有效,除非手动删除,并且docker数据卷可以让多个docker容器共享数据</p>
-<p><strong>数据卷的创建</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume create volume_name</code></pre></p>
-<p><strong>数据卷的挂载</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash">  <span class="token function">docker</span> run -it -v volume_name:container_path image_name
+<p><strong>数据卷的创建</strong><br>  </p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> volume create volume_name</code></pre><p></p>
+<p><strong>数据卷的挂载</strong><br>  </p><pre class="language-bash" data-language="bash"><code class="language-bash">  <span class="token function">docker</span> run -it -v volume_name:container_path image_name
 `````<span class="token variable"><span class="token variable">`</span>
 
 <span class="token comment">##### 4.docker网络</span>
@@ -548,11 +551,11 @@ docker网络中一共有5种网络模式
 **docker网络的创建**
 <span class="token variable">`</span></span>``bash
   <span class="token comment">#创建一个桥接的docker网络</span>
-<span class="token function">docker</span> network creat -d bridge --subnet<span class="token operator">=</span><span class="token number">172.20</span>.0.1/24 --gateway<span class="token operator">=</span><span class="token number">172.20</span>.0.1 -o <span class="token assign-left variable">parent</span><span class="token operator">=</span>eth0 mybridge</code></pre></p>
-<h5 id="5-dockerfile"><a href="#5-dockerfile" class="headerlink" title="5.dockerfile"></a>5.dockerfile</h5><p><strong>什么是Dockerfile?</strong><br>  dockerfile是一个用于构建docker镜像的脚本,docker可以读取dockerfile文件自动构建docker镜像<br><strong>dockerfile如何使用?</strong><br>  <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#当dockerfile命名为Dockerfile并且当前在dockerfile路径下,如果命名不一样需要在构建镜像的时候用-f指定构建脚本</span>
+<span class="token function">docker</span> network creat -d bridge --subnet<span class="token operator">=</span><span class="token number">172.20</span>.0.1/24 --gateway<span class="token operator">=</span><span class="token number">172.20</span>.0.1 -o <span class="token assign-left variable">parent</span><span class="token operator">=</span>eth0 mybridge</code></pre><p></p>
+<h5 id="5-dockerfile"><a href="#5-dockerfile" class="headerlink" title="5.dockerfile"></a>5.dockerfile</h5><p><strong>什么是Dockerfile?</strong><br>  dockerfile是一个用于构建docker镜像的脚本,docker可以读取dockerfile文件自动构建docker镜像<br><strong>dockerfile如何使用?</strong><br>  </p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#当dockerfile命名为Dockerfile并且当前在dockerfile路径下,如果命名不一样需要在构建镜像的时候用-f指定构建脚本</span>
 <span class="token function">docker</span> build -t name:tag <span class="token builtin class-name">.</span>
 <span class="token comment">#指定dockerfile文件路径</span>
-<span class="token function">docker</span> build -f /path/to/dockerfile -t name:tag</code></pre><br> <strong>docker语法</strong></p>
+<span class="token function">docker</span> build -f /path/to/dockerfile -t name:tag</code></pre><br> <strong>docker语法</strong><p></p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">FROM
 <span class="token comment">#表明以哪个镜像作为基础镜像</span>
 MAINTAINER
@@ -573,7 +576,7 @@ CMD
 <span class="token instruction"><span class="token keyword">RUN</span> sed -i <span class="token string">'s/archive.ubuntu.com/mirrors.aliyun.com/g'</span> /etc/apt/sources.list \ </span>
 &amp;&amp; apt-get update \
 &amp;&amp; ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
-&amp;&amp; echo $TZ > /etc/timezone \
+&amp;&amp; echo $TZ &gt; /etc/timezone \
 apt-get install -y tzdata unzip wget npm curl \
 &amp;&amp; apt-get clean \
 &amp;&amp; apt-get autoclean \
@@ -603,22 +606,22 @@ pacman -S <span class="token function">docker</span>
 <h5 id="2-docker配置"><a href="#2-docker配置" class="headerlink" title="2.docker配置"></a>2.docker配置</h5><p><strong>docker配置非root用户使用</strong></p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#如果系统不存在docker组</span>
 <span class="token function">groupadd</span> <span class="token function">docker</span>
-<span class="token function">usermod</span> -aG <span class="token function">docker</span> <span class="token variable">$&#123;<span class="token environment constant">USER</span>&#125;</span><span class="token comment">#</span>
+<span class="token function">usermod</span> -aG <span class="token function">docker</span> <span class="token variable">${<span class="token environment constant">USER</span>}</span><span class="token comment">#</span>
 newgrp <span class="token function">docker</span>
 systemctl restart 
 <span class="token comment">#重新登陆系统生效</span>
 <span class="token comment">#-a(append)附加</span>
 <span class="token comment">#-G指定组</span></code></pre>
 
-<p><strong>docker换源</strong><br>编辑&#x2F;etc&#x2F;docker&#x2F;daemon.json文件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">&#123;</span>
+<p><strong>docker换源</strong><br>编辑/etc/docker/daemon.json文件</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">{</span>
   <span class="token string">"registry-mirrors"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
     <span class="token string">"https://hub-mirror.c.163.com"</span>,
     <span class="token string">"https://ustc-edu-cn.mirror.aliyuncs.com"</span>,
     <span class="token string">"https://ghcr.io"</span>,
     <span class="token string">"https://mirror.baidubce.com"</span>
   <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token comment">#换源后需要重启docker才能生效</span></code></pre>
 
 <p><strong>docker的启动和停止</strong></p>
@@ -632,7 +635,7 @@ systemctl stop docker.service</code></pre>
 
 
 <h3 id="6-docker-compose"><a href="#6-docker-compose" class="headerlink" title="6.docker-compose"></a>6.docker-compose</h3><h5 id="1-什么是docker-compose"><a href="#1-什么是docker-compose" class="headerlink" title="1.什么是docker-compose?"></a>1.什么是docker-compose?</h5><p>  docker-compose是一个用python写的容器编排工具,在连续部署多个容器的时候,可以使用一个docker-compose脚本实现一次部署多个容器,大大提高了容器编排效率</p>
-<h5 id="2-如何使用docker-compose进行容器编排？"><a href="#2-如何使用docker-compose进行容器编排？" class="headerlink" title="2.如何使用docker-compose进行容器编排？"></a>2.如何使用docker-compose进行容器编排？</h5><p><strong>实例</strong><br>  <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.0'</span>
+<h5 id="2-如何使用docker-compose进行容器编排？"><a href="#2-如何使用docker-compose进行容器编排？" class="headerlink" title="2.如何使用docker-compose进行容器编排？"></a>2.如何使用docker-compose进行容器编排？</h5><p><strong>实例</strong><br>  </p><pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.0'</span>
 <span class="token key atrule">services</span><span class="token punctuation">:</span>
   <span class="token key atrule">web</span><span class="token punctuation">:</span>
   <span class="token comment">#容器名称</span>
@@ -658,7 +661,7 @@ systemctl stop docker.service</code></pre>
   <span class="token key atrule">default</span><span class="token punctuation">:</span>
     <span class="token key atrule">external</span><span class="token punctuation">:</span>
       <span class="token key atrule">name</span><span class="token punctuation">:</span> my<span class="token punctuation">-</span>pre<span class="token punctuation">-</span>existing<span class="token punctuation">-</span>network
-      <span class="token comment">#这里不能使用默认的docker0网络,只能使用用户自定义的网络</span></code></pre></p>
+      <span class="token comment">#这里不能使用默认的docker0网络,只能使用用户自定义的网络</span></code></pre><p></p>
 <p>docker-compose常用的一些属性如下:</p>
   <pre class="language-bash" data-language="bash"><code class="language-bash">Compose和Docker兼容性：
     Compose 文件格式有3个版本,分别为1, <span class="token number">2</span>.x 和 <span class="token number">3</span>.x

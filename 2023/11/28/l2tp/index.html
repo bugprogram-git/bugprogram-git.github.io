@@ -66,7 +66,10 @@ modprobe l2t">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -423,7 +426,7 @@ modprobe l2t">
 modprobe udp_tunnel
 modprobe l2tp_netlink
 modprobe l2tp_core</code></pre>
-<h3 id="3-配置xl2tpd"><a href="#3-配置xl2tpd" class="headerlink" title="3.配置xl2tpd"></a>3.配置xl2tpd</h3><p>修改配置文件 &#x2F;etc&#x2F;xl2tpd&#x2F;xl2tpd.</p>
+<h3 id="3-配置xl2tpd"><a href="#3-配置xl2tpd" class="headerlink" title="3.配置xl2tpd"></a>3.配置xl2tpd</h3><p>修改配置文件 /etc/xl2tpd/xl2tpd.</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>lac myvpn<span class="token punctuation">]</span> <span class="token comment">#myvpn为vpn名称</span>
 lns <span class="token operator">=</span> <span class="token number">121.248</span>.154.251 <span class="token comment">#vpn服务器的地址</span>
 ppp debug <span class="token operator">=</span> no <span class="token comment">#关闭调试信息</span>
@@ -431,7 +434,7 @@ pppoptfile <span class="token operator">=</span> /etc/ppp/options.l2tpd.client <
 refuse chap <span class="token operator">=</span> <span class="token function">yes</span>
 require pap <span class="token operator">=</span> <span class="token function">yes</span>
 length bit <span class="token operator">=</span> <span class="token function">yes</span></code></pre>
-<p>修改验证文件&#x2F;etc&#x2F;ppp&#x2F;options.l2tpd.client</p>
+<p>修改验证文件/etc/ppp/options.l2tpd.client</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">ipcp-accept-local
 ipcp-accept-remote
 refuse-eap
@@ -449,9 +452,9 @@ debug
 connect-delay <span class="token number">5000</span>
 name <span class="token string">"2111605319"</span> <span class="token comment">#vpn账号</span>
 password <span class="token string">"yh20021007"</span> <span class="token comment">#vpn密码</span></code></pre>
-<h3 id="4-配置预共享密钥"><a href="#4-配置预共享密钥" class="headerlink" title="4.配置预共享密钥"></a>4.配置预共享密钥</h3><p>vim &#x2F;etc&#x2F;ipsec.secrets<br>添加</p>
+<h3 id="4-配置预共享密钥"><a href="#4-配置预共享密钥" class="headerlink" title="4.配置预共享密钥"></a>4.配置预共享密钥</h3><p>vim /etc/ipsec.secrets<br>添加</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">:</span> PSK <span class="token string">"njfu.edu"</span></code></pre>
-<h3 id="5-配置ipsec"><a href="#5-配置ipsec" class="headerlink" title="5.配置ipsec"></a>5.配置ipsec</h3><p>vim &#x2F;etc&#x2F;ipsec.conf</p>
+<h3 id="5-配置ipsec"><a href="#5-配置ipsec" class="headerlink" title="5.配置ipsec"></a>5.配置ipsec</h3><p>vim /etc/ipsec.conf</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">config setup
 
 conn %default
@@ -484,11 +487,11 @@ ipsec up myvpn
 
 <span class="token function">mkdir</span> /var/run/xl2tpd -p
 
-<span class="token builtin class-name">echo</span> <span class="token string">"c myvpn"</span> <span class="token operator">></span> /var/run/xl2tpd/l2tp-control <span class="token comment">#这里的myvpn要和前面匹配</span></code></pre>
+<span class="token builtin class-name">echo</span> <span class="token string">"c myvpn"</span> <span class="token operator">&gt;</span> /var/run/xl2tpd/l2tp-control <span class="token comment">#这里的myvpn要和前面匹配</span></code></pre>
 
 <h3 id="7-确认连接成功"><a href="#7-确认连接成功" class="headerlink" title="7.确认连接成功"></a>7.确认连接成功</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#执行指令</span>
 ipsec status</code></pre>
-<p>如果显示<br>Security Associations (1 up, 0 connecting):<br>       myvpn[1]: ESTABLISHED 17 minutes ago, 172.19.123.72[172.19.123.72]…121.248.154.251[121.248.154.251]<br>       myvpn{1}:  INSTALLED, TRANSPORT, reqid 1, ESP in UDP SPIs: c7ed658e_i 8cd83099_o<br>       myvpn{1}:   172.19.123.72&#x2F;32[udp&#x2F;l2f] &#x3D;&#x3D;&#x3D; 121.248.154.251&#x2F;32[udp&#x2F;l2f]</p>
+<p>如果显示<br>Security Associations (1 up, 0 connecting):<br>       myvpn[1]: ESTABLISHED 17 minutes ago, 172.19.123.72[172.19.123.72]…121.248.154.251[121.248.154.251]<br>       myvpn{1}:  INSTALLED, TRANSPORT, reqid 1, ESP in UDP SPIs: c7ed658e_i 8cd83099_o<br>       myvpn{1}:   172.19.123.72/32[udp/l2f] === 121.248.154.251/32[udp/l2f]</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#执行指令 如果发现有个ppp的网卡，即连接成功</span>
 <span class="token function">ip</span> addr</code></pre>
                 

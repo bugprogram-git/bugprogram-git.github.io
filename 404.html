@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="I2C协议, Tech">
-    <meta name="description" content="I2C协议1.什么是I2C协议？I2C总线是PHLIPS公司在20世纪80年代推出的一种串行总线。具有引脚少，硬件实现简单，可扩展性强的优点，I2C支持多主控，总线上的任意一个设备能够进行发送/接收数据的设备都可以占领总线。当然，任意时间点">
+    <meta name="keywords" content="404, Tech">
+    <meta name="description" content="Tech">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -28,7 +28,7 @@
 </script>
 
 
-    <title>I2C协议 | Tech</title>
+    <title>404 | Tech</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -344,16 +344,29 @@
 
 </header>
 
-    
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
+    <style type="text/css">
+    /* don't remove. */
+    .about-cover {
+        height: 90.2vh;
+    }
+</style>
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
         <div class="row">
-            <div class="col s12 m12 l12">
+            <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                 <div class="brand">
-                    <h1 class="description center-align post-title">I2C协议</h1>
+                    <div class="title center-align">
+                        404 Sorry 您找的页面不存在！
+                    </div>
+                    <div class="title center-align">
+                        试试右上角的<span style="color:blue;font-weight:bold">搜索</span>功能？
+                    </div>
+                    <div class="title center-align">
+                        <a href="/" target="_blank">返回首页</a>
+                    </div>
+                    <div class="description center-align">
+                        Oops～，我崩溃了！找不到你想要的页面 :(
+                    </div>
                 </div>
             </div>
         </div>
@@ -361,464 +374,11 @@
 </div>
 
 
-
-
-<main class="post-container content">
-
-    
-    <div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">嵌入式基础</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-12-21
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-11-28
-                </div>
-                
-
-                
-
-                
-
-                
-            </div>
-        </div>
-        <hr class="clearfix">
-
-        
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.min.css">
-        
-
-        
-
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <h1 id="I2C协议"><a href="#I2C协议" class="headerlink" title="I2C协议"></a>I2C协议</h1><h3 id="1-什么是I2C协议？"><a href="#1-什么是I2C协议？" class="headerlink" title="1.什么是I2C协议？"></a>1.什么是I2C协议？</h3><p>I2C总线是PHLIPS公司在20世纪80年代推出的一种串行总线。具有引脚少，硬件实现简单，可扩展性强的优点，I2C支持多主控，总线上的任意一个设备能够进行发送/接收数据的设备都可以占领总线。当然，任意时间点上只能存在一个主控。</p>
-<h3 id="2-I2C接线图"><a href="#2-I2C接线图" class="headerlink" title="2.I2C接线图"></a>2.I2C接线图</h3><p>I2C通讯只有两根线一根是SCL，一根是SDA，SCL为同步时钟线用于传递时钟信号，SDA为数据线用于传递数据，因此只有一根线用于实际数据的收发，因此I2C也是一种半双工通讯协议。<br><img src="/images/i2c.png" alt="i2c"></p>
-<h3 id="3-I2C通讯特点"><a href="#3-I2C通讯特点" class="headerlink" title="3.I2C通讯特点"></a>3.I2C通讯特点</h3><p>起始信号和结束信号都是由主机发出的，起始信号一旦发出，总线就处于被占用状态，在结束信号一旦发出后，总线就处于空闲状态。</p>
-<h5 id="1-起始信号"><a href="#1-起始信号" class="headerlink" title="1.起始信号"></a>1.起始信号</h5><p>在SCL时钟线为高电平期间，数据线由高电平往低电平转变为起始信号。<br><img src="/image/i2cstart.png" alt="I2C起始信号"></p>
-<h5 id="2-结束信号"><a href="#2-结束信号" class="headerlink" title="2.结束信号"></a>2.结束信号</h5><p>在SCL时钟线为高电平期间，数据线由低电平往高电平转变为结束信号。<br><img src="/image/i2cstop.png" alt="I2C结束信号"><br>起始信号后</p>
-<h5 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3.注意事项"></a>3.注意事项</h5><p>(1) 接收器件接收到一个完整的数据字节后，可能需要完成一些其他工作，如处理内部接收中断服务函数等，这就无法立即接收下一字节的数据，这时接收器件可将SCL线拉成低电平，从而使得主机处于等待状态。直至接收器件准备好接收下一字节数据时再释放SCL线使之为高电平。</p>
-<p>(2) 连接到I2C总线上的器件，若具有I2C总线控制器那么很硬件会自动检测到起始、结束信号，而对于不具备I2C总线控制器的器件(单片机)来说，需要在每个时钟周期内保证对数据线SDA采样两次，捕获是否接收到起始/结束信号。</p>
-<h5 id="4-通信过程"><a href="#4-通信过程" class="headerlink" title="4.通信过程"></a>4.通信过程</h5><p>(1)起始信号后，总线上所有的从机开始等待主机紧接下来的从机地址广播。因为总线上每个设备的地址都是唯一的，当主机广播的地址与某个设备地址相同时，该设备就被选中，并向主机发出应答(ACK)或者非应答(NACK)，主机只有在接收到应答信号后继续发送/接收数据，没选中的设备将会忽略之后的数据信号。根据I2C协议，从机地址可以是7位或者10位。</p>
-<p>(2)I2C总线上传输的数据包括上述的地址信号，又包括真正的数据信号。在起始信号后需传送一个从机地址(7位)，第8位是数据的传输方向(接收/发送)，“0”表示主机发送数据，“1”表示主机接收数据。每次数据的传输总是由主机产生结束信号以结束传输，但若主机希望继续占用总线进行新的数据传输时，则可以不产生结束信号，而是再次发送起始信号对另一从机地址寻址。</p>
-<p>(3)若配置为写数据方向，主机开始向从机传输数据，数据包大小为8位，主机每发送完1字节数据都有等到从机的应答信号(ACK)，多字节数据发送时重复此过程。传输结束后，主机向从机发送一个停止信号表不再传输数据。</p>
-<p>(4)若配置为读方向，从机开始向主机返回数据，数据包大小还是8位。同理，从机每发送完一字节数据都要等到主机的应答信号(ACK)，重复此过程可以返回多个数据。当主机希望停止接收数据时就向返回一个非应答信号(NACK)，数据传输将结束。</p>
-<p>(5) 实际I2C通讯采用的是读写复合的格式。传输过程中主机需要发出2次起始信号：第一次传输主机通过从机地址找到从机设备，发送一段数据，这个数据是从设备内部寄存器或者存储器地址；第二次传输是对该地址进行读/写。主机要读取从机数据时，主机会释放对SDA总线的控制，由从机控制SDA总线，主机负责接收信号；主机要向从机设备写数据时，SDA由主机控制，从机负责接收信号。</p>
-<h3 id="4-小结"><a href="#4-小结" class="headerlink" title="4.小结"></a>4.小结</h3><p>I2C是嵌入式开发中最常用地协议之一，经常使用在控制板和显示屏进行通讯，以及主机和从机进行通讯中。</p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29344757/article/details/76520378">https://blog.csdn.net/qq_29344757/article/details/76520378</a></p>
-
-                
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
-        
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">404NotFound</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="https://bugprogram-git.github.io/2022/12/21/I2C%E5%8D%8F%E8%AE%AE/">https://bugprogram-git.github.io/2022/12/21/I2C%E5%8D%8F%E8%AE%AE/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">404NotFound</a>
-                    !
-                </span>
-            </div>
-        
-    </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
+    <script>
+        // 每天切换 banner 图.  Switch banner image every day.
+        var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+        $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
     </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">嵌入式基础</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
-</div>
-
-                </div>
-            </div>
-            
-                <div id="reward">
-    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs row">
-                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
-                    </ul>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(function () {
-        $('.tabs').tabs();
-    });
-</script>
-
-            
-        </div>
-    </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2022-12-21T17-08-35',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/12/22/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="科学上网技术原理和及配置教程">
-                        
-                        <span class="card-title">科学上网技术原理和及配置教程</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-12-22
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" class="post-category">
-                                    软件配置
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">
-                        <span class="chip bg-color">科学上网</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/12/20/Git%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Git使用入门">
-                        
-                        <span class="card-title">Git使用入门</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" class="post-category">
-                                    软件开发
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
-                        <span class="chip bg-color">软件工具使用</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-
-  <!-- 是否加载使用自带的 prismjs. -->
-  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
-
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
-        </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('0'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
 
 
 

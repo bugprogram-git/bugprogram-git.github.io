@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -430,13 +433,13 @@
             <div id="articleContent">
                 <h1 id="科学上网技术原理及配置教程"><a href="#科学上网技术原理及配置教程" class="headerlink" title="科学上网技术原理及配置教程"></a>科学上网技术原理及配置教程</h1><h2 id="1-什么是科学上网"><a href="#1-什么是科学上网" class="headerlink" title="1.什么是科学上网?"></a>1.什么是科学上网?</h2><p>由于中国大陆的一些政治原因，我们上国际互联网的流量在出国的时候一般会受到政府的审查。(其他的国家没有上网流量审查，中国特有，上国内的网站不会被屏蔽)，类似于google，facebook，twitter的一些网站一般会都会被政府的屏蔽，导致我们在中国大陆是无法直接访问这些被屏蔽的网站的，因此我们需要借助一些特别的技术手段实现访问这些被屏蔽的网站<br>我们通常上网的流量在访问国际互联网首先要经过政府的流量审查设备GFW(Great FireWall)，因此我们要访问那些被屏蔽的网站，如google，首先就要过GFW这一关<br>要绕过GFW我们首先要明白GFW的工作原理</p>
 <ul>
-<li>GFW工作原理<br>GFW通常通过域名、IP、关键字等进行流量审查(但不仅限于这些手段)，因此我们要绕过GFW就要绕过GFW就要借助这些特点<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
- 用户<span class="token arrow operator">->></span> GFW<span class="token operator">:</span>访问google
- GFW <span class="token arrow operator">-->></span> Google<span class="token operator">:</span> 丢弃数据包</code></pre>
-如果我们使用科学上网一般是这样的<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
-用户 <span class="token arrow operator">->></span> GFW<span class="token operator">:</span>访问代理服务器
-GFW <span class="token arrow operator">->></span> 代理服务器<span class="token operator">:</span> <span class="token text string">(正常访问)</span>
-代理服务器 <span class="token arrow operator">->></span> Google<span class="token operator">:</span> <span class="token text string">(访问成功)</span></code></pre></li>
+<li>GFW工作原理<br>GFW通常通过域名、IP、关键字等进行流量审查(但不仅限于这些手段)，因此我们要绕过GFW就要绕过GFW就要借助这些特点<pre class="mermaid">sequenceDiagram
+ 用户-&gt;&gt; GFW:访问google
+ GFW --&gt;&gt; Google: 丢弃数据包</pre>
+如果我们使用科学上网一般是这样的<pre class="mermaid">sequenceDiagram
+用户 -&gt;&gt; GFW:访问代理服务器
+GFW -&gt;&gt; 代理服务器: (正常访问)
+代理服务器 -&gt;&gt; Google: (访问成功)</pre></li>
 </ul>
 <h2 id="2-常用的科学上网手段"><a href="#2-常用的科学上网手段" class="headerlink" title="2.常用的科学上网手段"></a>2.常用的科学上网手段</h2><ul>
 <li><p>VPN<br>VPN(Virtual Private Network)虚拟专用网络，一般用于企业中为了实现多地区组网实现加密通讯的一种协议。正是由于VPN加密的特点，使得VPN可以用于科学上网，不过近些年由于GFW的不断升级，GFW现如今很容易识别到VPN流量，因此现如今使用VPN实现科学上网的方式并不安全。</p>
@@ -456,13 +459,13 @@ GFW <span class="token arrow operator">->></span> 代理服务器<span class="to
 </ul>
 <h2 id="3-详细技术原理"><a href="#3-详细技术原理" class="headerlink" title="3.详细技术原理"></a>3.详细技术原理</h2><p>1.以shadowsocks为例<br>shadowsocks程序中有两个核心程序分别为ss-server和ss-local</p>
 <p>整个工作流程</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> TD
-client<span class="token arrow operator">--></span><span class="token label property">|socks5|</span>ss-local
-ss-local<span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span><span class="token label property">crypto</span><span class="token arrow operator">--></span></span>ss-server
-ss-server<span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span><span class="token label property">decrypto</span><span class="token arrow operator">--></span></span>destination_site
-destination_site<span class="token arrow operator">--></span>ss-server
-ss-server<span class="token arrow operator">--></span><span class="token label property">|crypto|</span>ss-local
-ss-local<span class="token arrow operator">--></span><span class="token label property">|decrypto|</span>client</code></pre>
+<pre class="mermaid">graph TD
+client--&gt;|socks5|ss-local
+ss-local--crypto--&gt;ss-server
+ss-server--decrypto--&gt;destination_site
+destination_site--&gt;ss-server
+ss-server--&gt;|crypto|ss-local
+ss-local--&gt;|decrypto|client</pre>
 
 <p>1.客户端需要代理的程序首先将需要代理的流量封装成socks5数据包发送给本地代理客户端ss-local</p>
 <p>2.ss-local接收到来自客户端程序发送来的流量之后，将数据包解封装还原成原始流量，并将数据包重新封装成shadowsocks数据包，并将数据包进行加密，发送给远程shdowsocks服务器ss-server。</p>
@@ -476,14 +479,14 @@ ss-local<span class="token arrow operator">--></span><span class="token label pr
 <span class="token comment">#编译完得到ss-server可执行文件</span></code></pre>
 
 <p>2.修改配置文件(服务端)</p>
-<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+<pre class="language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"server"</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">"::0"</span><span class="token punctuation">,</span><span class="token string">"0.0.0.0"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>        <span class="token comment">//监听的地址</span>
     <span class="token property">"server_port"</span><span class="token operator">:</span><span class="token number">8388</span><span class="token punctuation">,</span>                <span class="token comment">//监听的端口</span>
     <span class="token property">"method"</span><span class="token operator">:</span><span class="token string">"chacha20-ietf-poly1305"</span><span class="token punctuation">,</span> <span class="token comment">//加密算法</span>
     <span class="token property">"password"</span><span class="token operator">:</span><span class="token string">"ExamplePassword"</span><span class="token punctuation">,</span>      <span class="token comment">//密码</span>
     <span class="token property">"mode"</span><span class="token operator">:</span><span class="token string">"tcp_and_udp"</span><span class="token punctuation">,</span>              <span class="token comment">//模式</span>
     <span class="token property">"fast_open"</span><span class="token operator">:</span><span class="token boolean">false</span>                  <span class="token comment">//是否打开fast_open,(fast_open可以减少多次tcp传输数据之前的握手次数。)</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>3.创建service文件</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /usr/lib/systemd/system/shadowsocks-libev-server@.service
 
@@ -513,14 +516,14 @@ systemctl daemon-reload</code></pre>
 <p>2.创建配置文件</p>
 <pre class="language-json" data-language="json"><code class="language-json">vim /etc/shadowsocks-libev/config.json
 
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token property">"server"</span> <span class="token operator">:</span> <span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span>                <span class="token comment">//ss-server的ip地址</span>
     <span class="token property">"server_port"</span><span class="token operator">:</span> <span class="token number">8388</span><span class="token punctuation">,</span>                   <span class="token comment">//ss-server监听的端口</span>
     <span class="token property">"local_port"</span><span class="token operator">:</span> <span class="token number">1080</span><span class="token punctuation">,</span>                    <span class="token comment">//本地提供socks5代理的端口</span>
     <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"ExamplePassword"</span><span class="token punctuation">,</span>         <span class="token comment">//服务端验证密码</span>
     <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">300</span><span class="token punctuation">,</span>                        <span class="token comment">//超时时间</span>
     <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"chacha20-ietf-poly1305"</span>     <span class="token comment">//加密方法</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>3.创建service文件</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /usr/lib/systemd/system/shadowsocks-libev-local@.service
 
@@ -564,43 +567,43 @@ systemctl daemon-reload</code></pre>
 <p>3.创建服务端配置文件<br>基于vless+kcp传输协议</p>
 <pre class="language-json" data-language="json"><code class="language-json">sudo mkdir /etc/xray
 sudo vim /etc/xray/config.json
-<span class="token punctuation">&#123;</span>
-  <span class="token property">"log"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
+  <span class="token property">"log"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"access"</span><span class="token operator">:</span> <span class="token string">"/var/log/xray/access.log"</span><span class="token punctuation">,</span>
     <span class="token property">"error"</span><span class="token operator">:</span> <span class="token string">"/var/log/xray/error.log"</span><span class="token punctuation">,</span>
     <span class="token property">"loglevel"</span><span class="token operator">:</span> <span class="token string">"info"</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"inbounds"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">443</span><span class="token punctuation">,</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"vless"</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"clients"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">&#123;</span>
+          <span class="token punctuation">{</span>
             <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"63a1897b-895d-4307-ae9f-558cf04d4138"</span> <span class="token comment">//表示符用于客户端验证</span>
-          <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">}</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"decryption"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
         <span class="token property">"fallbacks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">&#123;</span>
+          <span class="token punctuation">{</span>
             <span class="token property">"dest"</span><span class="token operator">:</span> <span class="token number">80</span>
-          <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">}</span>
         <span class="token punctuation">]</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"network"</span><span class="token operator">:</span> <span class="token string">"kcp"</span><span class="token punctuation">,</span>
         <span class="token property">"security"</span><span class="token operator">:</span> <span class="token string">"tls"</span><span class="token punctuation">,</span>
-        <span class="token property">"tlsSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"tlsSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"certificates"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-            <span class="token punctuation">&#123;</span>
+            <span class="token punctuation">{</span>
               <span class="token property">"certificateFile"</span><span class="token operator">:</span> <span class="token string">"/usr/local/xray/cert/ssl.crt"</span><span class="token punctuation">,</span>
               <span class="token property">"keyFile"</span><span class="token operator">:</span> <span class="token string">"/usr/local/xray/cert/ssl.key"</span>
-            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">}</span>
           <span class="token punctuation">]</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"tcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"httpSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"kcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"tcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"httpSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"kcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"mtu"</span><span class="token operator">:</span> <span class="token number">1350</span><span class="token punctuation">,</span>
           <span class="token property">"tti"</span><span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
           <span class="token property">"uplinkCapacity"</span><span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
@@ -608,31 +611,31 @@ sudo vim /etc/xray/config.json
           <span class="token property">"congestion"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
           <span class="token property">"readBufferSize"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
           <span class="token property">"writeBufferSize"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-          <span class="token property">"header"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"header"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"wechat-video"</span>
-          <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"seed"</span><span class="token operator">:</span> <span class="token string">"9yPvIsO0"</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"wsSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"quicSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"wsSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"quicSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"v.tbctl.cn"</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"outbounds"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"freedom"</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"blackhole"</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"block"</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"routing"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"routing"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"rules"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"field"</span><span class="token punctuation">,</span>
         <span class="token property">"ip"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
           <span class="token string">"0.0.0.0/8"</span><span class="token punctuation">,</span>
@@ -651,10 +654,10 @@ sudo vim /etc/xray/config.json
           <span class="token string">"fe80::/10"</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"outboundTag"</span><span class="token operator">:</span> <span class="token string">"block"</span>
-      <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <p>4.创建service</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /usr/lib/systemd/system/xray.service
 
@@ -692,93 +695,93 @@ systemd daemon-reload</code></pre>
 <h6 id="3-配置客户端配置文件"><a href="#3-配置客户端配置文件" class="headerlink" title="3.配置客户端配置文件"></a>3.配置客户端配置文件</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etx/xray/config.json</code></pre>
 
 <pre class="language-json" data-language="json"><code class="language-json">
-<span class="token punctuation">&#123;</span>
-  <span class="token property">"log"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span><span class="token comment">//日志</span>
+<span class="token punctuation">{</span>
+  <span class="token property">"log"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token comment">//日志</span>
     <span class="token property">"loglevel"</span><span class="token operator">:</span> <span class="token string">"warning"</span><span class="token punctuation">,</span>
     <span class="token property">"error"</span><span class="token operator">:</span> <span class="token string">"/var/log/xray/error.log"</span><span class="token punctuation">,</span> 
     <span class="token property">"access"</span><span class="token operator">:</span> <span class="token string">"/var/log/xray/access.log"</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token property">"inbounds"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"all-in"</span><span class="token punctuation">,</span>
       <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">12345</span><span class="token punctuation">,</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"dokodemo-door"</span><span class="token punctuation">,</span> <span class="token comment">//用于透明代理，这里默认监听到0.0.0.0，不能监听到127.0.0.1，如果监听到127.0.0.1会导致透明代理失败，对于端口对外暴漏的问题可以通过设置防火墙规则来实现</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"network"</span><span class="token operator">:</span> <span class="token string">"tcp,udp"</span><span class="token punctuation">,</span>
         <span class="token property">"followRedirect"</span><span class="token operator">:</span> <span class="token boolean">true</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"sniffing"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"sniffing"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
         <span class="token property">"destOverride"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"http"</span><span class="token punctuation">,</span> <span class="token string">"tls"</span><span class="token punctuation">]</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">"sockopt"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"sockopt"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"tproxy"</span><span class="token operator">:</span> <span class="token string">"tproxy"</span>
-        <span class="token punctuation">&#125;</span>
-      <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"socks"</span><span class="token punctuation">,</span> <span class="token comment">//如果需要socks代理可以设置这一段，注意，socks代理端口不能对外暴露，尤其是在云服务器上，</span>
       <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">1080</span><span class="token punctuation">,</span>
       <span class="token property">"listen"</span><span class="token operator">:</span> <span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span> <span class="token comment">//这里一定要监听到本地</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"socks"</span><span class="token punctuation">,</span>
-      <span class="token property">"sniffing"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"sniffing"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
         <span class="token property">"destOverride"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
           <span class="token string">"http"</span><span class="token punctuation">,</span>
           <span class="token string">"tls"</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"routeOnly"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"auth"</span><span class="token operator">:</span> <span class="token string">"noauth"</span><span class="token punctuation">,</span>
         <span class="token property">"udp"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
         <span class="token property">"allowTransparent"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-      <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token property">"outbounds"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"direct"</span><span class="token punctuation">,</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"freedom"</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"domainStrategy"</span><span class="token operator">:</span> <span class="token string">"UseIPv4"</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-        <span class="token property">"sockopt"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"sockopt"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"mark"</span><span class="token operator">:</span> <span class="token number">2</span> <span class="token comment">//用于tproxy对流量进行分类，防止流量回环，这个值要和后面的iptables的配置值对应。</span>
-        <span class="token punctuation">&#125;</span>
-      <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
       <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"proxy"</span><span class="token punctuation">,</span>
       <span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"vless"</span><span class="token punctuation">,</span>
-      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property">"settings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"vnext"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">&#123;</span>
+          <span class="token punctuation">{</span>
             <span class="token property">"address"</span><span class="token operator">:</span> <span class="token string">"v.tbctl.cn"</span><span class="token punctuation">,</span>
             <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">443</span><span class="token punctuation">,</span>
             <span class="token property">"users"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-              <span class="token punctuation">&#123;</span>
+              <span class="token punctuation">{</span>
                 <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"63a1897b-895d-4307-ae9f-558cf111111"</span><span class="token punctuation">,</span>
                 <span class="token property">"alterId"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
                 <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"t@t.tt"</span><span class="token punctuation">,</span>
                 <span class="token property">"security"</span><span class="token operator">:</span> <span class="token string">"auto"</span><span class="token punctuation">,</span>
                 <span class="token property">"encryption"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
                 <span class="token property">"flow"</span><span class="token operator">:</span> <span class="token string">""</span>
-              <span class="token punctuation">&#125;</span>
+              <span class="token punctuation">}</span>
             <span class="token punctuation">]</span>
-          <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">}</span>
         <span class="token punctuation">]</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"streamSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"network"</span><span class="token operator">:</span> <span class="token string">"kcp"</span><span class="token punctuation">,</span>
         <span class="token property">"security"</span><span class="token operator">:</span> <span class="token string">"tls"</span><span class="token punctuation">,</span>
-        <span class="token property">"tlsSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token property">"tlsSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"allowInsecure"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
           <span class="token property">"show"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-        <span class="token property">"kcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"kcpSettings"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
           <span class="token property">"mtu"</span><span class="token operator">:</span> <span class="token number">1350</span><span class="token punctuation">,</span>
           <span class="token property">"tti"</span><span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
           <span class="token property">"uplinkCapacity"</span><span class="token operator">:</span> <span class="token number">12</span><span class="token punctuation">,</span>
@@ -786,64 +789,64 @@ systemd daemon-reload</code></pre>
           <span class="token property">"congestion"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
           <span class="token property">"readBufferSize"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
           <span class="token property">"writeBufferSize"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-          <span class="token property">"header"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token property">"header"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
             <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"wechat-video"</span>
-          <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token property">"seed"</span><span class="token operator">:</span> <span class="token string">"9yPvIsO0"</span> <span class="token comment">//kcp seed</span>
-        <span class="token punctuation">&#125;</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token property">"mux"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">"mux"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
         <span class="token property">"concurrency"</span><span class="token operator">:</span> <span class="token number">-1</span>
-      <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token property">"dns"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">//dns服务器</span>
-    <span class="token property">"hosts"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token property">"dns"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token comment">//dns服务器</span>
+    <span class="token property">"hosts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token property">"dns.google"</span><span class="token operator">:</span> <span class="token string">"8.8.8.8"</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token property">"servers"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">{</span>
               <span class="token property">"address"</span><span class="token operator">:</span> <span class="token string">"https+local://dns.alidns.com/dns-query"</span><span class="token punctuation">,</span>
               <span class="token property">"domains"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"domain:geosite:cn"</span><span class="token punctuation">,</span><span class="token string">"bing.com"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
               <span class="token property">"expectIPs"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"geoip:cn"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
               <span class="token property">"skipFallback"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
               <span class="token property">"address"</span><span class="token operator">:</span> <span class="token string">"https+local://doh.pub/dns-query"</span><span class="token punctuation">,</span>
               <span class="token property">"domains"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"domain:geosite:cn"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
               <span class="token property">"expectIPs"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"geoip:cn"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
               <span class="token property">"skipFallback"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token string">"https://1.1.1.1/dns-query"</span><span class="token punctuation">,</span>
       <span class="token string">"https://1.0.0.1/dns-query"</span><span class="token punctuation">,</span>
       <span class="token string">"https://dns.google/dns-query"</span>
     <span class="token punctuation">]</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-  <span class="token property">"routing"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"routing"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"domainStrategy"</span><span class="token operator">:</span> <span class="token string">"IPIfNonMatch"</span><span class="token punctuation">,</span>
     <span class="token property">"rules"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"field"</span><span class="token punctuation">,</span>
         <span class="token property">"inboundTag"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all-in"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">53</span><span class="token punctuation">,</span>
         <span class="token property">"outboundTag"</span><span class="token operator">:</span> <span class="token string">"dns-out"</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"field"</span><span class="token punctuation">,</span>
         <span class="token property">"ip"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"8.8.8.8"</span><span class="token punctuation">,</span> <span class="token string">"1.1.1.1"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"outboundTag"</span><span class="token operator">:</span> <span class="token string">"proxy"</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"field"</span><span class="token punctuation">,</span>
         <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"geosite:category-ads-all"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"outboundTag"</span><span class="token operator">:</span> <span class="token string">"block"</span>
-      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-      <span class="token punctuation">&#123;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
         <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"field"</span><span class="token punctuation">,</span>
         <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"geosite:geolocation-!cn"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"outboundTag"</span><span class="token operator">:</span> <span class="token string">"proxy"</span>
-      <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
 </code></pre>
 
@@ -913,24 +916,24 @@ iptables -t filter -A INPUT -p icmp --icmp-type echo-reponse -j DROP</code></pre
 <h6 id="5-3-配置路由策略"><a href="#5-3-配置路由策略" class="headerlink" title="5.3 配置路由策略"></a>5.3 配置路由策略</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ip</span> route <span class="token function">add</span> <span class="token builtin class-name">local</span> default dev lo table <span class="token number">100</span> <span class="token comment"># 添加路由表 100（匹配到这个规则的数据包都被视为lo网卡发出的</span>
 <span class="token function">sudo</span> <span class="token function">ip</span> rule <span class="token function">add</span> fwmark <span class="token number">1</span> table <span class="token number">100</span> <span class="token comment"># 为路由表 100 设定规则</span></code></pre>
 <h6 id="5-4-设置开机自启动-可选"><a href="#5-4-设置开机自启动-可选" class="headerlink" title="*5.4 设置开机自启动(可选)"></a>*5.4 设置开机自启动(可选)</h6><p>保存iptables规则</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">bash</span> -c <span class="token string">"iptables-save > /etc/iptabels/iptables.rules"</span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">bash</span> -c <span class="token string">"iptables-save &gt; /etc/iptabels/iptables.rules"</span></code></pre>
 <p>创建service文件</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /usr/lib/system/system/iptables.service</code></pre>
 
 <pre class="language-none"><code class="language-none">[Unit]
-Description&#x3D;IPv4 Packet Filtering Framework
-Before&#x3D;network-pre.target
-Wants&#x3D;network-pre.target
-After&#x3D;network.target xray.service
+Description=IPv4 Packet Filtering Framework
+Before=network-pre.target
+Wants=network-pre.target
+After=network.target xray.service
 
 [Service]
-User&#x3D;root
-Type&#x3D;simple
-ExecStartPre&#x3D;&#x2F;bin&#x2F;bash -c &quot;sudo ip route add local default dev lo table 100; sudo ip rule add fwmark 1 table 100&quot;
-ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;iptables-restore  &#x2F;etc&#x2F;iptables&#x2F;iptables.rules
+User=root
+Type=simple
+ExecStartPre=/bin/bash -c "sudo ip route add local default dev lo table 100; sudo ip rule add fwmark 1 table 100"
+ExecStart=/usr/sbin/iptables-restore  /etc/iptables/iptables.rules
 
 [Install]
-WantedBy&#x3D;multi-user.target
+WantedBy=multi-user.target
 </code></pre>
 
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置xray开机自启动</span>
@@ -940,11 +943,11 @@ WantedBy&#x3D;multi-user.target
 <span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> iptables</code></pre>
 <h5 id="6-通过ocserv服务器进行中转（可选）"><a href="#6-通过ocserv服务器进行中转（可选）" class="headerlink" title="*6.通过ocserv服务器进行中转（可选）"></a>*6.通过ocserv服务器进行中转（可选）</h5><p>为了使用更加的方便，可以将xray客户端搭建在云服务器上，然后再云服务器上搭建ocserv服务端，通过配置路由规则，将ocserv客户端的流量通过ocserv服务器用xray进行转发，实现科学上网</p>
 <p>整个技术架构</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>  
-OcservClient<span class="token arrow operator">->></span>OcservServer<span class="token operator">:</span>Crypto<span class="token text string">(DTLS)</span>
-OcservServer<span class="token arrow operator">->></span>XrayClient<span class="token operator">:</span>Origin
-XrayClient<span class="token arrow operator">->></span>XrayServer<span class="token operator">:</span>Crypto<span class="token text string">(VLESS+kcp+tls)</span>
-XrayServer<span class="token arrow operator">->></span>RealServer<span class="token operator">:</span>Origin</code></pre>
+<pre class="mermaid">sequenceDiagram  
+OcservClient-&gt;&gt;OcservServer:Crypto(DTLS)
+OcservServer-&gt;&gt;XrayClient:Origin
+XrayClient-&gt;&gt;XrayServer:Crypto(VLESS+kcp+tls)
+XrayServer-&gt;&gt;RealServer:Origin</pre>
 
 <p>实现通过ocserv进行中转的前提是服务器已经配置好透明代理，只要配置好透明代理，服务器上所有的流量都会走xray进行路由匹配，如果检测到需要路由的流量，xray会对流量进行自动代理。因此要实现通过ocserv对流量进行中转只需要将服务器的ocserv配置好即可，并且将ocserv和客户端通信的流量从xray过滤即可，防止ocserv直连客户端的流量同样走代理</p>
 <h3 id="6-常用的客户端软件配置-基于windows"><a href="#6-常用的客户端软件配置-基于windows" class="headerlink" title="6.常用的客户端软件配置(基于windows)"></a>6.常用的客户端软件配置(基于windows)</h3><h4 id="6-1-基于Windows"><a href="#6-1-基于Windows" class="headerlink" title="6.1 基于Windows"></a>6.1 基于Windows</h4><h5 id="6-1-1-ClashForWindows"><a href="#6-1-1-ClashForWindows" class="headerlink" title="6.1.1.ClashForWindows"></a>6.1.1.ClashForWindows</h5><p>Clash for Windows是代理工具Clash在Windows系统的唯一图形客户端，同时还支持Windows、Linux、macOS三大系统，功能强大且支持多种代理协议，如Shadowsocks(SS)、ShadowsocksR(SSR)、Socks、Snell、V2Ray、Trojan等代理协议。以下是配置步骤</p>

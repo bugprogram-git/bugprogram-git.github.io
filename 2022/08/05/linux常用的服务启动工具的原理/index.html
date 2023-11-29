@@ -5,10 +5,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="linux常用的服务启动工具的原理, Tech">
-    <meta name="description" content="linux常用的服务工具的原理1.openrc&amp;#x2F;systemd通过读取&amp;#x2F;etc&amp;#x2F;init.d&amp;#x2F;*脚本,这个脚本定义了程序的执行规则,停止规则等.
+    <meta name="description" content="linux常用的服务工具的原理1.openrc/systemd通过读取/etc/init.d/*脚本,这个脚本定义了程序的执行规则,停止规则等.
 以nginx服务的服务脚本为例
 #!/bin/sh
 
+### BEGIN INIT INFO
 ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -67,7 +68,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -432,7 +436,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="linux常用的服务工具的原理"><a href="#linux常用的服务工具的原理" class="headerlink" title="linux常用的服务工具的原理"></a>linux常用的服务工具的原理</h1><h3 id="1-openrc-x2F-systemd"><a href="#1-openrc-x2F-systemd" class="headerlink" title="1.openrc&#x2F;systemd"></a>1.openrc&#x2F;systemd</h3><p>通过读取&#x2F;etc&#x2F;init.d&#x2F;*脚本,这个脚本定义了程序的执行规则,停止规则等.</p>
+                <h1 id="linux常用的服务工具的原理"><a href="#linux常用的服务工具的原理" class="headerlink" title="linux常用的服务工具的原理"></a>linux常用的服务工具的原理</h1><h3 id="1-openrc-x2F-systemd"><a href="#1-openrc-x2F-systemd" class="headerlink" title="1.openrc/systemd"></a>1.openrc/systemd</h3><p>通过读取/etc/init.d/*脚本,这个脚本定义了程序的执行规则,停止规则等.</p>
 <p>以nginx服务的服务脚本为例</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 
@@ -456,7 +460,7 @@
 	<span class="token builtin class-name">.</span> /etc/default/nginx
 <span class="token keyword">fi</span>
 
-<span class="token assign-left variable">STOP_SCHEDULE</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$&#123;STOP_SCHEDULE<span class="token operator">:-</span>QUIT<span class="token operator">/</span>5<span class="token operator">/</span>TERM<span class="token operator">/</span>5<span class="token operator">/</span>KILL<span class="token operator">/</span>5&#125;</span>"</span>
+<span class="token assign-left variable">STOP_SCHEDULE</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${STOP_SCHEDULE<span class="token operator">:-</span>QUIT<span class="token operator">/</span>5<span class="token operator">/</span>TERM<span class="token operator">/</span>5<span class="token operator">/</span>KILL<span class="token operator">/</span>5}</span>"</span>
 
 <span class="token builtin class-name">test</span> -x <span class="token variable">$DAEMON</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span>
 
@@ -464,7 +468,7 @@
 <span class="token builtin class-name">.</span> /lib/lsb/init-functions
 
 <span class="token comment"># Try to extract nginx pidfile</span>
-<span class="token assign-left variable">PID</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> /etc/nginx/nginx.conf <span class="token operator">|</span> <span class="token function">grep</span> -Ev <span class="token string">'^\s*#'</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN &#123; RS="[;&#123;&#125;]" &#125; &#123; if ($1 == "pid") print $2 &#125;'</span> <span class="token operator">|</span> <span class="token function">head</span> -n1<span class="token variable">)</span></span>
+<span class="token assign-left variable">PID</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> /etc/nginx/nginx.conf <span class="token operator">|</span> <span class="token function">grep</span> -Ev <span class="token string">'^\s*#'</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'BEGIN { RS="[;{}]" } { if ($1 == "pid") print $2 }'</span> <span class="token operator">|</span> <span class="token function">head</span> -n1<span class="token variable">)</span></span>
 <span class="token keyword">if</span> <span class="token punctuation">[</span> -z <span class="token string">"<span class="token variable">$PID</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
 	<span class="token assign-left variable">PID</span><span class="token operator">=</span>/run/nginx.pid
 <span class="token keyword">fi</span>
@@ -474,26 +478,26 @@
 	<span class="token builtin class-name">ulimit</span> <span class="token variable">$ULIMIT</span>
 <span class="token keyword">fi</span>
 
-<span class="token function-name function">start_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">start_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Start the daemon/service</span>
 	<span class="token comment">#</span>
 	<span class="token comment"># Returns:</span>
 	<span class="token comment">#   0 if daemon has been started</span>
 	<span class="token comment">#   1 if daemon was already running</span>
 	<span class="token comment">#   2 if daemon could not be started</span>
-	start-stop-daemon --start --quiet --pidfile <span class="token variable">$PID</span> --exec <span class="token variable">$DAEMON</span> --test <span class="token operator">></span> /dev/null <span class="token punctuation">\</span>
+	start-stop-daemon --start --quiet --pidfile <span class="token variable">$PID</span> --exec <span class="token variable">$DAEMON</span> --test <span class="token operator">&gt;</span> /dev/null <span class="token punctuation">\</span>
 		<span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token number">1</span>
 	start-stop-daemon --start --quiet --pidfile <span class="token variable">$PID</span> --exec <span class="token variable">$DAEMON</span> -- <span class="token punctuation">\</span>
-		<span class="token variable">$DAEMON_OPTS</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null <span class="token punctuation">\</span>
+		<span class="token variable">$DAEMON_OPTS</span> <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token punctuation">\</span>
 		<span class="token operator">||</span> <span class="token builtin class-name">return</span> <span class="token number">2</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
-<span class="token function-name function">test_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">test_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Test the nginx configuration</span>
-	<span class="token variable">$DAEMON</span> -t <span class="token variable">$DAEMON_OPTS</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span>
-<span class="token punctuation">&#125;</span>
+	<span class="token variable">$DAEMON</span> -t <span class="token variable">$DAEMON_OPTS</span> <span class="token operator">&gt;</span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span>
+<span class="token punctuation">}</span>
 
-<span class="token function-name function">stop_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">stop_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Stops the daemon/service</span>
 	<span class="token comment">#</span>
 	<span class="token comment"># Return</span>
@@ -505,21 +509,21 @@
 	<span class="token assign-left variable">RETVAL</span><span class="token operator">=</span><span class="token string">"<span class="token variable">$?</span>"</span>
 	<span class="token function">sleep</span> <span class="token number">1</span>
 	<span class="token builtin class-name">return</span> <span class="token string">"<span class="token variable">$RETVAL</span>"</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
-<span class="token function-name function">reload_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">reload_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Function that sends a SIGHUP to the daemon/service</span>
 	start-stop-daemon --stop --signal HUP --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span>
 	<span class="token builtin class-name">return</span> <span class="token number">0</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
-<span class="token function-name function">rotate_logs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">rotate_logs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Rotate log files</span>
 	start-stop-daemon --stop --signal USR1 --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span>
 	<span class="token builtin class-name">return</span> <span class="token number">0</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
-<span class="token function-name function">upgrade_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token function-name function">upgrade_nginx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment"># Online upgrade nginx executable</span>
 	<span class="token comment"># http://nginx.org/en/docs/control.html</span>
 	<span class="token comment">#</span>
@@ -530,7 +534,7 @@
 	<span class="token comment">#   3 if the old master could not be killed</span>
 	<span class="token keyword">if</span> start-stop-daemon --stop --signal USR2 --quiet --pidfile <span class="token variable">$PID</span> --name <span class="token variable">$NAME</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
 		<span class="token comment"># Wait for both old and new master to write their pid file</span>
-		<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>.oldbin"</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+		<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">${PID}</span>.oldbin"</span> <span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -s <span class="token string">"<span class="token variable">${PID}</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
 			<span class="token assign-left variable">cnt</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">expr</span> $cnt + <span class="token number">1</span><span class="token variable">`</span></span>
 			<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$cnt</span> -gt <span class="token number">10</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
 				<span class="token builtin class-name">return</span> <span class="token number">2</span>
@@ -538,7 +542,7 @@
 			<span class="token function">sleep</span> <span class="token number">1</span>
 		<span class="token keyword">done</span>
 		<span class="token comment"># Everything is ready, gracefully stop the old master</span>
-		<span class="token keyword">if</span> start-stop-daemon --stop --signal QUIT --quiet --pidfile <span class="token string">"<span class="token variable">$&#123;PID&#125;</span>.oldbin"</span> --name <span class="token variable">$NAME</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+		<span class="token keyword">if</span> start-stop-daemon --stop --signal QUIT --quiet --pidfile <span class="token string">"<span class="token variable">${PID}</span>.oldbin"</span> --name <span class="token variable">$NAME</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
 			<span class="token builtin class-name">return</span> <span class="token number">0</span>
 		<span class="token keyword">else</span>
 			<span class="token builtin class-name">return</span> <span class="token number">3</span>
@@ -546,7 +550,7 @@
 	<span class="token keyword">else</span>
 		<span class="token builtin class-name">return</span> <span class="token number">1</span>
 	<span class="token keyword">fi</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
 <span class="token keyword">case</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token keyword">in</span>
 	start<span class="token punctuation">)</span>
@@ -626,7 +630,7 @@
 		log_end_msg <span class="token variable">$?</span>
 		<span class="token punctuation">;</span><span class="token punctuation">;</span>
 	*<span class="token punctuation">)</span>
-		<span class="token builtin class-name">echo</span> <span class="token string">"Usage: <span class="token variable">$NAME</span> &#123;start|stop|restart|reload|force-reload|status|configtest|rotate|upgrade&#125;"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;2</span>
+		<span class="token builtin class-name">echo</span> <span class="token string">"Usage: <span class="token variable">$NAME</span> {start|stop|restart|reload|force-reload|status|configtest|rotate|upgrade}"</span> <span class="token operator">&gt;</span><span class="token file-descriptor important">&amp;2</span>
 		<span class="token builtin class-name">exit</span> <span class="token number">3</span>
 		<span class="token punctuation">;</span><span class="token punctuation">;</span>
 <span class="token keyword">esac</span></code></pre>
@@ -637,7 +641,7 @@
 
 
 
-<h3 id="2-systemd"><a href="#2-systemd" class="headerlink" title="2.systemd"></a>2.systemd</h3><p>systemd是大部分linux发行版采用的init程序,作为一种init程序,操作系统启动的时候systemd会启动一个后台守护进行systemd,systemd每启动一个服务,是通过从systemd fork一个子进程,启动服务的过程中systemd通过读取&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;**.service文件脚本,从而获得可执行程序的路径,启动程序参数等等…</p>
+<h3 id="2-systemd"><a href="#2-systemd" class="headerlink" title="2.systemd"></a>2.systemd</h3><p>systemd是大部分linux发行版采用的init程序,作为一种init程序,操作系统启动的时候systemd会启动一个后台守护进行systemd,systemd每启动一个服务,是通过从systemd fork一个子进程,启动服务的过程中systemd通过读取/usr/lib/systemd/system/**.service文件脚本,从而获得可执行程序的路径,启动程序参数等等…</p>
 <p>以nginx.service服务管理脚本为例</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Stop dance for nginx</span>
 <span class="token comment"># =======================</span>

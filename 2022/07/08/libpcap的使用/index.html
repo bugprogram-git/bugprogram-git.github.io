@@ -64,7 +64,10 @@ int pcap_findalldevs(pcap_if_t **alld">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -432,26 +435,26 @@ int pcap_findalldevs(pcap_if_t **alld">
                 <h1 id="libpcap的基本使用"><a href="#libpcap的基本使用" class="headerlink" title="libpcap的基本使用"></a>libpcap的基本使用</h1><h4 id="1-获取网络接口"><a href="#1-获取网络接口" class="headerlink" title="1.获取网络接口"></a>1.获取网络接口</h4><pre class="language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">pcap_lookupdev</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>error_buffer<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//获取本地网络接口(返回网络接口的名称)</span>
 <span class="token keyword">int</span> <span class="token function">pcap_findalldevs</span><span class="token punctuation">(</span><span class="token class-name">pcap_if_t</span> <span class="token operator">*</span><span class="token operator">*</span>alldevsp<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>errbuf<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//查找本地所有的网络接口</span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token class-name">pcap_if_t</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token punctuation">{</span>
 	<span class="token keyword">struct</span> <span class="token class-name">pcap_if</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
 	<span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>		<span class="token comment">/* name to hand to "pcap_open_live()" */</span>
 	<span class="token keyword">char</span> <span class="token operator">*</span>description<span class="token punctuation">;</span>	<span class="token comment">/* textual description of interface, or NULL */</span>
 	<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token operator">*</span>addresses<span class="token punctuation">;</span>
 	bpf_u_int32 flags<span class="token punctuation">;</span>	<span class="token comment">/* PCAP_IF_ interface flags */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token punctuation">{</span>
 	<span class="token keyword">struct</span> <span class="token class-name">pcap_addr</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
 	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>addr<span class="token punctuation">;</span>		<span class="token comment">/* address */</span>
 	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>netmask<span class="token punctuation">;</span>	<span class="token comment">/* netmask for that address */</span>
 	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>broadaddr<span class="token punctuation">;</span>	<span class="token comment">/* broadcast address for that address */</span>
 	<span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span>dstaddr<span class="token punctuation">;</span>	<span class="token comment">/* P2P destination address for that address */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token keyword">struct</span> <span class="token class-name">pcap_pkthdr</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">struct</span> <span class="token class-name">timeval</span> ts<span class="token punctuation">;</span>    <span class="token comment">/* time stamp */</span>
   bpf_u_int32 caplen<span class="token punctuation">;</span>   <span class="token comment">/* length of portion present */</span>
   bpf_u_int32 len<span class="token punctuation">;</span>      <span class="token comment">/* length this packet (off wire) */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token comment">//抓到的包的结构</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token comment">//抓到的包的结构</span>
 <span class="token keyword">int</span> <span class="token function">pcap_loop</span><span class="token punctuation">(</span>handler<span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span>capture_handler<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">inet_ntoa</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">in_addr</span> <span class="token operator">*</span>addr<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//该函数返回的指针指向的地址空间是静态分配的,因此每次调用此函数后,后面的结果都会对上一次的结果进行覆盖</span>
 </code></pre>

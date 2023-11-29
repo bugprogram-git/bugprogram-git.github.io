@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -420,9 +423,9 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="ads文件"><a href="#ads文件" class="headerlink" title="ads文件"></a>ads文件</h1><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念:"></a>基本概念:</h3><p>NTFS交换数据流（Alternate Data Streams，简称ADS）是NTFS磁盘格式的一个特性。在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/2152677">NTFS文件系统</a>下，每个文件都可以存在多个数据流，意思是除了主文件流之外还可以有许多非主文件流寄宿在主文件流中，这些利用NTFS数据流寄宿并隐藏在系统中的非主文件流我们称之为ADS流文件。虽然我们无法看到ADS流文件，但它们却是真实存在。下面通过一个实例来具体展现ADS流文件的创建、关联及隐藏过程。</p>
-<h3 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h3><p>在ntfs文件系统分区创建ads文件流有两种方式,一个是指在指定宿主文件的情况下创建ads文件流,二是创建一个单独的ads文件流,ads文件不能直接查看到,可以使用dir &#x2F;r命令查看,后缀带有$DATA的文件就是ads文件,ads文件不能直接使用type进行查看,可以使用notepad进行打开编辑</p>
-<pre class="language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">echo</span> hello > hello<span class="token punctuation">.</span>txt:ads<span class="token punctuation">.</span>txt <span class="token comment">#以文件ads.txt为宿主文件,创建了ads文件ads.txt</span>
-<span class="token function">echo</span> hello > :ads<span class="token punctuation">.</span>txt <span class="token comment">#创建一个没有宿主文件的单独ads文件(依赖于所在目录),(如果该文件在根分区目录下,只能借助第三方工具将其删除)</span></code></pre>
+<h3 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h3><p>在ntfs文件系统分区创建ads文件流有两种方式,一个是指在指定宿主文件的情况下创建ads文件流,二是创建一个单独的ads文件流,ads文件不能直接查看到,可以使用dir /r命令查看,后缀带有$DATA的文件就是ads文件,ads文件不能直接使用type进行查看,可以使用notepad进行打开编辑</p>
+<pre class="language-powershell" data-language="powershell"><code class="language-powershell"><span class="token function">echo</span> hello &gt; hello<span class="token punctuation">.</span>txt:ads<span class="token punctuation">.</span>txt <span class="token comment">#以文件ads.txt为宿主文件,创建了ads文件ads.txt</span>
+<span class="token function">echo</span> hello &gt; :ads<span class="token punctuation">.</span>txt <span class="token comment">#创建一个没有宿主文件的单独ads文件(依赖于所在目录),(如果该文件在根分区目录下,只能借助第三方工具将其删除)</span></code></pre>
 
 <p>可以通过使用ads文件隐藏木马,起到免杀的作用</p>
 <h3 id="移除ads文件的方法"><a href="#移除ads文件的方法" class="headerlink" title="移除ads文件的方法"></a>移除ads文件的方法</h3><p>1.删除顶层目录</p>

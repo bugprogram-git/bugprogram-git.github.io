@@ -66,7 +66,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -448,9 +451,9 @@
 <span class="token number">5</span>.cp<span class="token punctuation">[</span>.b,.w,.l<span class="token punctuation">]</span> srcaddress value <span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">(</span>拷贝内存中的值<span class="token punctuation">)</span>
 <span class="token number">6</span>.cmp<span class="token punctuation">[</span>.b,.w,.l<span class="token punctuation">]</span> addr1 addr2 count<span class="token punctuation">(</span>对比两块内存中的值<span class="token punctuation">)</span></code></pre>
 
-<h4 id="2-读取命令"><a href="#2-读取命令" class="headerlink" title="2.读取命令"></a>2.读取命令</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token number">1</span>.fatinfo <span class="token operator">&lt;</span>interface<span class="token operator">></span> dev:part <span class="token punctuation">(</span>显示分区<span class="token punctuation">(</span>fat<span class="token punctuation">)</span>信息<span class="token punctuation">)</span>
-<span class="token number">2</span>.fatls <span class="token operator">&lt;</span>interface<span class="token operator">></span> dev:part directory<span class="token punctuation">(</span>列出某个目录的文件或者是目录<span class="token punctuation">)</span>
-<span class="token number">3</span>.fatload <span class="token operator">&lt;</span>interface<span class="token operator">></span> address dev:part <span class="token function">file</span> <span class="token punctuation">(</span>将一个文件从磁盘分区读取到内存<span class="token punctuation">)</span>
+<h4 id="2-读取命令"><a href="#2-读取命令" class="headerlink" title="2.读取命令"></a>2.读取命令</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token number">1</span>.fatinfo <span class="token operator">&lt;</span>interface<span class="token operator">&gt;</span> dev:part <span class="token punctuation">(</span>显示分区<span class="token punctuation">(</span>fat<span class="token punctuation">)</span>信息<span class="token punctuation">)</span>
+<span class="token number">2</span>.fatls <span class="token operator">&lt;</span>interface<span class="token operator">&gt;</span> dev:part directory<span class="token punctuation">(</span>列出某个目录的文件或者是目录<span class="token punctuation">)</span>
+<span class="token number">3</span>.fatload <span class="token operator">&lt;</span>interface<span class="token operator">&gt;</span> address dev:part <span class="token function">file</span> <span class="token punctuation">(</span>将一个文件从磁盘分区读取到内存<span class="token punctuation">)</span>
 以上命令都是针对于fat文件系统分区的操作</code></pre>
 
 <h4 id="3-设置环境变量"><a href="#3-设置环境变量" class="headerlink" title="3.设置环境变量"></a>3.设置环境变量</h4><pre class="language-bash" data-language="bash"><code class="language-bash">printenv<span class="token punctuation">(</span>显示当前环境变量<span class="token punctuation">)</span>

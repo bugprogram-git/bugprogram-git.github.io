@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -439,25 +442,25 @@
 <h3 id="4-etcd配置"><a href="#4-etcd配置" class="headerlink" title="4.etcd配置"></a>4.etcd配置</h3><p>1.安装etcd</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#基于Archlinux</span>
 pacman -S etcd <span class="token comment">#</span></code></pre>
-<p>2.配置etcd<br>由于Archlinux安装etcd后生成的etcd.service文件中并没有指定etcd的配置文件，因此我们可以修改&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;etcd.service文件的配置参数</p>
+<p>2.配置etcd<br>由于Archlinux安装etcd后生成的etcd.service文件中并没有指定etcd的配置文件，因此我们可以修改/usr/lib/systemd/system/etcd.service文件的配置参数</p>
 <pre class="language-service" data-language="service"><code class="language-service">[Unit]
-Description&#x3D;etcd key-value store
-Documentation&#x3D;https:&#x2F;&#x2F;github.com&#x2F;etcd-io&#x2F;etcd
-After&#x3D;network-online.target local-fs.target remote-fs.target time-sync.target
-Wants&#x3D;network-online.target local-fs.target remote-fs.target time-sync.target
+Description=etcd key-value store
+Documentation=https://github.com/etcd-io/etcd
+After=network-online.target local-fs.target remote-fs.target time-sync.target
+Wants=network-online.target local-fs.target remote-fs.target time-sync.target
 
 [Service]
-User&#x3D;etcd
-Type&#x3D;notify
-Environment&#x3D;ETCD_DATA_DIR&#x3D;&#x2F;var&#x2F;lib&#x2F;etcd
-Environment&#x3D;ETCD_NAME&#x3D;%m
-ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;etcd --config-file &#x2F;etc&#x2F;etcd&#x2F;etcd.conf #这里指定配置文件
-Restart&#x3D;always
-RestartSec&#x3D;10s
-LimitNOFILE&#x3D;40000
+User=etcd
+Type=notify
+Environment=ETCD_DATA_DIR=/var/lib/etcd
+Environment=ETCD_NAME=%m
+ExecStart=/usr/bin/etcd --config-file /etc/etcd/etcd.conf #这里指定配置文件
+Restart=always
+RestartSec=10s
+LimitNOFILE=40000
 
 [Install]
-WantedBy&#x3D;multi-user.target</code></pre>
+WantedBy=multi-user.target</code></pre>
 <p>3.编辑etcd配置文件<br>etcd配置文件以yaml文件语法格式编写</p>
 <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># Cluster配置</span>
 <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"etcd-node-1"</span>

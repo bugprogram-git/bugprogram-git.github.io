@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="nginx使用教程, Tech">
-    <meta name="description" content="nginx使用教程1.什么是nginx?nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP&amp;#x2F;UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载">
+    <meta name="description" content="nginx使用教程1.什么是nginx?nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP/UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载很重的俄罗">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -63,7 +63,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -428,15 +431,15 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="nginx使用教程"><a href="#nginx使用教程" class="headerlink" title="nginx使用教程"></a>nginx使用教程</h1><h3 id="1-什么是nginx"><a href="#1-什么是nginx" class="headerlink" title="1.什么是nginx?"></a>1.什么是nginx?</h3><p>nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP&#x2F;UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载很重的俄罗斯网站上运行，包括 Yandex、Mail.Ru、VK 和 Rambler。 根据 Netcraft 的数据，2022 年 5 月，nginx 服务或代理了 21.67% 最繁忙的网站。以下是一些成功案例：Dropbox、Netflix、Wordpress.com、FastMail.FM。</p>
+                <h1 id="nginx使用教程"><a href="#nginx使用教程" class="headerlink" title="nginx使用教程"></a>nginx使用教程</h1><h3 id="1-什么是nginx"><a href="#1-什么是nginx" class="headerlink" title="1.什么是nginx?"></a>1.什么是nginx?</h3><p>nginx [engine x] 是 HTTP 和反向代理服务器、邮件代理服务器和通用 TCP/UDP 代理服务器，最初由 Igor Sysoev 编写。 很长一段时间以来，它一直在许多负载很重的俄罗斯网站上运行，包括 Yandex、Mail.Ru、VK 和 Rambler。 根据 Netcraft 的数据，2022 年 5 月，nginx 服务或代理了 21.67% 最繁忙的网站。以下是一些成功案例：Dropbox、Netflix、Wordpress.com、FastMail.FM。</p>
 <h3 id="2-如何部署安装nginx"><a href="#2-如何部署安装nginx" class="headerlink" title="2.如何部署安装nginx"></a>2.如何部署安装nginx</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> -y nginx <span class="token comment">#Ubuntu/Debian</span>
 <span class="token function">sudo</span> yum <span class="token function">install</span> -y nginx <span class="token comment">#rhel/centos</span></code></pre>
 
 <h3 id="3-nginx的结构"><a href="#3-nginx的结构" class="headerlink" title="3.nginx的结构"></a>3.nginx的结构</h3><h4 id="3-1-nginx的启动方式"><a href="#3-1-nginx的启动方式" class="headerlink" title="3.1.nginx的启动方式"></a>3.1.nginx的启动方式</h4><p>nginx一般以守护进程启动,一个nginx服务至少包含一个master进程和一个work进程,master为nginx的守护进程用于管理work进程,和work进程为nginx接受请求后实际处理请求的进程</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-1<span class="token text string">((master nginx守护进程))</span><span class="token arrow operator">--></span>2<span class="token text string">((work1 工作进程1))</span>
-1<span class="token arrow operator">--></span>3<span class="token text string">((work2 工作进程2))</span>
-1<span class="token arrow operator">--></span>4<span class="token text string">((work3 工作进程3))</span></code></pre>
+<pre class="mermaid">graph LR;
+1((master nginx守护进程))--&gt;2((work1 工作进程1))
+1--&gt;3((work2 工作进程2))
+1--&gt;4((work3 工作进程3))</pre>
 
 
 
@@ -449,29 +452,29 @@
 <li>4.普通匹配</li>
 </ul>
 <p>优先级自上而下</p>
-<h5 id="1-精确匹配"><a href="#1-精确匹配" class="headerlink" title="1.精确匹配"></a>1.精确匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location <span class="token operator">=</span> /get<span class="token punctuation">&#123;</span>
+<h5 id="1-精确匹配"><a href="#1-精确匹配" class="headerlink" title="1.精确匹配"></a>1.精确匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location <span class="token operator">=</span> /get<span class="token punctuation">{</span>
 	root html<span class="token punctuation">;</span>
 	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello you get!"</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token comment">#精确匹配一旦成功不会去尝试匹配别的匹配规则</span></code></pre>
 
 <h5 id="2-非正则匹配"><a href="#2-非正则匹配" class="headerlink" title="2.非正则匹配"></a>2.非正则匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">
-location ^~<span class="token punctuation">&#123;</span>
+location ^~<span class="token punctuation">{</span>
 	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello,world"</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token comment">#匹配成功后不会去尝试匹配正则规则</span></code></pre>
 
-<h5 id="3-正则匹配"><a href="#3-正则匹配" class="headerlink" title="3.正则匹配"></a>3.正则匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location ~ <span class="token punctuation">\</span>*.php$/ <span class="token punctuation">&#123;</span>
+<h5 id="3-正则匹配"><a href="#3-正则匹配" class="headerlink" title="3.正则匹配"></a>3.正则匹配</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location ~ <span class="token punctuation">\</span>*.php$/ <span class="token punctuation">{</span>
 	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"hello,location"</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-location ~* <span class="token punctuation">\</span>*.php$ <span class="token punctuation">&#123;</span>
+<span class="token punctuation">}</span>
+location ~* <span class="token punctuation">\</span>*.php$ <span class="token punctuation">{</span>
 	<span class="token builtin class-name">return</span> <span class="token number">200</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 <span class="token comment">#~*为不区分大小写的正则匹配</span></code></pre>
 
-<h5 id="4-普通匹配-最长字符匹配"><a href="#4-普通匹配-最长字符匹配" class="headerlink" title="4.普通匹配(最长字符匹配)"></a>4.普通匹配(最长字符匹配)</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location /get <span class="token punctuation">&#123;</span>
+<h5 id="4-普通匹配-最长字符匹配"><a href="#4-普通匹配-最长字符匹配" class="headerlink" title="4.普通匹配(最长字符匹配)"></a>4.普通匹配(最长字符匹配)</h5><pre class="language-bash" data-language="bash"><code class="language-bash">location /get <span class="token punctuation">{</span>
 	root html<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+<span class="token punctuation">}</span></code></pre>
 
 <h4 id="3-3-nginx的日志文件以及错误重定向"><a href="#3-3-nginx的日志文件以及错误重定向" class="headerlink" title="3.3.nginx的日志文件以及错误重定向"></a>3.3.nginx的日志文件以及错误重定向</h4><pre class="language-bash" data-language="bash"><code class="language-bash">access_log logs/access.log notice <span class="token function">format</span><span class="token punctuation">;</span>		<span class="token comment">#设置访问日志的存储路径以及日志等级和记录的日志格式</span>
 error_log logs/error.log error<span class="token punctuation">;</span>					<span class="token comment">#设置错误日志的存储路径和记录的日志格式</span>
@@ -495,14 +498,14 @@ worker_processes <span class="token number">1</span><span class="token punctuati
 error_log logs/error.log notice<span class="token punctuation">;</span>
 
 <span class="token comment">#配置events</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
 	worker_connections <span class="token number">1024</span><span class="token punctuation">;</span>	<span class="token comment">#设置每个worker进程最大支持的连接数(和操作系统允许打开最大的文件描述符也有关系)</span>
 	use epoll<span class="token punctuation">;</span>					<span class="token comment">#设置处理事件的io模型</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">}</span>
 
 <span class="token comment">#配置web服务</span>
 http
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
 	<span class="token comment">#包含媒体文件类型</span>
 	include mime.types<span class="token punctuation">;</span>
 	
@@ -545,21 +548,21 @@ http
 	<span class="token comment">#设置是否对服务端返回的结构进行压缩</span>
 	gzip_proxied off<span class="token operator">|</span>expired<span class="token operator">|</span>no-cache<span class="token operator">|</span>no-store<span class="token operator">|</span>private<span class="token operator">|</span>no_last_modified<span class="token operator">|</span>no_etag<span class="token operator">|</span>auth<span class="token operator">|</span>any<span class="token punctuation">;</span>
 	<span class="token comment">#设置服务</span>
-	server <span class="token punctuation">&#123;</span>
+	server <span class="token punctuation">{</span>
 		listen <span class="token number">80</span><span class="token punctuation">;</span><span class="token comment">#设置监听的端口</span>
 		server_name localhost<span class="token punctuation">;</span> <span class="token comment">#服务端的名称(一般设置为域名)</span>
-		location /<span class="token punctuation">&#123;</span>	<span class="token comment">#请求拦截器</span>
+		location /<span class="token punctuation">{</span>	<span class="token comment">#请求拦截器</span>
 			root html<span class="token punctuation">;</span><span class="token comment">#资源的根目录(实际请求的目录为location目录加上根目录)</span>
 			<span class="token comment">#alias html;#实际请求的目录为alias目录;</span>
 			index index.html index.htm<span class="token punctuation">;</span><span class="token comment">#设置主页的文件</span>
-		<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">}</span>
 		<span class="token comment">#location ~*^server#~代表后面的表达式为一个正则表达式(~*为不区分大小写的正则表达式)</span>
-		<span class="token comment">#&#123;</span>
+		<span class="token comment">#{</span>
 		<span class="token comment">#	root html</span>
 		<span class="token comment">#	index index.php</span>
-		<span class="token comment">#&#125;</span>
-	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre>
+		<span class="token comment">#}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 
 
 

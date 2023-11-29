@@ -64,7 +64,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -431,8 +434,8 @@
             <div id="articleContent">
                 <h1 id="Git使用入门"><a href="#Git使用入门" class="headerlink" title="Git使用入门"></a>Git使用入门</h1><h3 id="1-什么是Git？"><a href="#1-什么是Git？" class="headerlink" title="1.什么是Git？"></a>1.什么是Git？</h3><p>Git是一个强大的分布式版本控制工具，最初由linus管理linux内核项目时开发，在项目开发的时候使用git可以存储代码、跟踪修订历史记录、合并代码更改，并在需要时恢复为较早的代码版本。</p>
 <h3 id="2-Git的三个概念"><a href="#2-Git的三个概念" class="headerlink" title="2.Git的三个概念"></a>2.Git的三个概念</h3><h6 id="1-工作区"><a href="#1-工作区" class="headerlink" title="1.工作区"></a>1.工作区</h6><p>实际开发中能在git仓库目录下看到的目录</p>
-<h6 id="2-暂存区"><a href="#2-暂存区" class="headerlink" title="2.暂存区"></a>2.暂存区</h6><p>英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git&#x2F;index）中，所以我们把暂存区有时也叫作索引（index）。</p>
-<h6 id="3-版本库"><a href="#3-版本库" class="headerlink" title="3.版本库"></a>3.版本库</h6><p>工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。</p>
+<h6 id="2-暂存区"><a href="#2-暂存区" class="headerlink" title="2.暂存区"></a>2.暂存区</h6><p>英文叫 stage 或 index。一般存放在&nbsp;.git&nbsp;目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。</p>
+<h6 id="3-版本库"><a href="#3-版本库" class="headerlink" title="3.版本库"></a>3.版本库</h6><p>工作区有一个隐藏目录&nbsp;.git，这个不算工作区，而是 Git 的版本库。</p>
 <h3 id="3-安装git"><a href="#3-安装git" class="headerlink" title="3.安装git"></a>3.安装git</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在ubuntu/debian上可以使用以下命令来安装git</span>
 <span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">git</span>
 <span class="token comment">#基于archlinux </span>
@@ -463,36 +466,36 @@
 <span class="token function">git</span> branch 
 
 <span class="token comment">#基于当前分支创建一个新的分支</span>
-<span class="token function">git</span> branch <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+<span class="token function">git</span> branch <span class="token variable">${BRANCH_NAME}</span>
 
 <span class="token comment">#创建一个分支将切换到该分支下</span>
-<span class="token function">git</span> checkout -b <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+<span class="token function">git</span> checkout -b <span class="token variable">${BRANCH_NAME}</span>
 
 <span class="token comment">#切换分支</span>
-<span class="token function">git</span> checkout <span class="token variable">$&#123;BRANCH_NAME&#125;</span>
+<span class="token function">git</span> checkout <span class="token variable">${BRANCH_NAME}</span>
 </code></pre>
 <h5 id="5-git远程操作"><a href="#5-git远程操作" class="headerlink" title="5.git远程操作"></a>5.git远程操作</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看git远程主机的信息</span>
 <span class="token function">git</span> remote -v
 
 <span class="token comment">#添加远程主机</span>
-<span class="token comment">#git remote add &lt;远程主机名> &lt;代码仓库地址></span>
+<span class="token comment">#git remote add &lt;远程主机名&gt; &lt;代码仓库地址&gt;</span>
 <span class="token function">git</span> remote <span class="token function">add</span> origin https://github.com/DreamAccout/monitor.git
 
 
 <span class="token comment">#删除远程分支</span>
-<span class="token comment">#git push &lt;远程主机名> --delete &lt;远程分支名></span>
+<span class="token comment">#git push &lt;远程主机名&gt; --delete &lt;远程分支名&gt;</span>
 <span class="token function">git</span> push origin --delete remoteBranchName
 
 <span class="token comment">#推送到本地分支到远程分支(如果改远程分支不存在则进行创建)</span>
-<span class="token comment">#git push &lt;远程主机名> &lt;本地分支名>:&lt;远程分支名></span>
+<span class="token comment">#git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span>
 <span class="token function">git</span> push -u origin master:master
 
 <span class="token comment">#将远程分支克隆到本地</span>
-<span class="token comment">#git fetch &lt;远程主机名> &lt;远程分支名>:&lt;本地分支名></span>
+<span class="token comment">#git fetch &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span>
 <span class="token function">git</span> fetch origin master:dev
 
 <span class="token comment">#将远程分支合并到本地相当于git fetch &amp;&amp; git merge</span>
-<span class="token comment">#git pull &lt;远程主机名> &lt;远程分支名>:&lt;本地分支名></span>
+<span class="token comment">#git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span>
 <span class="token function">git</span> pull origin master:dev
 
 <span class="token comment">#克隆一个远程仓库</span>
@@ -502,9 +505,9 @@
         //我是dev分支的修改记录
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
 //我是master分支的修改记录
-<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span> master
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;&gt;</span><span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> master
 <span class="token comment">#&lt;&lt;&lt;&lt;&lt;到=====是当前分支修改的内容</span>
-<span class="token comment">#=====到>>>>>>是合并分支修改的内容</span></code></pre>
+<span class="token comment">#=====到&gt;&gt;&gt;&gt;&gt;&gt;是合并分支修改的内容</span></code></pre>
 <h5 id="7-git-rebase用法"><a href="#7-git-rebase用法" class="headerlink" title="7.git rebase用法"></a>7.git rebase用法</h5><p>在开发过程中我们可能会出现代码提交历史太多，有很多个版本只进行了小的修改，这个时候我们经常会将多个提交历史进行合并</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将当前版本往前三个版本提交历史记录进行合并。</span>
 <span class="token function">git</span> rebase -i HEAD~3</code></pre>
@@ -524,7 +527,7 @@
 ssh-keygen -t rsa -b <span class="token number">2048</span> -C <span class="token string">"git-repo key"</span> -f git-repo
 
 <span class="token comment">#将公钥配置到git用户的ssh验证密钥</span>
-<span class="token function">sudo</span> <span class="token function">cat</span> git-repo.pub <span class="token operator">></span> /home/git/.ssh/authorized_keys
+<span class="token function">sudo</span> <span class="token function">cat</span> git-repo.pub <span class="token operator">&gt;</span> /home/git/.ssh/authorized_keys
 
 <span class="token comment">#将私钥保留在本地</span></code></pre>
 <h5 id="3-指定一个目录为git仓库目录"><a href="#3-指定一个目录为git仓库目录" class="headerlink" title="3.指定一个目录为git仓库目录"></a>3.指定一个目录为git仓库目录</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#这里使用/srv/git-repo为git仓库目录</span>

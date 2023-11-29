@@ -64,7 +64,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -475,11 +478,11 @@ pacman -Sy <span class="token comment">#获取软件包索引</span></code></pre
 <span class="token comment">#dhcpcd是获取ip地址的dhcp客户端工具</span>
 <span class="token comment">#neovim是一个常用的编辑器</span></code></pre>
 <h2 id="6-进入安装好的系统-进行基本的系统配置"><a href="#6-进入安装好的系统-进行基本的系统配置" class="headerlink" title="6.进入安装好的系统,进行基本的系统配置"></a>6.进入安装好的系统,进行基本的系统配置</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#生成fstab文件</span>
-genfstab /mnt <span class="token operator">>></span> /mnt/etc/fstab
+genfstab /mnt <span class="token operator">&gt;&gt;</span> /mnt/etc/fstab
 
 <span class="token comment">#chroot 到新的系统</span>
 arch-chroot /mnt</code></pre>
-<h3 id="1-设置hostname和host"><a href="#1-设置hostname和host" class="headerlink" title="1.设置hostname和host"></a>1.设置hostname和host</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Arch"</span> <span class="token operator">></span> /etc/hostname
+<h3 id="1-设置hostname和host"><a href="#1-设置hostname和host" class="headerlink" title="1.设置hostname和host"></a>1.设置hostname和host</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">"Arch"</span> <span class="token operator">&gt;</span> /etc/hostname
 <span class="token function">vim</span> /etc/hosts
 <span class="token number">127.0</span>.0.1   localhost
 ::1         localhost
@@ -492,7 +495,7 @@ arch-chroot /mnt</code></pre>
 <span class="token function">vim</span> /etc/locale.gen
 en_US.UTF-8.UTF-8
 zh_CN.UTF-8.UTF-8
-<span class="token builtin class-name">echo</span> <span class="token string">"LANG=en_US.UTF-8.UTF-8"</span> <span class="token operator">></span> /etc/locale.conf
+<span class="token builtin class-name">echo</span> <span class="token string">"LANG=en_US.UTF-8.UTF-8"</span> <span class="token operator">&gt;</span> /etc/locale.conf
 locale-gen</code></pre>
 <h3 id="3-配置archlinuxcn库-可选"><a href="#3-配置archlinuxcn库-可选" class="headerlink" title="3.配置archlinuxcn库(可选)"></a>3.配置archlinuxcn库(可选)</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/pacman.conf
 
@@ -510,7 +513,7 @@ pacman -S grub efibootmgr amd-ucode
 
 <span class="token comment">#生成grub配置文件</span>
 <span class="token function">grub-mkconfig</span> -o /boot/grub/grub.cfg</code></pre>
-<p>&#96;</p>
+<p>`</p>
 <h2 id="7-安装桌面环境（KDE）（可选）"><a href="#7-安装桌面环境（KDE）（可选）" class="headerlink" title="7.安装桌面环境（KDE）（可选）"></a>7.安装桌面环境（KDE）（可选）</h2><h3 id="1-安装基本软件"><a href="#1-安装基本软件" class="headerlink" title="1.安装基本软件"></a>1.安装基本软件</h3><pre class="language-bash" data-language="bash"><code class="language-bash">pacman -S xorg plasma konsole sddm xf86-video-ati dolphin
 <span class="token comment">#xorg显示库</span>
 <span class="token comment">#sddm显示管理器</span>

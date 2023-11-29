@@ -64,7 +64,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -432,11 +435,11 @@
                 <h1 id="Tor的技术原理"><a href="#Tor的技术原理" class="headerlink" title="Tor的技术原理"></a>Tor的技术原理</h1><h3 id="1-Tor的历史"><a href="#1-Tor的历史" class="headerlink" title="1.Tor的历史"></a>1.Tor的历史</h3><p>1995年，美国海军研究实验室的科学家开始开发一套匿名系统，可以避免人们在互联网上的行迹被追踪到。由于在该系统中，数据被层层密码保护，这个技术被称为叫作“洋葱路由”(tor)。</p>
 <h3 id="2-Tor如何实现匿名访问"><a href="#2-Tor如何实现匿名访问" class="headerlink" title="2.Tor如何实现匿名访问?"></a>2.Tor如何实现匿名访问?</h3><p><strong>Tor客户端匿名原理</strong>:</p>
 <p>Tor是一个三重代理,客户端在接入tor网络的时候,Tor客户端会首先连接tor目录服务器通信获得全球活动的中继节点,然后从中选取三个作为节点的相关信息(ip地址,公钥,出口策略,带宽,在线时间)组成电路(cirdcuit),这三个节点分别叫入口节点、中继节点、出口节点。用户的流量在发送到暗网服务器的时候会依次经过这三个节点,只有最后一个节点知道目标服务器,第一个节点知道自身的ip地址</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-Client<span class="token arrow operator">--></span>GuardRelay
-GuardRelay<span class="token arrow operator">--></span>MiddleRelay
-MiddleRelay<span class="token arrow operator">--></span>ExitRelay
-ExitRelay<span class="token arrow operator">--></span>RealServer</code></pre>
+<pre class="mermaid">graph LR;
+Client--&gt;GuardRelay
+GuardRelay--&gt;MiddleRelay
+MiddleRelay--&gt;ExitRelay
+ExitRelay--&gt;RealServer</pre>
 
 
 
@@ -450,14 +453,14 @@ ExitRelay<span class="token arrow operator">--></span>RealServer</code></pre>
 <li>4.服务器通过tor链路连接至汇合节点,并比对cookie,如果比对成功,客户端和目标站点建立通信</li>
 </ul>
 <p>至此客户端和目标站点中间隔了6个节点,分别是客户端入口节点、客户端中继节点、汇合点、服务器出口节点、服务器中继节点、服务器入口节点。</p>
-<pre class="language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> LR<span class="token punctuation">;</span>
-Client<span class="token arrow operator">--></span>ClientGuardRelay
-ClientGuardRelay<span class="token arrow operator">--></span>ClientMiddleRelay<span class="token punctuation">;</span>
-ClientMiddleRelay<span class="token arrow operator">--></span>ClientExitRelay<span class="token punctuation">;</span>
+<pre class="mermaid">graph LR;
+Client--&gt;ClientGuardRelay
+ClientGuardRelay--&gt;ClientMiddleRelay;
+ClientMiddleRelay--&gt;ClientExitRelay;
 
-Server<span class="token arrow operator">--></span>ServerGuardRelay
-ServerGuardRelay<span class="token arrow operator">--></span>ServerMiddleRelay<span class="token punctuation">;</span>
-ServerMiddleRelay<span class="token arrow operator">--></span>ServerExitRelay</code></pre>
+Server--&gt;ServerGuardRelay
+ServerGuardRelay--&gt;ServerMiddleRelay;
+ServerMiddleRelay--&gt;ServerExitRelay</pre>
 
 
 
@@ -466,7 +469,7 @@ ServerMiddleRelay<span class="token arrow operator">--></span>ServerExitRelay</c
 <h3 id="3-如何搭建一个暗网网站"><a href="#3-如何搭建一个暗网网站" class="headerlink" title="3.如何搭建一个暗网网站?"></a>3.如何搭建一个暗网网站?</h3><p>安装tor</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> tor</code></pre>
 
-<p>编辑tor配置文件&#x2F;etc&#x2F;tor&#x2F;torrc</p>
+<p>编辑tor配置文件/etc/tor/torrc</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">HiddenServiceDir /var/lib/tor/hidden_service/
 HiddenServicePort <span class="token number">80</span> <span class="token number">127.0</span>.0.1:10000 <span class="token comment">#表示对外映射一个虚拟端口80提供服务,并将本地10000端口映射到80端口</span>
 Socks5Proxy <span class="token number">127.0</span>.0.0:1080 <span class="token comment">#使用前置代理,用代理连接至tor网络</span>
@@ -477,7 +480,7 @@ SOCKSPolicy accept <span class="token number">0.0</span>.0.0 <span class="token 
 <p>启动tor服务</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">systemctl start tor.service</code></pre>
 
-<p>启动后目录&#x2F;var&#x2F;lib&#x2F;tor&#x2F;hidden_service下会生成两个文件hostname和private_key,分别是暗网的主机名和私钥,公钥就是暗网主机名	</p>
+<p>启动后目录/var/lib/tor/hidden_service下会生成两个文件hostname和private_key,分别是暗网的主机名和私钥,公钥就是暗网主机名	</p>
 <p>参考:</p>
 <p><a target="_blank" rel="noopener" href="https://2047.one/t/9204">https://2047.one/t/9204</a></p>
 

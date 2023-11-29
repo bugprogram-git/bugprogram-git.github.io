@@ -5,14 +5,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="ssh配置密钥, Tech">
-    <meta name="description" content="1.什么是ssh？ssh是一种应用层协议，一般用于本地客户端登录到远程服务器进行相关作业，端口是22&amp;#x2F;TCP。
+    <meta name="description" content="1.什么是ssh？ssh是一种应用层协议，一般用于本地客户端登录到远程服务器进行相关作业，端口是22/TCP。
 2.ssh结构
 1.ssh服务器
 2.ssh客户端
 
 3.ssh客户端认证方式
 1.密码认证
-2.密钥认证基于安全性和">
+2.密钥认证基于安全性和便利性考量">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -70,7 +70,10 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Tech" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -426,7 +429,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-什么是ssh？"><a href="#1-什么是ssh？" class="headerlink" title="1.什么是ssh？"></a>1.什么是ssh？</h2><p>ssh是一种应用层协议，一般用于本地客户端登录到远程服务器进行相关作业，端口是22&#x2F;TCP。</p>
+                <h2 id="1-什么是ssh？"><a href="#1-什么是ssh？" class="headerlink" title="1.什么是ssh？"></a>1.什么是ssh？</h2><p>ssh是一种应用层协议，一般用于本地客户端登录到远程服务器进行相关作业，端口是22/TCP。</p>
 <h2 id="2-ssh结构"><a href="#2-ssh结构" class="headerlink" title="2.ssh结构"></a>2.ssh结构</h2><ul>
 <li>1.ssh服务器</li>
 <li>2.ssh客户端</li>
@@ -444,11 +447,11 @@ ssh-keygen -t rsa -b <span class="token number">2048</span> -C <span class="toke
 </code></pre>
 <p>上面这一步将会生成一对RSA密钥，公钥会以.pub为后缀,公钥放在被登录的服务器上，私钥自行留存，被用于以后进行登录服务器时进行身份验证使用。</p>
 <h4 id="2-配置密钥"><a href="#2-配置密钥" class="headerlink" title="2.配置密钥"></a>2.配置密钥</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#将公钥配置在家目录的.ssh目录下</span>
-<span class="token function">cat</span> id_rsa.pub <span class="token operator">></span> <span class="token environment constant">$HOME</span>/.ssh/authorized_keys
+<span class="token function">cat</span> id_rsa.pub <span class="token operator">&gt;</span> <span class="token environment constant">$HOME</span>/.ssh/authorized_keys
 <span class="token comment">#注意权限</span>
 <span class="token comment">#.ssh目录要配置成700权限authorized_keys密钥文件权限要配置成644</span></code></pre>
 <p>将公钥配置在服务器上，并且相关目录的权限要配置正确</p>
-<h4 id="3-其他相关配置"><a href="#3-其他相关配置" class="headerlink" title="3.其他相关配置"></a>3.其他相关配置</h4><p>为了服务器的安全考虑以及其他相关需求，我们一般要对服务器进行其他相关配置，ssh服务器的配置文件为&#x2F;etc&#x2F;ssh&#x2F;sshd_config</p>
+<h4 id="3-其他相关配置"><a href="#3-其他相关配置" class="headerlink" title="3.其他相关配置"></a>3.其他相关配置</h4><p>为了服务器的安全考虑以及其他相关需求，我们一般要对服务器进行其他相关配置，ssh服务器的配置文件为/etc/ssh/sshd_config</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#vim /etc/ssh/sshd_config</span>
 PermitRootlogin <span class="token function">yes</span><span class="token comment">#指定是否允许root用户登录,如果一般不使用root用户登录建议关闭</span>
 PasswordAuthentication <span class="token comment">#指定是否允许通过密码认证方式登录,如果已经使用密钥登录建议关闭</span>
