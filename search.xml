@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>linux逻辑卷相关操作</title>
+      <link href="/2023/11/30/linux%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/"/>
+      <url>/2023/11/30/linux%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h2 id="linux逻辑卷相关操作"><a href="#linux逻辑卷相关操作" class="headerlink" title="linux逻辑卷相关操作"></a>linux逻辑卷相关操作</h2><h3 id="1-磁盘分区"><a href="#1-磁盘分区" class="headerlink" title="1.磁盘分区"></a>1.磁盘分区</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">fdisk</span> /dev/sda</code></pre><h3 id="2-创建物理卷"><a href="#2-创建物理卷" class="headerlink" title="2.创建物理卷"></a>2.创建物理卷</h3><p>物理卷是构成逻辑卷组的基本单位</p><pre class="language-bash" data-language="bash"><code class="language-bash">pvcreate /dev/sda1</code></pre><h3 id="3-创建逻辑卷组"><a href="#3-创建逻辑卷组" class="headerlink" title="3.创建逻辑卷组"></a>3.创建逻辑卷组</h3><p>逻辑卷是逻辑卷组的一部分，逻辑卷的创建基于逻辑卷组</p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#基于物理卷sda1 sdb1 sdc1创建逻辑卷组mylvmdisk</span>vgcreate mylvmdisk /dev/sda1 /dev/sdb1 /dev/sdc1<span class="token comment">#扩展已经存在的逻辑卷组mylvmdisk</span>vgextend mylvmdisk /dev/sda1</code></pre><h3 id="4-创建逻辑卷"><a href="#4-创建逻辑卷" class="headerlink" title="4.创建逻辑卷"></a>4.创建逻辑卷</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#基于mylvmdisk逻辑卷组创建一个10G名称为data的逻辑卷</span>lvcreate -L 10G -n data mylvmdisk<span class="token comment">#将隶属于vgnfs中的卷lvdata扩容99G（一定要加上加号）如果不添加加号，则99g是重新分配后的空间</span>lvextend -L +99G /dev/vgnfs/lvdata </code></pre><h3 id="5-刷新文件系统"><a href="#5-刷新文件系统" class="headerlink" title="5.刷新文件系统"></a>5.刷新文件系统</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#ext文件系统</span>resize2fs /dev/vgnfs/lvdata<span class="token comment">#xfs文件系统</span>xfs_growfs /dev/vgnfs/lvdata<span class="token comment">#btrfs文件系统</span>btrfs filesystem resize /dev/vgnfs/lvdata</code></pre><h3 id="6-其他相关操作"><a href="#6-其他相关操作" class="headerlink" title="6.其他相关操作"></a>6.其他相关操作</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看所有物理卷信息</span>pvs<span class="token comment">#查看所有逻辑卷组的信息</span>vgdiskplay<span class="token comment">#查看所有的逻辑卷信息</span>lvdiskplay</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>initrd解压</title>
       <link href="/2023/11/29/initrd%E8%A7%A3%E5%8E%8B/"/>
       <url>/2023/11/29/initrd%E8%A7%A3%E5%8E%8B/</url>
@@ -34,7 +47,7 @@
       <link href="/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
       <url>/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h2 id="代理服务器搭建"><a href="#代理服务器搭建" class="headerlink" title="代理服务器搭建"></a>代理服务器搭建</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://my.oofeye.com/work/Socks5/ss5.sh <span class="token operator">|</span> <span class="token function">bash</span></code></pre>]]></content>
       
       
       
@@ -56,19 +69,6 @@
             <tag> 软件配置 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>centos7磁盘扩容</title>
-      <link href="/2023/05/15/centos7%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/"/>
-      <url>/2023/05/15/centos7%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
       
     </entry>
     
@@ -145,6 +145,12 @@
         <content type="html"><![CDATA[<p>参考原文链接<a href="https://blog.51cto.com/u_15380887/4596626">https://blog.51cto.com/u_15380887/4596626</a></p><p>bug:<br>出现乱码，首先确认在挂载的时候有没有指定字符集</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> 杂项 </tag>
+            
+        </tags>
       
     </entry>
     
