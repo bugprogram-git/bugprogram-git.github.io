@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="keywords" content="openssl自签证书, Tech">
     <meta name="description" content="1.openssl自签证书这种方法获取的证书不被浏览器信任，因为是我们自己给自己办法的证书，访问的时候一般会提示危险
-1.生成CA私钥openssl genrsa -out ca.key 2048
-#生成rsa私钥，2048位强度，serv">
+1.第一种方式1.生成CA私钥openssl genrsa -out ca.key 2048
+#生成rsa私钥，2048位">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -411,7 +411,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-11-29
+                    2023-11-30
                 </div>
                 
 
@@ -434,7 +434,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="1-openssl自签证书"><a href="#1-openssl自签证书" class="headerlink" title="1.openssl自签证书"></a>1.openssl自签证书</h2><p>这种方法获取的证书不被浏览器信任，因为是我们自己给自己办法的证书，访问的时候一般会提示危险</p>
-<h5 id="1-生成CA私钥"><a href="#1-生成CA私钥" class="headerlink" title="1.生成CA私钥"></a>1.生成CA私钥</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl genrsa -out ca.key <span class="token number">2048</span>
+<h3 id="1-第一种方式"><a href="#1-第一种方式" class="headerlink" title="1.第一种方式"></a>1.第一种方式</h3><h5 id="1-生成CA私钥"><a href="#1-生成CA私钥" class="headerlink" title="1.生成CA私钥"></a>1.生成CA私钥</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl genrsa -out ca.key <span class="token number">2048</span>
 <span class="token comment">#生成rsa私钥，2048位强度，server.key是秘钥文件名。</span></code></pre>
 
 <h5 id="2-生成CA根证书请求信息"><a href="#2-生成CA根证书请求信息" class="headerlink" title="2.生成CA根证书请求信息"></a>2.生成CA根证书请求信息</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl req -new -key ca.key -out ca.csr</code></pre>
@@ -444,6 +444,10 @@
 <h5 id="4-生成私钥"><a href="#4-生成私钥" class="headerlink" title="4.生成私钥"></a>4.生成私钥</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl genrsa -out ssl.key <span class="token number">2048</span></code></pre>
 <h5 id="5-生成证书的申请信息"><a href="#5-生成证书的申请信息" class="headerlink" title="5.生成证书的申请信息"></a>5.生成证书的申请信息</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl req -new -key ssl.key -out ssl.csr</code></pre>
 <h5 id="6-使用CA的私钥进行签名"><a href="#6-使用CA的私钥进行签名" class="headerlink" title="6.使用CA的私钥进行签名"></a>6.使用CA的私钥进行签名</h5><pre class="language-bash" data-language="bash"><code class="language-bash">openssl x509 -req -CA ca.crt -CAkey ca.key -CAcreateserial -in ssl.csr -out ssl.crt</code></pre>
+<h3 id="2-第二种方式"><a href="#2-第二种方式" class="headerlink" title="2.第二种方式"></a>2.第二种方式</h3><ul>
+<li>1.生成私钥<pre class="language-bash" data-language="bash"><code class="language-bash">openssl genrsa -out server.key <span class="token number">1024</span></code></pre></li>
+<li>2.生成证书文件<pre class="language-bash" data-language="bash"><code class="language-bash">openssl req -new -x509 -days <span class="token number">3650</span> -key server.key -out server.crt -subj <span class="token string">"/C=CN/ST=mykey/L=mykey/O=mykey/OU=mykey/CN=domain1/CN=domain2/CN=domain3"</span></code></pre></li>
+</ul>
 <h2 id="2-使用acme获取权威证书"><a href="#2-使用acme获取权威证书" class="headerlink" title="2.使用acme获取权威证书"></a>2.使用acme获取权威证书</h2><p>这种证书一般会被信任，但是前提是我们需要有域名，如果服务器在国外，无需备案</p>
 <h5 id="1-安装acme-sh"><a href="#1-安装acme-sh" class="headerlink" title="1.安装acme.sh"></a>1.安装acme.sh</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://get.acme.sh <span class="token operator">|</span> <span class="token function">sh</span> <span class="token comment">#在国内网络环境可能会连接失败，需要挂上代理</span></code></pre>
 <h5 id="2-设置acme-sh别名"><a href="#2-设置acme-sh别名" class="headerlink" title="2.设置acme.sh别名"></a>2.设置acme.sh别名</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">alias</span> acme.sh<span class="token operator">=~</span>/.acme.sh/acme.sh

@@ -6,7 +6,7 @@
   <link href="https://bugprogram-git.github.io/atom.xml" rel="self"/>
   
   <link href="https://bugprogram-git.github.io/"/>
-  <updated>2023-11-30T07:40:17.684Z</updated>
+  <updated>2023-11-30T10:28:27.561Z</updated>
   <id>https://bugprogram-git.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql服务器搭建</title>
+    <link href="https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
+    <id>https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</id>
+    <published>2023-11-30T09:25:00.000Z</published>
+    <updated>2023-11-30T10:28:27.561Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;1-mysql服务器搭建&quot;&gt;&lt;a href=&quot;#1-mysql服务器搭建&quot; class=&quot;headerlink&quot; title=&quot;1.mysql服务器搭建&quot;&gt;&lt;/a&gt;1.mysql服务器搭建&lt;/h2&gt;&lt;p&gt;本教程基于Centos7.2009&lt;/p&gt;
+&lt;h3</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>linux逻辑卷相关操作</title>
@@ -85,14 +107,15 @@
     <link href="https://bugprogram-git.github.io/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
     <id>https://bugprogram-git.github.io/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</id>
     <published>2023-11-29T11:39:43.000Z</published>
-    <updated>2023-11-30T07:28:13.609Z</updated>
+    <updated>2023-11-30T09:23:41.775Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;代理服务器搭建&quot;&gt;&lt;a href=&quot;#代理服务器搭建&quot; class=&quot;headerlink&quot; title=&quot;代理服务器搭建&quot;&gt;&lt;/a&gt;代理服务器搭建&lt;/h2&gt;&lt;pre class=&quot;language-bash&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;代理服务器搭建&quot;&gt;&lt;a href=&quot;#代理服务器搭建&quot; class=&quot;headerlink&quot; title=&quot;代理服务器搭建&quot;&gt;&lt;/a&gt;代理服务器搭建&lt;/h2&gt;&lt;p&gt;一键脚本搭建socks5代理服务器&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;</summary>
         
       
     
@@ -447,29 +470,6 @@
     
     
     <category term="科学上网" scheme="https://bugprogram-git.github.io/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>I2C协议</title>
-    <link href="https://bugprogram-git.github.io/2022/12/21/I2C%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://bugprogram-git.github.io/2022/12/21/I2C%E5%8D%8F%E8%AE%AE/</id>
-    <published>2022-12-21T09:08:35.000Z</published>
-    <updated>2023-11-28T08:37:49.080Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;I2C协议&quot;&gt;&lt;a href=&quot;#I2C协议&quot; class=&quot;headerlink&quot; title=&quot;I2C协议&quot;&gt;&lt;/a&gt;I2C协议&lt;/h1&gt;&lt;h3 id=&quot;1-什么是I2C协议？&quot;&gt;&lt;a href=&quot;#1-什么是I2C协议？&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="嵌入式基础" scheme="https://bugprogram-git.github.io/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   

@@ -4,10 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="代理服务器搭建, Tech">
-    <meta name="description" content="代理服务器搭建一键脚本搭建socks5代理服务器
-curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
-">
+    <meta name="keywords" content="mysql服务器搭建, Tech">
+    <meta name="description" content="1.mysql服务器搭建本教程基于Centos7.2009
+1.包管理器安装1.添加mysql的yum源
+cat &amp;gt; /etc/yum.repos.d/mysql.repo &amp;lt;&amp;lt;EOF
+[mysql-connectors-">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +31,7 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
 </script>
 
 
-    <title>代理服务器搭建 | Tech</title>
+    <title>mysql服务器搭建 | Tech</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -350,12 +351,12 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">代理服务器搭建</h1>
+                    <h1 class="description center-align post-title">mysql服务器搭建</h1>
                 </div>
             </div>
         </div>
@@ -391,7 +392,7 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-11-29
+                    2023-11-30
                 </div>
                 
 
@@ -420,8 +421,131 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="代理服务器搭建"><a href="#代理服务器搭建" class="headerlink" title="代理服务器搭建"></a>代理服务器搭建</h2><p>一键脚本搭建socks5代理服务器</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://my.oofeye.com/work/Socks5/ss5.sh <span class="token operator">|</span> <span class="token function">bash</span></code></pre>
+                <h2 id="1-mysql服务器搭建"><a href="#1-mysql服务器搭建" class="headerlink" title="1.mysql服务器搭建"></a>1.mysql服务器搭建</h2><p>本教程基于Centos7.2009</p>
+<h3 id="1-包管理器安装"><a href="#1-包管理器安装" class="headerlink" title="1.包管理器安装"></a>1.包管理器安装</h3><p>1.添加mysql的yum源</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/yum.repos.d/mysql.repo <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+[mysql-connectors-community]
+name=MySQL Connectors Community
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/mysql-connectors-community-el7-<span class="token variable">$basearch</span>/
+enabled=1
+gpgcheck=0
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql
+
+[mysql-tools-community]
+name=MySQL Tools Community
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/mysql-tools-community-el7-<span class="token variable">$basearch</span>/
+enabled=1
+gpgcheck=0
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql
+
+[mysql-8.0-community]
+name=MySQL 8.0 Community Server
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/mysql/yum/mysql-8.0-community-el7-<span class="token variable">$basearch</span>/
+enabled=1
+gpgcheck=0
+gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql
+EOF</span></code></pre>
+<p>重新生成软件包缓存</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">yum makecache <span class="token operator">&amp;&amp;</span> yum <span class="token function">install</span> -y mysql-server</code></pre>
+<p>启动mysql</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart mysqld</code></pre>
+<h3 id="2-源码安装"><a href="#2-源码安装" class="headerlink" title="2.源码安装"></a>2.源码安装</h3><p>安装scl和rh源，用于提供新版本的编译工具</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/yum.repos.d/CentOS-scl-scl.repo <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+[centos-sclo-sclo]
+name=CentOS-7 - SCLo sclo
+baseurl=http://mirrors.ustc.edu.cn/centos/7.9/sclo/<span class="token variable">$basearch</span>/sclo/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
+EOF</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/yum.repos.d/CentOS-scl-rh.repo <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+[centos-sclo-rh]
+name=CentOS-7 - SCLo rh
+baseurl=http://mirrors.ustc.edu.cn/centos/7.9/sclo/<span class="token variable">$basearch</span>/rh/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-SCLo
+EOF</span></code></pre>
+<p>安装基本的编译工具</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">yum -y <span class="token function">install</span> <span class="token function">wget</span>  cmake gcc gcc-c++ ncurses  ncurses-devel  libaio-devel  openssl openssl-devel devtoolset-11-gcc devtoolset-11-gcc-c++ devtoolset-11-binutils</code></pre>
+<p>获取源码<br>由于mysql依赖于boost，建议选boost版本的源码，不然在编译mysql之前需要先安装boost</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://cdn.mysql.com//Downloads/MySQL-8.1/mysql-boost-8.1.0.tar.gz</code></pre>
+<p>编译源码并安装</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -pv /usr/local/mysql
+
+cmake <span class="token builtin class-name">.</span> -DCMAKE_INSTALL_PREFIX<span class="token operator">=</span>/usr/local/mysql -DMYSQL_DATADIR<span class="token operator">=</span>/usr/local/mysql/data -DSYSCONFDIR<span class="token operator">=</span>/etc -DMYSQL_TCP_PORT<span class="token operator">=</span><span class="token number">3308</span> -DWITH_BOOST<span class="token operator">=</span><span class="token punctuation">..</span>/boost/boost_1_77_0/
+
+<span class="token function">make</span> -j <span class="token variable"><span class="token variable">`</span>nproc<span class="token variable">`</span></span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span></code></pre>
+<p>创建mysql用户</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">useradd</span> -m -d /usr/local/mysql -s /bin/false mysql</code></pre>
+<p>创建数据目录，并赋予权限</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -pv /usr/local/mysql/data
+<span class="token function">chown</span> -R mysql:mysql /usr/local/mysql/data</code></pre>
+<p>创建mysql的配置文件</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /usr/local/mysql/etc/my.cnf <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+[mysqld]
+
+datadir=/usr/local/mysql/data
+
+socket=/var/run/mysql/mysql.sock
+
+symbolic-links=0
+
+log-error=/tmp/mysql.log
+
+pid-file=/var/run/mysql/mysql.pid
+
+!includedir /etc/my.cnf.d
+EOF</span></code></pre>
+<p>初始化数据库</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">/usr/local/mysql/bin/mysqld --initialize --user<span class="token operator">=</span>mysql --basedir<span class="token operator">=</span>/usr/local/mysql --datadir<span class="token operator">=</span>/usr/local/mysql/data/</code></pre>
+<p>启动mysql</p>
+<ul>
+<li>命令行启动<pre class="language-bash" data-language="bash"><code class="language-bash">/usr/local/mysqld --user<span class="token operator">=</span>mysql</code></pre></li>
+<li>systemd启动<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<span class="token assign-left variable">Description</span><span class="token operator">=</span>MySQL Server
+<span class="token assign-left variable">Documentation</span><span class="token operator">=</span>man:mysqld<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+<span class="token assign-left variable">Documentation</span><span class="token operator">=</span>http://dev.mysql.com/doc/refman/en/using-systemd.html
+<span class="token assign-left variable">After</span><span class="token operator">=</span>network-online.target
+<span class="token assign-left variable">Wants</span><span class="token operator">=</span>network-online.target
+<span class="token assign-left variable">After</span><span class="token operator">=</span>syslog.target
+
+<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target
+
+<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
+<span class="token assign-left variable">User</span><span class="token operator">=</span>mysql
+<span class="token assign-left variable">Group</span><span class="token operator">=</span>mysql
+
+<span class="token assign-left variable">Type</span><span class="token operator">=</span>notify
+
+<span class="token comment"># Disable service start and stop timeout logic of systemd for mysqld service.</span>
+<span class="token assign-left variable">TimeoutSec</span><span class="token operator">=</span><span class="token number">0</span>
+
+<span class="token comment"># Execute pre and post scripts as root</span>
+<span class="token comment">#PermissionsStartOnly=true</span>
+
+<span class="token comment"># Needed to create system tables</span>
+
+<span class="token comment"># Start main service</span>
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/sbin/mysqld <span class="token variable">$MYSQLD_OPTS</span> --defaults-extra-file<span class="token operator">=</span>/usr/local/mysql/my.cnf
+<span class="token comment">#这里换成自己mysql的配置文件的路径</span>
+<span class="token comment"># Use this to switch malloc implementation</span>
+<span class="token assign-left variable">EnvironmentFile</span><span class="token operator">=</span>-/etc/sysconfig/mysql
+
+<span class="token comment"># Sets open_files_limit</span>
+LimitNOFILE <span class="token operator">=</span> <span class="token number">10000</span>
+
+<span class="token assign-left variable">Restart</span><span class="token operator">=</span>on-failure
+
+<span class="token assign-left variable">RestartPreventExitStatus</span><span class="token operator">=</span><span class="token number">1</span>
+
+<span class="token comment"># Set enviroment variable MYSQLD_PARENT_PID. This is required for restart.</span>
+<span class="token assign-left variable">Environment</span><span class="token operator">=</span>MYSQLD_PARENT_PID<span class="token operator">=</span><span class="token number">1</span>
+
+<span class="token assign-left variable">PrivateTmp</span><span class="token operator">=</span>false</code></pre></li>
+</ul>
 
                 
             </div>
@@ -448,7 +572,7 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://bugprogram-git.github.io/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">https://bugprogram-git.github.io/2023/11/29/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</a>
+                    <a href="https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -561,7 +685,7 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
         repo: '',
         owner: '',
         admin: null,
-        id: '2023-11-29T19-39-43',
+        id: '2023-11-30T17-25-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -589,54 +713,18 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/11/29/golearning/">
+                <a href="/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="golearning">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="mysql服务器搭建">
                         
-                        <span class="card-title">golearning</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-29
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            404NotFound
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/05/15/centos7-9%E8%A7%A3%E5%86%B3RTL8125%E7%BD%91%E5%8D%A1%E4%B8%8D%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="centos7.9解决RTL8125网卡不识别的问题">
-                        
-                        <span class="card-title">centos7.9解决RTL8125网卡不识别的问题</span>
+                        <span class="card-title">mysql服务器搭建</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -647,7 +735,7 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-30
                             </span>
                         <span class="publish-author">
                             
@@ -657,13 +745,43 @@ curl https://my.oofeye.com/work/Socks5/ss5.sh | bash
                         </span>
                     </div>
                 </div>
+
                 
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/">
-                        <span class="chip bg-color">软件配置</span>
-                    </a>
-                    
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/11/30/linux%E9%80%BB%E8%BE%91%E5%8D%B7%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="linux逻辑卷相关操作">
+                        
+                        <span class="card-title">linux逻辑卷相关操作</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            404NotFound
+                            
+                        </span>
+                    </div>
                 </div>
                 
             </div>
