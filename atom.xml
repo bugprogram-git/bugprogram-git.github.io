@@ -6,7 +6,7 @@
   <link href="https://bugprogram-git.github.io/atom.xml" rel="self"/>
   
   <link href="https://bugprogram-git.github.io/"/>
-  <updated>2023-11-30T10:28:27.561Z</updated>
+  <updated>2023-12-02T10:54:47.567Z</updated>
   <id>https://bugprogram-git.github.io/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>vsftpd服务器搭建</title>
+    <link href="https://bugprogram-git.github.io/2023/12/02/vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
+    <id>https://bugprogram-git.github.io/2023/12/02/vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</id>
+    <published>2023-12-02T10:33:51.000Z</published>
+    <updated>2023-12-02T10:54:47.567Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;vsftpd服务器搭建&quot;&gt;&lt;a href=&quot;#vsftpd服务器搭建&quot; class=&quot;headerlink&quot; title=&quot;vsftpd服务器搭建&quot;&gt;&lt;/a&gt;vsftpd服务器搭建&lt;/h2&gt;&lt;p&gt;本教程基于Centos7&lt;/p&gt;
+&lt;pre</summary>
+        
+      
+    
+    
+    
+    
+    <category term="软件配置" scheme="https://bugprogram-git.github.io/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>mysql服务器搭建</title>
     <link href="https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"/>
     <id>https://bugprogram-git.github.io/2023/11/30/mysql%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</id>
     <published>2023-11-30T09:25:00.000Z</published>
-    <updated>2023-11-30T10:28:27.561Z</updated>
+    <updated>2023-12-02T11:01:14.968Z</updated>
     
     
       
@@ -445,31 +469,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>科学上网技术原理和及配置教程</title>
-    <link href="https://bugprogram-git.github.io/2022/12/22/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/"/>
-    <id>https://bugprogram-git.github.io/2022/12/22/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/</id>
-    <published>2022-12-22T04:35:34.000Z</published>
-    <updated>2023-11-28T08:37:49.566Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;科学上网技术原理及配置教程&quot;&gt;&lt;a href=&quot;#科学上网技术原理及配置教程&quot; class=&quot;headerlink&quot; title=&quot;科学上网技术原理及配置教程&quot;&gt;&lt;/a&gt;科学上网技术原理及配置教程&lt;/h1&gt;&lt;h2 id=&quot;1-什么是科学上网&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="软件配置" scheme="https://bugprogram-git.github.io/categories/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/"/>
-    
-    
-    <category term="科学上网" scheme="https://bugprogram-git.github.io/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
   </entry>
   
